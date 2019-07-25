@@ -1,0 +1,40 @@
+.v-card
+    &--auth
+        border-radius: 6px
+
+    > .v-sheet
+        border-radius: 4px
+    
+    &--widget
+        border-width: 1px
+        border-style: solid
+    
+    &--form
+        margin-top: -56px
+    
+    &__image
+        position: relative
+        display: flex
+        align-items: center
+        justify-content: center
+        min-height: 360px
+        overflow: hidden
+
+        &--icon 
+            z-index: 1
+
+            .v-icon
+                font-size: 48px 
+
+        &--wrap
+            position: absolute
+            height: 100%
+            width: 100%
+            display: flex
+            align-items: center
+            justify-content: center
+            overflow: hidden
+            z-index: 0
+
+            img
+                width: 100%

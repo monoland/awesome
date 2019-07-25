@@ -1,0 +1,47 @@
+.v-toolbar
+    &.elevation-0
+        &:after
+            bottom: -1px
+            content: ''
+            height: 1px
+            pointer-events: none
+            position: absolute
+            left: 0
+            right: 0
+            width: 100%
+            background: rgba(17, 17, 17, .06)
+    
+    &.elevation-0
+        &^[0]--search
+            z-index: 1
+
+            &:after
+                bottom: -1px
+                content: ''
+                height: 1px
+                pointer-events: none
+                position: absolute
+                left: 0
+                right: 0
+                width: 100%
+                background: transparent
+        
+        &^[0]--search ~ &^[0]--application
+            z-index: 0
+    
+    &--search
+        ^[0]__content
+            input
+                outline: none
+                height: 100%
+                width: 100%
+    
+    &--delete
+        .title
+            margin-left: 20px
+
+    &--application.transparent::after
+        bottom: 0
+        height: 0
+        background: transparent
+

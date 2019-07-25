@@ -1,0 +1,113 @@
+<template>
+    <v-dialog v-model="form.state"
+        :transition="transition"
+        hide-overlay 
+        fullscreen 
+    >
+        <v-card height="100%" flat v-if="$vuetify.breakpoint.xsOnly">
+            <v-toolbar color="white" card flat>
+                <v-btn icon @click="closeForm">
+                    <v-icon>arrow_back</v-icon>
+                </v-btn>
+
+                <v-spacer></v-spacer>
+                <span class="d-block title">{{ page.title }}</span>
+                <v-spacer></v-spacer>
+
+                <v-btn icon :color="$root.theme" flat @click="submitForm">
+                    <v-icon>done</v-icon>
+                </v-btn>
+            </v-toolbar>
+
+            <v-container grid-list-xs>
+                <v-layout wrap>
+                    <slot></slot>
+                </v-layout>
+            </v-container>
+        </v-card>
+
+        <v-card flat :class="`${$root.theme} lighten-5`" v-else>
+            <v-toolbar :color="`${$root.theme} lighten-4`" extended flat>
+                <v-btn icon @click="closeForm">
+                    <v-icon>close</v-icon>
+                </v-btn>
+            </v-toolbar>
+
+            <v-layout row pb-2>
+                <v-flex :xs8="!small" :offset-xs2="!small" :xs6="small" :offset-xs3="small">
+                    <v-widget form style="margin-top: -56px !important;">
+                        <v-container class="px-0 pb-0 pt-2" grid-list-lg>
+                            <v-layout wrap>
+                                <slot></slot>
+                            </v-layout>
+                        </v-container>
+
+                        <v-card-actions slot="actions">
+                            <v-spacer></v-spacer>
+                            <v-btn :color="$root.theme" flat @click="submitForm">{{ submitName }}</v-btn>
+                            <v-btn :color="$root.theme" flat @click="closeForm">{{ cancelName }}</v-btn>
+                        </v-card-actions>
+                    </v-widget>
+                </v-flex>
+            </v-layout>
+        </v-card>
+    </v-dialog>
+</template>
+
+<script>
+import { mapState, mapActions } from 'vuex';
+
+export default {
+    name: 'v-page-form',
+
+    computed: {
+
+        ...mapState(['form', 'page']),
+        
+        dynPX: function() {
+            if (this.$vuetify.breakpoint.smOnly) {
+                return 'px-3';
+            }
+
+            return 'px-4';
+        },
+
+        dynCalc: function() {
+            if (this.$vuetify.breakpoint.smOnly) {
+                return 'calc(100% - 32px)';
+            }
+
+            return 'calc(100% - 48px)';
+        },
+
+        transition: function() {
+            if (this.$vuetify.breakpoint.xsOnly) {
+                return 'dialog-move-transition';
+            }
+
+            return 'dialog-bottom-transition';
+        }
+    },
+
+    props: {
+        submitName: {
+            type: String,
+            default: 'submit'
+        },
+
+        cancelName: {
+            type: String,
+            default: 'cancel'
+        },
+
+        small: {
+            type: Boolean,
+            default: false
+        }
+    },
+
+    methods: {
+        ...mapActions(['closeForm', 'submitForm'])
+    },
+};
+</script>
