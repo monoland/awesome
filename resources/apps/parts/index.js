@@ -1,4 +1,5 @@
 export { default as CardImage } from './CardImage';
+export { default as CodeEditor } from './CodeEditor';
 export { default as Header } from './Header';
 export { default as MenuAccount } from './MenuAccount';
 export { default as MenuApplication } from './MenuApplication';
@@ -6,4 +7,5 @@ export { default as PageForm } from './PageForm';
 export { default as PageList } from './PageList';
 export { default as PageTable } from './PageTable';
 export { default as PageTrash } from './PageTrash';
+export { default as UploadFile } from './UploadFile';
 export { default as Widget } from './Widget';
