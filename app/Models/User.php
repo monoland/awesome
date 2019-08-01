@@ -46,6 +46,16 @@ class User extends Authenticatable
      *
      * @return void
      */
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function authent()
     {
         return $this->belongsTo(Authent::class);

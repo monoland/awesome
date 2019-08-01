@@ -1,7 +1,9 @@
 import Axios from 'axios';
 import * as CryptoJS from 'crypto-js';
 import SecureStorage from 'secure-web-storage';
-import { siteKey, secretKey } from '@apps/.env.js';
+// import bugsnag from '@bugsnag/js';
+import { siteKey, secretKey, baseURL, bugsnagKey } from '@apps/.env.js';
+// const bugsnagClient = bugsnag(bugsnagKey);
 
 class Authentication
 {
@@ -161,6 +163,7 @@ export const AuthProvider = {
                 }, headers);
                 
                 return Axios.create({
+                    baseURL: baseURL,
                     headers
                 });
             }
@@ -200,6 +203,8 @@ export const AuthProvider = {
             },
 
             set(newval) {
+                // bugsnagClient.notify(new Error(newval));
+
                 if (newval.hasOwnProperty('response')) {
                     let { message, errors } = newval.response.data;
                     let status = newval.response.status;

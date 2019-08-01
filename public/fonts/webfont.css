@@ -134,3 +134,13 @@
         url('/fonts/nunito/nunito-v9-latin-900.woff2') format('woff2'),
         url('/fonts/nunito/nunito-v9-latin-900.woff') format('woff');
 }
+
+/* ubuntu-mono-regular - latin */
+@font-face {
+    font-family: 'Ubuntu Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Ubuntu Mono'), local('UbuntuMono-Regular'),
+         url('/fonts/umono/ubuntu-mono-v9-latin-regular.woff2') format('woff2'),
+         url('/fonts/umono/ubuntu-mono-v9-latin-regular.woff') format('woff');
+}

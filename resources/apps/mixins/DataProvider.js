@@ -27,6 +27,7 @@ const store = new Vuex.Store({
         headers: [],
         records: [],
         record: {},
+        documents: [],
         multiple: true,
         dataurl: null,
         primaryId: 'id',
@@ -107,6 +108,18 @@ const store = new Vuex.Store({
 
         spliceRecords: function(state, index) {
             state.records.splice(index, 1);
+        },
+
+        documents: function(state, payload) {
+            state.documents = payload;
+        },
+
+        pushDocuments: function(state, payload) {
+            state.documents.push(payload);
+        },
+
+        spliceDocuments: function(state, index) {
+            state.documents.splice(index, 1);
         },
 
         record: function(state, payload) {

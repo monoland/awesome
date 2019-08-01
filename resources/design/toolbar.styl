@@ -44,4 +44,17 @@
         bottom: 0
         height: 0
         background: transparent
+    
+    &__actions
+        display: flex
+        flex-grow: 1
+        position: relative
+        height: 100%
+        min-width: 220px
+        justify-content: flex-end
 
+    &__extension > .v-toolbar__actions:last-child
+        margin-right -12px
+    
+    &__items
+        position: absolute
