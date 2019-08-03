@@ -27,9 +27,7 @@ export default {
         if (!this.$root.theme) this.$root.theme = this.auth.theme;
     },
 
-    data:() => ({
-        document: false
-    }),
+    data:() => ({}),
 
     methods: {
         ...mapActions(['resetStore', 'setPageInfo']),

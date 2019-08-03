@@ -31,3 +31,79 @@
                 position: absolute !important
                 padding: 0 24px
                 width: 100%
+
+.v-file
+    position: relative
+    padding: 12px 0 0 0
+    margin-top: 4px
+    min-height: 66px
+
+    label
+        position: absolute
+        color: rgba(0,0,0,0.54)
+        overflow: hidden
+        text-overflow: ellipsis
+        top: -2px
+        white-space: nowrap
+        pointer-events: none
+
+    &__wrap
+        position: relative
+        min-height: 54px
+
+    &__text
+        color: rgba(0,0,0,0.87)
+
+    &__bttn
+        display: flex
+        position: absolute
+        margin: 6px 0
+        height: calc(100% - 12px)
+        width: 100%
+        align-items: center
+        justify-content: center
+        border-radius: 2px
+        border: 1px dashed currentColor;
+        background: rgba(255, 255, 255, 0.27)
+        cursor: pointer
+        z-index: 1
+    
+    &__list
+        position: relative
+        min-height: 54px
+    
+    &__item
+        display: flex
+        flex-direction: column
+
+        &:not(:first-child)
+            margin-top: 12px
+
+    &__data
+        position: relative
+        display: flex
+        align-items: center
+        color: rgba(0,0,0,0.87)
+        height: 32px
+        margin-bottom: 8px
+
+        &:before, &:after
+            bottom: -1px
+            content: ''
+            left: 0
+            position: absolute
+            width: 100%
+        
+        &:before
+            border-style: solid
+            border-color: rgba(0,0,0,0.18)
+            border-width: 1px 0 0 0
+
+        & ^[0]__text
+            flex-grow: 1
+    
+    &__meta
+        color: rgba(0,0,0,0.54)
+        display: flex
+        align-items: center
+        height: 14px

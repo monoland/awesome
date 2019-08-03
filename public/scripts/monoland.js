@@ -2071,9 +2071,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     if (!this.$root.theme) this.$root.theme = this.auth.theme;
   },
   data: function data() {
-    return {
-      document: false
-    };
+    return {};
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['resetStore', 'setPageInfo']))
 });
@@ -3429,6 +3427,37 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3446,7 +3475,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return ['png', 'jpg', 'jpeg', 'pdf', 'zip'];
       }
     },
-    value: Boolean
+    label: {
+      type: String,
+      "default": null
+    },
+    value: null
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['documents']), {
     fileName: {
@@ -3502,6 +3535,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showDelete: false,
       search: null,
       tabs: 0,
+      files: [],
       pathUrl: '/api/document'
     };
   },
@@ -3510,7 +3544,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.fetchDocument();
     }
 
-    this.dialog = this.value;
+    if (this.value && this.value.constructor === Object) {
+      this.files.push(this.value);
+    }
+
+    if (this.value && this.value.constructor === Array) {
+      this.files = this.value;
+    }
   },
   mounted: function mounted() {
     this.initFineUploader();
@@ -3521,6 +3561,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         search: val
       });
     }, 1000),
+    removeFile: function removeFile(file) {
+      var idx = this.selected.findIndex(function (obj) {
+        return obj.id === file.id;
+      });
+
+      if (idx !== -1) {
+        this.selected.splice(idx, 1);
+      }
+    },
+    closeDialog: function closeDialog() {
+      this.dialog = false;
+      this.tabs = 0;
+      this.media = true;
+    },
     closeOverlay: function closeOverlay() {
       this.showEdit = false;
       this.showDelete = false;
@@ -3547,6 +3601,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.showOverlay = true;
       this.showEdit = false;
       this.showDelete = true;
+    },
+    emitDocument: function emitDocument() {
+      this.$emit('input', this.selected);
+      this.closeDialog();
     },
     updateDocument: function () {
       var _updateDocument = _asyncToGenerator(
@@ -3841,12 +3899,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       deep: true
     },
     value: function value(newVal) {
-      this.dialog = newVal;
-
-      if (!newVal) {
-        this.tabs = 0;
-        this.media = true;
+      if (newVal && newVal.constructor === Object) {
+        this.files.push(newVal);
+      } else if (newVal && newVal.constructor === Array) {
+        this.files = newVal;
+      } else {
+        this.files = [];
       }
+
+      this.selected = this.files;
     }
   }
 });
@@ -25782,6 +25843,127 @@ var render = function() {
     "v-dialog",
     {
       attrs: { persistent: "" },
+      scopedSlots: _vm._u([
+        {
+          key: "activator",
+          fn: function(ref) {
+            var on = ref.on
+            return [
+              _c("div", { staticClass: "v-file" }, [
+                _c("label", { staticClass: "caption" }, [
+                  _vm._v(_vm._s(_vm.label))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "v-file__wrap" },
+                  [
+                    _c("v-slide-x-transition", { attrs: { mode: "in-out" } }, [
+                      _vm.files.length === 0
+                        ? _c(
+                            "div",
+                            _vm._g(
+                              {
+                                staticClass: "v-file__bttn",
+                                class: _vm.$root.theme + "--text"
+                              },
+                              on
+                            ),
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "v-file__text font-weight-regular text-uppercase"
+                                },
+                                [
+                                  _c("small", [
+                                    _vm._v("click to open document")
+                                  ])
+                                ]
+                              )
+                            ]
+                          )
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "v-slide-y-transition",
+                      {
+                        staticClass: "v-file__list",
+                        attrs: { group: "", tag: "div", mode: "in-out" }
+                      },
+                      [
+                        _vm._l(_vm.files, function(file, index) {
+                          return _vm.files.length
+                            ? [
+                                _c(
+                                  "div",
+                                  { key: index, staticClass: "v-file__item" },
+                                  [
+                                    _c("div", { staticClass: "v-file__data" }, [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "v-file__text subheading"
+                                        },
+                                        [_vm._v(_vm._s(file.name))]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "v-file__icon" },
+                                        [
+                                          _c(
+                                            "v-icon",
+                                            {
+                                              attrs: {
+                                                small: "",
+                                                color: _vm.$root.theme
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.removeFile(file)
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("close")]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "v-file__meta caption" },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            "Size: " +
+                                              _vm.formatBytes(file.byte) +
+                                              " | Mime: " +
+                                              file.mime
+                                          )
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            : _vm._e()
+                        })
+                      ],
+                      2
+                    )
+                  ],
+                  1
+                )
+              ])
+            ]
+          }
+        }
+      ]),
       model: {
         value: _vm.dialog,
         callback: function($$v) {
@@ -25791,6 +25973,7 @@ var render = function() {
       }
     },
     [
+      _vm._v(" "),
       _c(
         "v-layout",
         { attrs: { "align-center": "", "justify-center": "" } },
@@ -26210,7 +26393,7 @@ var render = function() {
                       ])
                     },
                     [
-                      _c("v-toolbar-title", [_vm._v("Media")]),
+                      _c("v-toolbar-title", [_vm._v("Document")]),
                       _vm._v(" "),
                       _c("v-spacer"),
                       _vm._v(" "),
@@ -26219,11 +26402,7 @@ var render = function() {
                         {
                           staticStyle: { margin: "-12px -4px 0 0" },
                           attrs: { small: "" },
-                          on: {
-                            click: function($event) {
-                              return _vm.$emit("input", false)
-                            }
-                          }
+                          on: { click: _vm.closeDialog }
                         },
                         [_vm._v("close")]
                       )
@@ -26447,7 +26626,8 @@ var render = function() {
                             flat: "",
                             color: _vm.$root.theme,
                             disabled: _vm.disabledSelect
-                          }
+                          },
+                          on: { click: _vm.emitDocument }
                         },
                         [_vm._v("select")]
                       ),
@@ -26456,11 +26636,7 @@ var render = function() {
                         "v-btn",
                         {
                           attrs: { flat: "", color: "grey" },
-                          on: {
-                            click: function($event) {
-                              return _vm.$emit("input", false)
-                            }
-                          }
+                          on: { click: _vm.closeDialog }
                         },
                         [_vm._v("cancel")]
                       ),

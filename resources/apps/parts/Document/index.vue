@@ -1,5 +1,36 @@
 <template>
     <v-dialog persistent v-model="dialog">
+        <template v-slot:activator="{ on }">
+            <div class="v-file">
+                <label class="caption">{{ label }}</label>
+
+                <div class="v-file__wrap">
+                    <v-slide-x-transition mode="in-out">
+                        <div class="v-file__bttn" :class="`${$root.theme}--text`" v-on="on" v-if="files.length === 0">
+                            <div class="v-file__text font-weight-regular text-uppercase">
+                                <small>click to open document</small>
+                            </div>
+                        </div>
+                    </v-slide-x-transition>
+                    
+                    <v-slide-y-transition group tag="div" class="v-file__list" mode="in-out">
+                        <template v-for="(file, index) in files" v-if="files.length">
+                            <div class="v-file__item" :key="index">
+                                <div class="v-file__data">
+                                    <div class="v-file__text subheading">{{ file.name }}</div>
+                                    <div class="v-file__icon">
+                                        <v-icon small :color="$root.theme" @click="removeFile(file)">close</v-icon>
+                                    </div>
+                                </div>
+
+                                <div class="v-file__meta caption">{{ `Size: ${formatBytes(file.byte)} | Mime: ${file.mime}` }}</div>
+                            </div>
+                        </template>
+                    </v-slide-y-transition>
+                </div>
+            </div>
+        </template>
+
         <v-layout align-center justify-center>
             <v-flex md7>
                 <v-card class="v-card--document">
@@ -56,9 +87,9 @@
                     </v-fade-transition>
 
                     <v-toolbar flat card tabs>
-                        <v-toolbar-title>Media</v-toolbar-title>
+                        <v-toolbar-title>Document</v-toolbar-title>
                         <v-spacer></v-spacer>
-                        <v-icon small style="margin: -12px -4px 0 0" @click="$emit('input', false)">close</v-icon>
+                        <v-icon small style="margin: -12px -4px 0 0" @click="closeDialog">close</v-icon>
 
                         <template v-slot:extension>
                             <v-tabs color="transparent" :slider-color="$root.theme" v-model="tabs">
@@ -154,8 +185,8 @@
                     <v-divider></v-divider>
 
                     <v-card-actions>
-                        <v-btn flat :color="$root.theme" :disabled="disabledSelect">select</v-btn>
-                        <v-btn flat color="grey" @click="$emit('input', false)">cancel</v-btn>
+                        <v-btn flat :color="$root.theme" @click="emitDocument" :disabled="disabledSelect">select</v-btn>
+                        <v-btn flat color="grey" @click="closeDialog">cancel</v-btn>
 
                         <v-spacer></v-spacer>
 
@@ -193,7 +224,12 @@ export default {
             default:() => (['png', 'jpg', 'jpeg', 'pdf', 'zip']) 
         },
 
-        value: Boolean
+        label: {
+            type: String,
+            default: null
+        },
+
+        value: null
     },
 
     computed: {
@@ -250,6 +286,7 @@ export default {
         showDelete: false,
         search: null,
         tabs: 0,
+        files: [],
 
         pathUrl: '/api/document'
     }),
@@ -259,7 +296,13 @@ export default {
             this.fetchDocument();
         }
 
-        this.dialog = this.value;
+        if (this.value && this.value.constructor === Object) {
+            this.files.push(this.value);
+        }
+
+        if (this.value && this.value.constructor === Array) {
+            this.files = this.value;
+        }
     },
 
     mounted() {
@@ -272,6 +315,20 @@ export default {
                 search: val
             });
         }, 1000),
+
+        removeFile: function(file) {
+            let idx = this.selected.findIndex(obj => obj.id === file.id);
+
+            if (idx !== -1) {
+                this.selected.splice(idx, 1);
+            }
+        },
+
+        closeDialog: function() {
+            this.dialog = false;
+            this.tabs = 0;
+            this.media = true;
+        },
 
         closeOverlay: function() {
             this.showEdit = false;
@@ -299,6 +356,11 @@ export default {
             this.showOverlay = true;
             this.showEdit = false;
             this.showDelete = true;
+        },
+
+        emitDocument: function() {
+            this.$emit('input', this.selected);
+            this.closeDialog();
         },
 
         updateDocument: async function() {
@@ -492,12 +554,15 @@ export default {
         },
 
         value: function(newVal) {
-            this.dialog = newVal;
-            
-            if (!newVal) {
-                this.tabs = 0;
-                this.media = true;
+            if (newVal && newVal.constructor === Object) {
+                this.files.push(newVal);
+            } else if (newVal && newVal.constructor === Array) {
+                this.files = newVal;
+            } else {
+                this.files = [];
             }
+
+            this.selected = this.files;
         }
     },
 };
