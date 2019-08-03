@@ -44,4 +44,9 @@ router.beforeEach((to, from, next) => {
     }
 });
 
+router.onError(error => {
+    Auth.signout();
+    router.push({ name: 'login' });
+});
+
 export default router;
