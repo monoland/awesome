@@ -2,7 +2,7 @@ import { mapState, mapActions } from 'vuex';
 
 export const pageMixins = {
     computed: {
-        ...mapState(['headers', 'page', 'records', 'table', 'toolbar']),
+        ...mapState(['headers', 'page', 'record', 'records', 'table', 'toolbar']),
 
         desktop: function() {
             return !this.$vuetify.breakpoint.xsOnly;
@@ -41,6 +41,10 @@ export const pageMixins = {
                     this.$store.commit('disabled', { add: true, delete: false, edit: false, find: true, link: false });
                     this.overideState();
                     break;
+                
+                case 'pinned':
+                    this.$store.commit('disabled', { add: false, delete: true, edit: true, find: false, link: true });
+                    break;
             
                 default:
                     this.$store.commit('disabled', { add: false, delete: true, edit: true, find: false, link: true });
@@ -63,6 +67,10 @@ export const pageMixins = {
                         this.$store.commit('toolbar', { search: true });
                     }
 
+                    if (this.page.state === 'pinned') {
+                        this.$store.commit('toolbar', { delete: false });
+                    }
+
                     this.$store.commit('record', {});
                     this.$store.commit('pageInfo', { state: 'default' });
                     break;
@@ -70,14 +78,14 @@ export const pageMixins = {
                 case 1:
                     this.$store.commit('toolbar', { search: false });
                     this.$store.commit('record', newval[0]);
-                    if (!this.page.state === 'pinned') this.$store.commit('pageInfo', { state: 'select' });
+                    if (this.page.state !== 'pinned') this.$store.commit('pageInfo', { state: 'select' });
                     
                     this.afterSelected(this.record);
                     break;
                 
                 default:
                     this.$store.commit('toolbar', { search: false });
-                    if (!this.page.state === 'pinned') this.$store.commit('pageInfo', { state: 'delete' });
+                    if (this.page.state !== 'pinned') this.$store.commit('pageInfo', { state: 'delete' });
                     
                     break;
             }

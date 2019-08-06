@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="form.state" fullscreen hide-overlay :transition="transition">
         <v-card height="100%" flat v-if="$vuetify.breakpoint.xsOnly">
-            <v-toolbar color="white" card flat>
+            <v-toolbar color="white" flat>
                 <v-btn icon @click="formClose">
                     <v-icon>arrow_back</v-icon>
                 </v-btn>
@@ -10,7 +10,7 @@
                 <span class="d-block title">{{ page.title }}</span>
                 <v-spacer></v-spacer>
 
-                <v-btn icon :color="$root.theme" flat @click="submitForm">
+                <v-btn icon :color="$root.theme" @click="formSubmit">
                     <v-icon>done</v-icon>
                 </v-btn>
             </v-toolbar>
@@ -40,8 +40,8 @@
 
                         <v-card-actions slot="actions">
                             <v-spacer></v-spacer>
-                            <v-btn :color="$root.theme" flat @click="formSubmit">{{ submitName }}</v-btn>
-                            <v-btn :color="$root.theme" flat @click="formClose">{{ cancelName }}</v-btn>
+                            <v-btn text :color="$root.theme" @click="formSubmit">{{ submitName }}</v-btn>
+                            <v-btn text :color="$root.theme" @click="formClose">{{ cancelName }}</v-btn>
                         </v-card-actions>
                     </v-widget>
                 </v-flex>

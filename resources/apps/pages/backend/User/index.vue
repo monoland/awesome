@@ -4,17 +4,9 @@
         
         <div class="v-page__content">
             <div class="v-page__wrap">
-                <v-widget table v-if="desktop">
-                    <v-data-table
-                        v-model="table.selected"
-                        :headers="headers"
-                        :items="records"
-                        :single-select="single"
-                        :loading="table.loader"
-                        item-key="id"
-                        show-select
-                    ></v-data-table>
-                </v-widget>
+                <v-desktop-table v-if="desktop"
+                    :single="single"
+                ></v-desktop-table>
 
                 <v-mobile-table icon="perm_identity" v-else>
                     <template v-slot:default="props">
@@ -24,6 +16,32 @@
                         </v-list-item-content>
                     </template>
                 </v-mobile-table>
+
+                <v-page-form small>
+                    <v-flex xs12>
+                        <v-text-field
+                            label="Nama Pengguna"
+                            :color="$root.theme"
+                            v-model="record.name"
+                        ></v-text-field>
+                    </v-flex>
+
+                    <v-flex xs12>
+                        <v-text-field
+                            label="Email Pengguna"
+                            :color="$root.theme"
+                            v-model="record.email"
+                        ></v-text-field>
+                    </v-flex>
+
+                    <v-flex xs12>
+                        <v-select
+                            label="Otentikasi"
+                            :color="$root.theme"
+                            v-model="record.authent_id"
+                        ></v-select>
+                    </v-flex>
+                </v-page-form>
             </div>
         </div>
     </div>

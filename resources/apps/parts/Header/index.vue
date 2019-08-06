@@ -1,9 +1,9 @@
 <template>
     <div class="v-page__header" :class="{ 'absolute': absolute, 'mobile': $vuetify.breakpoint.xsOnly }">
-        <v-fade-transition>
+        <v-slide-x-reverse-transition>
             <div class="v-page__header--search" key="search" v-show="toolbar.search">
                 <v-toolbar class="no-shadow" flat>
-                    <v-scale-transition>
+                    <v-slide-x-reverse-transition>
                         <input v-show="toolbar.search"
                             v-model="searchText"
                             ref="input"
@@ -12,7 +12,7 @@
                             key="text-search" 
                             placeholder="Search"
                         >
-                    </v-scale-transition>
+                    </v-slide-x-reverse-transition>
 
                     <v-scale-transition>
                         <v-btn icon key="close-search" :color="$root.theme" @click="searchClose" v-show="toolbar.search">
@@ -21,23 +21,31 @@
                     </v-scale-transition>
                 </v-toolbar>
             </div>
-        </v-fade-transition>
+        </v-slide-x-reverse-transition>
         
-        <v-scale-transition>
+        <v-fade-transition>
             <div class="v-page__header--delete" key="deleted" v-show="toolbar.delete">
-                <v-btn icon :color="$root.theme" @click="trashFormClose">
-                    <v-icon>close</v-icon>
-                </v-btn>
+                <v-toolbar class="no-shadow" flat>
+                    <v-scale-transition>
+                        <v-btn key="close" icon :color="$root.theme" @click="trashFormClose" v-show="toolbar.delete">
+                            <v-icon>close</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
 
-                <v-toolbar-title>{{ `${table.selected.length} Selected` }}</v-toolbar-title>
+                    <v-slide-x-reverse-transition>
+                        <v-toolbar-title key="title" v-show="toolbar.delete">{{ `${table.selected.length} Selected` }}</v-toolbar-title>
+                    </v-slide-x-reverse-transition>
+                    
+                    <v-spacer></v-spacer>
 
-                <v-spacer></v-spacer>
-
-                <v-btn icon :color="$root.theme" @click="trashFormOpen">
-                    <v-icon>delete</v-icon>
-                </v-btn>
+                    <v-scale-transition>
+                        <v-btn key="trash" icon :color="$root.theme" @click="trashFormOpen" v-show="toolbar.delete">
+                            <v-icon>delete</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
+                </v-toolbar>
             </div>
-        </v-scale-transition>
+        </v-fade-transition>
 
         <v-toolbar flat>
             <slot name="navigate">

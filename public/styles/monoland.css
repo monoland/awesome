@@ -24116,6 +24116,14 @@ html {
 .v-navigation-drawer.theme--light .v-divider {
   border-color: rgba(17,17,17,0.1);
 }
+.dialog-move-transition-enter-active,
+.dialog-move-transition-leave-active {
+  transition: 0.18s cubic-bezier(0, 0, 0, 1);
+}
+.dialog-move-transition-enter,
+.dialog-move-transition-leave-to {
+  transform: translateX(100%);
+}
 .line-height1 {
   line-height: 1 !important;
 }

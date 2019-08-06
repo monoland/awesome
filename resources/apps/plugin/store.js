@@ -19,8 +19,18 @@ export default new Vuex.Store({
             }
         }),
 
+        
+        afterAddnew:() => {},
+        afterDelete:() => {},
         afterFormOpen:() => {},
         afterSelected:() => {},
+        afterUpdate:() => {},
+        beforeAddnew:() => {},
+        beforeDelete:() => {},
+        beforeUpdate:() => {},
+        cancelAddnew:() => { return false; },
+        cancelDelete:() => { return false; },
+        cancelUpdate:() => { return false; },
         overideState:() => {},
         setRecord:() => {},
 
@@ -32,6 +42,7 @@ export default new Vuex.Store({
         headers: [],
         menus: [],
         page: { state: 'default', icon: null, title: null, subtitle: null },
+        primaryId: 'id',
         records: [],
         record: {},
         toolbar: { search: false, delete: false, text: null },
@@ -41,12 +52,48 @@ export default new Vuex.Store({
     },
 
     mutations: {
+        afterAddnew: function({ state }, payload) {
+            state.afterAddnew = payload;
+        },
+
+        afterDelete: function({ state }, payload) {
+            state.afterDelete = payload;
+        },
+
         afterFormOpen: function({ state }, payload) {
             state.afterFormOpen = payload;
         },
 
+        afterUpdate: function({ state }, payload) {
+            state.afterUpdate = payload;
+        },
+
         afterSelected: function({ state }, payload) {
             state.afterSelected = payload;
+        },
+
+        beforeAddnew: function({ state }, payload) {
+            state.beforeAddnew = payload;
+        },
+
+        beforeDelete: function({ state }, payload) {
+            state.beforeDelete = payload;
+        },
+
+        beforeUpdate: function({ state }, payload) {
+            state.beforeUpdate = payload;
+        },
+
+        cancelAddnew: function({ state }, payload) {
+            state.cancelAddnew = payload;
+        },
+
+        cancelDelete: function({ state }, payload) {
+            state.cancelDelete = payload;
+        },
+
+        cancelUpdate: function({ state }, payload) {
+            state.cancelUpdate = payload;
         },
 
         dataUrl: function(state, payload) {
@@ -102,6 +149,10 @@ export default new Vuex.Store({
             Object.keys(payload).forEach(key => {
                 state.table.paging[key] = payload[key];
             });
+        },
+
+        primaryId: function(state, payload) {
+            state.primaryId = payload;
         },
 
         record: function(state, payload) {
@@ -173,10 +224,6 @@ export default new Vuex.Store({
     },
 
     actions: {
-        afterFormOpen: function({ state }, payload) {
-            state.afterFormOpen(payload);
-        },
-
         afterSelected: function({ state }, payload) {
             state.afterSelected(payload);
         },
@@ -193,14 +240,12 @@ export default new Vuex.Store({
             commit('toolbar', { delete: true });
         },
 
-        deleteRecord: function() {},
-
         editFormClose: function({ commit }) {
             commit('form', { state: false, mode: null });
             commit('table', { selected: [] });
         },
 
-        editFormOpen: function({ commit, dispatch, state }, payload) {
+        editFormOpen: function({ commit, state }, payload) {
             if (payload.constructor === Object) {
                 if (state.page.state === 'pinned') {
                     commit('selectedPush', payload);
@@ -211,7 +256,8 @@ export default new Vuex.Store({
             }
 
             commit('form', { state: true, mode: 'edit' });
-            dispatch('afterFormOpen');
+            
+            state.afterFormOpen(payload);
         },
 
         fetchAppMenus: async function({commit, dispatch, state}) {
@@ -227,7 +273,9 @@ export default new Vuex.Store({
             state.form.mode === 'edit' ? dispatch('editFormClose') : dispatch('newFormClose');
         },
 
-        formSubmit: function() {},
+        formSubmit: function({ dispatch, state }) {
+            state.form.mode === 'edit' ? dispatch('recordUpdate') : dispatch('recordAddnew')
+        },
 
         initStore: function({ commit, dispatch, state }) {
             if (!state.auth.check) dispatch('signout');
@@ -235,14 +283,23 @@ export default new Vuex.Store({
             commit('initStore');
         },
 
+        message: function({ commit }, payload) {
+            commit('snackbar', {
+                color: 'success',
+                text: payload,
+                state: true
+            });
+        },
+
         newFormClose: function({ commit }) {
             commit('form', { state: false, mode: null });
         },
 
-        newFormOpen: function({ commit, dispatch }) {
+        newFormOpen: function({ commit, dispatch, state }) {
             dispatch('recordNew');
             commit('form', { state: true, mode: 'addnew' });
-            dispatch('afterFormOpen');
+            
+            state.afterFormOpen();
         },
 
         overideState: function({ state }, payload) {
@@ -251,6 +308,76 @@ export default new Vuex.Store({
 
         pageInfo: function({ commit }, payload) {
             commit('pageInfo', payload);
+        },
+
+        recordAddnew: async function({ commit, dispatch, state }) {
+            try {
+                state.beforeAddnew();
+                
+                if (state.cancelAddnew()) {
+                    commit('form', { state: false, mode: null });
+                    return;
+                }
+
+                let { data } = await state.http.post(
+                    state.dataUrl, state.record
+                );
+
+                commit('recordPush', data);
+                commit('form', { state: false, mode: null });
+                dispatch('message', 'proses simpan berhasil!');
+
+                state.afterAddnew();
+            } catch (error) {
+                dispatch('errors', error);
+                commit('form', { state: false, mode: null });
+            }
+        },
+
+        recordDelete: async function({ commit, dispatch, state }) {
+            try {
+                state.beforeDelete();
+
+                if (state.cancelDelete()) {
+                    commit('form', { state: false, mode: null });
+                    return;
+                }
+
+                let selected = state.table.selected;
+                let currentRecord = state.record;
+
+                if (selected.length <= 1) {
+                    let index = state.records.findIndex(obj => obj.id === currentRecord.id);
+                    let primaryKey = state.record[state.primaryId];
+
+                    let response = await state.http.delete(
+                        state.dataUrl + '/' + primaryKey
+                    );
+
+                    if (response) {
+                        commit('recordSplice', index);
+                    }
+                } else {
+                    let response = await state.http.post(
+                        state.dataUrl + '/bulks', selected
+                    );
+
+                    if (response) {
+                        selected.forEach((record) => {
+                            let index = state.records.findIndex(obj => obj.id === record.id);
+                            commit('recordSplice', index);
+                        });
+                    }
+                }
+
+                state.afterDelete();
+            } catch (error) {
+                dispatch('errors', error);
+            } finally {
+                commit('trash', { state: false });
+                commit('table', { selected: [] });
+                dispatch('message', 'proses hapus berhasil!');
+            }
         },
 
         recordFetch: async function({ commit, dispatch, state }, payload) {
@@ -281,6 +408,7 @@ export default new Vuex.Store({
             if (state.page.state === 'pinned') return;
 
             commit('pageInfo', { state: 'pinned' });
+            commit('toolbar', { delete: true });
             commit('selectedPush', payload);
         },
 
@@ -304,6 +432,33 @@ export default new Vuex.Store({
             dispatch('recordFetch');
         },
 
+        recordUpdate: async function({ commit, dispatch, state }) {
+            try {
+                state.beforeUpdate();
+                
+                if (state.cancelUpdate()) {
+                    commit('form', { state: false, mode: null });
+                    return;
+                }
+
+                let primaryKey = state.record[state.primaryId];
+
+                let { data } = await state.http.put(
+                    state.dataUrl + '/' + primaryKey, state.record
+                );
+                
+                commit('record', data);
+                commit('form', { state: false, mode: null });
+                commit('table', { selected: [] });
+                dispatch('message', 'proses update berhasil!');
+                
+                state.afterUpdate();
+            } catch (error) {
+                dispatch('errors', error);
+                commit('form', { state: false, mode: null });
+            }
+        },
+
         searchClose: function({ commit }) {
             commit('toolbar', { search: false, text: null });
         },
@@ -312,12 +467,52 @@ export default new Vuex.Store({
             commit('toolbar', { search: true });
         },
 
+        setAfterAddnew: function({ commit }, payload) {
+            commit('afterAddnew', payload);
+        },
+
+        setAfterDelete: function({ commit }, payload) {
+            commit('afterDelete', payload);
+        },
+
         setAfterFormOpen: function({ commit }, payload) {
             commit('afterFormOpen', payload);
         },
 
+        setAfterUpdate: function({ commit }, payload) {
+            commit('afterUpdate', payload);
+        },
+
+        setBeforeAddnew: function({ commit }, payload) {
+            commit('beforeAddnew', payload);
+        },
+
+        setBeforeDelete: function({ commit }, payload) {
+            commit('beforeDelete', payload);
+        },
+
+        setBeforeUpdate: function({ commit }, payload) {
+            commit('beforeUpdate', payload);
+        },
+
+        setCancelAddnew: function({ commit }, payload) {
+            commit('cancelAddnew', payload);
+        },
+
+        setCancelDelete: function({ commit }, payload) {
+            commit('cancelDelete', payload);
+        },
+
+        setCancelUpdate: function({ commit }, payload) {
+            commit('cancelUpdate', payload);
+        },
+
         setOverideState: function({ commit }, payload) {
             commit('overideState', payload);
+        },
+
+        setPrimaryId: function({ commit }, payload) {
+            commit('primaryId', payload);
         },
 
         setRecord: function({ commit }, payload) {
@@ -368,6 +563,7 @@ export default new Vuex.Store({
         trashFormClose: function({ commit }) {
             commit('trash', { state: false });
             commit('table', { selected: [] });
+            commit('toolbar', { delete: false });
             commit('pageInfo', { state: 'default' });
         },
 
