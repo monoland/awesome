@@ -6,7 +6,7 @@
         :width="width"
     >
         <v-sheet
-            class="v-sheet--offset py-3 mx-auto"
+            class="v-sheet--offset py-4 mx-auto"
             :color="color"
             :max-width="dynWidth"
             :class="dynClass"
@@ -17,7 +17,7 @@
             </slot>
         </v-sheet>
 
-        <v-card-text :class="dynClass">
+        <v-card-text :class="dynContent">
             <slot></slot>
         </v-card-text>
 
@@ -35,7 +35,11 @@ export default {
         ...mapState(['page']),
 
         dynClass: function() {
-            return ( this.table ? 'px-4 pb-2' : 'px-6');
+            return ( this.table ? 'px-4 pb-3' : 'px-6');
+        },
+
+        dynContent: function() {
+            return ( this.table ? 'px-4 pb-1 pt-0' : 'px-6');
         },
 
         dynWidth: function() {

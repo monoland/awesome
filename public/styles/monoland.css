@@ -24044,7 +24044,14 @@ html {
   .v-application .float-print-right {
     float: right !important;
   }
-}.v-card > .v-bottom-navigation:last-child {
+}.v-data-table__progress > th {
+  position: relative;
+}
+.v-data-table__progress .v-progress-linear {
+  position: absolute;
+  top: -1.5px;
+}
+.v-card > .v-bottom-navigation:last-child {
   border-radius: 0 !important;
 }
 .v-card--widget {
@@ -24112,6 +24119,9 @@ html {
 .line-height1 {
   line-height: 1 !important;
 }
+.v-application--is-ltr .v-list-item__avatar:first-child {
+  margin-right: 16px;
+}
 .v-page {
   position: relative;
   min-height: 100%;
@@ -24137,6 +24147,16 @@ html {
 }
 .v-page__header:not(.mobile) ~ .v-page__content > .v-page__wrap {
   padding: 16px;
+}
+.v-page__header--actions {
+  position: relative;
+}
+.v-page__header--actions:not(.selected) {
+  padding-left: 52px;
+}
+.v-page__header--actions .v-btn.static {
+  position: absolute;
+  right: 52px;
 }
 .v-page__header--delete,
 .v-page__header--search {

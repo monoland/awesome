@@ -18,7 +18,7 @@ export default {
         WebFontLoader.load({
             custom: {
                 families: ['Roboto', 'Nunito', 'Ubuntu Mono', 'Material Icons'],
-                urls: ['/fonts/webfont.css']
+                urls: ['/fonts/webfont.min.css']
             },
             active: this.setFontLoaded
         })

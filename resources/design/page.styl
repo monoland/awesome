@@ -24,6 +24,16 @@
         
         &:not(.mobile) ~ ^[0]__content > ^[0]__wrap
             padding: 16px
+        
+        &--actions
+            position: relative
+
+            &:not(.selected)
+                padding-left: 52px
+
+            .v-btn.static
+                position: absolute
+                right: 52px
 
         &--delete,
         &--search
