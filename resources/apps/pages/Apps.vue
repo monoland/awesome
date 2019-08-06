@@ -1,6 +1,6 @@
 <template>
-    <div class="monoland" :class="{ 'monoland--load': !fontLoaded }">
-        <router-view v-if="fontLoaded"></router-view>
+    <div class="monoland" :v-cloak="!fontLoaded">
+        <router-view></router-view>
     </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
     mounted() {
         WebFontLoader.load({
             custom: {
-                families: ['Roboto', 'Nunito', 'Material Icons'],
+                families: ['Roboto', 'Nunito', 'Ubuntu Mono', 'Material Icons'],
                 urls: ['/fonts/webfont.css']
             },
             active: this.setFontLoaded

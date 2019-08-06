@@ -1783,7 +1783,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     webfontloader__WEBPACK_IMPORTED_MODULE_0___default.a.load({
       custom: {
-        families: ['Roboto', 'Nunito', 'Material Icons'],
+        families: ['Roboto', 'Nunito', 'Ubuntu Mono', 'Material Icons'],
         urls: ['/fonts/webfont.css']
       },
       active: this.setFontLoaded
@@ -1864,16 +1864,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'page-base',
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['snackbar'])),
-  data: function data() {
-    return {
-      appnav: null
-    };
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['auth', 'snackbar'])),
+  created: function created() {
+    if (!this.$root.theme) this.$root.theme = this.auth.theme;
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['closeSnackbar']))
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['snackbarClose', 'signout']))
 });
 
 /***/ }),
@@ -1887,193 +1890,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _apps_mixins_PageMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @apps/mixins/PageMixins */ "./resources/apps/mixins/PageMixins.js");
 //
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'page-client',
-  mixins: [_apps_mixins_PageMixins__WEBPACK_IMPORTED_MODULE_0__["pageMixins"]],
-  data: function data() {
-    return {
-      statuses: [{
-        value: false,
-        text: 'active'
-      }, {
-        value: true,
-        text: 'revoked'
-      }],
-      grants: [{
-        value: 'password',
-        text: 'Password Grant'
-      }, {
-        value: 'client',
-        text: 'Client Grant'
-      }]
-    };
-  },
-  created: function created() {
-    this.setHeaders([{
-      text: 'Nama',
-      value: 'name'
-    }, {
-      text: 'Secret',
-      value: 'secret'
-    }, {
-      text: 'Revoke',
-      value: 'revoked',
-      sortable: false,
-      align: 'center',
-      "class": 'icontag'
-    }, {
-      text: 'Updated',
-      value: 'updated_at',
-      "class": 'date-updated'
-    }]);
-    this.setPageInfo({
-      icon: 'whatshot',
-      title: 'Klien'
-    });
-    this.setPageUrl('/api/client');
-    this.setRecord({
-      id: null,
-      name: null,
-      secret: null,
-      revoked: false,
-      grant: null,
-      redirect: null
-    });
-  },
-  methods: {}
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/backend/Home/index.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/pages/backend/Home/index.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'page-home',
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['auth'])),
-  created: function created() {
-    this.resetStore();
-    this.$store.commit('http', this.$http);
-    this.setPageInfo({
-      icon: 'people',
-      title: 'Beranda'
-    });
-    if (!this.$root.theme) this.$root.theme = this.auth.theme;
-  },
-  data: function data() {
-    return {};
-  },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['resetStore', 'setPageInfo']))
+  name: 'page-client'
 });
 
 /***/ }),
@@ -2087,116 +1909,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'page-password',
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['record']), {
-    dynWidth: function dynWidth() {
-      if (this.$vuetify.breakpoint.xsOnly) {
-        return '100%';
-      }
-
-      return '360px';
-    },
-    dynHeight: function dynHeight() {
-      if (this.$vuetify.breakpoint.xsOnly) {
-        return 'height: calc(100% - 56px)';
-      }
-
-      return 'height: calc(100% - 64px)';
-    }
-  }),
-  data: function data() {
-    return {
-      user: {
-        old_password: null,
-        password: null,
-        password_confirmation: null
-      },
-      hidden1: true,
-      hidden2: true,
-      hidden3: true
-    };
-  },
-  created: function created() {
-    this.setPageInfo({
-      icon: 'people',
-      title: 'Katasandi'
-    });
-    this.setRecord(this.$auth.user);
-    this.newRecord();
-  },
-  mounted: function mounted() {
-    this.$store.subscribe(function (mutation, state) {// 
-    });
-  },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['setPageInfo', 'setRecord', 'newRecord', 'updatePassword']))
+  name: 'page-password'
 });
 
 /***/ }),
@@ -2210,163 +1928,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'page-profile',
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['record']), {
-    dynWidth: function dynWidth() {
-      if (this.$vuetify.breakpoint.xsOnly) {
-        return '100%';
-      }
-
-      return '360px';
-    },
-    dynHeight: function dynHeight() {
-      if (this.$vuetify.breakpoint.xsOnly) {
-        return 'height: calc(100% - 56px)';
-      }
-
-      return 'height: calc(100% - 64px)';
-    }
-  }),
-  data: function data() {
-    return {
-      colors: [{
-        value: 'red',
-        text: 'Red'
-      }, {
-        value: 'pink',
-        text: 'Pink'
-      }, {
-        value: 'purple',
-        text: 'Purple'
-      }, {
-        value: 'deep-purple',
-        text: 'Deep Purple'
-      }, {
-        value: 'indigo',
-        text: 'Indigo'
-      }, {
-        value: 'blue',
-        text: 'Blue'
-      }, {
-        value: 'light-blue',
-        text: 'Light Blue'
-      }, {
-        value: 'cyan',
-        text: 'Cyan'
-      }, {
-        value: 'teal',
-        text: 'Teal'
-      }, {
-        value: 'green',
-        text: 'Green'
-      }, {
-        value: 'light-green',
-        text: 'Light Green'
-      }, {
-        value: 'lime',
-        text: 'Lemon'
-      }, {
-        value: 'yellow',
-        text: 'Yellow'
-      }, {
-        value: 'amber',
-        text: 'Amber'
-      }, {
-        value: 'orange',
-        text: 'Orange'
-      }, {
-        value: 'deep-orange',
-        text: 'Deep Orange'
-      }, {
-        value: 'brown',
-        text: 'Brown'
-      }, {
-        value: 'blue-grey',
-        text: 'Blue Grey'
-      }, {
-        value: 'grey',
-        text: 'Grey'
-      }]
-    };
-  },
-  created: function created() {
-    this.setPageInfo({
-      icon: 'people',
-      title: 'Pengguna'
-    });
-    this.setRecord(this.$auth.user);
-    this.newRecord();
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    this.$store.subscribe(function (mutation, state) {
-      if (mutation.type === 'auth') {
-        _this.$root.theme = mutation.payload.theme;
-      }
-    });
-  },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['setPageInfo', 'setRecord', 'newRecord', 'updateProfile']))
+  name: 'page-profile'
 });
 
 /***/ }),
@@ -2380,6 +1947,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'page-setting'
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/backend/User/index.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/pages/backend/User/index.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'page-user'
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/frontend/Login/index.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/pages/frontend/Login/index.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2446,213 +2059,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'page-setting',
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['setting']), {
-    dynWidth: function dynWidth() {
-      if (this.$vuetify.breakpoint.xsOnly) {
-        return '100%';
-      }
-
-      return '360px';
-    },
-    dynHeight: function dynHeight() {
-      if (this.$vuetify.breakpoint.xsOnly) {
-        return 'height: calc(100% - 56px)';
-      }
-
-      return 'height: calc(100% - 64px)';
-    }
-  }),
-  created: function created() {
-    this.setPageInfo({
-      icon: 'people',
-      title: 'Setting'
-    });
-    this.fetchSetting();
-  },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['setPageInfo', 'fetchSetting', 'updateSetting']))
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/backend/User/index.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/pages/backend/User/index.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _apps_mixins_PageMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @apps/mixins/PageMixins */ "./resources/apps/mixins/PageMixins.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'page-user',
-  mixins: [_apps_mixins_PageMixins__WEBPACK_IMPORTED_MODULE_0__["pageMixins"]],
-  created: function created() {
-    this.setHeaders([{
-      text: 'Name',
-      value: 'name'
-    }, {
-      text: 'Email',
-      value: 'email'
-    }, {
-      text: 'Otentikasi',
-      value: 'authorization'
-    }, {
-      text: 'Updated',
-      value: 'updated_at',
-      "class": 'date-updated'
-    }]);
-    this.setPageInfo({
-      icon: 'people',
-      title: 'Pengguna'
-    });
-    this.setPageUrl('/api/users');
-    this.setRecord({
-      id: null,
-      name: null,
-      email: null,
-      authent_id: null
-    });
-  },
-  methods: {}
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/frontend/Login/index.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/pages/frontend/Login/index.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'page-login',
-  computed: {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['login', 'snackbar']), {
     cssbackground: function cssbackground() {
       var image = null;
       if (!image) return '';
@@ -2667,1249 +2078,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return '330';
     }
-  },
-  data: function data() {
-    return {
-      showtext: false,
-      username: null,
-      userpass: null
-    };
-  },
-  methods: {
-    signin: function () {
-      var _signin = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var token, user;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return this.$http.post('/oauth/token', {
-                  grant_type: 'password',
-                  client_id: this.$auth.siteKey,
-                  client_secret: this.$auth.secretKey,
-                  username: this.username,
-                  password: this.userpass,
-                  scope: '*'
-                });
-
-              case 3:
-                token = _context.sent;
-                this.$auth.token = token.data;
-                _context.next = 7;
-                return this.$http.get('/api/user');
-
-              case 7:
-                user = _context.sent;
-                this.$auth.user = user.data;
-                this.$router.push({
-                  name: 'home'
-                });
-                _context.next = 15;
-                break;
-
-              case 12:
-                _context.prev = 12;
-                _context.t0 = _context["catch"](0);
-                this.$error = _context.t0;
-
-              case 15:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this, [[0, 12]]);
-      }));
-
-      function signin() {
-        return _signin.apply(this, arguments);
-      }
-
-      return signin;
-    }()
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/CardImage/index.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/CardImage/index.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var shortid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! shortid */ "./node_modules/shortid/index.js");
-/* harmony import */ var shortid__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(shortid__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var fine_uploader_lib_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fine-uploader/lib/core */ "./node_modules/fine-uploader/lib/core/index.js");
-/* harmony import */ var fine_uploader_lib_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fine_uploader_lib_core__WEBPACK_IMPORTED_MODULE_1__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'v-card-image',
-  props: {
-    icon: {
-      type: String,
-      "default": 'photo_camera'
-    },
-    uploader: {
-      type: Boolean,
-      "default": true
-    },
-    value: null
-  },
-  data: function data() {
-    return {
-      uploaded: false,
-      uplvalue: 0,
-      photourl: null,
-      uuid: shortid__WEBPACK_IMPORTED_MODULE_0___default.a.generate()
-    };
-  },
-  created: function created() {
-    if (this.value) {
-      this.photourl = this.value;
-    }
-  },
-  mounted: function mounted() {
-    if (this.uploader) this.initUpload();
-  },
-  methods: {
-    initUpload: function initUpload() {
-      var _this = this;
-
-      new fine_uploader_lib_core__WEBPACK_IMPORTED_MODULE_1___default.a.FineUploaderBasic({
-        button: document.getElementById(_this.uuid),
-        request: {
-          customHeaders: {
-            'Authorization': _this.$auth.token
-          },
-          endpoint: '/api/media',
-          filenameParam: 'fileName',
-          inputName: 'fileUpload',
-          uuidName: 'uuid',
-          totalFileSizeName: 'totalFileSize'
-        },
-        chunking: {
-          enabled: true,
-          mandatory: true,
-          paramNames: {
-            chunkSize: 'chunkSize',
-            partByteOffset: 'partByteOffset',
-            partIndex: 'partIndex',
-            totalParts: 'totalParts'
-          },
-          success: {
-            endpoint: '/api/media?completed=true'
-          }
-        },
-        validation: {
-          acceptFiles: 'image/png, image/jpeg',
-          allowedExtensions: ['png', 'jpg', 'jpeg']
-        },
-        callbacks: {
-          onUploadChunk: function onUploadChunk(id, name, data) {
-            _this.uploaded = false;
-            _this.uplvalue = (parseInt(data.partIndex) + 1) / parseInt(data.totalParts) * 100;
-
-            if (_this.uplvalue >= 100) {
-              _this.uploaded = true;
-            }
-          },
-          onComplete: function onComplete(id, name, response) {
-            if (!response.success) {
-              _this.$error = response.error;
-            } else {
-              _this.photourl = response.fileinfo.url.original;
-
-              _this.$emit('input', response.fileinfo.url.original);
-            }
-          }
-        }
-      });
-    }
-  },
-  watch: {
-    value: function value(newval) {
-      this.photourl = newval;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/CodeEditor/index.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/CodeEditor/index.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_prism__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/prism */ "./resources/apps/parts/CodeEditor/utils/prism.js");
-/* harmony import */ var escape_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! escape-html */ "./node_modules/escape-html/index.js");
-/* harmony import */ var escape_html__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(escape_html__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _utils_normalizeHtml_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/normalizeHtml.js */ "./resources/apps/parts/CodeEditor/utils/normalizeHtml.js");
-/* harmony import */ var _utils_htmlToPlain_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/htmlToPlain.js */ "./resources/apps/parts/CodeEditor/utils/htmlToPlain.js");
-/* harmony import */ var _utils_selection_range_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./utils/selection-range.js */ "./resources/apps/parts/CodeEditor/utils/selection-range.js");
-/* harmony import */ var _utils_getIndent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils/getIndent */ "./resources/apps/parts/CodeEditor/utils/getIndent.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'v-code-editor',
-  model: {
-    prop: "code",
-    event: "change"
-  },
-  props: {
-    emitEvents: {
-      type: Boolean,
-      "default": false
-    },
-    language: {
-      type: String,
-      "default": "js"
-    },
-    lineNumbers: {
-      type: Boolean,
-      "default": false
-    },
-    autoStyleLineNumbers: {
-      type: Boolean,
-      "default": true
-    },
-    readonly: {
-      type: Boolean,
-      "default": false
-    },
-    code: {
-      type: String,
-      "default": ""
-    }
-  },
-  computed: {
-    content: function content() {
-      return Object(_utils_prism__WEBPACK_IMPORTED_MODULE_0__["default"])(this.codeData, this.language);
-    },
-    lineNumbersCount: function lineNumbersCount() {
-      var totalLines = this.codeData.split(/\r\n|\n/).length;
-
-      if (this.codeData.endsWith("\n")) {
-        totalLines--;
-      }
-
-      return totalLines;
-    }
-  },
-  data: function data() {
-    return {
-      undoStack: [],
-      selection: undefined,
-      lineNumbersHeight: "20px",
-      undoOffset: 0,
-      undoTimestamp: 0,
-      lastPos: 0,
-      codeData: "",
-      composing: false
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    this.recordChange(this.getPlain());
-    this.undoTimestamp = 0;
-    this.styleLineNumbers();
-
-    var onPaste = function onPaste(e) {
-      e.preventDefault();
-      var currentCursorPos = Object(_utils_selection_range_js__WEBPACK_IMPORTED_MODULE_4__["default"])(_this.$refs.pre);
-      var text = (e.originalEvent || e).clipboardData.getData("Text");
-      document.execCommand("insertHTML", false, escape_html__WEBPACK_IMPORTED_MODULE_1___default()(text));
-      var newCursorPos = currentCursorPos.end + text.length;
-      _this.selection = {
-        start: newCursorPos,
-        end: newCursorPos
-      };
-
-      var plain = _this.getPlain();
-
-      _this.recordChange(plain, _this.selection);
-
-      _this.updateContent(plain);
-
-      _this.setLineNumbersHeight();
-    };
-
-    var $pre = this.$refs.pre;
-    $pre.addEventListener("paste", onPaste);
-    this.$once("hook:beforeDestroy", function () {
-      $pre.removeEventListener("paste", onPaste);
-    });
-    $pre.addEventListener("compositionstart", function () {
-      _this.composing = true;
-    });
-    $pre.addEventListener("compositionend", function () {
-      _this.composing = false;
-    });
-  },
-  updated: function updated() {
-    if (this.selection) {
-      Object(_utils_selection_range_js__WEBPACK_IMPORTED_MODULE_4__["default"])(this.$refs.pre, this.selection);
-    }
-  },
-  methods: {
-    setLineNumbersHeight: function setLineNumbersHeight() {
-      this.lineNumbersHeight = getComputedStyle(this.$refs.pre).height;
-    },
-    styleLineNumbers: function styleLineNumbers() {
-      if (!this.lineNumbers || !this.autoStyleLineNumbers) return;
-      var $editor = this.$refs.pre;
-      var $lineNumbers = this.$el.querySelector(".v-editor__line-numbers");
-      var editorStyles = window.getComputedStyle($editor);
-      this.$nextTick(function () {
-        var btlr = "border-top-left-radius";
-        var bblr = "border-bottom-left-radius";
-        $lineNumbers.style[btlr] = editorStyles[btlr];
-        $lineNumbers.style[bblr] = editorStyles[bblr];
-        $editor.style[btlr] = 0;
-        $editor.style[bblr] = 0;
-        var stylesList = ["background-color", "margin-top", "padding-top", "font-family", "font-size", "line-height"];
-        stylesList.forEach(function (style) {
-          $lineNumbers.style[style] = editorStyles[style];
-        });
-        $lineNumbers.style["margin-bottom"] = "-" + editorStyles["padding-top"];
-      });
-    },
-    handleClick: function handleClick(evt) {
-      if (this.emitEvents) {
-        this.$emit("editorClick", evt);
-      }
-
-      this.undoTimestamp = 0;
-      this.selection = Object(_utils_selection_range_js__WEBPACK_IMPORTED_MODULE_4__["default"])(this.$refs.pre);
-    },
-    getPlain: function getPlain() {
-      if (this._innerHTML === this.$refs.pre.innerHTML) {
-        return this._plain;
-      }
-
-      var plain = Object(_utils_htmlToPlain_js__WEBPACK_IMPORTED_MODULE_3__["default"])(Object(_utils_normalizeHtml_js__WEBPACK_IMPORTED_MODULE_2__["default"])(this.$refs.pre.innerHTML));
-      this._innerHTML = this.$refs.pre.innerHTML;
-      this._plain = plain;
-      return this._plain;
-    },
-    recordChange: function recordChange(plain, selection) {
-      if (plain === this.undoStack[this.undoStack.length - 1]) return;
-
-      if (this.undoOffset > 0) {
-        this.undoStack = this.undoStack.slice(0, -this.undoOffset);
-        this.undoOffset = 0;
-      }
-
-      var timestamp = Date.now();
-      var record = {
-        plain: plain,
-        selection: selection
-      };
-
-      if (timestamp - this.undoTimestamp < 3000) {
-        this.undoStack[this.undoStack.length - 1] = record;
-      } else {
-        this.undoStack.push(record);
-
-        if (this.undoStack.length > 50) {
-          this.undoStack.shift();
-        }
-      }
-
-      this.undoTimestamp = timestamp;
-    },
-    updateContent: function updateContent(plain) {
-      this.$emit("change", plain);
-    },
-    restoreStackState: function restoreStackState(offset) {
-      var _this$undoStack = this.undoStack[this.undoStack.length - 1 - offset],
-          plain = _this$undoStack.plain,
-          selection = _this$undoStack.selection;
-      this.selection = selection;
-      this.undoOffset = offset;
-      this.updateContent(plain);
-    },
-    undo: function undo() {
-      var offset = this.undoOffset + 1;
-
-      if (offset >= this.undoStack.length) {
-        return;
-      }
-
-      this.restoreStackState(offset);
-    },
-    redo: function redo() {
-      var offset = this.undoOffset - 1;
-
-      if (offset < 0) {
-        return;
-      }
-
-      this.restoreStackState(offset);
-    },
-    handleKeyDown: function handleKeyDown(evt) {
-      if (this.emitEvents) {
-        this.$emit("keydown", evt);
-      }
-
-      if (evt.keyCode === 9 && !this.ignoreTabKey) {
-        document.execCommand("insertHTML", false, "  ");
-        evt.preventDefault();
-      } else if (evt.keyCode === 8) {
-        var _selectionRange = Object(_utils_selection_range_js__WEBPACK_IMPORTED_MODULE_4__["default"])(this.$refs.pre),
-            cursorPos = _selectionRange.start,
-            cursorEndPos = _selectionRange.end;
-
-        if (cursorPos !== cursorEndPos) return;
-        var deindent = Object(_utils_getIndent__WEBPACK_IMPORTED_MODULE_5__["getDeindentLevel"])(this.$refs.pre.innerText, cursorPos);
-        if (deindent <= 0) return;
-
-        for (var i = 0; i < deindent; i++) {
-          document.execCommand("delete", false);
-        }
-
-        evt.preventDefault();
-      } else if (evt.keyCode === 13) {
-        var _selectionRange2 = Object(_utils_selection_range_js__WEBPACK_IMPORTED_MODULE_4__["default"])(this.$refs.pre),
-            _cursorPos = _selectionRange2.start;
-
-        var indentation = Object(_utils_getIndent__WEBPACK_IMPORTED_MODULE_5__["getIndent"])(this.$refs.pre.innerText, _cursorPos);
-        document.execCommand("insertHTML", false, "\n " + indentation);
-        document.execCommand("delete", false);
-        evt.preventDefault();
-      } else if (evt.keyCode === 90 && evt.metaKey !== evt.ctrlKey && !evt.altKey) {
-        if (evt.shiftKey) {
-          this.redo();
-        } else {
-          this.undo();
-        }
-
-        evt.preventDefault();
-      }
-    },
-    handleKeyUp: function handleKeyUp(evt) {
-      var keyupCode = evt.which;
-
-      if (this.composing) {
-        if (keyupCode === 13) {
-          this.composing = false;
-        } else {
-          return;
-        }
-      }
-
-      if (this.emitEvents) {
-        this.$emit("keyup", evt);
-      }
-
-      if (evt.keyCode === 91 || evt.keyCode === 93 || evt.ctrlKey || evt.metaKey) {
-        return;
-      }
-
-      if (evt.keyCode === 13) {
-        this.undoTimestamp = 0;
-      }
-
-      this.selection = Object(_utils_selection_range_js__WEBPACK_IMPORTED_MODULE_4__["default"])(this.$refs.pre);
-
-      if (evt.keyCode !== 37 && evt.keyCode !== 38 && evt.keyCode !== 39 && evt.keyCode !== 40) {
-        var plain = this.getPlain();
-        this.recordChange(plain, this.selection);
-        this.updateContent(plain);
-      } else {
-        this.undoTimestamp = 0;
-      }
-    }
-  },
-  watch: {
-    code: {
-      immediate: true,
-      handler: function handler(newVal) {
-        if (!newVal) {
-          this.codeData = "";
-        } else {
-          this.codeData = newVal;
-        }
-      }
-    },
-    content: {
-      immediate: true,
-      handler: function handler() {
-        var _this2 = this;
-
-        if (this.lineNumbers) {
-          this.$nextTick(function () {
-            _this2.setLineNumbersHeight();
-          });
-        }
-      }
-    },
-    lineNumbers: function lineNumbers() {
-      var _this3 = this;
-
-      this.$nextTick(function () {
-        _this3.styleLineNumbers();
-
-        _this3.setLineNumbersHeight();
-      });
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/Document/index.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/Document/index.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var fine_uploader_lib_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! fine-uploader/lib/core */ "./node_modules/fine-uploader/lib/core/index.js");
-/* harmony import */ var fine_uploader_lib_core__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(fine_uploader_lib_core__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var debounce__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! debounce */ "./node_modules/debounce/index.js");
-/* harmony import */ var debounce__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(debounce__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var shortid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! shortid */ "./node_modules/shortid/index.js");
-/* harmony import */ var shortid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(shortid__WEBPACK_IMPORTED_MODULE_4__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'v-document',
-  props: {
-    acceptFiles: {
-      type: String,
-      "default": 'image/png, image/jpeg, application/pdf, application/zip'
-    },
-    allowedExtensions: {
-      type: Array,
-      "default": function _default() {
-        return ['png', 'jpg', 'jpeg', 'pdf', 'zip'];
-      }
-    },
-    label: {
-      type: String,
-      "default": null
-    },
-    value: null
-  },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['documents']), {
-    fileName: {
-      get: function get() {
-        return this.selected.length > 0 ? this.selected[0].name : null;
-      },
-      set: function set(newVal) {
-        this.selected[0].name = newVal;
-      }
-    },
-    disabledSelect: function disabledSelect() {
-      return this.selected.length <= 0;
-    }
   }),
   data: function data() {
     return {
-      dialog: false,
-      media: true,
-      uplvalue: 0,
-      progress: false,
-      combined: false,
-      metas: {},
-      uuid: shortid__WEBPACK_IMPORTED_MODULE_4___default.a.generate(),
-      headers: [{
-        text: 'Nama',
-        value: 'name'
-      }, {
-        text: 'Size',
-        value: 'byte'
-      }, {
-        text: 'Extn',
-        value: 'extn'
-      }, {
-        text: 'Updated',
-        value: 'updated_at',
-        "class": 'date-updated'
-      }],
-      selected: [],
-      params: {
-        descending: false,
-        page: 1,
-        rowsPerPage: 50,
-        sortBy: "name",
-        totalItems: 0
-      },
-      totalDocuments: 0,
-      loading: false,
-      loadMore: null,
-      crudmode: false,
-      hideEdit: false,
-      showEdit: false,
-      showOverlay: false,
-      showDelete: false,
-      search: null,
-      tabs: 0,
-      files: [],
-      pathUrl: '/api/document'
+      showtext: false
     };
   },
-  created: function created() {
-    if (this.documents.length === 0) {
-      this.fetchDocument();
-    }
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['snackbarClose', 'signin']))
+});
 
-    if (this.value && this.value.constructor === Object) {
-      this.files.push(this.value);
-    }
+/***/ }),
 
-    if (this.value && this.value.constructor === Array) {
-      this.files = this.value;
-    }
-  },
-  mounted: function mounted() {
-    this.initFineUploader();
-  },
-  methods: {
-    bouncing: Object(debounce__WEBPACK_IMPORTED_MODULE_3__["debounce"])(function (_this, val) {
-      _this.fetchDocument({
-        search: val
-      });
-    }, 1000),
-    removeFile: function removeFile(file) {
-      var idx = this.selected.findIndex(function (obj) {
-        return obj.id === file.id;
-      });
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/project/Home/index.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/pages/project/Home/index.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-      if (idx !== -1) {
-        this.selected.splice(idx, 1);
-      }
-    },
-    closeDialog: function closeDialog() {
-      this.dialog = false;
-      this.tabs = 0;
-      this.media = true;
-    },
-    closeOverlay: function closeOverlay() {
-      this.showEdit = false;
-      this.showDelete = false;
-      this.showOverlay = false;
-      this.selected = [];
-    },
-    closeEdit: function closeEdit() {
-      this.showEdit = false;
-      this.selected = [];
-    },
-    openEdit: function openEdit() {
-      var _this2 = this;
-
-      this.showOverlay = true;
-      this.showEdit = true;
-      this.showDelete = false;
-      this.$nextTick(function () {
-        _this2.$refs.fileName.focus();
-
-        _this2.$refs.fileName.$el.getElementsByTagName('input')[0].select();
-      });
-    },
-    openDelete: function openDelete() {
-      this.showOverlay = true;
-      this.showEdit = false;
-      this.showDelete = true;
-    },
-    emitDocument: function emitDocument() {
-      this.$emit('input', this.selected);
-      this.closeDialog();
-    },
-    updateDocument: function () {
-      var _updateDocument = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _ref, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return this.$http.put(this.pathUrl + '/' + this.selected[0].id, this.selected[0]);
-
-              case 3:
-                _ref = _context.sent;
-                data = _ref.data;
-                this.closeOverlay();
-                _context.next = 11;
-                break;
-
-              case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](0);
-                this.$store.dispatch('errors', _context.t0);
-
-              case 11:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this, [[0, 8]]);
-      }));
-
-      function updateDocument() {
-        return _updateDocument.apply(this, arguments);
-      }
-
-      return updateDocument;
-    }(),
-    deleteDocument: function () {
-      var _deleteDocument = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var _this3 = this;
-
-        var index, response, _response;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.prev = 0;
-
-                if (!(this.selected.length <= 1)) {
-                  _context2.next = 9;
-                  break;
-                }
-
-                index = this.documents.findIndex(function (obj) {
-                  return obj.id === _this3.selected[0].id;
-                });
-                _context2.next = 5;
-                return this.$http["delete"](this.pathUrl + '/' + this.selected[0].id);
-
-              case 5:
-                response = _context2.sent;
-
-                if (response) {
-                  this.$store.commit('spliceDocuments', index);
-                }
-
-                _context2.next = 13;
-                break;
-
-              case 9:
-                _context2.next = 11;
-                return this.$http.post(this.pathUrl + '/bulkdelete', selected);
-
-              case 11:
-                _response = _context2.sent;
-
-                if (_response) {
-                  selected.forEach(function (record) {
-                    var index = _this3.documents.findIndex(function (obj) {
-                      return obj.id === record.id;
-                    });
-
-                    _this3.$store.commit('spliceDocuments', index);
-                  });
-                }
-
-              case 13:
-                this.closeOverlay();
-                _context2.next = 19;
-                break;
-
-              case 16:
-                _context2.prev = 16;
-                _context2.t0 = _context2["catch"](0);
-                this.$store.dispatch('errors', _context2.t0);
-
-              case 19:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, this, [[0, 16]]);
-      }));
-
-      function deleteDocument() {
-        return _deleteDocument.apply(this, arguments);
-      }
-
-      return deleteDocument;
-    }(),
-    formatBytes: function formatBytes(bytes) {
-      var decimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
-      var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-      if (bytes === 0) return '0 Bytes';
-      var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
-      if (i === 0) return "".concat(bytes, " ").concat(sizes[i], ")");
-      return "".concat((bytes / Math.pow(1024, i)).toFixed(1), " ").concat(sizes[i]);
-    },
-    fetchDocument: function () {
-      var _fetchDocument = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(params) {
-        var _this4 = this;
-
-        var _params, _initial, _ref2, _ref2$data, data, meta, links;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                _context3.prev = 0;
-                _params = this.params;
-                _initial = false;
-
-                if (params && params.constructor === Object) {
-                  _initial = true;
-                  Object.keys(params).forEach(function (key) {
-                    _params[key] = params[key];
-                  });
-                }
-
-                _context3.next = 6;
-                return this.$http.get(this.pathUrl, {
-                  params: _params
-                });
-
-              case 6:
-                _ref2 = _context3.sent;
-                _ref2$data = _ref2.data;
-                data = _ref2$data.data;
-                meta = _ref2$data.meta;
-                links = _ref2$data.links;
-
-                if (this.documents.length === 0) {
-                  this.$store.commit('documents', data);
-                } else if (_initial === true) {
-                  this.$store.commit('documents', data);
-                } else {
-                  data.forEach(function (record) {
-                    _this4.$store.commit('pushDocuments', record);
-                  });
-                }
-
-                this.metas = meta;
-                this.loadMore = links.next;
-
-                if (this.loadMore && this.loadMore.length > 0) {
-                  this.params.page = this.params.page + 1;
-                }
-
-                _context3.next = 20;
-                break;
-
-              case 17:
-                _context3.prev = 17;
-                _context3.t0 = _context3["catch"](0);
-                this.$store.dispatch('errors', _context3.t0);
-
-              case 20:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, this, [[0, 17]]);
-      }));
-
-      function fetchDocument(_x) {
-        return _fetchDocument.apply(this, arguments);
-      }
-
-      return fetchDocument;
-    }(),
-    initFineUploader: function initFineUploader() {
-      var _this = this;
-
-      var options = {
-        button: document.getElementById(_this.uuid),
-        request: {
-          customHeaders: {
-            Authorization: _this.$auth.token
-          },
-          endpoint: '/api/document',
-          filenameParam: 'fileName',
-          inputName: 'fileUpload',
-          uuidName: 'uuid',
-          totalFileSizeName: 'totalFileSize'
-        },
-        chunking: {
-          enabled: true,
-          mandatory: true,
-          // partSize: 50000,
-          paramNames: {
-            chunkSize: 'chunkSize',
-            partByteOffset: 'partByteOffset',
-            partIndex: 'partIndex',
-            totalParts: 'totalParts'
-          },
-          success: {
-            endpoint: '/api/document?completed=true'
-          }
-        },
-        validation: {
-          acceptFiles: _this.acceptFiles,
-          allowedExtensions: _this.allowedExtensions
-        },
-        callbacks: {
-          onUpload: function onUpload(id, name) {
-            _this.progress = true;
-          },
-          onUploadChunk: function onUploadChunk(id, name, data) {
-            _this.uplvalue = (parseInt(data.partIndex) + 1) / parseInt(data.totalParts) * 100;
-
-            if (_this.uplvalue >= 100) {
-              _this.combined = true;
-            }
-          },
-          onComplete: function onComplete(id, name, response) {
-            if (!response.success) {
-              _this.$store.dispatch('errors', response.error);
-            } else {
-              _this.$store.commit('pushDocuments', response.record);
-
-              _this.uplvalue = 0;
-              _this.progress = false;
-              _this.combined = false;
-            }
-          },
-          onError: function onError(id, name, errorReason, xhrOrXdr) {
-            if (xhrOrXdr && xhrOrXdr.status == 401) {
-              _this.$auth.signout();
-
-              _this.$router.push({
-                name: 'login'
-              });
-            } else {
-              _this.uplvalue = 0;
-              _this.progress = false;
-              _this.combined = false;
-            }
-          }
-        }
-      };
-      return new fine_uploader_lib_core__WEBPACK_IMPORTED_MODULE_2___default.a.FineUploaderBasic(options);
-    }
-  },
-  watch: {
-    search: function search(newVal) {
-      this.bouncing(this, newVal);
-    },
-    selected: {
-      handler: function handler(newVal) {
-        if (newVal.length <= 0) {
-          this.crudmode = false;
-          return;
-        } else {
-          if (newVal.length > 1) {
-            this.hideEdit = true;
-          } else {
-            this.hideEdit = false;
-          }
-
-          this.crudmode = true;
-        }
-      },
-      deep: true
-    },
-    value: function value(newVal) {
-      if (newVal && newVal.constructor === Object) {
-        this.files.push(newVal);
-      } else if (newVal && newVal.constructor === Array) {
-        this.files = newVal;
-      } else {
-        this.files = [];
-      }
-
-      this.selected = this.files;
-    }
-  }
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'page-home'
 });
 
 /***/ }),
@@ -4019,16 +2213,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'v-header',
   props: {
     absolute: {
-      type: Boolean,
-      "default": false
-    },
-    fixed: {
       type: Boolean,
       "default": false
     },
@@ -4036,94 +2238,59 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: Boolean,
       "default": false
     },
-    color: {
-      type: String,
-      "default": 'white'
-    },
     searchable: {
       type: Boolean,
       "default": true
     }
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['disabled', 'page', 'search', 'trash']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['deleted'])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['closeSearch', 'openNewForm', 'openEditForm', 'openDelete', 'refresh', 'releaseTrash']), {
-    bouncing: Object(debounce__WEBPACK_IMPORTED_MODULE_0__["debounce"])(function (e) {
-      this.$store.commit('search', {
-        text: e.target.value
-      });
-    }, 1000),
-    openSearch: function openSearch() {
-      var _this = this;
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['disabled', 'page', 'table', 'toolbar']), {
+    dynStyle: function dynStyle() {
+      if (this.fixed) {
+        return "width: calc(100% - ".concat(this.$vuetify.application.left, "px)");
+      }
 
-      this.$store.dispatch('openSearch');
-      this.$nextTick(function () {
-        _this.$refs.input.focus();
-      });
+      return null;
     }
-  })
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuAccount/index.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/MenuAccount/index.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'v-menu-account',
-  methods: {
-    signout: function signout() {
-      this.$auth.signout();
-      this.$router.push({
-        name: 'login'
+  }),
+  data: function data() {
+    return {
+      searchText: null
+    };
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['deleteClose', 'deleteRecord', 'editFormOpen', 'newFormOpen', 'reloadRecord', 'searchClose', 'searchOpen', 'trashFormOpen']), {
+    bouncing: Object(debounce__WEBPACK_IMPORTED_MODULE_0__["debounce"])(function (value) {
+      this.$store.commit('toolbar', {
+        text: value
       });
+    }, 1000)
+  }),
+  watch: {
+    searchText: function searchText(newVal) {
+      this.bouncing(newVal);
+    },
+    toolbar: {
+      handler: function handler(newVal) {
+        var _this = this;
+
+        if (newVal.search === true) {
+          this.$nextTick(function () {
+            return _this.$refs.input.focus();
+          });
+        }
+
+        this.searchText = newVal.text;
+      },
+      deep: true
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuApplication/index.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/MenuApplication/index.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuApps/index.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/MenuApps/index.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4210,316 +2377,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'v-menu-application',
+  name: 'v-menu-apps',
+  props: {
+    image: {
+      type: String,
+      "default": ''
+    }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['auth', 'menus'])),
   data: function data() {
     return {
-      menus: null,
-      user: {},
       expand: false
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    if (!this.$auth.menus) {
-      this.$store.subscribe(function (mutation, state) {
-        if (mutation.type === 'auth' && mutation.payload.hasOwnProperty('menus')) {
-          _this.menus = mutation.payload.menus;
-        }
-      });
-      this.fetchMenus();
-    } else {
-      this.menus = this.$auth.menus;
-    }
-
-    this.user = this.$auth.user;
-  },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['fetchMenus']))
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageForm/index.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/PageForm/index.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'v-page-form',
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['form', 'page']), {
-    dynPX: function dynPX() {
-      if (this.$vuetify.breakpoint.smOnly) {
-        return 'px-3';
-      }
-
-      return 'px-4';
-    },
-    dynCalc: function dynCalc() {
-      if (this.$vuetify.breakpoint.smOnly) {
-        return 'calc(100% - 32px)';
-      }
-
-      return 'calc(100% - 48px)';
-    },
-    transition: function transition() {
-      if (this.$vuetify.breakpoint.xsOnly) {
-        return 'dialog-move-transition';
-      }
-
-      return 'dialog-bottom-transition';
-    }
-  }),
-  props: {
-    submitName: {
-      type: String,
-      "default": 'submit'
-    },
-    cancelName: {
-      type: String,
-      "default": 'cancel'
-    },
-    small: {
-      type: Boolean,
-      "default": false
+    if (!this.menus.length && !this.auth.menus) {
+      this.$store.dispatch('fetchAppMenus');
+    } else if (!this.menus.length && this.auth.menus) {
+      this.$store.commit('fetchAppMenus');
     }
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['closeForm', 'submitForm']))
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageList/index.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/PageList/index.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'v-page-list',
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['records'])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['pressListItem', 'openEditForm']))
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageTable/index.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/PageTable/index.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'v-page-table',
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['table', 'headers', 'records', 'multiple']))
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageTrash/index.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/PageTrash/index.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'v-page-trash',
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['trash', 'records']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['trashCount'])),
-  props: {
-    submitName: {
-      type: String,
-      "default": 'delete'
-    },
-    cancelName: {
-      type: String,
-      "default": 'cancel'
-    }
-  },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['closeDelete', 'postDelete']))
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['signout']))
 });
 
 /***/ }),
@@ -4534,12 +2437,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+var _this = undefined;
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4565,14 +2477,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'v-widget',
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['page']), {
-    dynPX: function dynPX() {
+    dynClass: function dynClass() {
       if (this.$vuetify.breakpoint.smOnly) {
         return this.table ? 'px-3 pb-1' : 'px-3';
       }
 
-      return this.table ? 'px-4 pb-1' : 'px-4';
+      return this.table ? 'px-6 pb-1' : 'px-6';
     },
-    dynCalc: function dynCalc() {
+    dynWidth: function dynWidth() {
       if (this.$vuetify.breakpoint.smOnly) {
         return 'calc(100% - 32px)';
       }
@@ -4595,145 +2507,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }),
   props: {
-    table: {
-      type: Boolean,
-      "default": false
+    color: {
+      type: String,
+      "default": function _default() {
+        return _this.$root.theme;
+      }
+    },
+    elevation: {
+      type: Number,
+      "default": 0
     },
     form: {
       type: Boolean,
       "default": false
+    },
+    table: {
+      type: Boolean,
+      "default": false
+    },
+    width: {
+      type: String,
+      "default": undefined
     }
   }
 });
-
-/***/ }),
-
-/***/ "./node_modules/component-props/index.js":
-/*!***********************************************!*\
-  !*** ./node_modules/component-props/index.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Global Names
- */
-
-var globals = /\b(Array|Date|Object|Math|JSON)\b/g;
-
-/**
- * Return immediate identifiers parsed from `str`.
- *
- * @param {String} str
- * @param {String|Function} map function or prefix
- * @return {Array}
- * @api public
- */
-
-module.exports = function(str, fn){
-  var p = unique(props(str));
-  if (fn && 'string' == typeof fn) fn = prefixed(fn);
-  if (fn) return map(str, p, fn);
-  return p;
-};
-
-/**
- * Return immediate identifiers in `str`.
- *
- * @param {String} str
- * @return {Array}
- * @api private
- */
-
-function props(str) {
-  return str
-    .replace(/\.\w+|\w+ *\(|"[^"]*"|'[^']*'|\/([^/]+)\//g, '')
-    .replace(globals, '')
-    .match(/[a-zA-Z_]\w*/g)
-    || [];
-}
-
-/**
- * Return `str` with `props` mapped with `fn`.
- *
- * @param {String} str
- * @param {Array} props
- * @param {Function} fn
- * @return {String}
- * @api private
- */
-
-function map(str, props, fn) {
-  var re = /\.\w+|\w+ *\(|"[^"]*"|'[^']*'|\/([^/]+)\/|[a-zA-Z_]\w*/g;
-  return str.replace(re, function(_){
-    if ('(' == _[_.length - 1]) return fn(_);
-    if (!~props.indexOf(_)) return _;
-    return fn(_);
-  });
-}
-
-/**
- * Return unique array.
- *
- * @param {Array} arr
- * @return {Array}
- * @api private
- */
-
-function unique(arr) {
-  var ret = [];
-
-  for (var i = 0; i < arr.length; i++) {
-    if (~ret.indexOf(arr[i])) continue;
-    ret.push(arr[i]);
-  }
-
-  return ret;
-}
-
-/**
- * Map with prefix `str`.
- */
-
-function prefixed(str) {
-  return function(_){
-    return str + _;
-  };
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/component-xor/index.js":
-/*!*********************************************!*\
-  !*** ./node_modules/component-xor/index.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Expose `xor`
- */
-
-module.exports = xor;
-
-/**
- * XOR utility
- *
- * T T F
- * T F T
- * F T T
- * F F F
- *
- * @param {Boolean} a
- * @param {Boolean} b
- * @return {Boolean}
- */
-
-function xor(a, b) {
-  return a ^ b;
-}
-
 
 /***/ }),
 
@@ -11498,6212 +9295,6 @@ module.exports = debounce;
 
 /***/ }),
 
-/***/ "./node_modules/dom-iterator/index.js":
-/*!********************************************!*\
-  !*** ./node_modules/dom-iterator/index.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Module Dependencies
- */
-
-var xor = __webpack_require__(/*! component-xor */ "./node_modules/component-xor/index.js");
-var props = __webpack_require__(/*! component-props */ "./node_modules/component-props/index.js");
-
-
-/**
- * Export `Iterator`
- */
-
-module.exports = Iterator;
-
-/**
- * Initialize `Iterator`
- *
- * @param {Node} node
- * @param {Node} root
- * @return {Iterator} self
- * @api public
- */
-
-function Iterator(node, root) {
-  if (!(this instanceof Iterator)) return new Iterator(node, root);
-  this.node = this.start = this.peeked = node;
-  this.root = root;
-  this.closingTag = false;
-  this._revisit = true;
-  this._selects = [];
-  this._rejects = [];
-
-  if (node && this.higher(node)) {
-    throw new Error('root must be a parent or ancestor to node');
-  }
-}
-
-/**
- * Reset the Iterator
- *
- * @param {Node} node (optional)
- * @return {Iterator} self
- * @api public
- */
-
-Iterator.prototype.reset = function(node) {
-  this.node = node || this.start;
-  return this;
-};
-
-/**
- * Revisit element nodes. Defaults to `true`
- */
-
-Iterator.prototype.revisit = function(revisit) {
-  this._revisit = undefined == revisit ? true : revisit;
-  return this;
-};
-
-/**
- * Jump to the opening tag
- */
-
-Iterator.prototype.opening = function() {
-  if (1 == this.node.nodeType) this.closingTag = false;
-  return this;
-};
-
-/**
- * Jump to the closing tag
- */
-
-Iterator.prototype.atOpening = function() {
-  return !this.closingTag;
-};
-
-
-/**
- * Jump to the closing tag
- */
-
-Iterator.prototype.closing = function() {
-  if (1 == this.node.nodeType) this.closingTag = true;
-  return this;
-};
-
-/**
- * Jump to the closing tag
- */
-
-Iterator.prototype.atClosing = function() {
-  return this.closingTag;
-};
-
-/**
- * Next node
- *
- * @param {Number} type
- * @return {Node|null}
- * @api public
- */
-
-Iterator.prototype.next = traverse('nextSibling', 'firstChild');
-
-/**
- * Previous node
- *
- * @param {Number} type
- * @return {Node|null}
- * @api public
- */
-
-Iterator.prototype.previous =
-Iterator.prototype.prev = traverse('previousSibling', 'lastChild');
-
-/**
- * Make traverse function
- *
- * @param {String} dir
- * @param {String} child
- * @return {Function}
- * @api private
- */
-
-function traverse(dir, child) {
-  var next = dir == 'nextSibling';
-  return function walk(expr, n, peek) {
-    expr = this.compile(expr);
-    n = n && n > 0 ? n : 1;
-    var node = this.node;
-    var closing = this.closingTag;
-    var revisit = this._revisit;
-
-    while (node) {
-      if (xor(next, closing) && node[child]) {
-        // element with children: <em>...</em>
-        node = node[child];
-        closing = !next;
-      } else if (1 == node.nodeType && !node[child] && xor(next, closing)) {
-        // empty element tag: <em></em>
-        closing = next;
-        if (!revisit) continue;
-      } else if (node[dir]) {
-        // element has a neighbor: ...<em></em>...
-        node = node[dir];
-        closing = !next;
-      } else {
-        // done with current layer, move up.
-        node = node.parentNode;
-        closing = next;
-        if (!revisit) continue;
-      }
-
-      if (!node || this.higher(node, this.root)) break;
-
-      if (expr(node) && this.selects(node, peek) && this.rejects(node, peek)) {
-        if (--n) continue;
-        if (!peek) this.node = node;
-        this.closingTag = closing;
-        return node;
-      }
-    }
-
-    return null;
-  };
-}
-
-/**
- * Select nodes that cause `expr(node)`
- * to be truthy
- *
- * @param {Number|String|Function} expr
- * @return {Iterator} self
- * @api public
- */
-
-Iterator.prototype.select = function(expr) {
-  expr = this.compile(expr);
-  this._selects.push(expr);
-  return this;
-};
-
-/**
- * Run through the selects ORing each
- *
- * @param {Node} node
- * @param {Boolean} peek
- * @return {Boolean}
- * @api private
- */
-
-Iterator.prototype.selects = function(node, peek) {
-  var exprs = this._selects;
-  var len = exprs.length;
-  if (!len) return true;
-
-  for (var i = 0; i < len; i++) {
-    if (exprs[i].call(this, node, peek)) return true;
-  };
-
-  return false;
-};
-
-/**
- * Select nodes that cause `expr(node)`
- * to be falsy
- *
- * @param {Number|String|Function} expr
- * @return {Iterator} self
- * @api public
- */
-
-Iterator.prototype.reject = function(expr) {
-  expr = this.compile(expr);
-  this._rejects.push(expr);
-  return this;
-};
-
-/**
- * Run through the reject expressions ANDing each
- *
- * @param {Node} node
- * @param {Boolean} peek
- * @return {Boolean}
- * @api private
- */
-
-Iterator.prototype.rejects = function(node, peek) {
-  var exprs = this._rejects;
-  var len = exprs.length;
-  if (!len) return true;
-
-  for (var i = 0; i < len; i++) {
-    if (exprs[i].call(this, node, peek)) return false;
-  };
-
-  return true;
-};
-
-/**
- * Check if node is higher
- * than root.
- *
- * @param {Node} node
- * @param {Node} root
- * @return {Boolean}
- * @api private
- */
-
-Iterator.prototype.higher = function(node) {
-  var root = this.root;
-  if (!root) return false;
-  node = node.parentNode;
-  while (node && node != root) node = node.parentNode;
-  return node != root;
-};
-
-/**
- * Compile an expression
- *
- * @param {String|Function|Number} expr
- * @return {Function}
- */
-
-Iterator.prototype.compile = function(expr) {
-  switch (typeof expr) {
-    case 'number':
-      return function(node) { return expr == node.nodeType; };
-    case 'string':
-      return new Function('node', 'return ' + props(expr, 'node.'));
-    case 'function':
-      return expr;
-    default:
-      return function() { return true; };
-  }
-};
-
-/**
- * Peek in either direction
- * `n` nodes. Peek backwards
- * using negative numbers.
- *
- * @param {Number} n (optional)
- * @return {Node|null}
- * @api public
- */
-
-Iterator.prototype.peak =
-Iterator.prototype.peek = function(expr, n) {
-  if (arguments.length == 1) n = expr, expr = true;
-  n = undefined == n ? 1 : n;
-  if (!n) return this.node;
-  else if (n > 0) return this.next(expr, n, true);
-  else return this.prev(expr, Math.abs(n), true);
-};
-
-/**
- * Add a plugin
- *
- * @param {Function} fn
- * @return {Iterator}
- * @api public
- */
-
-Iterator.prototype.use = function(fn) {
-  fn(this);
-  return this;
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/escape-html/index.js":
-/*!*******************************************!*\
-  !*** ./node_modules/escape-html/index.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * escape-html
- * Copyright(c) 2012-2013 TJ Holowaychuk
- * Copyright(c) 2015 Andreas Lubbe
- * Copyright(c) 2015 Tiancheng "Timothy" Gu
- * MIT Licensed
- */
-
-
-
-/**
- * Module variables.
- * @private
- */
-
-var matchHtmlRegExp = /["'&<>]/;
-
-/**
- * Module exports.
- * @public
- */
-
-module.exports = escapeHtml;
-
-/**
- * Escape special characters in the given string of html.
- *
- * @param  {string} string The string to escape for inserting into HTML
- * @return {string}
- * @public
- */
-
-function escapeHtml(string) {
-  var str = '' + string;
-  var match = matchHtmlRegExp.exec(str);
-
-  if (!match) {
-    return str;
-  }
-
-  var escape;
-  var html = '';
-  var index = 0;
-  var lastIndex = 0;
-
-  for (index = match.index; index < str.length; index++) {
-    switch (str.charCodeAt(index)) {
-      case 34: // "
-        escape = '&quot;';
-        break;
-      case 38: // &
-        escape = '&amp;';
-        break;
-      case 39: // '
-        escape = '&#39;';
-        break;
-      case 60: // <
-        escape = '&lt;';
-        break;
-      case 62: // >
-        escape = '&gt;';
-        break;
-      default:
-        continue;
-    }
-
-    if (lastIndex !== index) {
-      html += str.substring(lastIndex, index);
-    }
-
-    lastIndex = index + 1;
-    html += escape;
-  }
-
-  return lastIndex !== index
-    ? html + str.substring(lastIndex, index)
-    : html;
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/fine-uploader/fine-uploader/fine-uploader.core.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/fine-uploader/fine-uploader/fine-uploader.core.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;// Fine Uploader 5.16.2 - MIT licensed. http://fineuploader.com
-(function(global) {
-    var qq = function(element) {
-        "use strict";
-        return {
-            hide: function() {
-                element.style.display = "none";
-                return this;
-            },
-            attach: function(type, fn) {
-                if (element.addEventListener) {
-                    element.addEventListener(type, fn, false);
-                } else if (element.attachEvent) {
-                    element.attachEvent("on" + type, fn);
-                }
-                return function() {
-                    qq(element).detach(type, fn);
-                };
-            },
-            detach: function(type, fn) {
-                if (element.removeEventListener) {
-                    element.removeEventListener(type, fn, false);
-                } else if (element.attachEvent) {
-                    element.detachEvent("on" + type, fn);
-                }
-                return this;
-            },
-            contains: function(descendant) {
-                if (!descendant) {
-                    return false;
-                }
-                if (element === descendant) {
-                    return true;
-                }
-                if (element.contains) {
-                    return element.contains(descendant);
-                } else {
-                    return !!(descendant.compareDocumentPosition(element) & 8);
-                }
-            },
-            insertBefore: function(elementB) {
-                elementB.parentNode.insertBefore(element, elementB);
-                return this;
-            },
-            remove: function() {
-                element.parentNode.removeChild(element);
-                return this;
-            },
-            css: function(styles) {
-                if (element.style == null) {
-                    throw new qq.Error("Can't apply style to node as it is not on the HTMLElement prototype chain!");
-                }
-                if (styles.opacity != null) {
-                    if (typeof element.style.opacity !== "string" && typeof element.filters !== "undefined") {
-                        styles.filter = "alpha(opacity=" + Math.round(100 * styles.opacity) + ")";
-                    }
-                }
-                qq.extend(element.style, styles);
-                return this;
-            },
-            hasClass: function(name, considerParent) {
-                var re = new RegExp("(^| )" + name + "( |$)");
-                return re.test(element.className) || !!(considerParent && re.test(element.parentNode.className));
-            },
-            addClass: function(name) {
-                if (!qq(element).hasClass(name)) {
-                    element.className += " " + name;
-                }
-                return this;
-            },
-            removeClass: function(name) {
-                var re = new RegExp("(^| )" + name + "( |$)");
-                element.className = element.className.replace(re, " ").replace(/^\s+|\s+$/g, "");
-                return this;
-            },
-            getByClass: function(className, first) {
-                var candidates, result = [];
-                if (first && element.querySelector) {
-                    return element.querySelector("." + className);
-                } else if (element.querySelectorAll) {
-                    return element.querySelectorAll("." + className);
-                }
-                candidates = element.getElementsByTagName("*");
-                qq.each(candidates, function(idx, val) {
-                    if (qq(val).hasClass(className)) {
-                        result.push(val);
-                    }
-                });
-                return first ? result[0] : result;
-            },
-            getFirstByClass: function(className) {
-                return qq(element).getByClass(className, true);
-            },
-            children: function() {
-                var children = [], child = element.firstChild;
-                while (child) {
-                    if (child.nodeType === 1) {
-                        children.push(child);
-                    }
-                    child = child.nextSibling;
-                }
-                return children;
-            },
-            setText: function(text) {
-                element.innerText = text;
-                element.textContent = text;
-                return this;
-            },
-            clearText: function() {
-                return qq(element).setText("");
-            },
-            hasAttribute: function(attrName) {
-                var attrVal;
-                if (element.hasAttribute) {
-                    if (!element.hasAttribute(attrName)) {
-                        return false;
-                    }
-                    return /^false$/i.exec(element.getAttribute(attrName)) == null;
-                } else {
-                    attrVal = element[attrName];
-                    if (attrVal === undefined) {
-                        return false;
-                    }
-                    return /^false$/i.exec(attrVal) == null;
-                }
-            }
-        };
-    };
-    (function() {
-        "use strict";
-        qq.canvasToBlob = function(canvas, mime, quality) {
-            return qq.dataUriToBlob(canvas.toDataURL(mime, quality));
-        };
-        qq.dataUriToBlob = function(dataUri) {
-            var arrayBuffer, byteString, createBlob = function(data, mime) {
-                var BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder || window.MSBlobBuilder, blobBuilder = BlobBuilder && new BlobBuilder();
-                if (blobBuilder) {
-                    blobBuilder.append(data);
-                    return blobBuilder.getBlob(mime);
-                } else {
-                    return new Blob([ data ], {
-                        type: mime
-                    });
-                }
-            }, intArray, mimeString;
-            if (dataUri.split(",")[0].indexOf("base64") >= 0) {
-                byteString = atob(dataUri.split(",")[1]);
-            } else {
-                byteString = decodeURI(dataUri.split(",")[1]);
-            }
-            mimeString = dataUri.split(",")[0].split(":")[1].split(";")[0];
-            arrayBuffer = new ArrayBuffer(byteString.length);
-            intArray = new Uint8Array(arrayBuffer);
-            qq.each(byteString, function(idx, character) {
-                intArray[idx] = character.charCodeAt(0);
-            });
-            return createBlob(arrayBuffer, mimeString);
-        };
-        qq.log = function(message, level) {
-            if (window.console) {
-                if (!level || level === "info") {
-                    window.console.log(message);
-                } else {
-                    if (window.console[level]) {
-                        window.console[level](message);
-                    } else {
-                        window.console.log("<" + level + "> " + message);
-                    }
-                }
-            }
-        };
-        qq.isObject = function(variable) {
-            return variable && !variable.nodeType && Object.prototype.toString.call(variable) === "[object Object]";
-        };
-        qq.isFunction = function(variable) {
-            return typeof variable === "function";
-        };
-        qq.isArray = function(value) {
-            return Object.prototype.toString.call(value) === "[object Array]" || value && window.ArrayBuffer && value.buffer && value.buffer.constructor === ArrayBuffer;
-        };
-        qq.isItemList = function(maybeItemList) {
-            return Object.prototype.toString.call(maybeItemList) === "[object DataTransferItemList]";
-        };
-        qq.isNodeList = function(maybeNodeList) {
-            return Object.prototype.toString.call(maybeNodeList) === "[object NodeList]" || maybeNodeList.item && maybeNodeList.namedItem;
-        };
-        qq.isString = function(maybeString) {
-            return Object.prototype.toString.call(maybeString) === "[object String]";
-        };
-        qq.trimStr = function(string) {
-            if (String.prototype.trim) {
-                return string.trim();
-            }
-            return string.replace(/^\s+|\s+$/g, "");
-        };
-        qq.format = function(str) {
-            var args = Array.prototype.slice.call(arguments, 1), newStr = str, nextIdxToReplace = newStr.indexOf("{}");
-            qq.each(args, function(idx, val) {
-                var strBefore = newStr.substring(0, nextIdxToReplace), strAfter = newStr.substring(nextIdxToReplace + 2);
-                newStr = strBefore + val + strAfter;
-                nextIdxToReplace = newStr.indexOf("{}", nextIdxToReplace + val.length);
-                if (nextIdxToReplace < 0) {
-                    return false;
-                }
-            });
-            return newStr;
-        };
-        qq.isFile = function(maybeFile) {
-            return window.File && Object.prototype.toString.call(maybeFile) === "[object File]";
-        };
-        qq.isFileList = function(maybeFileList) {
-            return window.FileList && Object.prototype.toString.call(maybeFileList) === "[object FileList]";
-        };
-        qq.isFileOrInput = function(maybeFileOrInput) {
-            return qq.isFile(maybeFileOrInput) || qq.isInput(maybeFileOrInput);
-        };
-        qq.isInput = function(maybeInput, notFile) {
-            var evaluateType = function(type) {
-                var normalizedType = type.toLowerCase();
-                if (notFile) {
-                    return normalizedType !== "file";
-                }
-                return normalizedType === "file";
-            };
-            if (window.HTMLInputElement) {
-                if (Object.prototype.toString.call(maybeInput) === "[object HTMLInputElement]") {
-                    if (maybeInput.type && evaluateType(maybeInput.type)) {
-                        return true;
-                    }
-                }
-            }
-            if (maybeInput.tagName) {
-                if (maybeInput.tagName.toLowerCase() === "input") {
-                    if (maybeInput.type && evaluateType(maybeInput.type)) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        };
-        qq.isBlob = function(maybeBlob) {
-            if (window.Blob && Object.prototype.toString.call(maybeBlob) === "[object Blob]") {
-                return true;
-            }
-        };
-        qq.isXhrUploadSupported = function() {
-            var input = document.createElement("input");
-            input.type = "file";
-            return input.multiple !== undefined && typeof File !== "undefined" && typeof FormData !== "undefined" && typeof qq.createXhrInstance().upload !== "undefined";
-        };
-        qq.createXhrInstance = function() {
-            if (window.XMLHttpRequest) {
-                return new XMLHttpRequest();
-            }
-            try {
-                return new ActiveXObject("MSXML2.XMLHTTP.3.0");
-            } catch (error) {
-                qq.log("Neither XHR or ActiveX are supported!", "error");
-                return null;
-            }
-        };
-        qq.isFolderDropSupported = function(dataTransfer) {
-            return dataTransfer.items && dataTransfer.items.length > 0 && dataTransfer.items[0].webkitGetAsEntry;
-        };
-        qq.isFileChunkingSupported = function() {
-            return !qq.androidStock() && qq.isXhrUploadSupported() && (File.prototype.slice !== undefined || File.prototype.webkitSlice !== undefined || File.prototype.mozSlice !== undefined);
-        };
-        qq.sliceBlob = function(fileOrBlob, start, end) {
-            var slicer = fileOrBlob.slice || fileOrBlob.mozSlice || fileOrBlob.webkitSlice;
-            return slicer.call(fileOrBlob, start, end);
-        };
-        qq.arrayBufferToHex = function(buffer) {
-            var bytesAsHex = "", bytes = new Uint8Array(buffer);
-            qq.each(bytes, function(idx, byt) {
-                var byteAsHexStr = byt.toString(16);
-                if (byteAsHexStr.length < 2) {
-                    byteAsHexStr = "0" + byteAsHexStr;
-                }
-                bytesAsHex += byteAsHexStr;
-            });
-            return bytesAsHex;
-        };
-        qq.readBlobToHex = function(blob, startOffset, length) {
-            var initialBlob = qq.sliceBlob(blob, startOffset, startOffset + length), fileReader = new FileReader(), promise = new qq.Promise();
-            fileReader.onload = function() {
-                promise.success(qq.arrayBufferToHex(fileReader.result));
-            };
-            fileReader.onerror = promise.failure;
-            fileReader.readAsArrayBuffer(initialBlob);
-            return promise;
-        };
-        qq.extend = function(first, second, extendNested) {
-            qq.each(second, function(prop, val) {
-                if (extendNested && qq.isObject(val)) {
-                    if (first[prop] === undefined) {
-                        first[prop] = {};
-                    }
-                    qq.extend(first[prop], val, true);
-                } else {
-                    first[prop] = val;
-                }
-            });
-            return first;
-        };
-        qq.override = function(target, sourceFn) {
-            var super_ = {}, source = sourceFn(super_);
-            qq.each(source, function(srcPropName, srcPropVal) {
-                if (target[srcPropName] !== undefined) {
-                    super_[srcPropName] = target[srcPropName];
-                }
-                target[srcPropName] = srcPropVal;
-            });
-            return target;
-        };
-        qq.indexOf = function(arr, elt, from) {
-            if (arr.indexOf) {
-                return arr.indexOf(elt, from);
-            }
-            from = from || 0;
-            var len = arr.length;
-            if (from < 0) {
-                from += len;
-            }
-            for (;from < len; from += 1) {
-                if (arr.hasOwnProperty(from) && arr[from] === elt) {
-                    return from;
-                }
-            }
-            return -1;
-        };
-        qq.getUniqueId = function() {
-            return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
-                var r = Math.random() * 16 | 0, v = c == "x" ? r : r & 3 | 8;
-                return v.toString(16);
-            });
-        };
-        qq.ie = function() {
-            return navigator.userAgent.indexOf("MSIE") !== -1 || navigator.userAgent.indexOf("Trident") !== -1;
-        };
-        qq.ie7 = function() {
-            return navigator.userAgent.indexOf("MSIE 7") !== -1;
-        };
-        qq.ie8 = function() {
-            return navigator.userAgent.indexOf("MSIE 8") !== -1;
-        };
-        qq.ie10 = function() {
-            return navigator.userAgent.indexOf("MSIE 10") !== -1;
-        };
-        qq.ie11 = function() {
-            return qq.ie() && navigator.userAgent.indexOf("rv:11") !== -1;
-        };
-        qq.edge = function() {
-            return navigator.userAgent.indexOf("Edge") >= 0;
-        };
-        qq.safari = function() {
-            return navigator.vendor !== undefined && navigator.vendor.indexOf("Apple") !== -1;
-        };
-        qq.chrome = function() {
-            return navigator.vendor !== undefined && navigator.vendor.indexOf("Google") !== -1;
-        };
-        qq.opera = function() {
-            return navigator.vendor !== undefined && navigator.vendor.indexOf("Opera") !== -1;
-        };
-        qq.firefox = function() {
-            return !qq.edge() && !qq.ie11() && navigator.userAgent.indexOf("Mozilla") !== -1 && navigator.vendor !== undefined && navigator.vendor === "";
-        };
-        qq.windows = function() {
-            return navigator.platform === "Win32";
-        };
-        qq.android = function() {
-            return navigator.userAgent.toLowerCase().indexOf("android") !== -1;
-        };
-        qq.androidStock = function() {
-            return qq.android() && navigator.userAgent.toLowerCase().indexOf("chrome") < 0;
-        };
-        qq.ios6 = function() {
-            return qq.ios() && navigator.userAgent.indexOf(" OS 6_") !== -1;
-        };
-        qq.ios7 = function() {
-            return qq.ios() && navigator.userAgent.indexOf(" OS 7_") !== -1;
-        };
-        qq.ios8 = function() {
-            return qq.ios() && navigator.userAgent.indexOf(" OS 8_") !== -1;
-        };
-        qq.ios800 = function() {
-            return qq.ios() && navigator.userAgent.indexOf(" OS 8_0 ") !== -1;
-        };
-        qq.ios = function() {
-            return navigator.userAgent.indexOf("iPad") !== -1 || navigator.userAgent.indexOf("iPod") !== -1 || navigator.userAgent.indexOf("iPhone") !== -1;
-        };
-        qq.iosChrome = function() {
-            return qq.ios() && navigator.userAgent.indexOf("CriOS") !== -1;
-        };
-        qq.iosSafari = function() {
-            return qq.ios() && !qq.iosChrome() && navigator.userAgent.indexOf("Safari") !== -1;
-        };
-        qq.iosSafariWebView = function() {
-            return qq.ios() && !qq.iosChrome() && !qq.iosSafari();
-        };
-        qq.preventDefault = function(e) {
-            if (e.preventDefault) {
-                e.preventDefault();
-            } else {
-                e.returnValue = false;
-            }
-        };
-        qq.toElement = function() {
-            var div = document.createElement("div");
-            return function(html) {
-                div.innerHTML = html;
-                var element = div.firstChild;
-                div.removeChild(element);
-                return element;
-            };
-        }();
-        qq.each = function(iterableItem, callback) {
-            var keyOrIndex, retVal;
-            if (iterableItem) {
-                if (window.Storage && iterableItem.constructor === window.Storage) {
-                    for (keyOrIndex = 0; keyOrIndex < iterableItem.length; keyOrIndex++) {
-                        retVal = callback(iterableItem.key(keyOrIndex), iterableItem.getItem(iterableItem.key(keyOrIndex)));
-                        if (retVal === false) {
-                            break;
-                        }
-                    }
-                } else if (qq.isArray(iterableItem) || qq.isItemList(iterableItem) || qq.isNodeList(iterableItem)) {
-                    for (keyOrIndex = 0; keyOrIndex < iterableItem.length; keyOrIndex++) {
-                        retVal = callback(keyOrIndex, iterableItem[keyOrIndex]);
-                        if (retVal === false) {
-                            break;
-                        }
-                    }
-                } else if (qq.isString(iterableItem)) {
-                    for (keyOrIndex = 0; keyOrIndex < iterableItem.length; keyOrIndex++) {
-                        retVal = callback(keyOrIndex, iterableItem.charAt(keyOrIndex));
-                        if (retVal === false) {
-                            break;
-                        }
-                    }
-                } else {
-                    for (keyOrIndex in iterableItem) {
-                        if (Object.prototype.hasOwnProperty.call(iterableItem, keyOrIndex)) {
-                            retVal = callback(keyOrIndex, iterableItem[keyOrIndex]);
-                            if (retVal === false) {
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        };
-        qq.bind = function(oldFunc, context) {
-            if (qq.isFunction(oldFunc)) {
-                var args = Array.prototype.slice.call(arguments, 2);
-                return function() {
-                    var newArgs = qq.extend([], args);
-                    if (arguments.length) {
-                        newArgs = newArgs.concat(Array.prototype.slice.call(arguments));
-                    }
-                    return oldFunc.apply(context, newArgs);
-                };
-            }
-            throw new Error("first parameter must be a function!");
-        };
-        qq.obj2url = function(obj, temp, prefixDone) {
-            var uristrings = [], prefix = "&", add = function(nextObj, i) {
-                var nextTemp = temp ? /\[\]$/.test(temp) ? temp : temp + "[" + i + "]" : i;
-                if (nextTemp !== "undefined" && i !== "undefined") {
-                    uristrings.push(typeof nextObj === "object" ? qq.obj2url(nextObj, nextTemp, true) : Object.prototype.toString.call(nextObj) === "[object Function]" ? encodeURIComponent(nextTemp) + "=" + encodeURIComponent(nextObj()) : encodeURIComponent(nextTemp) + "=" + encodeURIComponent(nextObj));
-                }
-            };
-            if (!prefixDone && temp) {
-                prefix = /\?/.test(temp) ? /\?$/.test(temp) ? "" : "&" : "?";
-                uristrings.push(temp);
-                uristrings.push(qq.obj2url(obj));
-            } else if (Object.prototype.toString.call(obj) === "[object Array]" && typeof obj !== "undefined") {
-                qq.each(obj, function(idx, val) {
-                    add(val, idx);
-                });
-            } else if (typeof obj !== "undefined" && obj !== null && typeof obj === "object") {
-                qq.each(obj, function(prop, val) {
-                    add(val, prop);
-                });
-            } else {
-                uristrings.push(encodeURIComponent(temp) + "=" + encodeURIComponent(obj));
-            }
-            if (temp) {
-                return uristrings.join(prefix);
-            } else {
-                return uristrings.join(prefix).replace(/^&/, "").replace(/%20/g, "+");
-            }
-        };
-        qq.obj2FormData = function(obj, formData, arrayKeyName) {
-            if (!formData) {
-                formData = new FormData();
-            }
-            qq.each(obj, function(key, val) {
-                key = arrayKeyName ? arrayKeyName + "[" + key + "]" : key;
-                if (qq.isObject(val)) {
-                    qq.obj2FormData(val, formData, key);
-                } else if (qq.isFunction(val)) {
-                    formData.append(key, val());
-                } else {
-                    formData.append(key, val);
-                }
-            });
-            return formData;
-        };
-        qq.obj2Inputs = function(obj, form) {
-            var input;
-            if (!form) {
-                form = document.createElement("form");
-            }
-            qq.obj2FormData(obj, {
-                append: function(key, val) {
-                    input = document.createElement("input");
-                    input.setAttribute("name", key);
-                    input.setAttribute("value", val);
-                    form.appendChild(input);
-                }
-            });
-            return form;
-        };
-        qq.parseJson = function(json) {
-            if (window.JSON && qq.isFunction(JSON.parse)) {
-                return JSON.parse(json);
-            } else {
-                return eval("(" + json + ")");
-            }
-        };
-        qq.getExtension = function(filename) {
-            var extIdx = filename.lastIndexOf(".") + 1;
-            if (extIdx > 0) {
-                return filename.substr(extIdx, filename.length - extIdx);
-            }
-        };
-        qq.getFilename = function(blobOrFileInput) {
-            if (qq.isInput(blobOrFileInput)) {
-                return blobOrFileInput.value.replace(/.*(\/|\\)/, "");
-            } else if (qq.isFile(blobOrFileInput)) {
-                if (blobOrFileInput.fileName !== null && blobOrFileInput.fileName !== undefined) {
-                    return blobOrFileInput.fileName;
-                }
-            }
-            return blobOrFileInput.name;
-        };
-        qq.DisposeSupport = function() {
-            var disposers = [];
-            return {
-                dispose: function() {
-                    var disposer;
-                    do {
-                        disposer = disposers.shift();
-                        if (disposer) {
-                            disposer();
-                        }
-                    } while (disposer);
-                },
-                attach: function() {
-                    var args = arguments;
-                    this.addDisposer(qq(args[0]).attach.apply(this, Array.prototype.slice.call(arguments, 1)));
-                },
-                addDisposer: function(disposeFunction) {
-                    disposers.push(disposeFunction);
-                }
-            };
-        };
-    })();
-    (function() {
-        "use strict";
-        if (true) {
-            !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
-                return qq;
-            }).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-        } else {}
-    })();
-    (function() {
-        "use strict";
-        qq.Error = function(message) {
-            this.message = "[Fine Uploader " + qq.version + "] " + message;
-        };
-        qq.Error.prototype = new Error();
-    })();
-    qq.version = "5.16.2";
-    qq.supportedFeatures = function() {
-        "use strict";
-        var supportsUploading, supportsUploadingBlobs, supportsFileDrop, supportsAjaxFileUploading, supportsFolderDrop, supportsChunking, supportsResume, supportsUploadViaPaste, supportsUploadCors, supportsDeleteFileXdr, supportsDeleteFileCorsXhr, supportsDeleteFileCors, supportsFolderSelection, supportsImagePreviews, supportsUploadProgress;
-        function testSupportsFileInputElement() {
-            var supported = true, tempInput;
-            try {
-                tempInput = document.createElement("input");
-                tempInput.type = "file";
-                qq(tempInput).hide();
-                if (tempInput.disabled) {
-                    supported = false;
-                }
-            } catch (ex) {
-                supported = false;
-            }
-            return supported;
-        }
-        function isChrome14OrHigher() {
-            return (qq.chrome() || qq.opera()) && navigator.userAgent.match(/Chrome\/[1][4-9]|Chrome\/[2-9][0-9]/) !== undefined;
-        }
-        function isCrossOriginXhrSupported() {
-            if (window.XMLHttpRequest) {
-                var xhr = qq.createXhrInstance();
-                return xhr.withCredentials !== undefined;
-            }
-            return false;
-        }
-        function isXdrSupported() {
-            return window.XDomainRequest !== undefined;
-        }
-        function isCrossOriginAjaxSupported() {
-            if (isCrossOriginXhrSupported()) {
-                return true;
-            }
-            return isXdrSupported();
-        }
-        function isFolderSelectionSupported() {
-            return document.createElement("input").webkitdirectory !== undefined;
-        }
-        function isLocalStorageSupported() {
-            try {
-                return !!window.localStorage && qq.isFunction(window.localStorage.setItem);
-            } catch (error) {
-                return false;
-            }
-        }
-        function isDragAndDropSupported() {
-            var span = document.createElement("span");
-            return ("draggable" in span || "ondragstart" in span && "ondrop" in span) && !qq.android() && !qq.ios();
-        }
-        supportsUploading = testSupportsFileInputElement();
-        supportsAjaxFileUploading = supportsUploading && qq.isXhrUploadSupported();
-        supportsUploadingBlobs = supportsAjaxFileUploading && !qq.androidStock();
-        supportsFileDrop = supportsAjaxFileUploading && isDragAndDropSupported();
-        supportsFolderDrop = supportsFileDrop && function() {
-            var input = document.createElement("input");
-            input.type = "file";
-            return !!("webkitdirectory" in (input || document.querySelectorAll("input[type=file]")[0]));
-        }();
-        supportsChunking = supportsAjaxFileUploading && qq.isFileChunkingSupported();
-        supportsResume = supportsAjaxFileUploading && supportsChunking && isLocalStorageSupported();
-        supportsUploadViaPaste = supportsAjaxFileUploading && isChrome14OrHigher();
-        supportsUploadCors = supportsUploading && (window.postMessage !== undefined || supportsAjaxFileUploading);
-        supportsDeleteFileCorsXhr = isCrossOriginXhrSupported();
-        supportsDeleteFileXdr = isXdrSupported();
-        supportsDeleteFileCors = isCrossOriginAjaxSupported();
-        supportsFolderSelection = isFolderSelectionSupported();
-        supportsImagePreviews = supportsAjaxFileUploading && window.FileReader !== undefined;
-        supportsUploadProgress = function() {
-            if (supportsAjaxFileUploading) {
-                return !qq.androidStock() && !qq.iosChrome();
-            }
-            return false;
-        }();
-        return {
-            ajaxUploading: supportsAjaxFileUploading,
-            blobUploading: supportsUploadingBlobs,
-            canDetermineSize: supportsAjaxFileUploading,
-            chunking: supportsChunking,
-            deleteFileCors: supportsDeleteFileCors,
-            deleteFileCorsXdr: supportsDeleteFileXdr,
-            deleteFileCorsXhr: supportsDeleteFileCorsXhr,
-            dialogElement: !!window.HTMLDialogElement,
-            fileDrop: supportsFileDrop,
-            folderDrop: supportsFolderDrop,
-            folderSelection: supportsFolderSelection,
-            imagePreviews: supportsImagePreviews,
-            imageValidation: supportsImagePreviews,
-            itemSizeValidation: supportsAjaxFileUploading,
-            pause: supportsChunking,
-            progressBar: supportsUploadProgress,
-            resume: supportsResume,
-            scaling: supportsImagePreviews && supportsUploadingBlobs,
-            tiffPreviews: qq.safari(),
-            unlimitedScaledImageSize: !qq.ios(),
-            uploading: supportsUploading,
-            uploadCors: supportsUploadCors,
-            uploadCustomHeaders: supportsAjaxFileUploading,
-            uploadNonMultipart: supportsAjaxFileUploading,
-            uploadViaPaste: supportsUploadViaPaste
-        };
-    }();
-    qq.isGenericPromise = function(maybePromise) {
-        "use strict";
-        return !!(maybePromise && maybePromise.then && qq.isFunction(maybePromise.then));
-    };
-    qq.Promise = function() {
-        "use strict";
-        var successArgs, failureArgs, successCallbacks = [], failureCallbacks = [], doneCallbacks = [], state = 0;
-        qq.extend(this, {
-            then: function(onSuccess, onFailure) {
-                if (state === 0) {
-                    if (onSuccess) {
-                        successCallbacks.push(onSuccess);
-                    }
-                    if (onFailure) {
-                        failureCallbacks.push(onFailure);
-                    }
-                } else if (state === -1) {
-                    onFailure && onFailure.apply(null, failureArgs);
-                } else if (onSuccess) {
-                    onSuccess.apply(null, successArgs);
-                }
-                return this;
-            },
-            done: function(callback) {
-                if (state === 0) {
-                    doneCallbacks.push(callback);
-                } else {
-                    callback.apply(null, failureArgs === undefined ? successArgs : failureArgs);
-                }
-                return this;
-            },
-            success: function() {
-                state = 1;
-                successArgs = arguments;
-                if (successCallbacks.length) {
-                    qq.each(successCallbacks, function(idx, callback) {
-                        callback.apply(null, successArgs);
-                    });
-                }
-                if (doneCallbacks.length) {
-                    qq.each(doneCallbacks, function(idx, callback) {
-                        callback.apply(null, successArgs);
-                    });
-                }
-                return this;
-            },
-            failure: function() {
-                state = -1;
-                failureArgs = arguments;
-                if (failureCallbacks.length) {
-                    qq.each(failureCallbacks, function(idx, callback) {
-                        callback.apply(null, failureArgs);
-                    });
-                }
-                if (doneCallbacks.length) {
-                    qq.each(doneCallbacks, function(idx, callback) {
-                        callback.apply(null, failureArgs);
-                    });
-                }
-                return this;
-            }
-        });
-    };
-    qq.BlobProxy = function(referenceBlob, onCreate) {
-        "use strict";
-        qq.extend(this, {
-            referenceBlob: referenceBlob,
-            create: function() {
-                return onCreate(referenceBlob);
-            }
-        });
-    };
-    qq.UploadButton = function(o) {
-        "use strict";
-        var self = this, disposeSupport = new qq.DisposeSupport(), options = {
-            acceptFiles: null,
-            element: null,
-            focusClass: "qq-upload-button-focus",
-            folders: false,
-            hoverClass: "qq-upload-button-hover",
-            ios8BrowserCrashWorkaround: false,
-            multiple: false,
-            name: "qqfile",
-            onChange: function(input) {},
-            title: null
-        }, input, buttonId;
-        qq.extend(options, o);
-        buttonId = qq.getUniqueId();
-        function createInput() {
-            var input = document.createElement("input");
-            input.setAttribute(qq.UploadButton.BUTTON_ID_ATTR_NAME, buttonId);
-            input.setAttribute("title", options.title);
-            self.setMultiple(options.multiple, input);
-            if (options.folders && qq.supportedFeatures.folderSelection) {
-                input.setAttribute("webkitdirectory", "");
-            }
-            if (options.acceptFiles) {
-                input.setAttribute("accept", options.acceptFiles);
-            }
-            input.setAttribute("type", "file");
-            input.setAttribute("name", options.name);
-            qq(input).css({
-                position: "absolute",
-                right: 0,
-                top: 0,
-                fontFamily: "Arial",
-                fontSize: qq.ie() && !qq.ie8() ? "3500px" : "118px",
-                margin: 0,
-                padding: 0,
-                cursor: "pointer",
-                opacity: 0
-            });
-            !qq.ie7() && qq(input).css({
-                height: "100%"
-            });
-            options.element.appendChild(input);
-            disposeSupport.attach(input, "change", function() {
-                options.onChange(input);
-            });
-            disposeSupport.attach(input, "mouseover", function() {
-                qq(options.element).addClass(options.hoverClass);
-            });
-            disposeSupport.attach(input, "mouseout", function() {
-                qq(options.element).removeClass(options.hoverClass);
-            });
-            disposeSupport.attach(input, "focus", function() {
-                qq(options.element).addClass(options.focusClass);
-            });
-            disposeSupport.attach(input, "blur", function() {
-                qq(options.element).removeClass(options.focusClass);
-            });
-            return input;
-        }
-        qq(options.element).css({
-            position: "relative",
-            overflow: "hidden",
-            direction: "ltr"
-        });
-        qq.extend(this, {
-            getInput: function() {
-                return input;
-            },
-            getButtonId: function() {
-                return buttonId;
-            },
-            setMultiple: function(isMultiple, optInput) {
-                var input = optInput || this.getInput();
-                if (options.ios8BrowserCrashWorkaround && qq.ios8() && (qq.iosChrome() || qq.iosSafariWebView())) {
-                    input.setAttribute("multiple", "");
-                } else {
-                    if (isMultiple) {
-                        input.setAttribute("multiple", "");
-                    } else {
-                        input.removeAttribute("multiple");
-                    }
-                }
-            },
-            setAcceptFiles: function(acceptFiles) {
-                if (acceptFiles !== options.acceptFiles) {
-                    input.setAttribute("accept", acceptFiles);
-                }
-            },
-            reset: function() {
-                if (input.parentNode) {
-                    qq(input).remove();
-                }
-                qq(options.element).removeClass(options.focusClass);
-                input = null;
-                input = createInput();
-            }
-        });
-        input = createInput();
-    };
-    qq.UploadButton.BUTTON_ID_ATTR_NAME = "qq-button-id";
-    qq.UploadData = function(uploaderProxy) {
-        "use strict";
-        var data = [], byUuid = {}, byStatus = {}, byProxyGroupId = {}, byBatchId = {};
-        function getDataByIds(idOrIds) {
-            if (qq.isArray(idOrIds)) {
-                var entries = [];
-                qq.each(idOrIds, function(idx, id) {
-                    entries.push(data[id]);
-                });
-                return entries;
-            }
-            return data[idOrIds];
-        }
-        function getDataByUuids(uuids) {
-            if (qq.isArray(uuids)) {
-                var entries = [];
-                qq.each(uuids, function(idx, uuid) {
-                    entries.push(data[byUuid[uuid]]);
-                });
-                return entries;
-            }
-            return data[byUuid[uuids]];
-        }
-        function getDataByStatus(status) {
-            var statusResults = [], statuses = [].concat(status);
-            qq.each(statuses, function(index, statusEnum) {
-                var statusResultIndexes = byStatus[statusEnum];
-                if (statusResultIndexes !== undefined) {
-                    qq.each(statusResultIndexes, function(i, dataIndex) {
-                        statusResults.push(data[dataIndex]);
-                    });
-                }
-            });
-            return statusResults;
-        }
-        qq.extend(this, {
-            addFile: function(spec) {
-                var status = spec.status || qq.status.SUBMITTING, id = data.push({
-                    name: spec.name,
-                    originalName: spec.name,
-                    uuid: spec.uuid,
-                    size: spec.size == null ? -1 : spec.size,
-                    status: status,
-                    file: spec.file
-                }) - 1;
-                if (spec.batchId) {
-                    data[id].batchId = spec.batchId;
-                    if (byBatchId[spec.batchId] === undefined) {
-                        byBatchId[spec.batchId] = [];
-                    }
-                    byBatchId[spec.batchId].push(id);
-                }
-                if (spec.proxyGroupId) {
-                    data[id].proxyGroupId = spec.proxyGroupId;
-                    if (byProxyGroupId[spec.proxyGroupId] === undefined) {
-                        byProxyGroupId[spec.proxyGroupId] = [];
-                    }
-                    byProxyGroupId[spec.proxyGroupId].push(id);
-                }
-                data[id].id = id;
-                byUuid[spec.uuid] = id;
-                if (byStatus[status] === undefined) {
-                    byStatus[status] = [];
-                }
-                byStatus[status].push(id);
-                spec.onBeforeStatusChange && spec.onBeforeStatusChange(id);
-                uploaderProxy.onStatusChange(id, null, status);
-                return id;
-            },
-            retrieve: function(optionalFilter) {
-                if (qq.isObject(optionalFilter) && data.length) {
-                    if (optionalFilter.id !== undefined) {
-                        return getDataByIds(optionalFilter.id);
-                    } else if (optionalFilter.uuid !== undefined) {
-                        return getDataByUuids(optionalFilter.uuid);
-                    } else if (optionalFilter.status) {
-                        return getDataByStatus(optionalFilter.status);
-                    }
-                } else {
-                    return qq.extend([], data, true);
-                }
-            },
-            removeFileRef: function(id) {
-                var record = getDataByIds(id);
-                if (record) {
-                    delete record.file;
-                }
-            },
-            reset: function() {
-                data = [];
-                byUuid = {};
-                byStatus = {};
-                byBatchId = {};
-            },
-            setStatus: function(id, newStatus) {
-                var oldStatus = data[id].status, byStatusOldStatusIndex = qq.indexOf(byStatus[oldStatus], id);
-                byStatus[oldStatus].splice(byStatusOldStatusIndex, 1);
-                data[id].status = newStatus;
-                if (byStatus[newStatus] === undefined) {
-                    byStatus[newStatus] = [];
-                }
-                byStatus[newStatus].push(id);
-                uploaderProxy.onStatusChange(id, oldStatus, newStatus);
-            },
-            uuidChanged: function(id, newUuid) {
-                var oldUuid = data[id].uuid;
-                data[id].uuid = newUuid;
-                byUuid[newUuid] = id;
-                delete byUuid[oldUuid];
-            },
-            updateName: function(id, newName) {
-                data[id].name = newName;
-            },
-            updateSize: function(id, newSize) {
-                data[id].size = newSize;
-            },
-            setParentId: function(targetId, parentId) {
-                data[targetId].parentId = parentId;
-            },
-            getIdsInProxyGroup: function(id) {
-                var proxyGroupId = data[id].proxyGroupId;
-                if (proxyGroupId) {
-                    return byProxyGroupId[proxyGroupId];
-                }
-                return [];
-            },
-            getIdsInBatch: function(id) {
-                var batchId = data[id].batchId;
-                return byBatchId[batchId];
-            }
-        });
-    };
-    qq.status = {
-        SUBMITTING: "submitting",
-        SUBMITTED: "submitted",
-        REJECTED: "rejected",
-        QUEUED: "queued",
-        CANCELED: "canceled",
-        PAUSED: "paused",
-        UPLOADING: "uploading",
-        UPLOAD_FINALIZING: "upload finalizing",
-        UPLOAD_RETRYING: "retrying upload",
-        UPLOAD_SUCCESSFUL: "upload successful",
-        UPLOAD_FAILED: "upload failed",
-        DELETE_FAILED: "delete failed",
-        DELETING: "deleting",
-        DELETED: "deleted"
-    };
-    (function() {
-        "use strict";
-        qq.basePublicApi = {
-            addBlobs: function(blobDataOrArray, params, endpoint) {
-                this.addFiles(blobDataOrArray, params, endpoint);
-            },
-            addInitialFiles: function(cannedFileList) {
-                var self = this;
-                qq.each(cannedFileList, function(index, cannedFile) {
-                    self._addCannedFile(cannedFile);
-                });
-            },
-            addFiles: function(data, params, endpoint) {
-                this._maybeHandleIos8SafariWorkaround();
-                var batchId = this._storedIds.length === 0 ? qq.getUniqueId() : this._currentBatchId, processBlob = qq.bind(function(blob) {
-                    this._handleNewFile({
-                        blob: blob,
-                        name: this._options.blobs.defaultName
-                    }, batchId, verifiedFiles);
-                }, this), processBlobData = qq.bind(function(blobData) {
-                    this._handleNewFile(blobData, batchId, verifiedFiles);
-                }, this), processCanvas = qq.bind(function(canvas) {
-                    var blob = qq.canvasToBlob(canvas);
-                    this._handleNewFile({
-                        blob: blob,
-                        name: this._options.blobs.defaultName + ".png"
-                    }, batchId, verifiedFiles);
-                }, this), processCanvasData = qq.bind(function(canvasData) {
-                    var normalizedQuality = canvasData.quality && canvasData.quality / 100, blob = qq.canvasToBlob(canvasData.canvas, canvasData.type, normalizedQuality);
-                    this._handleNewFile({
-                        blob: blob,
-                        name: canvasData.name
-                    }, batchId, verifiedFiles);
-                }, this), processFileOrInput = qq.bind(function(fileOrInput) {
-                    if (qq.isInput(fileOrInput) && qq.supportedFeatures.ajaxUploading) {
-                        var files = Array.prototype.slice.call(fileOrInput.files), self = this;
-                        qq.each(files, function(idx, file) {
-                            self._handleNewFile(file, batchId, verifiedFiles);
-                        });
-                    } else {
-                        this._handleNewFile(fileOrInput, batchId, verifiedFiles);
-                    }
-                }, this), normalizeData = function() {
-                    if (qq.isFileList(data)) {
-                        data = Array.prototype.slice.call(data);
-                    }
-                    data = [].concat(data);
-                }, self = this, verifiedFiles = [];
-                this._currentBatchId = batchId;
-                if (data) {
-                    normalizeData();
-                    qq.each(data, function(idx, fileContainer) {
-                        if (qq.isFileOrInput(fileContainer)) {
-                            processFileOrInput(fileContainer);
-                        } else if (qq.isBlob(fileContainer)) {
-                            processBlob(fileContainer);
-                        } else if (qq.isObject(fileContainer)) {
-                            if (fileContainer.blob && fileContainer.name) {
-                                processBlobData(fileContainer);
-                            } else if (fileContainer.canvas && fileContainer.name) {
-                                processCanvasData(fileContainer);
-                            }
-                        } else if (fileContainer.tagName && fileContainer.tagName.toLowerCase() === "canvas") {
-                            processCanvas(fileContainer);
-                        } else {
-                            self.log(fileContainer + " is not a valid file container!  Ignoring!", "warn");
-                        }
-                    });
-                    this.log("Received " + verifiedFiles.length + " files.");
-                    this._prepareItemsForUpload(verifiedFiles, params, endpoint);
-                }
-            },
-            cancel: function(id) {
-                var uploadData = this._uploadData.retrieve({
-                    id: id
-                });
-                if (uploadData && uploadData.status === qq.status.UPLOAD_FINALIZING) {
-                    this.log(qq.format("Ignoring cancel for file ID {} ({}).  Finalizing upload.", id, this.getName(id)), "error");
-                } else {
-                    this._handler.cancel(id);
-                }
-            },
-            cancelAll: function() {
-                var storedIdsCopy = [], self = this;
-                qq.extend(storedIdsCopy, this._storedIds);
-                qq.each(storedIdsCopy, function(idx, storedFileId) {
-                    self.cancel(storedFileId);
-                });
-                this._handler.cancelAll();
-            },
-            clearStoredFiles: function() {
-                this._storedIds = [];
-            },
-            continueUpload: function(id) {
-                var uploadData = this._uploadData.retrieve({
-                    id: id
-                });
-                if (!qq.supportedFeatures.pause || !this._options.chunking.enabled) {
-                    return false;
-                }
-                if (uploadData.status === qq.status.PAUSED) {
-                    this.log(qq.format("Paused file ID {} ({}) will be continued.  Not paused.", id, this.getName(id)));
-                    this._uploadFile(id);
-                    return true;
-                } else {
-                    this.log(qq.format("Ignoring continue for file ID {} ({}).  Not paused.", id, this.getName(id)), "error");
-                }
-                return false;
-            },
-            deleteFile: function(id) {
-                return this._onSubmitDelete(id);
-            },
-            doesExist: function(fileOrBlobId) {
-                return this._handler.isValid(fileOrBlobId);
-            },
-            drawThumbnail: function(fileId, imgOrCanvas, maxSize, fromServer, customResizeFunction) {
-                var promiseToReturn = new qq.Promise(), fileOrUrl, options;
-                if (this._imageGenerator) {
-                    fileOrUrl = this._thumbnailUrls[fileId];
-                    options = {
-                        customResizeFunction: customResizeFunction,
-                        maxSize: maxSize > 0 ? maxSize : null,
-                        scale: maxSize > 0
-                    };
-                    if (!fromServer && qq.supportedFeatures.imagePreviews) {
-                        fileOrUrl = this.getFile(fileId);
-                    }
-                    if (fileOrUrl == null) {
-                        promiseToReturn.failure({
-                            container: imgOrCanvas,
-                            error: "File or URL not found."
-                        });
-                    } else {
-                        this._imageGenerator.generate(fileOrUrl, imgOrCanvas, options).then(function success(modifiedContainer) {
-                            promiseToReturn.success(modifiedContainer);
-                        }, function failure(container, reason) {
-                            promiseToReturn.failure({
-                                container: container,
-                                error: reason || "Problem generating thumbnail"
-                            });
-                        });
-                    }
-                } else {
-                    promiseToReturn.failure({
-                        container: imgOrCanvas,
-                        error: "Missing image generator module"
-                    });
-                }
-                return promiseToReturn;
-            },
-            getButton: function(fileId) {
-                return this._getButton(this._buttonIdsForFileIds[fileId]);
-            },
-            getEndpoint: function(fileId) {
-                return this._endpointStore.get(fileId);
-            },
-            getFile: function(fileOrBlobId) {
-                var file = this._handler.getFile(fileOrBlobId);
-                var uploadDataRecord;
-                if (!file) {
-                    uploadDataRecord = this._uploadData.retrieve({
-                        id: fileOrBlobId
-                    });
-                    if (uploadDataRecord) {
-                        file = uploadDataRecord.file;
-                    }
-                }
-                return file || null;
-            },
-            getInProgress: function() {
-                return this._uploadData.retrieve({
-                    status: [ qq.status.UPLOADING, qq.status.UPLOAD_RETRYING, qq.status.QUEUED ]
-                }).length;
-            },
-            getName: function(id) {
-                return this._uploadData.retrieve({
-                    id: id
-                }).name;
-            },
-            getParentId: function(id) {
-                var uploadDataEntry = this.getUploads({
-                    id: id
-                }), parentId = null;
-                if (uploadDataEntry) {
-                    if (uploadDataEntry.parentId !== undefined) {
-                        parentId = uploadDataEntry.parentId;
-                    }
-                }
-                return parentId;
-            },
-            getResumableFilesData: function() {
-                return this._handler.getResumableFilesData();
-            },
-            getSize: function(id) {
-                return this._uploadData.retrieve({
-                    id: id
-                }).size;
-            },
-            getNetUploads: function() {
-                return this._netUploaded;
-            },
-            getRemainingAllowedItems: function() {
-                var allowedItems = this._currentItemLimit;
-                if (allowedItems > 0) {
-                    return allowedItems - this._netUploadedOrQueued;
-                }
-                return null;
-            },
-            getUploads: function(optionalFilter) {
-                return this._uploadData.retrieve(optionalFilter);
-            },
-            getUuid: function(id) {
-                return this._uploadData.retrieve({
-                    id: id
-                }).uuid;
-            },
-            isResumable: function(id) {
-                return this._handler.hasResumeRecord(id);
-            },
-            log: function(str, level) {
-                if (this._options.debug && (!level || level === "info")) {
-                    qq.log("[Fine Uploader " + qq.version + "] " + str);
-                } else if (level && level !== "info") {
-                    qq.log("[Fine Uploader " + qq.version + "] " + str, level);
-                }
-            },
-            pauseUpload: function(id) {
-                var uploadData = this._uploadData.retrieve({
-                    id: id
-                });
-                if (!qq.supportedFeatures.pause || !this._options.chunking.enabled) {
-                    return false;
-                }
-                if (qq.indexOf([ qq.status.UPLOADING, qq.status.UPLOAD_RETRYING ], uploadData.status) >= 0) {
-                    if (this._handler.pause(id)) {
-                        this._uploadData.setStatus(id, qq.status.PAUSED);
-                        return true;
-                    } else {
-                        this.log(qq.format("Unable to pause file ID {} ({}).", id, this.getName(id)), "error");
-                    }
-                } else {
-                    this.log(qq.format("Ignoring pause for file ID {} ({}).  Not in progress.", id, this.getName(id)), "error");
-                }
-                return false;
-            },
-            removeFileRef: function(id) {
-                this._handler.expunge(id);
-                this._uploadData.removeFileRef(id);
-            },
-            reset: function() {
-                this.log("Resetting uploader...");
-                this._handler.reset();
-                this._storedIds = [];
-                this._autoRetries = [];
-                this._retryTimeouts = [];
-                this._preventRetries = [];
-                this._thumbnailUrls = [];
-                qq.each(this._buttons, function(idx, button) {
-                    button.reset();
-                });
-                this._paramsStore.reset();
-                this._endpointStore.reset();
-                this._netUploadedOrQueued = 0;
-                this._netUploaded = 0;
-                this._uploadData.reset();
-                this._buttonIdsForFileIds = [];
-                this._pasteHandler && this._pasteHandler.reset();
-                this._options.session.refreshOnReset && this._refreshSessionData();
-                this._succeededSinceLastAllComplete = [];
-                this._failedSinceLastAllComplete = [];
-                this._totalProgress && this._totalProgress.reset();
-                this._customResumeDataStore.reset();
-            },
-            retry: function(id) {
-                return this._manualRetry(id);
-            },
-            scaleImage: function(id, specs) {
-                var self = this;
-                return qq.Scaler.prototype.scaleImage(id, specs, {
-                    log: qq.bind(self.log, self),
-                    getFile: qq.bind(self.getFile, self),
-                    uploadData: self._uploadData
-                });
-            },
-            setCustomHeaders: function(headers, id) {
-                this._customHeadersStore.set(headers, id);
-            },
-            setCustomResumeData: function(id, data) {
-                this._customResumeDataStore.set(data, id);
-            },
-            setDeleteFileCustomHeaders: function(headers, id) {
-                this._deleteFileCustomHeadersStore.set(headers, id);
-            },
-            setDeleteFileEndpoint: function(endpoint, id) {
-                this._deleteFileEndpointStore.set(endpoint, id);
-            },
-            setDeleteFileParams: function(params, id) {
-                this._deleteFileParamsStore.set(params, id);
-            },
-            setEndpoint: function(endpoint, id) {
-                this._endpointStore.set(endpoint, id);
-            },
-            setForm: function(elementOrId) {
-                this._updateFormSupportAndParams(elementOrId);
-            },
-            setItemLimit: function(newItemLimit) {
-                this._currentItemLimit = newItemLimit;
-            },
-            setName: function(id, newName) {
-                this._uploadData.updateName(id, newName);
-            },
-            setParams: function(params, id) {
-                this._paramsStore.set(params, id);
-            },
-            setUuid: function(id, newUuid) {
-                return this._uploadData.uuidChanged(id, newUuid);
-            },
-            setStatus: function(id, newStatus) {
-                var fileRecord = this.getUploads({
-                    id: id
-                });
-                if (!fileRecord) {
-                    throw new qq.Error(id + " is not a valid file ID.");
-                }
-                switch (newStatus) {
-                  case qq.status.DELETED:
-                    this._onDeleteComplete(id, null, false);
-                    break;
-
-                  case qq.status.DELETE_FAILED:
-                    this._onDeleteComplete(id, null, true);
-                    break;
-
-                  default:
-                    var errorMessage = "Method setStatus called on '" + name + "' not implemented yet for " + newStatus;
-                    this.log(errorMessage);
-                    throw new qq.Error(errorMessage);
-                }
-            },
-            uploadStoredFiles: function() {
-                if (this._storedIds.length === 0) {
-                    this._itemError("noFilesError");
-                } else {
-                    this._uploadStoredFiles();
-                }
-            }
-        };
-        qq.basePrivateApi = {
-            _addCannedFile: function(sessionData) {
-                var self = this;
-                return this._uploadData.addFile({
-                    uuid: sessionData.uuid,
-                    name: sessionData.name,
-                    size: sessionData.size,
-                    status: qq.status.UPLOAD_SUCCESSFUL,
-                    onBeforeStatusChange: function(id) {
-                        sessionData.deleteFileEndpoint && self.setDeleteFileEndpoint(sessionData.deleteFileEndpoint, id);
-                        sessionData.deleteFileParams && self.setDeleteFileParams(sessionData.deleteFileParams, id);
-                        if (sessionData.thumbnailUrl) {
-                            self._thumbnailUrls[id] = sessionData.thumbnailUrl;
-                        }
-                        self._netUploaded++;
-                        self._netUploadedOrQueued++;
-                    }
-                });
-            },
-            _annotateWithButtonId: function(file, associatedInput) {
-                if (qq.isFile(file)) {
-                    file.qqButtonId = this._getButtonId(associatedInput);
-                }
-            },
-            _batchError: function(message) {
-                this._options.callbacks.onError(null, null, message, undefined);
-            },
-            _createDeleteHandler: function() {
-                var self = this;
-                return new qq.DeleteFileAjaxRequester({
-                    method: this._options.deleteFile.method.toUpperCase(),
-                    maxConnections: this._options.maxConnections,
-                    uuidParamName: this._options.request.uuidName,
-                    customHeaders: this._deleteFileCustomHeadersStore,
-                    paramsStore: this._deleteFileParamsStore,
-                    endpointStore: this._deleteFileEndpointStore,
-                    cors: this._options.cors,
-                    log: qq.bind(self.log, self),
-                    onDelete: function(id) {
-                        self._onDelete(id);
-                        self._options.callbacks.onDelete(id);
-                    },
-                    onDeleteComplete: function(id, xhrOrXdr, isError) {
-                        self._onDeleteComplete(id, xhrOrXdr, isError);
-                        self._options.callbacks.onDeleteComplete(id, xhrOrXdr, isError);
-                    }
-                });
-            },
-            _createPasteHandler: function() {
-                var self = this;
-                return new qq.PasteSupport({
-                    targetElement: this._options.paste.targetElement,
-                    callbacks: {
-                        log: qq.bind(self.log, self),
-                        pasteReceived: function(blob) {
-                            self._handleCheckedCallback({
-                                name: "onPasteReceived",
-                                callback: qq.bind(self._options.callbacks.onPasteReceived, self, blob),
-                                onSuccess: qq.bind(self._handlePasteSuccess, self, blob),
-                                identifier: "pasted image"
-                            });
-                        }
-                    }
-                });
-            },
-            _createStore: function(initialValue, _readOnlyValues_) {
-                var store = {}, catchall = initialValue, perIdReadOnlyValues = {}, readOnlyValues = _readOnlyValues_, copy = function(orig) {
-                    if (qq.isObject(orig)) {
-                        return qq.extend({}, orig);
-                    }
-                    return orig;
-                }, getReadOnlyValues = function() {
-                    if (qq.isFunction(readOnlyValues)) {
-                        return readOnlyValues();
-                    }
-                    return readOnlyValues;
-                }, includeReadOnlyValues = function(id, existing) {
-                    if (readOnlyValues && qq.isObject(existing)) {
-                        qq.extend(existing, getReadOnlyValues());
-                    }
-                    if (perIdReadOnlyValues[id]) {
-                        qq.extend(existing, perIdReadOnlyValues[id]);
-                    }
-                };
-                return {
-                    set: function(val, id) {
-                        if (id == null) {
-                            store = {};
-                            catchall = copy(val);
-                        } else {
-                            store[id] = copy(val);
-                        }
-                    },
-                    get: function(id) {
-                        var values;
-                        if (id != null && store[id]) {
-                            values = store[id];
-                        } else {
-                            values = copy(catchall);
-                        }
-                        includeReadOnlyValues(id, values);
-                        return copy(values);
-                    },
-                    addReadOnly: function(id, values) {
-                        if (qq.isObject(store)) {
-                            if (id === null) {
-                                if (qq.isFunction(values)) {
-                                    readOnlyValues = values;
-                                } else {
-                                    readOnlyValues = readOnlyValues || {};
-                                    qq.extend(readOnlyValues, values);
-                                }
-                            } else {
-                                perIdReadOnlyValues[id] = perIdReadOnlyValues[id] || {};
-                                qq.extend(perIdReadOnlyValues[id], values);
-                            }
-                        }
-                    },
-                    remove: function(fileId) {
-                        return delete store[fileId];
-                    },
-                    reset: function() {
-                        store = {};
-                        perIdReadOnlyValues = {};
-                        catchall = initialValue;
-                    }
-                };
-            },
-            _createUploadDataTracker: function() {
-                var self = this;
-                return new qq.UploadData({
-                    getName: function(id) {
-                        return self.getName(id);
-                    },
-                    getUuid: function(id) {
-                        return self.getUuid(id);
-                    },
-                    getSize: function(id) {
-                        return self.getSize(id);
-                    },
-                    onStatusChange: function(id, oldStatus, newStatus) {
-                        self._onUploadStatusChange(id, oldStatus, newStatus);
-                        self._options.callbacks.onStatusChange(id, oldStatus, newStatus);
-                        self._maybeAllComplete(id, newStatus);
-                        if (self._totalProgress) {
-                            setTimeout(function() {
-                                self._totalProgress.onStatusChange(id, oldStatus, newStatus);
-                            }, 0);
-                        }
-                    }
-                });
-            },
-            _createUploadButton: function(spec) {
-                var self = this, acceptFiles = spec.accept || this._options.validation.acceptFiles, allowedExtensions = spec.allowedExtensions || this._options.validation.allowedExtensions, button;
-                function allowMultiple() {
-                    if (qq.supportedFeatures.ajaxUploading) {
-                        if (self._options.workarounds.iosEmptyVideos && qq.ios() && !qq.ios6() && self._isAllowedExtension(allowedExtensions, ".mov")) {
-                            return false;
-                        }
-                        if (spec.multiple === undefined) {
-                            return self._options.multiple;
-                        }
-                        return spec.multiple;
-                    }
-                    return false;
-                }
-                button = new qq.UploadButton({
-                    acceptFiles: acceptFiles,
-                    element: spec.element,
-                    focusClass: this._options.classes.buttonFocus,
-                    folders: spec.folders,
-                    hoverClass: this._options.classes.buttonHover,
-                    ios8BrowserCrashWorkaround: this._options.workarounds.ios8BrowserCrash,
-                    multiple: allowMultiple(),
-                    name: this._options.request.inputName,
-                    onChange: function(input) {
-                        self._onInputChange(input);
-                    },
-                    title: spec.title == null ? this._options.text.fileInputTitle : spec.title
-                });
-                this._disposeSupport.addDisposer(function() {
-                    button.dispose();
-                });
-                self._buttons.push(button);
-                return button;
-            },
-            _createUploadHandler: function(additionalOptions, namespace) {
-                var self = this, lastOnProgress = {}, options = {
-                    debug: this._options.debug,
-                    maxConnections: this._options.maxConnections,
-                    cors: this._options.cors,
-                    paramsStore: this._paramsStore,
-                    endpointStore: this._endpointStore,
-                    chunking: this._options.chunking,
-                    resume: this._options.resume,
-                    blobs: this._options.blobs,
-                    log: qq.bind(self.log, self),
-                    preventRetryParam: this._options.retry.preventRetryResponseProperty,
-                    onProgress: function(id, name, loaded, total) {
-                        if (loaded < 0 || total < 0) {
-                            return;
-                        }
-                        if (lastOnProgress[id]) {
-                            if (lastOnProgress[id].loaded !== loaded || lastOnProgress[id].total !== total) {
-                                self._onProgress(id, name, loaded, total);
-                                self._options.callbacks.onProgress(id, name, loaded, total);
-                            }
-                        } else {
-                            self._onProgress(id, name, loaded, total);
-                            self._options.callbacks.onProgress(id, name, loaded, total);
-                        }
-                        lastOnProgress[id] = {
-                            loaded: loaded,
-                            total: total
-                        };
-                    },
-                    onComplete: function(id, name, result, xhr) {
-                        delete lastOnProgress[id];
-                        var status = self.getUploads({
-                            id: id
-                        }).status, retVal;
-                        if (status === qq.status.UPLOAD_SUCCESSFUL || status === qq.status.UPLOAD_FAILED) {
-                            return;
-                        }
-                        retVal = self._onComplete(id, name, result, xhr);
-                        if (retVal instanceof qq.Promise) {
-                            retVal.done(function() {
-                                self._options.callbacks.onComplete(id, name, result, xhr);
-                            });
-                        } else {
-                            self._options.callbacks.onComplete(id, name, result, xhr);
-                        }
-                    },
-                    onCancel: function(id, name, cancelFinalizationEffort) {
-                        var promise = new qq.Promise();
-                        self._handleCheckedCallback({
-                            name: "onCancel",
-                            callback: qq.bind(self._options.callbacks.onCancel, self, id, name),
-                            onFailure: promise.failure,
-                            onSuccess: function() {
-                                cancelFinalizationEffort.then(function() {
-                                    self._onCancel(id, name);
-                                });
-                                promise.success();
-                            },
-                            identifier: id
-                        });
-                        return promise;
-                    },
-                    onUploadPrep: qq.bind(this._onUploadPrep, this),
-                    onUpload: function(id, name) {
-                        self._onUpload(id, name);
-                        var onUploadResult = self._options.callbacks.onUpload(id, name);
-                        if (qq.isGenericPromise(onUploadResult)) {
-                            self.log(qq.format("onUpload for {} returned a Promise - waiting for resolution.", id));
-                            return onUploadResult;
-                        }
-                        return new qq.Promise().success();
-                    },
-                    onUploadChunk: function(id, name, chunkData) {
-                        self._onUploadChunk(id, chunkData);
-                        var onUploadChunkResult = self._options.callbacks.onUploadChunk(id, name, chunkData);
-                        if (qq.isGenericPromise(onUploadChunkResult)) {
-                            self.log(qq.format("onUploadChunk for {}.{} returned a Promise - waiting for resolution.", id, chunkData.partIndex));
-                            return onUploadChunkResult;
-                        }
-                        return new qq.Promise().success();
-                    },
-                    onUploadChunkSuccess: function(id, chunkData, result, xhr) {
-                        self._onUploadChunkSuccess(id, chunkData);
-                        self._options.callbacks.onUploadChunkSuccess.apply(self, arguments);
-                    },
-                    onResume: function(id, name, chunkData, customResumeData) {
-                        return self._options.callbacks.onResume(id, name, chunkData, customResumeData);
-                    },
-                    onAutoRetry: function(id, name, responseJSON, xhr) {
-                        return self._onAutoRetry.apply(self, arguments);
-                    },
-                    onUuidChanged: function(id, newUuid) {
-                        self.log("Server requested UUID change from '" + self.getUuid(id) + "' to '" + newUuid + "'");
-                        self.setUuid(id, newUuid);
-                    },
-                    getName: qq.bind(self.getName, self),
-                    getUuid: qq.bind(self.getUuid, self),
-                    getSize: qq.bind(self.getSize, self),
-                    setSize: qq.bind(self._setSize, self),
-                    getDataByUuid: function(uuid) {
-                        return self.getUploads({
-                            uuid: uuid
-                        });
-                    },
-                    isQueued: function(id) {
-                        var status = self.getUploads({
-                            id: id
-                        }).status;
-                        return status === qq.status.QUEUED || status === qq.status.SUBMITTED || status === qq.status.UPLOAD_RETRYING || status === qq.status.PAUSED;
-                    },
-                    getIdsInProxyGroup: self._uploadData.getIdsInProxyGroup,
-                    getIdsInBatch: self._uploadData.getIdsInBatch,
-                    isInProgress: function(id) {
-                        return self.getUploads({
-                            id: id
-                        }).status === qq.status.UPLOADING;
-                    },
-                    getCustomResumeData: qq.bind(self._getCustomResumeData, self),
-                    setStatus: function(id, status) {
-                        self._uploadData.setStatus(id, status);
-                    }
-                };
-                qq.each(this._options.request, function(prop, val) {
-                    options[prop] = val;
-                });
-                options.customHeaders = this._customHeadersStore;
-                if (additionalOptions) {
-                    qq.each(additionalOptions, function(key, val) {
-                        options[key] = val;
-                    });
-                }
-                return new qq.UploadHandlerController(options, namespace);
-            },
-            _fileOrBlobRejected: function(id) {
-                this._netUploadedOrQueued--;
-                this._uploadData.setStatus(id, qq.status.REJECTED);
-            },
-            _formatSize: function(bytes) {
-                if (bytes === 0) {
-                    return bytes + this._options.text.sizeSymbols[0];
-                }
-                var i = -1;
-                do {
-                    bytes = bytes / 1e3;
-                    i++;
-                } while (bytes > 999);
-                return Math.max(bytes, .1).toFixed(1) + this._options.text.sizeSymbols[i];
-            },
-            _generateExtraButtonSpecs: function() {
-                var self = this;
-                this._extraButtonSpecs = {};
-                qq.each(this._options.extraButtons, function(idx, extraButtonOptionEntry) {
-                    var multiple = extraButtonOptionEntry.multiple, validation = qq.extend({}, self._options.validation, true), extraButtonSpec = qq.extend({}, extraButtonOptionEntry);
-                    if (multiple === undefined) {
-                        multiple = self._options.multiple;
-                    }
-                    if (extraButtonSpec.validation) {
-                        qq.extend(validation, extraButtonOptionEntry.validation, true);
-                    }
-                    qq.extend(extraButtonSpec, {
-                        multiple: multiple,
-                        validation: validation
-                    }, true);
-                    self._initExtraButton(extraButtonSpec);
-                });
-            },
-            _getButton: function(buttonId) {
-                var extraButtonsSpec = this._extraButtonSpecs[buttonId];
-                if (extraButtonsSpec) {
-                    return extraButtonsSpec.element;
-                } else if (buttonId === this._defaultButtonId) {
-                    return this._options.button;
-                }
-            },
-            _getButtonId: function(buttonOrFileInputOrFile) {
-                var inputs, fileInput, fileBlobOrInput = buttonOrFileInputOrFile;
-                if (fileBlobOrInput instanceof qq.BlobProxy) {
-                    fileBlobOrInput = fileBlobOrInput.referenceBlob;
-                }
-                if (fileBlobOrInput && !qq.isBlob(fileBlobOrInput)) {
-                    if (qq.isFile(fileBlobOrInput)) {
-                        return fileBlobOrInput.qqButtonId;
-                    } else if (fileBlobOrInput.tagName.toLowerCase() === "input" && fileBlobOrInput.type.toLowerCase() === "file") {
-                        return fileBlobOrInput.getAttribute(qq.UploadButton.BUTTON_ID_ATTR_NAME);
-                    }
-                    inputs = fileBlobOrInput.getElementsByTagName("input");
-                    qq.each(inputs, function(idx, input) {
-                        if (input.getAttribute("type") === "file") {
-                            fileInput = input;
-                            return false;
-                        }
-                    });
-                    if (fileInput) {
-                        return fileInput.getAttribute(qq.UploadButton.BUTTON_ID_ATTR_NAME);
-                    }
-                }
-            },
-            _getCustomResumeData: function(fileId) {
-                return this._customResumeDataStore.get(fileId);
-            },
-            _getNotFinished: function() {
-                return this._uploadData.retrieve({
-                    status: [ qq.status.UPLOADING, qq.status.UPLOAD_RETRYING, qq.status.QUEUED, qq.status.SUBMITTING, qq.status.SUBMITTED, qq.status.PAUSED ]
-                }).length;
-            },
-            _getValidationBase: function(buttonId) {
-                var extraButtonSpec = this._extraButtonSpecs[buttonId];
-                return extraButtonSpec ? extraButtonSpec.validation : this._options.validation;
-            },
-            _getValidationDescriptor: function(fileWrapper) {
-                if (fileWrapper.file instanceof qq.BlobProxy) {
-                    return {
-                        name: qq.getFilename(fileWrapper.file.referenceBlob),
-                        size: fileWrapper.file.referenceBlob.size
-                    };
-                }
-                return {
-                    name: this.getUploads({
-                        id: fileWrapper.id
-                    }).name,
-                    size: this.getUploads({
-                        id: fileWrapper.id
-                    }).size
-                };
-            },
-            _getValidationDescriptors: function(fileWrappers) {
-                var self = this, fileDescriptors = [];
-                qq.each(fileWrappers, function(idx, fileWrapper) {
-                    fileDescriptors.push(self._getValidationDescriptor(fileWrapper));
-                });
-                return fileDescriptors;
-            },
-            _handleCameraAccess: function() {
-                if (this._options.camera.ios && qq.ios()) {
-                    var acceptIosCamera = "image/*;capture=camera", button = this._options.camera.button, buttonId = button ? this._getButtonId(button) : this._defaultButtonId, optionRoot = this._options;
-                    if (buttonId && buttonId !== this._defaultButtonId) {
-                        optionRoot = this._extraButtonSpecs[buttonId];
-                    }
-                    optionRoot.multiple = false;
-                    if (optionRoot.validation.acceptFiles === null) {
-                        optionRoot.validation.acceptFiles = acceptIosCamera;
-                    } else {
-                        optionRoot.validation.acceptFiles += "," + acceptIosCamera;
-                    }
-                    qq.each(this._buttons, function(idx, button) {
-                        if (button.getButtonId() === buttonId) {
-                            button.setMultiple(optionRoot.multiple);
-                            button.setAcceptFiles(optionRoot.acceptFiles);
-                            return false;
-                        }
-                    });
-                }
-            },
-            _handleCheckedCallback: function(details) {
-                var self = this, callbackRetVal = details.callback();
-                if (qq.isGenericPromise(callbackRetVal)) {
-                    this.log(details.name + " - waiting for " + details.name + " promise to be fulfilled for " + details.identifier);
-                    return callbackRetVal.then(function(successParam) {
-                        self.log(details.name + " promise success for " + details.identifier);
-                        details.onSuccess(successParam);
-                    }, function() {
-                        if (details.onFailure) {
-                            self.log(details.name + " promise failure for " + details.identifier);
-                            details.onFailure();
-                        } else {
-                            self.log(details.name + " promise failure for " + details.identifier);
-                        }
-                    });
-                }
-                if (callbackRetVal !== false) {
-                    details.onSuccess(callbackRetVal);
-                } else {
-                    if (details.onFailure) {
-                        this.log(details.name + " - return value was 'false' for " + details.identifier + ".  Invoking failure callback.");
-                        details.onFailure();
-                    } else {
-                        this.log(details.name + " - return value was 'false' for " + details.identifier + ".  Will not proceed.");
-                    }
-                }
-                return callbackRetVal;
-            },
-            _handleNewFile: function(file, batchId, newFileWrapperList) {
-                var self = this, uuid = qq.getUniqueId(), size = -1, name = qq.getFilename(file), actualFile = file.blob || file, handler = this._customNewFileHandler ? this._customNewFileHandler : qq.bind(self._handleNewFileGeneric, self);
-                if (!qq.isInput(actualFile) && actualFile.size >= 0) {
-                    size = actualFile.size;
-                }
-                handler(actualFile, name, uuid, size, newFileWrapperList, batchId, this._options.request.uuidName, {
-                    uploadData: self._uploadData,
-                    paramsStore: self._paramsStore,
-                    addFileToHandler: function(id, file) {
-                        self._handler.add(id, file);
-                        self._netUploadedOrQueued++;
-                        self._trackButton(id);
-                    }
-                });
-            },
-            _handleNewFileGeneric: function(file, name, uuid, size, fileList, batchId) {
-                var id = this._uploadData.addFile({
-                    uuid: uuid,
-                    name: name,
-                    size: size,
-                    batchId: batchId,
-                    file: file
-                });
-                this._handler.add(id, file);
-                this._trackButton(id);
-                this._netUploadedOrQueued++;
-                fileList.push({
-                    id: id,
-                    file: file
-                });
-            },
-            _handlePasteSuccess: function(blob, extSuppliedName) {
-                var extension = blob.type.split("/")[1], name = extSuppliedName;
-                if (name == null) {
-                    name = this._options.paste.defaultName;
-                }
-                name += "." + extension;
-                this.addFiles({
-                    name: name,
-                    blob: blob
-                });
-            },
-            _handleDeleteSuccess: function(id) {
-                if (this.getUploads({
-                    id: id
-                }).status !== qq.status.DELETED) {
-                    var name = this.getName(id);
-                    this._netUploadedOrQueued--;
-                    this._netUploaded--;
-                    this._handler.expunge(id);
-                    this._uploadData.setStatus(id, qq.status.DELETED);
-                    this.log("Delete request for '" + name + "' has succeeded.");
-                }
-            },
-            _handleDeleteFailed: function(id, xhrOrXdr) {
-                var name = this.getName(id);
-                this._uploadData.setStatus(id, qq.status.DELETE_FAILED);
-                this.log("Delete request for '" + name + "' has failed.", "error");
-                if (!xhrOrXdr || xhrOrXdr.withCredentials === undefined) {
-                    this._options.callbacks.onError(id, name, "Delete request failed", xhrOrXdr);
-                } else {
-                    this._options.callbacks.onError(id, name, "Delete request failed with response code " + xhrOrXdr.status, xhrOrXdr);
-                }
-            },
-            _initExtraButton: function(spec) {
-                var button = this._createUploadButton({
-                    accept: spec.validation.acceptFiles,
-                    allowedExtensions: spec.validation.allowedExtensions,
-                    element: spec.element,
-                    folders: spec.folders,
-                    multiple: spec.multiple,
-                    title: spec.fileInputTitle
-                });
-                this._extraButtonSpecs[button.getButtonId()] = spec;
-            },
-            _initFormSupportAndParams: function() {
-                this._formSupport = qq.FormSupport && new qq.FormSupport(this._options.form, qq.bind(this.uploadStoredFiles, this), qq.bind(this.log, this));
-                if (this._formSupport && this._formSupport.attachedToForm) {
-                    this._paramsStore = this._createStore(this._options.request.params, this._formSupport.getFormInputsAsObject);
-                    this._options.autoUpload = this._formSupport.newAutoUpload;
-                    if (this._formSupport.newEndpoint) {
-                        this._options.request.endpoint = this._formSupport.newEndpoint;
-                    }
-                } else {
-                    this._paramsStore = this._createStore(this._options.request.params);
-                }
-            },
-            _isDeletePossible: function() {
-                if (!qq.DeleteFileAjaxRequester || !this._options.deleteFile.enabled) {
-                    return false;
-                }
-                if (this._options.cors.expected) {
-                    if (qq.supportedFeatures.deleteFileCorsXhr) {
-                        return true;
-                    }
-                    if (qq.supportedFeatures.deleteFileCorsXdr && this._options.cors.allowXdr) {
-                        return true;
-                    }
-                    return false;
-                }
-                return true;
-            },
-            _isAllowedExtension: function(allowed, fileName) {
-                var valid = false;
-                if (!allowed.length) {
-                    return true;
-                }
-                qq.each(allowed, function(idx, allowedExt) {
-                    if (qq.isString(allowedExt)) {
-                        var extRegex = new RegExp("\\." + allowedExt + "$", "i");
-                        if (fileName.match(extRegex) != null) {
-                            valid = true;
-                            return false;
-                        }
-                    }
-                });
-                return valid;
-            },
-            _itemError: function(code, maybeNameOrNames, item) {
-                var message = this._options.messages[code], allowedExtensions = [], names = [].concat(maybeNameOrNames), name = names[0], buttonId = this._getButtonId(item), validationBase = this._getValidationBase(buttonId), extensionsForMessage, placeholderMatch;
-                function r(name, replacement) {
-                    message = message.replace(name, replacement);
-                }
-                qq.each(validationBase.allowedExtensions, function(idx, allowedExtension) {
-                    if (qq.isString(allowedExtension)) {
-                        allowedExtensions.push(allowedExtension);
-                    }
-                });
-                extensionsForMessage = allowedExtensions.join(", ").toLowerCase();
-                r("{file}", this._options.formatFileName(name));
-                r("{extensions}", extensionsForMessage);
-                r("{sizeLimit}", this._formatSize(validationBase.sizeLimit));
-                r("{minSizeLimit}", this._formatSize(validationBase.minSizeLimit));
-                placeholderMatch = message.match(/(\{\w+\})/g);
-                if (placeholderMatch !== null) {
-                    qq.each(placeholderMatch, function(idx, placeholder) {
-                        r(placeholder, names[idx]);
-                    });
-                }
-                this._options.callbacks.onError(null, name, message, undefined);
-                return message;
-            },
-            _manualRetry: function(id, callback) {
-                if (this._onBeforeManualRetry(id)) {
-                    this._netUploadedOrQueued++;
-                    this._uploadData.setStatus(id, qq.status.UPLOAD_RETRYING);
-                    if (callback) {
-                        callback(id);
-                    } else {
-                        this._handler.retry(id);
-                    }
-                    return true;
-                }
-            },
-            _maybeAllComplete: function(id, status) {
-                var self = this, notFinished = this._getNotFinished();
-                if (status === qq.status.UPLOAD_SUCCESSFUL) {
-                    this._succeededSinceLastAllComplete.push(id);
-                } else if (status === qq.status.UPLOAD_FAILED) {
-                    this._failedSinceLastAllComplete.push(id);
-                }
-                if (notFinished === 0 && (this._succeededSinceLastAllComplete.length || this._failedSinceLastAllComplete.length)) {
-                    setTimeout(function() {
-                        self._onAllComplete(self._succeededSinceLastAllComplete, self._failedSinceLastAllComplete);
-                    }, 0);
-                }
-            },
-            _maybeHandleIos8SafariWorkaround: function() {
-                var self = this;
-                if (this._options.workarounds.ios8SafariUploads && qq.ios800() && qq.iosSafari()) {
-                    setTimeout(function() {
-                        window.alert(self._options.messages.unsupportedBrowserIos8Safari);
-                    }, 0);
-                    throw new qq.Error(this._options.messages.unsupportedBrowserIos8Safari);
-                }
-            },
-            _maybeParseAndSendUploadError: function(id, name, response, xhr) {
-                if (!response.success) {
-                    if (xhr && xhr.status !== 200 && !response.error) {
-                        this._options.callbacks.onError(id, name, "XHR returned response code " + xhr.status, xhr);
-                    } else {
-                        var errorReason = response.error ? response.error : this._options.text.defaultResponseError;
-                        this._options.callbacks.onError(id, name, errorReason, xhr);
-                    }
-                }
-            },
-            _maybeProcessNextItemAfterOnValidateCallback: function(validItem, items, index, params, endpoint) {
-                var self = this;
-                if (items.length > index) {
-                    if (validItem || !this._options.validation.stopOnFirstInvalidFile) {
-                        setTimeout(function() {
-                            var validationDescriptor = self._getValidationDescriptor(items[index]), buttonId = self._getButtonId(items[index].file), button = self._getButton(buttonId);
-                            self._handleCheckedCallback({
-                                name: "onValidate",
-                                callback: qq.bind(self._options.callbacks.onValidate, self, validationDescriptor, button),
-                                onSuccess: qq.bind(self._onValidateCallbackSuccess, self, items, index, params, endpoint),
-                                onFailure: qq.bind(self._onValidateCallbackFailure, self, items, index, params, endpoint),
-                                identifier: "Item '" + validationDescriptor.name + "', size: " + validationDescriptor.size
-                            });
-                        }, 0);
-                    } else if (!validItem) {
-                        for (;index < items.length; index++) {
-                            self._fileOrBlobRejected(items[index].id);
-                        }
-                    }
-                }
-            },
-            _onAllComplete: function(successful, failed) {
-                this._totalProgress && this._totalProgress.onAllComplete(successful, failed, this._preventRetries);
-                this._options.callbacks.onAllComplete(qq.extend([], successful), qq.extend([], failed));
-                this._succeededSinceLastAllComplete = [];
-                this._failedSinceLastAllComplete = [];
-            },
-            _onAutoRetry: function(id, name, responseJSON, xhr, callback) {
-                var self = this;
-                self._preventRetries[id] = responseJSON[self._options.retry.preventRetryResponseProperty];
-                if (self._shouldAutoRetry(id)) {
-                    var retryWaitPeriod = self._options.retry.autoAttemptDelay * 1e3;
-                    self._maybeParseAndSendUploadError.apply(self, arguments);
-                    self._options.callbacks.onAutoRetry(id, name, self._autoRetries[id]);
-                    self._onBeforeAutoRetry(id, name);
-                    self._uploadData.setStatus(id, qq.status.UPLOAD_RETRYING);
-                    self._retryTimeouts[id] = setTimeout(function() {
-                        self.log("Starting retry for " + name + "...");
-                        if (callback) {
-                            callback(id);
-                        } else {
-                            self._handler.retry(id);
-                        }
-                    }, retryWaitPeriod);
-                    return true;
-                }
-            },
-            _onBeforeAutoRetry: function(id, name) {
-                this.log("Waiting " + this._options.retry.autoAttemptDelay + " seconds before retrying " + name + "...");
-            },
-            _onBeforeManualRetry: function(id) {
-                var itemLimit = this._currentItemLimit, fileName;
-                if (this._preventRetries[id]) {
-                    this.log("Retries are forbidden for id " + id, "warn");
-                    return false;
-                } else if (this._handler.isValid(id)) {
-                    fileName = this.getName(id);
-                    if (this._options.callbacks.onManualRetry(id, fileName) === false) {
-                        return false;
-                    }
-                    if (itemLimit > 0 && this._netUploadedOrQueued + 1 > itemLimit) {
-                        this._itemError("retryFailTooManyItems");
-                        return false;
-                    }
-                    this.log("Retrying upload for '" + fileName + "' (id: " + id + ")...");
-                    return true;
-                } else {
-                    this.log("'" + id + "' is not a valid file ID", "error");
-                    return false;
-                }
-            },
-            _onCancel: function(id, name) {
-                this._netUploadedOrQueued--;
-                clearTimeout(this._retryTimeouts[id]);
-                var storedItemIndex = qq.indexOf(this._storedIds, id);
-                if (!this._options.autoUpload && storedItemIndex >= 0) {
-                    this._storedIds.splice(storedItemIndex, 1);
-                }
-                this._uploadData.setStatus(id, qq.status.CANCELED);
-            },
-            _onComplete: function(id, name, result, xhr) {
-                if (!result.success) {
-                    this._netUploadedOrQueued--;
-                    this._uploadData.setStatus(id, qq.status.UPLOAD_FAILED);
-                    if (result[this._options.retry.preventRetryResponseProperty] === true) {
-                        this._preventRetries[id] = true;
-                    }
-                } else {
-                    if (result.thumbnailUrl) {
-                        this._thumbnailUrls[id] = result.thumbnailUrl;
-                    }
-                    this._netUploaded++;
-                    this._uploadData.setStatus(id, qq.status.UPLOAD_SUCCESSFUL);
-                }
-                this._maybeParseAndSendUploadError(id, name, result, xhr);
-                return result.success ? true : false;
-            },
-            _onDelete: function(id) {
-                this._uploadData.setStatus(id, qq.status.DELETING);
-            },
-            _onDeleteComplete: function(id, xhrOrXdr, isError) {
-                var name = this.getName(id);
-                if (isError) {
-                    this._handleDeleteFailed(id, xhrOrXdr);
-                } else {
-                    this._handleDeleteSuccess(id);
-                }
-            },
-            _onInputChange: function(input) {
-                var fileIndex;
-                if (qq.supportedFeatures.ajaxUploading) {
-                    for (fileIndex = 0; fileIndex < input.files.length; fileIndex++) {
-                        this._annotateWithButtonId(input.files[fileIndex], input);
-                    }
-                    this.addFiles(input.files);
-                } else if (input.value.length > 0) {
-                    this.addFiles(input);
-                }
-                qq.each(this._buttons, function(idx, button) {
-                    button.reset();
-                });
-            },
-            _onProgress: function(id, name, loaded, total) {
-                this._totalProgress && this._totalProgress.onIndividualProgress(id, loaded, total);
-            },
-            _onSubmit: function(id, name) {},
-            _onSubmitCallbackSuccess: function(id, name) {
-                this._onSubmit.apply(this, arguments);
-                this._uploadData.setStatus(id, qq.status.SUBMITTED);
-                this._onSubmitted.apply(this, arguments);
-                if (this._options.autoUpload) {
-                    this._options.callbacks.onSubmitted.apply(this, arguments);
-                    this._uploadFile(id);
-                } else {
-                    this._storeForLater(id);
-                    this._options.callbacks.onSubmitted.apply(this, arguments);
-                }
-            },
-            _onSubmitDelete: function(id, onSuccessCallback, additionalMandatedParams) {
-                var uuid = this.getUuid(id), adjustedOnSuccessCallback;
-                if (onSuccessCallback) {
-                    adjustedOnSuccessCallback = qq.bind(onSuccessCallback, this, id, uuid, additionalMandatedParams);
-                }
-                if (this._isDeletePossible()) {
-                    this._handleCheckedCallback({
-                        name: "onSubmitDelete",
-                        callback: qq.bind(this._options.callbacks.onSubmitDelete, this, id),
-                        onSuccess: adjustedOnSuccessCallback || qq.bind(this._deleteHandler.sendDelete, this, id, uuid, additionalMandatedParams),
-                        identifier: id
-                    });
-                    return true;
-                } else {
-                    this.log("Delete request ignored for ID " + id + ", delete feature is disabled or request not possible " + "due to CORS on a user agent that does not support pre-flighting.", "warn");
-                    return false;
-                }
-            },
-            _onSubmitted: function(id) {},
-            _onTotalProgress: function(loaded, total) {
-                this._options.callbacks.onTotalProgress(loaded, total);
-            },
-            _onUploadPrep: function(id) {},
-            _onUpload: function(id, name) {
-                this._uploadData.setStatus(id, qq.status.UPLOADING);
-            },
-            _onUploadChunk: function(id, chunkData) {},
-            _onUploadChunkSuccess: function(id, chunkData) {
-                if (!this._preventRetries[id] && this._options.retry.enableAuto) {
-                    this._autoRetries[id] = 0;
-                }
-            },
-            _onUploadStatusChange: function(id, oldStatus, newStatus) {
-                if (newStatus === qq.status.PAUSED) {
-                    clearTimeout(this._retryTimeouts[id]);
-                }
-            },
-            _onValidateBatchCallbackFailure: function(fileWrappers) {
-                var self = this;
-                qq.each(fileWrappers, function(idx, fileWrapper) {
-                    self._fileOrBlobRejected(fileWrapper.id);
-                });
-            },
-            _onValidateBatchCallbackSuccess: function(validationDescriptors, items, params, endpoint, button) {
-                var errorMessage, itemLimit = this._currentItemLimit, proposedNetFilesUploadedOrQueued = this._netUploadedOrQueued;
-                if (itemLimit === 0 || proposedNetFilesUploadedOrQueued <= itemLimit) {
-                    if (items.length > 0) {
-                        this._handleCheckedCallback({
-                            name: "onValidate",
-                            callback: qq.bind(this._options.callbacks.onValidate, this, validationDescriptors[0], button),
-                            onSuccess: qq.bind(this._onValidateCallbackSuccess, this, items, 0, params, endpoint),
-                            onFailure: qq.bind(this._onValidateCallbackFailure, this, items, 0, params, endpoint),
-                            identifier: "Item '" + items[0].file.name + "', size: " + items[0].file.size
-                        });
-                    } else {
-                        this._itemError("noFilesError");
-                    }
-                } else {
-                    this._onValidateBatchCallbackFailure(items);
-                    errorMessage = this._options.messages.tooManyItemsError.replace(/\{netItems\}/g, proposedNetFilesUploadedOrQueued).replace(/\{itemLimit\}/g, itemLimit);
-                    this._batchError(errorMessage);
-                }
-            },
-            _onValidateCallbackFailure: function(items, index, params, endpoint) {
-                var nextIndex = index + 1;
-                this._fileOrBlobRejected(items[index].id, items[index].file.name);
-                this._maybeProcessNextItemAfterOnValidateCallback(false, items, nextIndex, params, endpoint);
-            },
-            _onValidateCallbackSuccess: function(items, index, params, endpoint) {
-                var self = this, nextIndex = index + 1, validationDescriptor = this._getValidationDescriptor(items[index]);
-                this._validateFileOrBlobData(items[index], validationDescriptor).then(function() {
-                    self._upload(items[index].id, params, endpoint);
-                    self._maybeProcessNextItemAfterOnValidateCallback(true, items, nextIndex, params, endpoint);
-                }, function() {
-                    self._maybeProcessNextItemAfterOnValidateCallback(false, items, nextIndex, params, endpoint);
-                });
-            },
-            _prepareItemsForUpload: function(items, params, endpoint) {
-                if (items.length === 0) {
-                    this._itemError("noFilesError");
-                    return;
-                }
-                var validationDescriptors = this._getValidationDescriptors(items), buttonId = this._getButtonId(items[0].file), button = this._getButton(buttonId);
-                this._handleCheckedCallback({
-                    name: "onValidateBatch",
-                    callback: qq.bind(this._options.callbacks.onValidateBatch, this, validationDescriptors, button),
-                    onSuccess: qq.bind(this._onValidateBatchCallbackSuccess, this, validationDescriptors, items, params, endpoint, button),
-                    onFailure: qq.bind(this._onValidateBatchCallbackFailure, this, items),
-                    identifier: "batch validation"
-                });
-            },
-            _preventLeaveInProgress: function() {
-                var self = this;
-                this._disposeSupport.attach(window, "beforeunload", function(e) {
-                    if (self.getInProgress()) {
-                        e = e || window.event;
-                        e.returnValue = self._options.messages.onLeave;
-                        return self._options.messages.onLeave;
-                    }
-                });
-            },
-            _refreshSessionData: function() {
-                var self = this, options = this._options.session;
-                if (qq.Session && this._options.session.endpoint != null) {
-                    if (!this._session) {
-                        qq.extend(options, {
-                            cors: this._options.cors
-                        });
-                        options.log = qq.bind(this.log, this);
-                        options.addFileRecord = qq.bind(this._addCannedFile, this);
-                        this._session = new qq.Session(options);
-                    }
-                    setTimeout(function() {
-                        self._session.refresh().then(function(response, xhrOrXdr) {
-                            self._sessionRequestComplete();
-                            self._options.callbacks.onSessionRequestComplete(response, true, xhrOrXdr);
-                        }, function(response, xhrOrXdr) {
-                            self._options.callbacks.onSessionRequestComplete(response, false, xhrOrXdr);
-                        });
-                    }, 0);
-                }
-            },
-            _sessionRequestComplete: function() {},
-            _setSize: function(id, newSize) {
-                this._uploadData.updateSize(id, newSize);
-                this._totalProgress && this._totalProgress.onNewSize(id);
-            },
-            _shouldAutoRetry: function(id) {
-                var uploadData = this._uploadData.retrieve({
-                    id: id
-                });
-                if (!this._preventRetries[id] && this._options.retry.enableAuto && uploadData.status !== qq.status.PAUSED) {
-                    if (this._autoRetries[id] === undefined) {
-                        this._autoRetries[id] = 0;
-                    }
-                    if (this._autoRetries[id] < this._options.retry.maxAutoAttempts) {
-                        this._autoRetries[id] += 1;
-                        return true;
-                    }
-                }
-                return false;
-            },
-            _storeForLater: function(id) {
-                this._storedIds.push(id);
-            },
-            _trackButton: function(id) {
-                var buttonId;
-                if (qq.supportedFeatures.ajaxUploading) {
-                    buttonId = this._handler.getFile(id).qqButtonId;
-                } else {
-                    buttonId = this._getButtonId(this._handler.getInput(id));
-                }
-                if (buttonId) {
-                    this._buttonIdsForFileIds[id] = buttonId;
-                }
-            },
-            _updateFormSupportAndParams: function(formElementOrId) {
-                this._options.form.element = formElementOrId;
-                this._formSupport = qq.FormSupport && new qq.FormSupport(this._options.form, qq.bind(this.uploadStoredFiles, this), qq.bind(this.log, this));
-                if (this._formSupport && this._formSupport.attachedToForm) {
-                    this._paramsStore.addReadOnly(null, this._formSupport.getFormInputsAsObject);
-                    this._options.autoUpload = this._formSupport.newAutoUpload;
-                    if (this._formSupport.newEndpoint) {
-                        this.setEndpoint(this._formSupport.newEndpoint);
-                    }
-                }
-            },
-            _upload: function(id, params, endpoint) {
-                var name = this.getName(id);
-                if (params) {
-                    this.setParams(params, id);
-                }
-                if (endpoint) {
-                    this.setEndpoint(endpoint, id);
-                }
-                this._handleCheckedCallback({
-                    name: "onSubmit",
-                    callback: qq.bind(this._options.callbacks.onSubmit, this, id, name),
-                    onSuccess: qq.bind(this._onSubmitCallbackSuccess, this, id, name),
-                    onFailure: qq.bind(this._fileOrBlobRejected, this, id, name),
-                    identifier: id
-                });
-            },
-            _uploadFile: function(id) {
-                if (!this._handler.upload(id)) {
-                    this._uploadData.setStatus(id, qq.status.QUEUED);
-                }
-            },
-            _uploadStoredFiles: function() {
-                var idToUpload, stillSubmitting, self = this;
-                while (this._storedIds.length) {
-                    idToUpload = this._storedIds.shift();
-                    this._uploadFile(idToUpload);
-                }
-                stillSubmitting = this.getUploads({
-                    status: qq.status.SUBMITTING
-                }).length;
-                if (stillSubmitting) {
-                    qq.log("Still waiting for " + stillSubmitting + " files to clear submit queue. Will re-parse stored IDs array shortly.");
-                    setTimeout(function() {
-                        self._uploadStoredFiles();
-                    }, 1e3);
-                }
-            },
-            _validateFileOrBlobData: function(fileWrapper, validationDescriptor) {
-                var self = this, file = function() {
-                    if (fileWrapper.file instanceof qq.BlobProxy) {
-                        return fileWrapper.file.referenceBlob;
-                    }
-                    return fileWrapper.file;
-                }(), name = validationDescriptor.name, size = validationDescriptor.size, buttonId = this._getButtonId(fileWrapper.file), validationBase = this._getValidationBase(buttonId), validityChecker = new qq.Promise();
-                validityChecker.then(function() {}, function() {
-                    self._fileOrBlobRejected(fileWrapper.id, name);
-                });
-                if (qq.isFileOrInput(file) && !this._isAllowedExtension(validationBase.allowedExtensions, name)) {
-                    this._itemError("typeError", name, file);
-                    return validityChecker.failure();
-                }
-                if (!this._options.validation.allowEmpty && size === 0) {
-                    this._itemError("emptyError", name, file);
-                    return validityChecker.failure();
-                }
-                if (size > 0 && validationBase.sizeLimit && size > validationBase.sizeLimit) {
-                    this._itemError("sizeError", name, file);
-                    return validityChecker.failure();
-                }
-                if (size > 0 && size < validationBase.minSizeLimit) {
-                    this._itemError("minSizeError", name, file);
-                    return validityChecker.failure();
-                }
-                if (qq.ImageValidation && qq.supportedFeatures.imagePreviews && qq.isFile(file)) {
-                    new qq.ImageValidation(file, qq.bind(self.log, self)).validate(validationBase.image).then(validityChecker.success, function(errorCode) {
-                        self._itemError(errorCode + "ImageError", name, file);
-                        validityChecker.failure();
-                    });
-                } else {
-                    validityChecker.success();
-                }
-                return validityChecker;
-            },
-            _wrapCallbacks: function() {
-                var self, safeCallback, prop;
-                self = this;
-                safeCallback = function(name, callback, args) {
-                    var errorMsg;
-                    try {
-                        return callback.apply(self, args);
-                    } catch (exception) {
-                        errorMsg = exception.message || exception.toString();
-                        self.log("Caught exception in '" + name + "' callback - " + errorMsg, "error");
-                    }
-                };
-                for (prop in this._options.callbacks) {
-                    (function() {
-                        var callbackName, callbackFunc;
-                        callbackName = prop;
-                        callbackFunc = self._options.callbacks[callbackName];
-                        self._options.callbacks[callbackName] = function() {
-                            return safeCallback(callbackName, callbackFunc, arguments);
-                        };
-                    })();
-                }
-            }
-        };
-    })();
-    (function() {
-        "use strict";
-        qq.FineUploaderBasic = function(o) {
-            var self = this;
-            this._options = {
-                debug: false,
-                button: null,
-                multiple: true,
-                maxConnections: 3,
-                disableCancelForFormUploads: false,
-                autoUpload: true,
-                warnBeforeUnload: true,
-                request: {
-                    customHeaders: {},
-                    endpoint: "/server/upload",
-                    filenameParam: "qqfilename",
-                    forceMultipart: true,
-                    inputName: "qqfile",
-                    method: "POST",
-                    omitDefaultParams: false,
-                    params: {},
-                    paramsInBody: true,
-                    requireSuccessJson: true,
-                    totalFileSizeName: "qqtotalfilesize",
-                    uuidName: "qquuid"
-                },
-                validation: {
-                    allowedExtensions: [],
-                    sizeLimit: 0,
-                    minSizeLimit: 0,
-                    itemLimit: 0,
-                    stopOnFirstInvalidFile: true,
-                    acceptFiles: null,
-                    image: {
-                        maxHeight: 0,
-                        maxWidth: 0,
-                        minHeight: 0,
-                        minWidth: 0
-                    },
-                    allowEmpty: false
-                },
-                callbacks: {
-                    onSubmit: function(id, name) {},
-                    onSubmitted: function(id, name) {},
-                    onComplete: function(id, name, responseJSON, maybeXhr) {},
-                    onAllComplete: function(successful, failed) {},
-                    onCancel: function(id, name) {},
-                    onUpload: function(id, name) {},
-                    onUploadChunk: function(id, name, chunkData) {},
-                    onUploadChunkSuccess: function(id, chunkData, responseJSON, xhr) {},
-                    onResume: function(id, fileName, chunkData, customResumeData) {},
-                    onProgress: function(id, name, loaded, total) {},
-                    onTotalProgress: function(loaded, total) {},
-                    onError: function(id, name, reason, maybeXhrOrXdr) {},
-                    onAutoRetry: function(id, name, attemptNumber) {},
-                    onManualRetry: function(id, name) {},
-                    onValidateBatch: function(fileOrBlobData) {},
-                    onValidate: function(fileOrBlobData) {},
-                    onSubmitDelete: function(id) {},
-                    onDelete: function(id) {},
-                    onDeleteComplete: function(id, xhrOrXdr, isError) {},
-                    onPasteReceived: function(blob) {},
-                    onStatusChange: function(id, oldStatus, newStatus) {},
-                    onSessionRequestComplete: function(response, success, xhrOrXdr) {}
-                },
-                messages: {
-                    typeError: "{file} has an invalid extension. Valid extension(s): {extensions}.",
-                    sizeError: "{file} is too large, maximum file size is {sizeLimit}.",
-                    minSizeError: "{file} is too small, minimum file size is {minSizeLimit}.",
-                    emptyError: "{file} is empty, please select files again without it.",
-                    noFilesError: "No files to upload.",
-                    tooManyItemsError: "Too many items ({netItems}) would be uploaded.  Item limit is {itemLimit}.",
-                    maxHeightImageError: "Image is too tall.",
-                    maxWidthImageError: "Image is too wide.",
-                    minHeightImageError: "Image is not tall enough.",
-                    minWidthImageError: "Image is not wide enough.",
-                    retryFailTooManyItems: "Retry failed - you have reached your file limit.",
-                    onLeave: "The files are being uploaded, if you leave now the upload will be canceled.",
-                    unsupportedBrowserIos8Safari: "Unrecoverable error - this browser does not permit file uploading of any kind due to serious bugs in iOS8 Safari.  Please use iOS8 Chrome until Apple fixes these issues."
-                },
-                retry: {
-                    enableAuto: false,
-                    maxAutoAttempts: 3,
-                    autoAttemptDelay: 5,
-                    preventRetryResponseProperty: "preventRetry"
-                },
-                classes: {
-                    buttonHover: "qq-upload-button-hover",
-                    buttonFocus: "qq-upload-button-focus"
-                },
-                chunking: {
-                    enabled: false,
-                    concurrent: {
-                        enabled: false
-                    },
-                    mandatory: false,
-                    paramNames: {
-                        partIndex: "qqpartindex",
-                        partByteOffset: "qqpartbyteoffset",
-                        chunkSize: "qqchunksize",
-                        totalFileSize: "qqtotalfilesize",
-                        totalParts: "qqtotalparts"
-                    },
-                    partSize: function(id) {
-                        return 2e6;
-                    },
-                    success: {
-                        endpoint: null,
-                        headers: function(id) {
-                            return null;
-                        },
-                        jsonPayload: false,
-                        method: "POST",
-                        params: function(id) {
-                            return null;
-                        },
-                        resetOnStatus: []
-                    }
-                },
-                resume: {
-                    enabled: false,
-                    recordsExpireIn: 7,
-                    paramNames: {
-                        resuming: "qqresume"
-                    },
-                    customKeys: function(fileId) {
-                        return [];
-                    }
-                },
-                formatFileName: function(fileOrBlobName) {
-                    return fileOrBlobName;
-                },
-                text: {
-                    defaultResponseError: "Upload failure reason unknown",
-                    fileInputTitle: "file input",
-                    sizeSymbols: [ "kB", "MB", "GB", "TB", "PB", "EB" ]
-                },
-                deleteFile: {
-                    enabled: false,
-                    method: "DELETE",
-                    endpoint: "/server/upload",
-                    customHeaders: {},
-                    params: {}
-                },
-                cors: {
-                    expected: false,
-                    sendCredentials: false,
-                    allowXdr: false
-                },
-                blobs: {
-                    defaultName: "misc_data"
-                },
-                paste: {
-                    targetElement: null,
-                    defaultName: "pasted_image"
-                },
-                camera: {
-                    ios: false,
-                    button: null
-                },
-                extraButtons: [],
-                session: {
-                    endpoint: null,
-                    params: {},
-                    customHeaders: {},
-                    refreshOnReset: true
-                },
-                form: {
-                    element: "qq-form",
-                    autoUpload: false,
-                    interceptSubmit: true
-                },
-                scaling: {
-                    customResizer: null,
-                    sendOriginal: true,
-                    orient: true,
-                    defaultType: null,
-                    defaultQuality: 80,
-                    failureText: "Failed to scale",
-                    includeExif: false,
-                    sizes: []
-                },
-                workarounds: {
-                    iosEmptyVideos: true,
-                    ios8SafariUploads: true,
-                    ios8BrowserCrash: false
-                }
-            };
-            qq.extend(this._options, o, true);
-            this._buttons = [];
-            this._extraButtonSpecs = {};
-            this._buttonIdsForFileIds = [];
-            this._wrapCallbacks();
-            this._disposeSupport = new qq.DisposeSupport();
-            this._storedIds = [];
-            this._autoRetries = [];
-            this._retryTimeouts = [];
-            this._preventRetries = [];
-            this._thumbnailUrls = [];
-            this._netUploadedOrQueued = 0;
-            this._netUploaded = 0;
-            this._uploadData = this._createUploadDataTracker();
-            this._initFormSupportAndParams();
-            this._customHeadersStore = this._createStore(this._options.request.customHeaders);
-            this._deleteFileCustomHeadersStore = this._createStore(this._options.deleteFile.customHeaders);
-            this._deleteFileParamsStore = this._createStore(this._options.deleteFile.params);
-            this._endpointStore = this._createStore(this._options.request.endpoint);
-            this._deleteFileEndpointStore = this._createStore(this._options.deleteFile.endpoint);
-            this._handler = this._createUploadHandler();
-            this._deleteHandler = qq.DeleteFileAjaxRequester && this._createDeleteHandler();
-            if (this._options.button) {
-                this._defaultButtonId = this._createUploadButton({
-                    element: this._options.button,
-                    title: this._options.text.fileInputTitle
-                }).getButtonId();
-            }
-            this._generateExtraButtonSpecs();
-            this._handleCameraAccess();
-            if (this._options.paste.targetElement) {
-                if (qq.PasteSupport) {
-                    this._pasteHandler = this._createPasteHandler();
-                } else {
-                    this.log("Paste support module not found", "error");
-                }
-            }
-            this._options.warnBeforeUnload && this._preventLeaveInProgress();
-            this._imageGenerator = qq.ImageGenerator && new qq.ImageGenerator(qq.bind(this.log, this));
-            this._refreshSessionData();
-            this._succeededSinceLastAllComplete = [];
-            this._failedSinceLastAllComplete = [];
-            this._scaler = qq.Scaler && new qq.Scaler(this._options.scaling, qq.bind(this.log, this)) || {};
-            if (this._scaler.enabled) {
-                this._customNewFileHandler = qq.bind(this._scaler.handleNewFile, this._scaler);
-            }
-            if (qq.TotalProgress && qq.supportedFeatures.progressBar) {
-                this._totalProgress = new qq.TotalProgress(qq.bind(this._onTotalProgress, this), function(id) {
-                    var entry = self._uploadData.retrieve({
-                        id: id
-                    });
-                    return entry && entry.size || 0;
-                });
-            }
-            this._currentItemLimit = this._options.validation.itemLimit;
-            this._customResumeDataStore = this._createStore();
-        };
-        qq.FineUploaderBasic.prototype = qq.basePublicApi;
-        qq.extend(qq.FineUploaderBasic.prototype, qq.basePrivateApi);
-    })();
-    qq.AjaxRequester = function(o) {
-        "use strict";
-        var log, shouldParamsBeInQueryString, queue = [], requestData = {}, options = {
-            acceptHeader: null,
-            validMethods: [ "PATCH", "POST", "PUT" ],
-            method: "POST",
-            contentType: "application/x-www-form-urlencoded",
-            maxConnections: 3,
-            customHeaders: {},
-            endpointStore: {},
-            paramsStore: {},
-            mandatedParams: {},
-            allowXRequestedWithAndCacheControl: true,
-            successfulResponseCodes: {
-                DELETE: [ 200, 202, 204 ],
-                PATCH: [ 200, 201, 202, 203, 204 ],
-                POST: [ 200, 201, 202, 203, 204 ],
-                PUT: [ 200, 201, 202, 203, 204 ],
-                GET: [ 200 ]
-            },
-            cors: {
-                expected: false,
-                sendCredentials: false
-            },
-            log: function(str, level) {},
-            onSend: function(id) {},
-            onComplete: function(id, xhrOrXdr, isError) {},
-            onProgress: null
-        };
-        qq.extend(options, o);
-        log = options.log;
-        if (qq.indexOf(options.validMethods, options.method) < 0) {
-            throw new Error("'" + options.method + "' is not a supported method for this type of request!");
-        }
-        function isSimpleMethod() {
-            return qq.indexOf([ "GET", "POST", "HEAD" ], options.method) >= 0;
-        }
-        function containsNonSimpleHeaders(headers) {
-            var containsNonSimple = false;
-            qq.each(containsNonSimple, function(idx, header) {
-                if (qq.indexOf([ "Accept", "Accept-Language", "Content-Language", "Content-Type" ], header) < 0) {
-                    containsNonSimple = true;
-                    return false;
-                }
-            });
-            return containsNonSimple;
-        }
-        function isXdr(xhr) {
-            return options.cors.expected && xhr.withCredentials === undefined;
-        }
-        function getCorsAjaxTransport() {
-            var xhrOrXdr;
-            if (window.XMLHttpRequest || window.ActiveXObject) {
-                xhrOrXdr = qq.createXhrInstance();
-                if (xhrOrXdr.withCredentials === undefined) {
-                    xhrOrXdr = new XDomainRequest();
-                    xhrOrXdr.onload = function() {};
-                    xhrOrXdr.onerror = function() {};
-                    xhrOrXdr.ontimeout = function() {};
-                    xhrOrXdr.onprogress = function() {};
-                }
-            }
-            return xhrOrXdr;
-        }
-        function getXhrOrXdr(id, suppliedXhr) {
-            var xhrOrXdr = requestData[id] && requestData[id].xhr;
-            if (!xhrOrXdr) {
-                if (suppliedXhr) {
-                    xhrOrXdr = suppliedXhr;
-                } else {
-                    if (options.cors.expected) {
-                        xhrOrXdr = getCorsAjaxTransport();
-                    } else {
-                        xhrOrXdr = qq.createXhrInstance();
-                    }
-                }
-                requestData[id].xhr = xhrOrXdr;
-            }
-            return xhrOrXdr;
-        }
-        function dequeue(id) {
-            var i = qq.indexOf(queue, id), max = options.maxConnections, nextId;
-            delete requestData[id];
-            queue.splice(i, 1);
-            if (queue.length >= max && i < max) {
-                nextId = queue[max - 1];
-                sendRequest(nextId);
-            }
-        }
-        function onComplete(id, xdrError) {
-            var xhr = getXhrOrXdr(id), method = options.method, isError = xdrError === true;
-            dequeue(id);
-            if (isError) {
-                log(method + " request for " + id + " has failed", "error");
-            } else if (!isXdr(xhr) && !isResponseSuccessful(xhr.status)) {
-                isError = true;
-                log(method + " request for " + id + " has failed - response code " + xhr.status, "error");
-            }
-            options.onComplete(id, xhr, isError);
-        }
-        function getParams(id) {
-            var onDemandParams = requestData[id].additionalParams, mandatedParams = options.mandatedParams, params;
-            if (options.paramsStore.get) {
-                params = options.paramsStore.get(id);
-            }
-            if (onDemandParams) {
-                qq.each(onDemandParams, function(name, val) {
-                    params = params || {};
-                    params[name] = val;
-                });
-            }
-            if (mandatedParams) {
-                qq.each(mandatedParams, function(name, val) {
-                    params = params || {};
-                    params[name] = val;
-                });
-            }
-            return params;
-        }
-        function sendRequest(id, optXhr) {
-            var xhr = getXhrOrXdr(id, optXhr), method = options.method, params = getParams(id), payload = requestData[id].payload, url;
-            options.onSend(id);
-            url = createUrl(id, params, requestData[id].additionalQueryParams);
-            if (isXdr(xhr)) {
-                xhr.onload = getXdrLoadHandler(id);
-                xhr.onerror = getXdrErrorHandler(id);
-            } else {
-                xhr.onreadystatechange = getXhrReadyStateChangeHandler(id);
-            }
-            registerForUploadProgress(id);
-            xhr.open(method, url, true);
-            if (options.cors.expected && options.cors.sendCredentials && !isXdr(xhr)) {
-                xhr.withCredentials = true;
-            }
-            setHeaders(id);
-            log("Sending " + method + " request for " + id);
-            if (payload) {
-                xhr.send(payload);
-            } else if (shouldParamsBeInQueryString || !params) {
-                xhr.send();
-            } else if (params && options.contentType && options.contentType.toLowerCase().indexOf("application/x-www-form-urlencoded") >= 0) {
-                xhr.send(qq.obj2url(params, ""));
-            } else if (params && options.contentType && options.contentType.toLowerCase().indexOf("application/json") >= 0) {
-                xhr.send(JSON.stringify(params));
-            } else {
-                xhr.send(params);
-            }
-            return xhr;
-        }
-        function createUrl(id, params, additionalQueryParams) {
-            var endpoint = options.endpointStore.get(id), addToPath = requestData[id].addToPath;
-            if (addToPath != undefined) {
-                endpoint += "/" + addToPath;
-            }
-            if (shouldParamsBeInQueryString && params) {
-                endpoint = qq.obj2url(params, endpoint);
-            }
-            if (additionalQueryParams) {
-                endpoint = qq.obj2url(additionalQueryParams, endpoint);
-            }
-            return endpoint;
-        }
-        function getXhrReadyStateChangeHandler(id) {
-            return function() {
-                if (getXhrOrXdr(id).readyState === 4) {
-                    onComplete(id);
-                }
-            };
-        }
-        function registerForUploadProgress(id) {
-            var onProgress = options.onProgress;
-            if (onProgress) {
-                getXhrOrXdr(id).upload.onprogress = function(e) {
-                    if (e.lengthComputable) {
-                        onProgress(id, e.loaded, e.total);
-                    }
-                };
-            }
-        }
-        function getXdrLoadHandler(id) {
-            return function() {
-                onComplete(id);
-            };
-        }
-        function getXdrErrorHandler(id) {
-            return function() {
-                onComplete(id, true);
-            };
-        }
-        function setHeaders(id) {
-            var xhr = getXhrOrXdr(id), customHeaders = options.customHeaders, onDemandHeaders = requestData[id].additionalHeaders || {}, method = options.method, allHeaders = {};
-            if (!isXdr(xhr)) {
-                options.acceptHeader && xhr.setRequestHeader("Accept", options.acceptHeader);
-                if (options.allowXRequestedWithAndCacheControl) {
-                    if (!options.cors.expected || (!isSimpleMethod() || containsNonSimpleHeaders(customHeaders))) {
-                        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-                        xhr.setRequestHeader("Cache-Control", "no-cache");
-                    }
-                }
-                if (options.contentType && (method === "POST" || method === "PUT")) {
-                    xhr.setRequestHeader("Content-Type", options.contentType);
-                }
-                qq.extend(allHeaders, qq.isFunction(customHeaders) ? customHeaders(id) : customHeaders);
-                qq.extend(allHeaders, onDemandHeaders);
-                qq.each(allHeaders, function(name, val) {
-                    xhr.setRequestHeader(name, val);
-                });
-            }
-        }
-        function isResponseSuccessful(responseCode) {
-            return qq.indexOf(options.successfulResponseCodes[options.method], responseCode) >= 0;
-        }
-        function prepareToSend(id, optXhr, addToPath, additionalParams, additionalQueryParams, additionalHeaders, payload) {
-            requestData[id] = {
-                addToPath: addToPath,
-                additionalParams: additionalParams,
-                additionalQueryParams: additionalQueryParams,
-                additionalHeaders: additionalHeaders,
-                payload: payload
-            };
-            var len = queue.push(id);
-            if (len <= options.maxConnections) {
-                return sendRequest(id, optXhr);
-            }
-        }
-        shouldParamsBeInQueryString = options.method === "GET" || options.method === "DELETE";
-        qq.extend(this, {
-            initTransport: function(id) {
-                var path, params, headers, payload, cacheBuster, additionalQueryParams;
-                return {
-                    withPath: function(appendToPath) {
-                        path = appendToPath;
-                        return this;
-                    },
-                    withParams: function(additionalParams) {
-                        params = additionalParams;
-                        return this;
-                    },
-                    withQueryParams: function(_additionalQueryParams_) {
-                        additionalQueryParams = _additionalQueryParams_;
-                        return this;
-                    },
-                    withHeaders: function(additionalHeaders) {
-                        headers = additionalHeaders;
-                        return this;
-                    },
-                    withPayload: function(thePayload) {
-                        payload = thePayload;
-                        return this;
-                    },
-                    withCacheBuster: function() {
-                        cacheBuster = true;
-                        return this;
-                    },
-                    send: function(optXhr) {
-                        if (cacheBuster && qq.indexOf([ "GET", "DELETE" ], options.method) >= 0) {
-                            params.qqtimestamp = new Date().getTime();
-                        }
-                        return prepareToSend(id, optXhr, path, params, additionalQueryParams, headers, payload);
-                    }
-                };
-            },
-            canceled: function(id) {
-                dequeue(id);
-            }
-        });
-    };
-    qq.UploadHandler = function(spec) {
-        "use strict";
-        var proxy = spec.proxy, fileState = {}, onCancel = proxy.onCancel, getName = proxy.getName;
-        qq.extend(this, {
-            add: function(id, fileItem) {
-                fileState[id] = fileItem;
-                fileState[id].temp = {};
-            },
-            cancel: function(id) {
-                var self = this, cancelFinalizationEffort = new qq.Promise(), onCancelRetVal = onCancel(id, getName(id), cancelFinalizationEffort);
-                onCancelRetVal.then(function() {
-                    if (self.isValid(id)) {
-                        fileState[id].canceled = true;
-                        self.expunge(id);
-                    }
-                    cancelFinalizationEffort.success();
-                });
-            },
-            expunge: function(id) {
-                delete fileState[id];
-            },
-            getThirdPartyFileId: function(id) {
-                return fileState[id].key;
-            },
-            isValid: function(id) {
-                return fileState[id] !== undefined;
-            },
-            reset: function() {
-                fileState = {};
-            },
-            _getFileState: function(id) {
-                return fileState[id];
-            },
-            _setThirdPartyFileId: function(id, thirdPartyFileId) {
-                fileState[id].key = thirdPartyFileId;
-            },
-            _wasCanceled: function(id) {
-                return !!fileState[id].canceled;
-            }
-        });
-    };
-    qq.UploadHandlerController = function(o, namespace) {
-        "use strict";
-        var controller = this, chunkingPossible = false, concurrentChunkingPossible = false, chunking, preventRetryResponse, log, handler, options = {
-            paramsStore: {},
-            maxConnections: 3,
-            chunking: {
-                enabled: false,
-                multiple: {
-                    enabled: false
-                }
-            },
-            log: function(str, level) {},
-            onProgress: function(id, fileName, loaded, total) {},
-            onComplete: function(id, fileName, response, xhr) {},
-            onCancel: function(id, fileName) {},
-            onUploadPrep: function(id) {},
-            onUpload: function(id, fileName) {},
-            onUploadChunk: function(id, fileName, chunkData) {},
-            onUploadChunkSuccess: function(id, chunkData, response, xhr) {},
-            onAutoRetry: function(id, fileName, response, xhr) {},
-            onResume: function(id, fileName, chunkData, customResumeData) {},
-            onUuidChanged: function(id, newUuid) {},
-            getName: function(id) {},
-            setSize: function(id, newSize) {},
-            isQueued: function(id) {},
-            getIdsInProxyGroup: function(id) {},
-            getIdsInBatch: function(id) {},
-            isInProgress: function(id) {}
-        }, chunked = {
-            done: function(id, chunkIdx, response, xhr) {
-                var chunkData = handler._getChunkData(id, chunkIdx);
-                handler._getFileState(id).attemptingResume = false;
-                delete handler._getFileState(id).temp.chunkProgress[chunkIdx];
-                handler._getFileState(id).loaded += chunkData.size;
-                options.onUploadChunkSuccess(id, handler._getChunkDataForCallback(chunkData), response, xhr);
-            },
-            finalize: function(id) {
-                var size = options.getSize(id), name = options.getName(id);
-                log("All chunks have been uploaded for " + id + " - finalizing....");
-                handler.finalizeChunks(id).then(function(response, xhr) {
-                    log("Finalize successful for " + id);
-                    var normaizedResponse = upload.normalizeResponse(response, true);
-                    options.onProgress(id, name, size, size);
-                    handler._maybeDeletePersistedChunkData(id);
-                    upload.cleanup(id, normaizedResponse, xhr);
-                }, function(response, xhr) {
-                    var normalizedResponse = upload.normalizeResponse(response, false);
-                    log("Problem finalizing chunks for file ID " + id + " - " + normalizedResponse.error, "error");
-                    if (normalizedResponse.reset || xhr && options.chunking.success.resetOnStatus.indexOf(xhr.status) >= 0) {
-                        chunked.reset(id);
-                    }
-                    if (!options.onAutoRetry(id, name, normalizedResponse, xhr)) {
-                        upload.cleanup(id, normalizedResponse, xhr);
-                    }
-                });
-            },
-            handleFailure: function(chunkIdx, id, response, xhr) {
-                var name = options.getName(id);
-                log("Chunked upload request failed for " + id + ", chunk " + chunkIdx);
-                handler.clearCachedChunk(id, chunkIdx);
-                var responseToReport = upload.normalizeResponse(response, false), inProgressIdx;
-                if (responseToReport.reset) {
-                    chunked.reset(id);
-                } else {
-                    var inProgressChunksArray = handler._getFileState(id).chunking.inProgress;
-                    inProgressIdx = inProgressChunksArray ? qq.indexOf(inProgressChunksArray, chunkIdx) : -1;
-                    if (inProgressIdx >= 0) {
-                        handler._getFileState(id).chunking.inProgress.splice(inProgressIdx, 1);
-                        handler._getFileState(id).chunking.remaining.unshift(chunkIdx);
-                    }
-                }
-                if (!handler._getFileState(id).temp.ignoreFailure) {
-                    if (concurrentChunkingPossible) {
-                        handler._getFileState(id).temp.ignoreFailure = true;
-                        log(qq.format("Going to attempt to abort these chunks: {}. These are currently in-progress: {}.", JSON.stringify(Object.keys(handler._getXhrs(id))), JSON.stringify(handler._getFileState(id).chunking.inProgress)));
-                        qq.each(handler._getXhrs(id), function(ckid, ckXhr) {
-                            log(qq.format("Attempting to abort file {}.{}. XHR readyState {}. ", id, ckid, ckXhr.readyState));
-                            ckXhr.abort();
-                            ckXhr._cancelled = true;
-                        });
-                        handler.moveInProgressToRemaining(id);
-                        connectionManager.free(id, true);
-                    }
-                    if (!options.onAutoRetry(id, name, responseToReport, xhr)) {
-                        upload.cleanup(id, responseToReport, xhr);
-                    }
-                }
-            },
-            hasMoreParts: function(id) {
-                return !!handler._getFileState(id).chunking.remaining.length;
-            },
-            nextPart: function(id) {
-                var nextIdx = handler._getFileState(id).chunking.remaining.shift();
-                if (nextIdx >= handler._getTotalChunks(id)) {
-                    nextIdx = null;
-                }
-                return nextIdx;
-            },
-            reset: function(id) {
-                log("Server or callback has ordered chunking effort to be restarted on next attempt for item ID " + id, "error");
-                handler._maybeDeletePersistedChunkData(id);
-                handler.reevaluateChunking(id);
-                handler._getFileState(id).loaded = 0;
-                handler._getFileState(id).attemptingResume = false;
-            },
-            sendNext: function(id) {
-                var size = options.getSize(id), name = options.getName(id), chunkIdx = chunked.nextPart(id), chunkData = handler._getChunkData(id, chunkIdx), fileState = handler._getFileState(id), resuming = fileState.attemptingResume, inProgressChunks = fileState.chunking.inProgress || [];
-                if (fileState.loaded == null) {
-                    fileState.loaded = 0;
-                }
-                if (resuming && options.onResume(id, name, chunkData, fileState.customResumeData) === false) {
-                    chunked.reset(id);
-                    chunkIdx = chunked.nextPart(id);
-                    chunkData = handler._getChunkData(id, chunkIdx);
-                    resuming = false;
-                }
-                if (chunkIdx == null && inProgressChunks.length === 0) {
-                    chunked.finalize(id);
-                } else {
-                    inProgressChunks.push(chunkIdx);
-                    handler._getFileState(id).chunking.inProgress = inProgressChunks;
-                    if (concurrentChunkingPossible) {
-                        connectionManager.open(id, chunkIdx);
-                    }
-                    if (concurrentChunkingPossible && connectionManager.available() && handler._getFileState(id).chunking.remaining.length) {
-                        chunked.sendNext(id);
-                    }
-                    if (chunkData.blob.size === 0) {
-                        log(qq.format("Chunk {} for file {} will not be uploaded, zero sized chunk.", chunkIdx, id), "error");
-                        chunked.handleFailure(chunkIdx, id, "File is no longer available", null);
-                    }
-                    var onUploadChunkPromise = options.onUploadChunk(id, name, handler._getChunkDataForCallback(chunkData));
-                    onUploadChunkPromise.then(function(requestOverrides) {
-                        if (!options.isInProgress(id)) {
-                            log(qq.format("Not sending chunked upload request for item {}.{} - no longer in progress.", id, chunkIdx));
-                        } else {
-                            log(qq.format("Sending chunked upload request for item {}.{}, bytes {}-{} of {}.", id, chunkIdx, chunkData.start + 1, chunkData.end, size));
-                            var uploadChunkData = {
-                                chunkIdx: chunkIdx,
-                                id: id,
-                                overrides: requestOverrides,
-                                resuming: resuming
-                            };
-                            handler.uploadChunk(uploadChunkData).then(function success(response, xhr) {
-                                log("Chunked upload request succeeded for " + id + ", chunk " + chunkIdx);
-                                handler.clearCachedChunk(id, chunkIdx);
-                                var inProgressChunks = handler._getFileState(id).chunking.inProgress || [], responseToReport = upload.normalizeResponse(response, true), inProgressChunkIdx = qq.indexOf(inProgressChunks, chunkIdx);
-                                log(qq.format("Chunk {} for file {} uploaded successfully.", chunkIdx, id));
-                                chunked.done(id, chunkIdx, responseToReport, xhr);
-                                if (inProgressChunkIdx >= 0) {
-                                    inProgressChunks.splice(inProgressChunkIdx, 1);
-                                }
-                                handler._maybePersistChunkedState(id);
-                                if (!chunked.hasMoreParts(id) && inProgressChunks.length === 0) {
-                                    chunked.finalize(id);
-                                } else if (chunked.hasMoreParts(id)) {
-                                    chunked.sendNext(id);
-                                } else {
-                                    log(qq.format("File ID {} has no more chunks to send and these chunk indexes are still marked as in-progress: {}", id, JSON.stringify(inProgressChunks)));
-                                }
-                            }, function failure(response, xhr) {
-                                chunked.handleFailure(chunkIdx, id, response, xhr);
-                            }).done(function() {
-                                handler.clearXhr(id, chunkIdx);
-                            });
-                        }
-                    }, function(error) {
-                        chunked.handleFailure(chunkIdx, id, error, null);
-                    });
-                }
-            }
-        }, connectionManager = {
-            _open: [],
-            _openChunks: {},
-            _waiting: [],
-            available: function() {
-                var max = options.maxConnections, openChunkEntriesCount = 0, openChunksCount = 0;
-                qq.each(connectionManager._openChunks, function(fileId, openChunkIndexes) {
-                    openChunkEntriesCount++;
-                    openChunksCount += openChunkIndexes.length;
-                });
-                return max - (connectionManager._open.length - openChunkEntriesCount + openChunksCount);
-            },
-            free: function(id, dontAllowNext) {
-                var allowNext = !dontAllowNext, waitingIndex = qq.indexOf(connectionManager._waiting, id), connectionsIndex = qq.indexOf(connectionManager._open, id), nextId;
-                delete connectionManager._openChunks[id];
-                if (upload.getProxyOrBlob(id) instanceof qq.BlobProxy) {
-                    log("Generated blob upload has ended for " + id + ", disposing generated blob.");
-                    delete handler._getFileState(id).file;
-                }
-                if (waitingIndex >= 0) {
-                    connectionManager._waiting.splice(waitingIndex, 1);
-                } else if (allowNext && connectionsIndex >= 0) {
-                    connectionManager._open.splice(connectionsIndex, 1);
-                    nextId = connectionManager._waiting.shift();
-                    if (nextId >= 0) {
-                        connectionManager._open.push(nextId);
-                        upload.start(nextId);
-                    }
-                }
-            },
-            getWaitingOrConnected: function() {
-                var waitingOrConnected = [];
-                qq.each(connectionManager._openChunks, function(fileId, chunks) {
-                    if (chunks && chunks.length) {
-                        waitingOrConnected.push(parseInt(fileId));
-                    }
-                });
-                qq.each(connectionManager._open, function(idx, fileId) {
-                    if (!connectionManager._openChunks[fileId]) {
-                        waitingOrConnected.push(parseInt(fileId));
-                    }
-                });
-                waitingOrConnected = waitingOrConnected.concat(connectionManager._waiting);
-                return waitingOrConnected;
-            },
-            isUsingConnection: function(id) {
-                return qq.indexOf(connectionManager._open, id) >= 0;
-            },
-            open: function(id, chunkIdx) {
-                if (chunkIdx == null) {
-                    connectionManager._waiting.push(id);
-                }
-                if (connectionManager.available()) {
-                    if (chunkIdx == null) {
-                        connectionManager._waiting.pop();
-                        connectionManager._open.push(id);
-                    } else {
-                        (function() {
-                            var openChunksEntry = connectionManager._openChunks[id] || [];
-                            openChunksEntry.push(chunkIdx);
-                            connectionManager._openChunks[id] = openChunksEntry;
-                        })();
-                    }
-                    return true;
-                }
-                return false;
-            },
-            reset: function() {
-                connectionManager._waiting = [];
-                connectionManager._open = [];
-            }
-        }, simple = {
-            send: function(id, name) {
-                var fileState = handler._getFileState(id);
-                if (!fileState) {
-                    log("Ignoring send request as this upload may have been cancelled, File ID " + id, "warn");
-                    return;
-                }
-                fileState.loaded = 0;
-                log("Sending simple upload request for " + id);
-                handler.uploadFile(id).then(function(response, optXhr) {
-                    log("Simple upload request succeeded for " + id);
-                    var responseToReport = upload.normalizeResponse(response, true), size = options.getSize(id);
-                    options.onProgress(id, name, size, size);
-                    upload.maybeNewUuid(id, responseToReport);
-                    upload.cleanup(id, responseToReport, optXhr);
-                }, function(response, optXhr) {
-                    log("Simple upload request failed for " + id);
-                    var responseToReport = upload.normalizeResponse(response, false);
-                    if (!options.onAutoRetry(id, name, responseToReport, optXhr)) {
-                        upload.cleanup(id, responseToReport, optXhr);
-                    }
-                });
-            }
-        }, upload = {
-            cancel: function(id) {
-                log("Cancelling " + id);
-                options.paramsStore.remove(id);
-                connectionManager.free(id);
-            },
-            cleanup: function(id, response, optXhr) {
-                var name = options.getName(id);
-                options.onComplete(id, name, response, optXhr);
-                if (handler._getFileState(id)) {
-                    handler._clearXhrs && handler._clearXhrs(id);
-                }
-                connectionManager.free(id);
-            },
-            getProxyOrBlob: function(id) {
-                return handler.getProxy && handler.getProxy(id) || handler.getFile && handler.getFile(id);
-            },
-            initHandler: function() {
-                var handlerType = namespace ? qq[namespace] : qq.traditional, handlerModuleSubtype = qq.supportedFeatures.ajaxUploading ? "Xhr" : "Form";
-                handler = new handlerType[handlerModuleSubtype + "UploadHandler"](options, {
-                    getCustomResumeData: options.getCustomResumeData,
-                    getDataByUuid: options.getDataByUuid,
-                    getName: options.getName,
-                    getSize: options.getSize,
-                    getUuid: options.getUuid,
-                    log: log,
-                    onCancel: options.onCancel,
-                    onProgress: options.onProgress,
-                    onUuidChanged: options.onUuidChanged,
-                    onFinalizing: function(id) {
-                        options.setStatus(id, qq.status.UPLOAD_FINALIZING);
-                    }
-                });
-                if (handler._removeExpiredChunkingRecords) {
-                    handler._removeExpiredChunkingRecords();
-                }
-            },
-            isDeferredEligibleForUpload: function(id) {
-                return options.isQueued(id);
-            },
-            maybeDefer: function(id, blob) {
-                if (blob && !handler.getFile(id) && blob instanceof qq.BlobProxy) {
-                    options.onUploadPrep(id);
-                    log("Attempting to generate a blob on-demand for " + id);
-                    blob.create().then(function(generatedBlob) {
-                        log("Generated an on-demand blob for " + id);
-                        handler.updateBlob(id, generatedBlob);
-                        options.setSize(id, generatedBlob.size);
-                        handler.reevaluateChunking(id);
-                        upload.maybeSendDeferredFiles(id);
-                    }, function(errorMessage) {
-                        var errorResponse = {};
-                        if (errorMessage) {
-                            errorResponse.error = errorMessage;
-                        }
-                        log(qq.format("Failed to generate blob for ID {}.  Error message: {}.", id, errorMessage), "error");
-                        options.onComplete(id, options.getName(id), qq.extend(errorResponse, preventRetryResponse), null);
-                        upload.maybeSendDeferredFiles(id);
-                        connectionManager.free(id);
-                    });
-                } else {
-                    return upload.maybeSendDeferredFiles(id);
-                }
-                return false;
-            },
-            maybeSendDeferredFiles: function(id) {
-                var idsInGroup = options.getIdsInProxyGroup(id), uploadedThisId = false;
-                if (idsInGroup && idsInGroup.length) {
-                    log("Maybe ready to upload proxy group file " + id);
-                    qq.each(idsInGroup, function(idx, idInGroup) {
-                        if (upload.isDeferredEligibleForUpload(idInGroup) && !!handler.getFile(idInGroup)) {
-                            uploadedThisId = idInGroup === id;
-                            upload.now(idInGroup);
-                        } else if (upload.isDeferredEligibleForUpload(idInGroup)) {
-                            return false;
-                        }
-                    });
-                } else {
-                    uploadedThisId = true;
-                    upload.now(id);
-                }
-                return uploadedThisId;
-            },
-            maybeNewUuid: function(id, response) {
-                if (response.newUuid !== undefined) {
-                    options.onUuidChanged(id, response.newUuid);
-                }
-            },
-            normalizeResponse: function(originalResponse, successful) {
-                var response = originalResponse;
-                if (!qq.isObject(originalResponse)) {
-                    response = {};
-                    if (qq.isString(originalResponse) && !successful) {
-                        response.error = originalResponse;
-                    }
-                }
-                response.success = successful;
-                return response;
-            },
-            now: function(id) {
-                var name = options.getName(id);
-                if (!controller.isValid(id)) {
-                    throw new qq.Error(id + " is not a valid file ID to upload!");
-                }
-                options.onUpload(id, name).then(function(response) {
-                    if (response && response.pause) {
-                        options.setStatus(id, qq.status.PAUSED);
-                        handler.pause(id);
-                        connectionManager.free(id);
-                    } else {
-                        if (chunkingPossible && handler._shouldChunkThisFile(id)) {
-                            chunked.sendNext(id);
-                        } else {
-                            simple.send(id, name);
-                        }
-                    }
-                }, function(error) {
-                    error = error || {};
-                    log(id + " upload start aborted due to rejected onUpload Promise - details: " + error, "error");
-                    if (!options.onAutoRetry(id, name, error.responseJSON || {})) {
-                        var response = upload.normalizeResponse(error.responseJSON, false);
-                        upload.cleanup(id, response);
-                    }
-                });
-            },
-            start: function(id) {
-                var blobToUpload = upload.getProxyOrBlob(id);
-                if (blobToUpload) {
-                    return upload.maybeDefer(id, blobToUpload);
-                } else {
-                    upload.now(id);
-                    return true;
-                }
-            }
-        };
-        qq.extend(this, {
-            add: function(id, file) {
-                handler.add.apply(this, arguments);
-            },
-            upload: function(id) {
-                if (connectionManager.open(id)) {
-                    return upload.start(id);
-                }
-                return false;
-            },
-            retry: function(id) {
-                if (concurrentChunkingPossible) {
-                    handler._getFileState(id).temp.ignoreFailure = false;
-                }
-                if (connectionManager.isUsingConnection(id)) {
-                    return upload.start(id);
-                } else {
-                    return controller.upload(id);
-                }
-            },
-            cancel: function(id) {
-                var cancelRetVal = handler.cancel(id);
-                if (qq.isGenericPromise(cancelRetVal)) {
-                    cancelRetVal.then(function() {
-                        upload.cancel(id);
-                    });
-                } else if (cancelRetVal !== false) {
-                    upload.cancel(id);
-                }
-            },
-            cancelAll: function() {
-                var waitingOrConnected = connectionManager.getWaitingOrConnected(), i;
-                if (waitingOrConnected.length) {
-                    for (i = waitingOrConnected.length - 1; i >= 0; i--) {
-                        controller.cancel(waitingOrConnected[i]);
-                    }
-                }
-                connectionManager.reset();
-            },
-            getFile: function(id) {
-                if (handler.getProxy && handler.getProxy(id)) {
-                    return handler.getProxy(id).referenceBlob;
-                }
-                return handler.getFile && handler.getFile(id);
-            },
-            isProxied: function(id) {
-                return !!(handler.getProxy && handler.getProxy(id));
-            },
-            getInput: function(id) {
-                if (handler.getInput) {
-                    return handler.getInput(id);
-                }
-            },
-            reset: function() {
-                log("Resetting upload handler");
-                controller.cancelAll();
-                connectionManager.reset();
-                handler.reset();
-            },
-            expunge: function(id) {
-                if (controller.isValid(id)) {
-                    return handler.expunge(id);
-                }
-            },
-            isValid: function(id) {
-                return handler.isValid(id);
-            },
-            hasResumeRecord: function(id) {
-                var key = handler.isValid(id) && handler._getLocalStorageId && handler._getLocalStorageId(id);
-                if (key) {
-                    return !!localStorage.getItem(key);
-                }
-                return false;
-            },
-            getResumableFilesData: function() {
-                if (handler.getResumableFilesData) {
-                    return handler.getResumableFilesData();
-                }
-                return [];
-            },
-            getThirdPartyFileId: function(id) {
-                if (controller.isValid(id)) {
-                    return handler.getThirdPartyFileId(id);
-                }
-            },
-            pause: function(id) {
-                if (controller.isResumable(id) && handler.pause && controller.isValid(id) && handler.pause(id)) {
-                    connectionManager.free(id);
-                    handler.moveInProgressToRemaining(id);
-                    return true;
-                }
-                return false;
-            },
-            isAttemptingResume: function(id) {
-                return !!handler.isAttemptingResume && handler.isAttemptingResume(id);
-            },
-            isResumable: function(id) {
-                return !!handler.isResumable && handler.isResumable(id);
-            }
-        });
-        qq.extend(options, o);
-        log = options.log;
-        chunkingPossible = options.chunking.enabled && qq.supportedFeatures.chunking;
-        concurrentChunkingPossible = chunkingPossible && options.chunking.concurrent.enabled;
-        preventRetryResponse = function() {
-            var response = {};
-            response[options.preventRetryParam] = true;
-            return response;
-        }();
-        upload.initHandler();
-    };
-    qq.WindowReceiveMessage = function(o) {
-        "use strict";
-        var options = {
-            log: function(message, level) {}
-        }, callbackWrapperDetachers = {};
-        qq.extend(options, o);
-        qq.extend(this, {
-            receiveMessage: function(id, callback) {
-                var onMessageCallbackWrapper = function(event) {
-                    callback(event.data);
-                };
-                if (window.postMessage) {
-                    callbackWrapperDetachers[id] = qq(window).attach("message", onMessageCallbackWrapper);
-                } else {
-                    log("iframe message passing not supported in this browser!", "error");
-                }
-            },
-            stopReceivingMessages: function(id) {
-                if (window.postMessage) {
-                    var detacher = callbackWrapperDetachers[id];
-                    if (detacher) {
-                        detacher();
-                    }
-                }
-            }
-        });
-    };
-    qq.FormUploadHandler = function(spec) {
-        "use strict";
-        var options = spec.options, handler = this, proxy = spec.proxy, formHandlerInstanceId = qq.getUniqueId(), onloadCallbacks = {}, detachLoadEvents = {}, postMessageCallbackTimers = {}, isCors = options.isCors, inputName = options.inputName, getUuid = proxy.getUuid, log = proxy.log, corsMessageReceiver = new qq.WindowReceiveMessage({
-            log: log
-        });
-        function expungeFile(id) {
-            delete detachLoadEvents[id];
-            if (isCors) {
-                clearTimeout(postMessageCallbackTimers[id]);
-                delete postMessageCallbackTimers[id];
-                corsMessageReceiver.stopReceivingMessages(id);
-            }
-            var iframe = document.getElementById(handler._getIframeName(id));
-            if (iframe) {
-                iframe.setAttribute("src", "javascript:false;");
-                qq(iframe).remove();
-            }
-        }
-        function getFileIdForIframeName(iframeName) {
-            return iframeName.split("_")[0];
-        }
-        function initIframeForUpload(name) {
-            var iframe = qq.toElement("<iframe src='javascript:false;' name='" + name + "' />");
-            iframe.setAttribute("id", name);
-            iframe.style.display = "none";
-            document.body.appendChild(iframe);
-            return iframe;
-        }
-        function registerPostMessageCallback(iframe, callback) {
-            var iframeName = iframe.id, fileId = getFileIdForIframeName(iframeName), uuid = getUuid(fileId);
-            onloadCallbacks[uuid] = callback;
-            detachLoadEvents[fileId] = qq(iframe).attach("load", function() {
-                if (handler.getInput(fileId)) {
-                    log("Received iframe load event for CORS upload request (iframe name " + iframeName + ")");
-                    postMessageCallbackTimers[iframeName] = setTimeout(function() {
-                        var errorMessage = "No valid message received from loaded iframe for iframe name " + iframeName;
-                        log(errorMessage, "error");
-                        callback({
-                            error: errorMessage
-                        });
-                    }, 1e3);
-                }
-            });
-            corsMessageReceiver.receiveMessage(iframeName, function(message) {
-                log("Received the following window message: '" + message + "'");
-                var fileId = getFileIdForIframeName(iframeName), response = handler._parseJsonResponse(message), uuid = response.uuid, onloadCallback;
-                if (uuid && onloadCallbacks[uuid]) {
-                    log("Handling response for iframe name " + iframeName);
-                    clearTimeout(postMessageCallbackTimers[iframeName]);
-                    delete postMessageCallbackTimers[iframeName];
-                    handler._detachLoadEvent(iframeName);
-                    onloadCallback = onloadCallbacks[uuid];
-                    delete onloadCallbacks[uuid];
-                    corsMessageReceiver.stopReceivingMessages(iframeName);
-                    onloadCallback(response);
-                } else if (!uuid) {
-                    log("'" + message + "' does not contain a UUID - ignoring.");
-                }
-            });
-        }
-        qq.extend(this, new qq.UploadHandler(spec));
-        qq.override(this, function(super_) {
-            return {
-                add: function(id, fileInput) {
-                    super_.add(id, {
-                        input: fileInput
-                    });
-                    fileInput.setAttribute("name", inputName);
-                    if (fileInput.parentNode) {
-                        qq(fileInput).remove();
-                    }
-                },
-                expunge: function(id) {
-                    expungeFile(id);
-                    super_.expunge(id);
-                },
-                isValid: function(id) {
-                    return super_.isValid(id) && handler._getFileState(id).input !== undefined;
-                }
-            };
-        });
-        qq.extend(this, {
-            getInput: function(id) {
-                return handler._getFileState(id).input;
-            },
-            _attachLoadEvent: function(iframe, callback) {
-                var responseDescriptor;
-                if (isCors) {
-                    registerPostMessageCallback(iframe, callback);
-                } else {
-                    detachLoadEvents[iframe.id] = qq(iframe).attach("load", function() {
-                        log("Received response for " + iframe.id);
-                        if (!iframe.parentNode) {
-                            return;
-                        }
-                        try {
-                            if (iframe.contentDocument && iframe.contentDocument.body && iframe.contentDocument.body.innerHTML == "false") {
-                                return;
-                            }
-                        } catch (error) {
-                            log("Error when attempting to access iframe during handling of upload response (" + error.message + ")", "error");
-                            responseDescriptor = {
-                                success: false
-                            };
-                        }
-                        callback(responseDescriptor);
-                    });
-                }
-            },
-            _createIframe: function(id) {
-                var iframeName = handler._getIframeName(id);
-                return initIframeForUpload(iframeName);
-            },
-            _detachLoadEvent: function(id) {
-                if (detachLoadEvents[id] !== undefined) {
-                    detachLoadEvents[id]();
-                    delete detachLoadEvents[id];
-                }
-            },
-            _getIframeName: function(fileId) {
-                return fileId + "_" + formHandlerInstanceId;
-            },
-            _initFormForUpload: function(spec) {
-                var method = spec.method, endpoint = spec.endpoint, params = spec.params, paramsInBody = spec.paramsInBody, targetName = spec.targetName, form = qq.toElement("<form method='" + method + "' enctype='multipart/form-data'></form>"), url = endpoint;
-                if (paramsInBody) {
-                    qq.obj2Inputs(params, form);
-                } else {
-                    url = qq.obj2url(params, endpoint);
-                }
-                form.setAttribute("action", url);
-                form.setAttribute("target", targetName);
-                form.style.display = "none";
-                document.body.appendChild(form);
-                return form;
-            },
-            _parseJsonResponse: function(innerHtmlOrMessage) {
-                var response = {};
-                try {
-                    response = qq.parseJson(innerHtmlOrMessage);
-                } catch (error) {
-                    log("Error when attempting to parse iframe upload response (" + error.message + ")", "error");
-                }
-                return response;
-            }
-        });
-    };
-    qq.XhrUploadHandler = function(spec) {
-        "use strict";
-        var handler = this, namespace = spec.options.namespace, proxy = spec.proxy, chunking = spec.options.chunking, getChunkSize = function(id) {
-            var fileState = handler._getFileState(id);
-            if (fileState.chunkSize) {
-                return fileState.chunkSize;
-            } else {
-                var chunkSize = chunking.partSize;
-                if (qq.isFunction(chunkSize)) {
-                    chunkSize = chunkSize(id, getSize(id));
-                }
-                fileState.chunkSize = chunkSize;
-                return chunkSize;
-            }
-        }, resume = spec.options.resume, chunkFiles = chunking && spec.options.chunking.enabled && qq.supportedFeatures.chunking, resumeEnabled = resume && spec.options.resume.enabled && chunkFiles && qq.supportedFeatures.resume, getName = proxy.getName, getSize = proxy.getSize, getUuid = proxy.getUuid, getEndpoint = proxy.getEndpoint, getDataByUuid = proxy.getDataByUuid, onUuidChanged = proxy.onUuidChanged, onProgress = proxy.onProgress, log = proxy.log, getCustomResumeData = proxy.getCustomResumeData;
-        function abort(id) {
-            qq.each(handler._getXhrs(id), function(xhrId, xhr) {
-                var ajaxRequester = handler._getAjaxRequester(id, xhrId);
-                xhr.onreadystatechange = null;
-                xhr.upload.onprogress = null;
-                xhr.abort();
-                ajaxRequester && ajaxRequester.canceled && ajaxRequester.canceled(id);
-            });
-        }
-        qq.extend(this, new qq.UploadHandler(spec));
-        qq.override(this, function(super_) {
-            return {
-                add: function(id, blobOrProxy) {
-                    if (qq.isFile(blobOrProxy) || qq.isBlob(blobOrProxy)) {
-                        super_.add(id, {
-                            file: blobOrProxy
-                        });
-                    } else if (blobOrProxy instanceof qq.BlobProxy) {
-                        super_.add(id, {
-                            proxy: blobOrProxy
-                        });
-                    } else {
-                        throw new Error("Passed obj is not a File, Blob, or proxy");
-                    }
-                    handler._initTempState(id);
-                    resumeEnabled && handler._maybePrepareForResume(id);
-                },
-                expunge: function(id) {
-                    abort(id);
-                    handler._maybeDeletePersistedChunkData(id);
-                    handler._clearXhrs(id);
-                    super_.expunge(id);
-                }
-            };
-        });
-        qq.extend(this, {
-            clearCachedChunk: function(id, chunkIdx) {
-                var fileState = handler._getFileState(id);
-                if (fileState) {
-                    delete fileState.temp.cachedChunks[chunkIdx];
-                }
-            },
-            clearXhr: function(id, chunkIdx) {
-                var tempState = handler._getFileState(id).temp;
-                if (tempState.xhrs) {
-                    delete tempState.xhrs[chunkIdx];
-                }
-                if (tempState.ajaxRequesters) {
-                    delete tempState.ajaxRequesters[chunkIdx];
-                }
-            },
-            finalizeChunks: function(id, responseParser) {
-                var lastChunkIdx = handler._getTotalChunks(id) - 1, xhr = handler._getXhr(id, lastChunkIdx);
-                if (responseParser) {
-                    return new qq.Promise().success(responseParser(xhr), xhr);
-                }
-                return new qq.Promise().success({}, xhr);
-            },
-            getFile: function(id) {
-                return handler.isValid(id) && handler._getFileState(id).file;
-            },
-            getProxy: function(id) {
-                return handler.isValid(id) && handler._getFileState(id).proxy;
-            },
-            getResumableFilesData: function() {
-                var resumableFilesData = [];
-                handler._iterateResumeRecords(function(key, uploadData) {
-                    handler.moveInProgressToRemaining(null, uploadData.chunking.inProgress, uploadData.chunking.remaining);
-                    var data = {
-                        name: uploadData.name,
-                        remaining: uploadData.chunking.remaining,
-                        size: uploadData.size,
-                        uuid: uploadData.uuid
-                    };
-                    if (uploadData.key) {
-                        data.key = uploadData.key;
-                    }
-                    if (uploadData.customResumeData) {
-                        data.customResumeData = uploadData.customResumeData;
-                    }
-                    resumableFilesData.push(data);
-                });
-                return resumableFilesData;
-            },
-            isAttemptingResume: function(id) {
-                return handler._getFileState(id).attemptingResume;
-            },
-            isResumable: function(id) {
-                return !!chunking && handler.isValid(id) && !handler._getFileState(id).notResumable;
-            },
-            moveInProgressToRemaining: function(id, optInProgress, optRemaining) {
-                var fileState = handler._getFileState(id) || {}, chunkingState = fileState.chunking || {}, inProgress = optInProgress || chunkingState.inProgress, remaining = optRemaining || chunkingState.remaining;
-                if (inProgress) {
-                    log(qq.format("Moving these chunks from in-progress {}, to remaining.", JSON.stringify(inProgress)));
-                    inProgress.reverse();
-                    qq.each(inProgress, function(idx, chunkIdx) {
-                        remaining.unshift(chunkIdx);
-                    });
-                    inProgress.length = 0;
-                }
-            },
-            pause: function(id) {
-                if (handler.isValid(id)) {
-                    log(qq.format("Aborting XHR upload for {} '{}' due to pause instruction.", id, getName(id)));
-                    handler._getFileState(id).paused = true;
-                    abort(id);
-                    return true;
-                }
-            },
-            reevaluateChunking: function(id) {
-                if (chunking && handler.isValid(id)) {
-                    var state = handler._getFileState(id), totalChunks, i;
-                    delete state.chunking;
-                    state.chunking = {};
-                    totalChunks = handler._getTotalChunks(id);
-                    if (totalChunks > 1 || chunking.mandatory) {
-                        state.chunking.enabled = true;
-                        state.chunking.parts = totalChunks;
-                        state.chunking.remaining = [];
-                        for (i = 0; i < totalChunks; i++) {
-                            state.chunking.remaining.push(i);
-                        }
-                        handler._initTempState(id);
-                    } else {
-                        state.chunking.enabled = false;
-                    }
-                }
-            },
-            updateBlob: function(id, newBlob) {
-                if (handler.isValid(id)) {
-                    handler._getFileState(id).file = newBlob;
-                }
-            },
-            _clearXhrs: function(id) {
-                var tempState = handler._getFileState(id).temp;
-                qq.each(tempState.ajaxRequesters, function(chunkId) {
-                    delete tempState.ajaxRequesters[chunkId];
-                });
-                qq.each(tempState.xhrs, function(chunkId) {
-                    delete tempState.xhrs[chunkId];
-                });
-            },
-            _createXhr: function(id, optChunkIdx) {
-                return handler._registerXhr(id, optChunkIdx, qq.createXhrInstance());
-            },
-            _getAjaxRequester: function(id, optChunkIdx) {
-                var chunkIdx = optChunkIdx == null ? -1 : optChunkIdx;
-                return handler._getFileState(id).temp.ajaxRequesters[chunkIdx];
-            },
-            _getChunkData: function(id, chunkIndex) {
-                var chunkSize = getChunkSize(id), fileSize = getSize(id), fileOrBlob = handler.getFile(id), startBytes = chunkSize * chunkIndex, endBytes = startBytes + chunkSize >= fileSize ? fileSize : startBytes + chunkSize, totalChunks = handler._getTotalChunks(id), cachedChunks = this._getFileState(id).temp.cachedChunks, blob = cachedChunks[chunkIndex] || qq.sliceBlob(fileOrBlob, startBytes, endBytes);
-                cachedChunks[chunkIndex] = blob;
-                return {
-                    part: chunkIndex,
-                    start: startBytes,
-                    end: endBytes,
-                    count: totalChunks,
-                    blob: blob,
-                    size: endBytes - startBytes
-                };
-            },
-            _getChunkDataForCallback: function(chunkData) {
-                return {
-                    partIndex: chunkData.part,
-                    startByte: chunkData.start + 1,
-                    endByte: chunkData.end,
-                    totalParts: chunkData.count
-                };
-            },
-            _getLocalStorageId: function(id) {
-                var formatVersion = "5.0", name = getName(id), size = getSize(id), chunkSize = getChunkSize(id), endpoint = getEndpoint(id), customKeys = resume.customKeys(id), localStorageId = qq.format("qq{}resume{}-{}-{}-{}-{}", namespace, formatVersion, name, size, chunkSize, endpoint);
-                customKeys.forEach(function(key) {
-                    localStorageId += "-" + key;
-                });
-                return localStorageId;
-            },
-            _getMimeType: function(id) {
-                return handler.getFile(id).type;
-            },
-            _getPersistableData: function(id) {
-                return handler._getFileState(id).chunking;
-            },
-            _getTotalChunks: function(id) {
-                if (chunking) {
-                    var fileSize = getSize(id), chunkSize = getChunkSize(id);
-                    return Math.ceil(fileSize / chunkSize);
-                }
-            },
-            _getXhr: function(id, optChunkIdx) {
-                var chunkIdx = optChunkIdx == null ? -1 : optChunkIdx;
-                return handler._getFileState(id).temp.xhrs[chunkIdx];
-            },
-            _getXhrs: function(id) {
-                return handler._getFileState(id).temp.xhrs;
-            },
-            _iterateResumeRecords: function(callback) {
-                if (resumeEnabled) {
-                    qq.each(localStorage, function(key, item) {
-                        if (key.indexOf(qq.format("qq{}resume", namespace)) === 0) {
-                            var uploadData = JSON.parse(item);
-                            callback(key, uploadData);
-                        }
-                    });
-                }
-            },
-            _initTempState: function(id) {
-                handler._getFileState(id).temp = {
-                    ajaxRequesters: {},
-                    chunkProgress: {},
-                    xhrs: {},
-                    cachedChunks: {}
-                };
-            },
-            _markNotResumable: function(id) {
-                handler._getFileState(id).notResumable = true;
-            },
-            _maybeDeletePersistedChunkData: function(id) {
-                var localStorageId;
-                if (resumeEnabled && handler.isResumable(id)) {
-                    localStorageId = handler._getLocalStorageId(id);
-                    if (localStorageId && localStorage.getItem(localStorageId)) {
-                        localStorage.removeItem(localStorageId);
-                        return true;
-                    }
-                }
-                return false;
-            },
-            _maybePrepareForResume: function(id) {
-                var state = handler._getFileState(id), localStorageId, persistedData;
-                if (resumeEnabled && state.key === undefined) {
-                    localStorageId = handler._getLocalStorageId(id);
-                    persistedData = localStorage.getItem(localStorageId);
-                    if (persistedData) {
-                        persistedData = JSON.parse(persistedData);
-                        if (getDataByUuid(persistedData.uuid)) {
-                            handler._markNotResumable(id);
-                        } else {
-                            log(qq.format("Identified file with ID {} and name of {} as resumable.", id, getName(id)));
-                            onUuidChanged(id, persistedData.uuid);
-                            state.key = persistedData.key;
-                            state.chunking = persistedData.chunking;
-                            state.loaded = persistedData.loaded;
-                            state.customResumeData = persistedData.customResumeData;
-                            state.attemptingResume = true;
-                            handler.moveInProgressToRemaining(id);
-                        }
-                    }
-                }
-            },
-            _maybePersistChunkedState: function(id) {
-                var state = handler._getFileState(id), localStorageId, persistedData;
-                if (resumeEnabled && handler.isResumable(id)) {
-                    var customResumeData = getCustomResumeData(id);
-                    localStorageId = handler._getLocalStorageId(id);
-                    persistedData = {
-                        name: getName(id),
-                        size: getSize(id),
-                        uuid: getUuid(id),
-                        key: state.key,
-                        chunking: state.chunking,
-                        loaded: state.loaded,
-                        lastUpdated: Date.now()
-                    };
-                    if (customResumeData) {
-                        persistedData.customResumeData = customResumeData;
-                    }
-                    try {
-                        localStorage.setItem(localStorageId, JSON.stringify(persistedData));
-                    } catch (error) {
-                        log(qq.format("Unable to save resume data for '{}' due to error: '{}'.", id, error.toString()), "warn");
-                    }
-                }
-            },
-            _registerProgressHandler: function(id, chunkIdx, chunkSize) {
-                var xhr = handler._getXhr(id, chunkIdx), name = getName(id), progressCalculator = {
-                    simple: function(loaded, total) {
-                        var fileSize = getSize(id);
-                        if (loaded === total) {
-                            onProgress(id, name, fileSize, fileSize);
-                        } else {
-                            onProgress(id, name, loaded >= fileSize ? fileSize - 1 : loaded, fileSize);
-                        }
-                    },
-                    chunked: function(loaded, total) {
-                        var chunkProgress = handler._getFileState(id).temp.chunkProgress, totalSuccessfullyLoadedForFile = handler._getFileState(id).loaded, loadedForRequest = loaded, totalForRequest = total, totalFileSize = getSize(id), estActualChunkLoaded = loadedForRequest - (totalForRequest - chunkSize), totalLoadedForFile = totalSuccessfullyLoadedForFile;
-                        chunkProgress[chunkIdx] = estActualChunkLoaded;
-                        qq.each(chunkProgress, function(chunkIdx, chunkLoaded) {
-                            totalLoadedForFile += chunkLoaded;
-                        });
-                        onProgress(id, name, totalLoadedForFile, totalFileSize);
-                    }
-                };
-                xhr.upload.onprogress = function(e) {
-                    if (e.lengthComputable) {
-                        var type = chunkSize == null ? "simple" : "chunked";
-                        progressCalculator[type](e.loaded, e.total);
-                    }
-                };
-            },
-            _registerXhr: function(id, optChunkIdx, xhr, optAjaxRequester) {
-                var xhrsId = optChunkIdx == null ? -1 : optChunkIdx, tempState = handler._getFileState(id).temp;
-                tempState.xhrs = tempState.xhrs || {};
-                tempState.ajaxRequesters = tempState.ajaxRequesters || {};
-                tempState.xhrs[xhrsId] = xhr;
-                if (optAjaxRequester) {
-                    tempState.ajaxRequesters[xhrsId] = optAjaxRequester;
-                }
-                return xhr;
-            },
-            _removeExpiredChunkingRecords: function() {
-                var expirationDays = resume.recordsExpireIn;
-                handler._iterateResumeRecords(function(key, uploadData) {
-                    var expirationDate = new Date(uploadData.lastUpdated);
-                    expirationDate.setDate(expirationDate.getDate() + expirationDays);
-                    if (expirationDate.getTime() <= Date.now()) {
-                        log("Removing expired resume record with key " + key);
-                        localStorage.removeItem(key);
-                    }
-                });
-            },
-            _shouldChunkThisFile: function(id) {
-                var state = handler._getFileState(id);
-                if (state) {
-                    if (!state.chunking) {
-                        handler.reevaluateChunking(id);
-                    }
-                    return state.chunking.enabled;
-                }
-            }
-        });
-    };
-    qq.DeleteFileAjaxRequester = function(o) {
-        "use strict";
-        var requester, options = {
-            method: "DELETE",
-            uuidParamName: "qquuid",
-            endpointStore: {},
-            maxConnections: 3,
-            customHeaders: function(id) {
-                return {};
-            },
-            paramsStore: {},
-            cors: {
-                expected: false,
-                sendCredentials: false
-            },
-            log: function(str, level) {},
-            onDelete: function(id) {},
-            onDeleteComplete: function(id, xhrOrXdr, isError) {}
-        };
-        qq.extend(options, o);
-        function getMandatedParams() {
-            if (options.method.toUpperCase() === "POST") {
-                return {
-                    _method: "DELETE"
-                };
-            }
-            return {};
-        }
-        requester = qq.extend(this, new qq.AjaxRequester({
-            acceptHeader: "application/json",
-            validMethods: [ "POST", "DELETE" ],
-            method: options.method,
-            endpointStore: options.endpointStore,
-            paramsStore: options.paramsStore,
-            mandatedParams: getMandatedParams(),
-            maxConnections: options.maxConnections,
-            customHeaders: function(id) {
-                return options.customHeaders.get(id);
-            },
-            log: options.log,
-            onSend: options.onDelete,
-            onComplete: options.onDeleteComplete,
-            cors: options.cors
-        }));
-        qq.extend(this, {
-            sendDelete: function(id, uuid, additionalMandatedParams) {
-                var additionalOptions = additionalMandatedParams || {};
-                options.log("Submitting delete file request for " + id);
-                if (options.method === "DELETE") {
-                    requester.initTransport(id).withPath(uuid).withParams(additionalOptions).send();
-                } else {
-                    additionalOptions[options.uuidParamName] = uuid;
-                    requester.initTransport(id).withParams(additionalOptions).send();
-                }
-            }
-        });
-    };
-    (function() {
-        function detectSubsampling(img) {
-            var iw = img.naturalWidth, ih = img.naturalHeight, canvas = document.createElement("canvas"), ctx;
-            if (iw * ih > 1024 * 1024) {
-                canvas.width = canvas.height = 1;
-                ctx = canvas.getContext("2d");
-                ctx.drawImage(img, -iw + 1, 0);
-                return ctx.getImageData(0, 0, 1, 1).data[3] === 0;
-            } else {
-                return false;
-            }
-        }
-        function detectVerticalSquash(img, iw, ih) {
-            var canvas = document.createElement("canvas"), sy = 0, ey = ih, py = ih, ctx, data, alpha, ratio;
-            canvas.width = 1;
-            canvas.height = ih;
-            ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0);
-            data = ctx.getImageData(0, 0, 1, ih).data;
-            while (py > sy) {
-                alpha = data[(py - 1) * 4 + 3];
-                if (alpha === 0) {
-                    ey = py;
-                } else {
-                    sy = py;
-                }
-                py = ey + sy >> 1;
-            }
-            ratio = py / ih;
-            return ratio === 0 ? 1 : ratio;
-        }
-        function renderImageToDataURL(img, blob, options, doSquash) {
-            var canvas = document.createElement("canvas"), mime = options.mime || "image/jpeg", promise = new qq.Promise();
-            renderImageToCanvas(img, blob, canvas, options, doSquash).then(function() {
-                promise.success(canvas.toDataURL(mime, options.quality || .8));
-            });
-            return promise;
-        }
-        function maybeCalculateDownsampledDimensions(spec) {
-            var maxPixels = 5241e3;
-            if (!qq.ios()) {
-                throw new qq.Error("Downsampled dimensions can only be reliably calculated for iOS!");
-            }
-            if (spec.origHeight * spec.origWidth > maxPixels) {
-                return {
-                    newHeight: Math.round(Math.sqrt(maxPixels * (spec.origHeight / spec.origWidth))),
-                    newWidth: Math.round(Math.sqrt(maxPixels * (spec.origWidth / spec.origHeight)))
-                };
-            }
-        }
-        function renderImageToCanvas(img, blob, canvas, options, doSquash) {
-            var iw = img.naturalWidth, ih = img.naturalHeight, width = options.width, height = options.height, ctx = canvas.getContext("2d"), promise = new qq.Promise(), modifiedDimensions;
-            ctx.save();
-            if (options.resize) {
-                return renderImageToCanvasWithCustomResizer({
-                    blob: blob,
-                    canvas: canvas,
-                    image: img,
-                    imageHeight: ih,
-                    imageWidth: iw,
-                    orientation: options.orientation,
-                    resize: options.resize,
-                    targetHeight: height,
-                    targetWidth: width
-                });
-            }
-            if (!qq.supportedFeatures.unlimitedScaledImageSize) {
-                modifiedDimensions = maybeCalculateDownsampledDimensions({
-                    origWidth: width,
-                    origHeight: height
-                });
-                if (modifiedDimensions) {
-                    qq.log(qq.format("Had to reduce dimensions due to device limitations from {}w / {}h to {}w / {}h", width, height, modifiedDimensions.newWidth, modifiedDimensions.newHeight), "warn");
-                    width = modifiedDimensions.newWidth;
-                    height = modifiedDimensions.newHeight;
-                }
-            }
-            transformCoordinate(canvas, width, height, options.orientation);
-            if (qq.ios()) {
-                (function() {
-                    if (detectSubsampling(img)) {
-                        iw /= 2;
-                        ih /= 2;
-                    }
-                    var d = 1024, tmpCanvas = document.createElement("canvas"), vertSquashRatio = doSquash ? detectVerticalSquash(img, iw, ih) : 1, dw = Math.ceil(d * width / iw), dh = Math.ceil(d * height / ih / vertSquashRatio), sy = 0, dy = 0, tmpCtx, sx, dx;
-                    tmpCanvas.width = tmpCanvas.height = d;
-                    tmpCtx = tmpCanvas.getContext("2d");
-                    while (sy < ih) {
-                        sx = 0;
-                        dx = 0;
-                        while (sx < iw) {
-                            tmpCtx.clearRect(0, 0, d, d);
-                            tmpCtx.drawImage(img, -sx, -sy);
-                            ctx.drawImage(tmpCanvas, 0, 0, d, d, dx, dy, dw, dh);
-                            sx += d;
-                            dx += dw;
-                        }
-                        sy += d;
-                        dy += dh;
-                    }
-                    ctx.restore();
-                    tmpCanvas = tmpCtx = null;
-                })();
-            } else {
-                ctx.drawImage(img, 0, 0, width, height);
-            }
-            canvas.qqImageRendered && canvas.qqImageRendered();
-            promise.success();
-            return promise;
-        }
-        function renderImageToCanvasWithCustomResizer(resizeInfo) {
-            var blob = resizeInfo.blob, image = resizeInfo.image, imageHeight = resizeInfo.imageHeight, imageWidth = resizeInfo.imageWidth, orientation = resizeInfo.orientation, promise = new qq.Promise(), resize = resizeInfo.resize, sourceCanvas = document.createElement("canvas"), sourceCanvasContext = sourceCanvas.getContext("2d"), targetCanvas = resizeInfo.canvas, targetHeight = resizeInfo.targetHeight, targetWidth = resizeInfo.targetWidth;
-            transformCoordinate(sourceCanvas, imageWidth, imageHeight, orientation);
-            targetCanvas.height = targetHeight;
-            targetCanvas.width = targetWidth;
-            sourceCanvasContext.drawImage(image, 0, 0);
-            resize({
-                blob: blob,
-                height: targetHeight,
-                image: image,
-                sourceCanvas: sourceCanvas,
-                targetCanvas: targetCanvas,
-                width: targetWidth
-            }).then(function success() {
-                targetCanvas.qqImageRendered && targetCanvas.qqImageRendered();
-                promise.success();
-            }, promise.failure);
-            return promise;
-        }
-        function transformCoordinate(canvas, width, height, orientation) {
-            switch (orientation) {
-              case 5:
-              case 6:
-              case 7:
-              case 8:
-                canvas.width = height;
-                canvas.height = width;
-                break;
-
-              default:
-                canvas.width = width;
-                canvas.height = height;
-            }
-            var ctx = canvas.getContext("2d");
-            switch (orientation) {
-              case 2:
-                ctx.translate(width, 0);
-                ctx.scale(-1, 1);
-                break;
-
-              case 3:
-                ctx.translate(width, height);
-                ctx.rotate(Math.PI);
-                break;
-
-              case 4:
-                ctx.translate(0, height);
-                ctx.scale(1, -1);
-                break;
-
-              case 5:
-                ctx.rotate(.5 * Math.PI);
-                ctx.scale(1, -1);
-                break;
-
-              case 6:
-                ctx.rotate(.5 * Math.PI);
-                ctx.translate(0, -height);
-                break;
-
-              case 7:
-                ctx.rotate(.5 * Math.PI);
-                ctx.translate(width, -height);
-                ctx.scale(-1, 1);
-                break;
-
-              case 8:
-                ctx.rotate(-.5 * Math.PI);
-                ctx.translate(-width, 0);
-                break;
-
-              default:
-                break;
-            }
-        }
-        function MegaPixImage(srcImage, errorCallback) {
-            var self = this;
-            if (window.Blob && srcImage instanceof Blob) {
-                (function() {
-                    var img = new Image(), URL = window.URL && window.URL.createObjectURL ? window.URL : window.webkitURL && window.webkitURL.createObjectURL ? window.webkitURL : null;
-                    if (!URL) {
-                        throw Error("No createObjectURL function found to create blob url");
-                    }
-                    img.src = URL.createObjectURL(srcImage);
-                    self.blob = srcImage;
-                    srcImage = img;
-                })();
-            }
-            if (!srcImage.naturalWidth && !srcImage.naturalHeight) {
-                srcImage.onload = function() {
-                    var listeners = self.imageLoadListeners;
-                    if (listeners) {
-                        self.imageLoadListeners = null;
-                        setTimeout(function() {
-                            for (var i = 0, len = listeners.length; i < len; i++) {
-                                listeners[i]();
-                            }
-                        }, 0);
-                    }
-                };
-                srcImage.onerror = errorCallback;
-                this.imageLoadListeners = [];
-            }
-            this.srcImage = srcImage;
-        }
-        MegaPixImage.prototype.render = function(target, options) {
-            options = options || {};
-            var self = this, imgWidth = this.srcImage.naturalWidth, imgHeight = this.srcImage.naturalHeight, width = options.width, height = options.height, maxWidth = options.maxWidth, maxHeight = options.maxHeight, doSquash = !this.blob || this.blob.type === "image/jpeg", tagName = target.tagName.toLowerCase(), opt;
-            if (this.imageLoadListeners) {
-                this.imageLoadListeners.push(function() {
-                    self.render(target, options);
-                });
-                return;
-            }
-            if (width && !height) {
-                height = imgHeight * width / imgWidth << 0;
-            } else if (height && !width) {
-                width = imgWidth * height / imgHeight << 0;
-            } else {
-                width = imgWidth;
-                height = imgHeight;
-            }
-            if (maxWidth && width > maxWidth) {
-                width = maxWidth;
-                height = imgHeight * width / imgWidth << 0;
-            }
-            if (maxHeight && height > maxHeight) {
-                height = maxHeight;
-                width = imgWidth * height / imgHeight << 0;
-            }
-            opt = {
-                width: width,
-                height: height
-            }, qq.each(options, function(optionsKey, optionsValue) {
-                opt[optionsKey] = optionsValue;
-            });
-            if (tagName === "img") {
-                (function() {
-                    var oldTargetSrc = target.src;
-                    renderImageToDataURL(self.srcImage, self.blob, opt, doSquash).then(function(dataUri) {
-                        target.src = dataUri;
-                        oldTargetSrc === target.src && target.onload();
-                    });
-                })();
-            } else if (tagName === "canvas") {
-                renderImageToCanvas(this.srcImage, this.blob, target, opt, doSquash);
-            }
-            if (typeof this.onrender === "function") {
-                this.onrender(target);
-            }
-        };
-        qq.MegaPixImage = MegaPixImage;
-    })();
-    qq.ImageGenerator = function(log) {
-        "use strict";
-        function isImg(el) {
-            return el.tagName.toLowerCase() === "img";
-        }
-        function isCanvas(el) {
-            return el.tagName.toLowerCase() === "canvas";
-        }
-        function isImgCorsSupported() {
-            return new Image().crossOrigin !== undefined;
-        }
-        function isCanvasSupported() {
-            var canvas = document.createElement("canvas");
-            return canvas.getContext && canvas.getContext("2d");
-        }
-        function determineMimeOfFileName(nameWithPath) {
-            var pathSegments = nameWithPath.split("/"), name = pathSegments[pathSegments.length - 1].split("?")[0], extension = qq.getExtension(name);
-            extension = extension && extension.toLowerCase();
-            switch (extension) {
-              case "jpeg":
-              case "jpg":
-                return "image/jpeg";
-
-              case "png":
-                return "image/png";
-
-              case "bmp":
-                return "image/bmp";
-
-              case "gif":
-                return "image/gif";
-
-              case "tiff":
-              case "tif":
-                return "image/tiff";
-            }
-        }
-        function isCrossOrigin(url) {
-            var targetAnchor = document.createElement("a"), targetProtocol, targetHostname, targetPort;
-            targetAnchor.href = url;
-            targetProtocol = targetAnchor.protocol;
-            targetPort = targetAnchor.port;
-            targetHostname = targetAnchor.hostname;
-            if (targetProtocol.toLowerCase() !== window.location.protocol.toLowerCase()) {
-                return true;
-            }
-            if (targetHostname.toLowerCase() !== window.location.hostname.toLowerCase()) {
-                return true;
-            }
-            if (targetPort !== window.location.port && !qq.ie()) {
-                return true;
-            }
-            return false;
-        }
-        function registerImgLoadListeners(img, promise) {
-            img.onload = function() {
-                img.onload = null;
-                img.onerror = null;
-                promise.success(img);
-            };
-            img.onerror = function() {
-                img.onload = null;
-                img.onerror = null;
-                log("Problem drawing thumbnail!", "error");
-                promise.failure(img, "Problem drawing thumbnail!");
-            };
-        }
-        function registerCanvasDrawImageListener(canvas, promise) {
-            canvas.qqImageRendered = function() {
-                promise.success(canvas);
-            };
-        }
-        function registerThumbnailRenderedListener(imgOrCanvas, promise) {
-            var registered = isImg(imgOrCanvas) || isCanvas(imgOrCanvas);
-            if (isImg(imgOrCanvas)) {
-                registerImgLoadListeners(imgOrCanvas, promise);
-            } else if (isCanvas(imgOrCanvas)) {
-                registerCanvasDrawImageListener(imgOrCanvas, promise);
-            } else {
-                promise.failure(imgOrCanvas);
-                log(qq.format("Element container of type {} is not supported!", imgOrCanvas.tagName), "error");
-            }
-            return registered;
-        }
-        function draw(fileOrBlob, container, options) {
-            var drawPreview = new qq.Promise(), identifier = new qq.Identify(fileOrBlob, log), maxSize = options.maxSize, orient = options.orient == null ? true : options.orient, megapixErrorHandler = function() {
-                container.onerror = null;
-                container.onload = null;
-                log("Could not render preview, file may be too large!", "error");
-                drawPreview.failure(container, "Browser cannot render image!");
-            };
-            identifier.isPreviewable().then(function(mime) {
-                var dummyExif = {
-                    parse: function() {
-                        return new qq.Promise().success();
-                    }
-                }, exif = orient ? new qq.Exif(fileOrBlob, log) : dummyExif, mpImg = new qq.MegaPixImage(fileOrBlob, megapixErrorHandler);
-                if (registerThumbnailRenderedListener(container, drawPreview)) {
-                    exif.parse().then(function(exif) {
-                        var orientation = exif && exif.Orientation;
-                        mpImg.render(container, {
-                            maxWidth: maxSize,
-                            maxHeight: maxSize,
-                            orientation: orientation,
-                            mime: mime,
-                            resize: options.customResizeFunction
-                        });
-                    }, function(failureMsg) {
-                        log(qq.format("EXIF data could not be parsed ({}).  Assuming orientation = 1.", failureMsg));
-                        mpImg.render(container, {
-                            maxWidth: maxSize,
-                            maxHeight: maxSize,
-                            mime: mime,
-                            resize: options.customResizeFunction
-                        });
-                    });
-                }
-            }, function() {
-                log("Not previewable");
-                drawPreview.failure(container, "Not previewable");
-            });
-            return drawPreview;
-        }
-        function drawOnCanvasOrImgFromUrl(url, canvasOrImg, draw, maxSize, customResizeFunction) {
-            var tempImg = new Image(), tempImgRender = new qq.Promise();
-            registerThumbnailRenderedListener(tempImg, tempImgRender);
-            if (isCrossOrigin(url)) {
-                tempImg.crossOrigin = "anonymous";
-            }
-            tempImg.src = url;
-            tempImgRender.then(function rendered() {
-                registerThumbnailRenderedListener(canvasOrImg, draw);
-                var mpImg = new qq.MegaPixImage(tempImg);
-                mpImg.render(canvasOrImg, {
-                    maxWidth: maxSize,
-                    maxHeight: maxSize,
-                    mime: determineMimeOfFileName(url),
-                    resize: customResizeFunction
-                });
-            }, draw.failure);
-        }
-        function drawOnImgFromUrlWithCssScaling(url, img, draw, maxSize) {
-            registerThumbnailRenderedListener(img, draw);
-            qq(img).css({
-                maxWidth: maxSize + "px",
-                maxHeight: maxSize + "px"
-            });
-            img.src = url;
-        }
-        function drawFromUrl(url, container, options) {
-            var draw = new qq.Promise(), scale = options.scale, maxSize = scale ? options.maxSize : null;
-            if (scale && isImg(container)) {
-                if (isCanvasSupported()) {
-                    if (isCrossOrigin(url) && !isImgCorsSupported()) {
-                        drawOnImgFromUrlWithCssScaling(url, container, draw, maxSize);
-                    } else {
-                        drawOnCanvasOrImgFromUrl(url, container, draw, maxSize);
-                    }
-                } else {
-                    drawOnImgFromUrlWithCssScaling(url, container, draw, maxSize);
-                }
-            } else if (isCanvas(container)) {
-                drawOnCanvasOrImgFromUrl(url, container, draw, maxSize);
-            } else if (registerThumbnailRenderedListener(container, draw)) {
-                container.src = url;
-            }
-            return draw;
-        }
-        qq.extend(this, {
-            generate: function(fileBlobOrUrl, container, options) {
-                if (qq.isString(fileBlobOrUrl)) {
-                    log("Attempting to update thumbnail based on server response.");
-                    return drawFromUrl(fileBlobOrUrl, container, options || {});
-                } else {
-                    log("Attempting to draw client-side image preview.");
-                    return draw(fileBlobOrUrl, container, options || {});
-                }
-            }
-        });
-        this._testing = {};
-        this._testing.isImg = isImg;
-        this._testing.isCanvas = isCanvas;
-        this._testing.isCrossOrigin = isCrossOrigin;
-        this._testing.determineMimeOfFileName = determineMimeOfFileName;
-    };
-    qq.Exif = function(fileOrBlob, log) {
-        "use strict";
-        var TAG_IDS = [ 274 ], TAG_INFO = {
-            274: {
-                name: "Orientation",
-                bytes: 2
-            }
-        };
-        function parseLittleEndian(hex) {
-            var result = 0, pow = 0;
-            while (hex.length > 0) {
-                result += parseInt(hex.substring(0, 2), 16) * Math.pow(2, pow);
-                hex = hex.substring(2, hex.length);
-                pow += 8;
-            }
-            return result;
-        }
-        function seekToApp1(offset, promise) {
-            var theOffset = offset, thePromise = promise;
-            if (theOffset === undefined) {
-                theOffset = 2;
-                thePromise = new qq.Promise();
-            }
-            qq.readBlobToHex(fileOrBlob, theOffset, 4).then(function(hex) {
-                var match = /^ffe([0-9])/.exec(hex), segmentLength;
-                if (match) {
-                    if (match[1] !== "1") {
-                        segmentLength = parseInt(hex.slice(4, 8), 16);
-                        seekToApp1(theOffset + segmentLength + 2, thePromise);
-                    } else {
-                        thePromise.success(theOffset);
-                    }
-                } else {
-                    thePromise.failure("No EXIF header to be found!");
-                }
-            });
-            return thePromise;
-        }
-        function getApp1Offset() {
-            var promise = new qq.Promise();
-            qq.readBlobToHex(fileOrBlob, 0, 6).then(function(hex) {
-                if (hex.indexOf("ffd8") !== 0) {
-                    promise.failure("Not a valid JPEG!");
-                } else {
-                    seekToApp1().then(function(offset) {
-                        promise.success(offset);
-                    }, function(error) {
-                        promise.failure(error);
-                    });
-                }
-            });
-            return promise;
-        }
-        function isLittleEndian(app1Start) {
-            var promise = new qq.Promise();
-            qq.readBlobToHex(fileOrBlob, app1Start + 10, 2).then(function(hex) {
-                promise.success(hex === "4949");
-            });
-            return promise;
-        }
-        function getDirEntryCount(app1Start, littleEndian) {
-            var promise = new qq.Promise();
-            qq.readBlobToHex(fileOrBlob, app1Start + 18, 2).then(function(hex) {
-                if (littleEndian) {
-                    return promise.success(parseLittleEndian(hex));
-                } else {
-                    promise.success(parseInt(hex, 16));
-                }
-            });
-            return promise;
-        }
-        function getIfd(app1Start, dirEntries) {
-            var offset = app1Start + 20, bytes = dirEntries * 12;
-            return qq.readBlobToHex(fileOrBlob, offset, bytes);
-        }
-        function getDirEntries(ifdHex) {
-            var entries = [], offset = 0;
-            while (offset + 24 <= ifdHex.length) {
-                entries.push(ifdHex.slice(offset, offset + 24));
-                offset += 24;
-            }
-            return entries;
-        }
-        function getTagValues(littleEndian, dirEntries) {
-            var TAG_VAL_OFFSET = 16, tagsToFind = qq.extend([], TAG_IDS), vals = {};
-            qq.each(dirEntries, function(idx, entry) {
-                var idHex = entry.slice(0, 4), id = littleEndian ? parseLittleEndian(idHex) : parseInt(idHex, 16), tagsToFindIdx = tagsToFind.indexOf(id), tagValHex, tagName, tagValLength;
-                if (tagsToFindIdx >= 0) {
-                    tagName = TAG_INFO[id].name;
-                    tagValLength = TAG_INFO[id].bytes;
-                    tagValHex = entry.slice(TAG_VAL_OFFSET, TAG_VAL_OFFSET + tagValLength * 2);
-                    vals[tagName] = littleEndian ? parseLittleEndian(tagValHex) : parseInt(tagValHex, 16);
-                    tagsToFind.splice(tagsToFindIdx, 1);
-                }
-                if (tagsToFind.length === 0) {
-                    return false;
-                }
-            });
-            return vals;
-        }
-        qq.extend(this, {
-            parse: function() {
-                var parser = new qq.Promise(), onParseFailure = function(message) {
-                    log(qq.format("EXIF header parse failed: '{}' ", message));
-                    parser.failure(message);
-                };
-                getApp1Offset().then(function(app1Offset) {
-                    log(qq.format("Moving forward with EXIF header parsing for '{}'", fileOrBlob.name === undefined ? "blob" : fileOrBlob.name));
-                    isLittleEndian(app1Offset).then(function(littleEndian) {
-                        log(qq.format("EXIF Byte order is {} endian", littleEndian ? "little" : "big"));
-                        getDirEntryCount(app1Offset, littleEndian).then(function(dirEntryCount) {
-                            log(qq.format("Found {} APP1 directory entries", dirEntryCount));
-                            getIfd(app1Offset, dirEntryCount).then(function(ifdHex) {
-                                var dirEntries = getDirEntries(ifdHex), tagValues = getTagValues(littleEndian, dirEntries);
-                                log("Successfully parsed some EXIF tags");
-                                parser.success(tagValues);
-                            }, onParseFailure);
-                        }, onParseFailure);
-                    }, onParseFailure);
-                }, onParseFailure);
-                return parser;
-            }
-        });
-        this._testing = {};
-        this._testing.parseLittleEndian = parseLittleEndian;
-    };
-    qq.Identify = function(fileOrBlob, log) {
-        "use strict";
-        function isIdentifiable(magicBytes, questionableBytes) {
-            var identifiable = false, magicBytesEntries = [].concat(magicBytes);
-            qq.each(magicBytesEntries, function(idx, magicBytesArrayEntry) {
-                if (questionableBytes.indexOf(magicBytesArrayEntry) === 0) {
-                    identifiable = true;
-                    return false;
-                }
-            });
-            return identifiable;
-        }
-        qq.extend(this, {
-            isPreviewable: function() {
-                var self = this, identifier = new qq.Promise(), previewable = false, name = fileOrBlob.name === undefined ? "blob" : fileOrBlob.name;
-                log(qq.format("Attempting to determine if {} can be rendered in this browser", name));
-                log("First pass: check type attribute of blob object.");
-                if (this.isPreviewableSync()) {
-                    log("Second pass: check for magic bytes in file header.");
-                    qq.readBlobToHex(fileOrBlob, 0, 4).then(function(hex) {
-                        qq.each(self.PREVIEWABLE_MIME_TYPES, function(mime, bytes) {
-                            if (isIdentifiable(bytes, hex)) {
-                                if (mime !== "image/tiff" || qq.supportedFeatures.tiffPreviews) {
-                                    previewable = true;
-                                    identifier.success(mime);
-                                }
-                                return false;
-                            }
-                        });
-                        log(qq.format("'{}' is {} able to be rendered in this browser", name, previewable ? "" : "NOT"));
-                        if (!previewable) {
-                            identifier.failure();
-                        }
-                    }, function() {
-                        log("Error reading file w/ name '" + name + "'.  Not able to be rendered in this browser.");
-                        identifier.failure();
-                    });
-                } else {
-                    identifier.failure();
-                }
-                return identifier;
-            },
-            isPreviewableSync: function() {
-                var fileMime = fileOrBlob.type, isRecognizedImage = qq.indexOf(Object.keys(this.PREVIEWABLE_MIME_TYPES), fileMime) >= 0, previewable = false, name = fileOrBlob.name === undefined ? "blob" : fileOrBlob.name;
-                if (isRecognizedImage) {
-                    if (fileMime === "image/tiff") {
-                        previewable = qq.supportedFeatures.tiffPreviews;
-                    } else {
-                        previewable = true;
-                    }
-                }
-                !previewable && log(name + " is not previewable in this browser per the blob's type attr");
-                return previewable;
-            }
-        });
-    };
-    qq.Identify.prototype.PREVIEWABLE_MIME_TYPES = {
-        "image/jpeg": "ffd8ff",
-        "image/gif": "474946",
-        "image/png": "89504e",
-        "image/bmp": "424d",
-        "image/tiff": [ "49492a00", "4d4d002a" ]
-    };
-    qq.ImageValidation = function(blob, log) {
-        "use strict";
-        function hasNonZeroLimits(limits) {
-            var atLeastOne = false;
-            qq.each(limits, function(limit, value) {
-                if (value > 0) {
-                    atLeastOne = true;
-                    return false;
-                }
-            });
-            return atLeastOne;
-        }
-        function getWidthHeight() {
-            var sizeDetermination = new qq.Promise();
-            new qq.Identify(blob, log).isPreviewable().then(function() {
-                var image = new Image(), url = window.URL && window.URL.createObjectURL ? window.URL : window.webkitURL && window.webkitURL.createObjectURL ? window.webkitURL : null;
-                if (url) {
-                    image.onerror = function() {
-                        log("Cannot determine dimensions for image.  May be too large.", "error");
-                        sizeDetermination.failure();
-                    };
-                    image.onload = function() {
-                        sizeDetermination.success({
-                            width: this.width,
-                            height: this.height
-                        });
-                    };
-                    image.src = url.createObjectURL(blob);
-                } else {
-                    log("No createObjectURL function available to generate image URL!", "error");
-                    sizeDetermination.failure();
-                }
-            }, sizeDetermination.failure);
-            return sizeDetermination;
-        }
-        function getFailingLimit(limits, dimensions) {
-            var failingLimit;
-            qq.each(limits, function(limitName, limitValue) {
-                if (limitValue > 0) {
-                    var limitMatcher = /(max|min)(Width|Height)/.exec(limitName), dimensionPropName = limitMatcher[2].charAt(0).toLowerCase() + limitMatcher[2].slice(1), actualValue = dimensions[dimensionPropName];
-                    switch (limitMatcher[1]) {
-                      case "min":
-                        if (actualValue < limitValue) {
-                            failingLimit = limitName;
-                            return false;
-                        }
-                        break;
-
-                      case "max":
-                        if (actualValue > limitValue) {
-                            failingLimit = limitName;
-                            return false;
-                        }
-                        break;
-                    }
-                }
-            });
-            return failingLimit;
-        }
-        this.validate = function(limits) {
-            var validationEffort = new qq.Promise();
-            log("Attempting to validate image.");
-            if (hasNonZeroLimits(limits)) {
-                getWidthHeight().then(function(dimensions) {
-                    var failingLimit = getFailingLimit(limits, dimensions);
-                    if (failingLimit) {
-                        validationEffort.failure(failingLimit);
-                    } else {
-                        validationEffort.success();
-                    }
-                }, validationEffort.success);
-            } else {
-                validationEffort.success();
-            }
-            return validationEffort;
-        };
-    };
-    qq.Session = function(spec) {
-        "use strict";
-        var options = {
-            endpoint: null,
-            params: {},
-            customHeaders: {},
-            cors: {},
-            addFileRecord: function(sessionData) {},
-            log: function(message, level) {}
-        };
-        qq.extend(options, spec, true);
-        function isJsonResponseValid(response) {
-            if (qq.isArray(response)) {
-                return true;
-            }
-            options.log("Session response is not an array.", "error");
-        }
-        function handleFileItems(fileItems, success, xhrOrXdr, promise) {
-            var someItemsIgnored = false;
-            success = success && isJsonResponseValid(fileItems);
-            if (success) {
-                qq.each(fileItems, function(idx, fileItem) {
-                    if (fileItem.uuid == null) {
-                        someItemsIgnored = true;
-                        options.log(qq.format("Session response item {} did not include a valid UUID - ignoring.", idx), "error");
-                    } else if (fileItem.name == null) {
-                        someItemsIgnored = true;
-                        options.log(qq.format("Session response item {} did not include a valid name - ignoring.", idx), "error");
-                    } else {
-                        try {
-                            options.addFileRecord(fileItem);
-                            return true;
-                        } catch (err) {
-                            someItemsIgnored = true;
-                            options.log(err.message, "error");
-                        }
-                    }
-                    return false;
-                });
-            }
-            promise[success && !someItemsIgnored ? "success" : "failure"](fileItems, xhrOrXdr);
-        }
-        this.refresh = function() {
-            var refreshEffort = new qq.Promise(), refreshCompleteCallback = function(response, success, xhrOrXdr) {
-                handleFileItems(response, success, xhrOrXdr, refreshEffort);
-            }, requesterOptions = qq.extend({}, options), requester = new qq.SessionAjaxRequester(qq.extend(requesterOptions, {
-                onComplete: refreshCompleteCallback
-            }));
-            requester.queryServer();
-            return refreshEffort;
-        };
-    };
-    qq.SessionAjaxRequester = function(spec) {
-        "use strict";
-        var requester, options = {
-            endpoint: null,
-            customHeaders: {},
-            params: {},
-            cors: {
-                expected: false,
-                sendCredentials: false
-            },
-            onComplete: function(response, success, xhrOrXdr) {},
-            log: function(str, level) {}
-        };
-        qq.extend(options, spec);
-        function onComplete(id, xhrOrXdr, isError) {
-            var response = null;
-            if (xhrOrXdr.responseText != null) {
-                try {
-                    response = qq.parseJson(xhrOrXdr.responseText);
-                } catch (err) {
-                    options.log("Problem parsing session response: " + err.message, "error");
-                    isError = true;
-                }
-            }
-            options.onComplete(response, !isError, xhrOrXdr);
-        }
-        requester = qq.extend(this, new qq.AjaxRequester({
-            acceptHeader: "application/json",
-            validMethods: [ "GET" ],
-            method: "GET",
-            endpointStore: {
-                get: function() {
-                    return options.endpoint;
-                }
-            },
-            customHeaders: options.customHeaders,
-            log: options.log,
-            onComplete: onComplete,
-            cors: options.cors
-        }));
-        qq.extend(this, {
-            queryServer: function() {
-                var params = qq.extend({}, options.params);
-                options.log("Session query request.");
-                requester.initTransport("sessionRefresh").withParams(params).withCacheBuster().send();
-            }
-        });
-    };
-    qq.Scaler = function(spec, log) {
-        "use strict";
-        var self = this, customResizeFunction = spec.customResizer, includeOriginal = spec.sendOriginal, orient = spec.orient, defaultType = spec.defaultType, defaultQuality = spec.defaultQuality / 100, failedToScaleText = spec.failureText, includeExif = spec.includeExif, sizes = this._getSortedSizes(spec.sizes);
-        qq.extend(this, {
-            enabled: qq.supportedFeatures.scaling && sizes.length > 0,
-            getFileRecords: function(originalFileUuid, originalFileName, originalBlobOrBlobData) {
-                var self = this, records = [], originalBlob = originalBlobOrBlobData.blob ? originalBlobOrBlobData.blob : originalBlobOrBlobData, identifier = new qq.Identify(originalBlob, log);
-                if (identifier.isPreviewableSync()) {
-                    qq.each(sizes, function(idx, sizeRecord) {
-                        var outputType = self._determineOutputType({
-                            defaultType: defaultType,
-                            requestedType: sizeRecord.type,
-                            refType: originalBlob.type
-                        });
-                        records.push({
-                            uuid: qq.getUniqueId(),
-                            name: self._getName(originalFileName, {
-                                name: sizeRecord.name,
-                                type: outputType,
-                                refType: originalBlob.type
-                            }),
-                            blob: new qq.BlobProxy(originalBlob, qq.bind(self._generateScaledImage, self, {
-                                customResizeFunction: customResizeFunction,
-                                maxSize: sizeRecord.maxSize,
-                                orient: orient,
-                                type: outputType,
-                                quality: defaultQuality,
-                                failedText: failedToScaleText,
-                                includeExif: includeExif,
-                                log: log
-                            }))
-                        });
-                    });
-                    records.push({
-                        uuid: originalFileUuid,
-                        name: originalFileName,
-                        size: originalBlob.size,
-                        blob: includeOriginal ? originalBlob : null
-                    });
-                } else {
-                    records.push({
-                        uuid: originalFileUuid,
-                        name: originalFileName,
-                        size: originalBlob.size,
-                        blob: originalBlob
-                    });
-                }
-                return records;
-            },
-            handleNewFile: function(file, name, uuid, size, fileList, batchId, uuidParamName, api) {
-                var self = this, buttonId = file.qqButtonId || file.blob && file.blob.qqButtonId, scaledIds = [], originalId = null, addFileToHandler = api.addFileToHandler, uploadData = api.uploadData, paramsStore = api.paramsStore, proxyGroupId = qq.getUniqueId();
-                qq.each(self.getFileRecords(uuid, name, file), function(idx, record) {
-                    var blobSize = record.size, id;
-                    if (record.blob instanceof qq.BlobProxy) {
-                        blobSize = -1;
-                    }
-                    id = uploadData.addFile({
-                        uuid: record.uuid,
-                        name: record.name,
-                        size: blobSize,
-                        batchId: batchId,
-                        proxyGroupId: proxyGroupId
-                    });
-                    if (record.blob instanceof qq.BlobProxy) {
-                        scaledIds.push(id);
-                    } else {
-                        originalId = id;
-                    }
-                    if (record.blob) {
-                        addFileToHandler(id, record.blob);
-                        fileList.push({
-                            id: id,
-                            file: record.blob
-                        });
-                    } else {
-                        uploadData.setStatus(id, qq.status.REJECTED);
-                    }
-                });
-                if (originalId !== null) {
-                    qq.each(scaledIds, function(idx, scaledId) {
-                        var params = {
-                            qqparentuuid: uploadData.retrieve({
-                                id: originalId
-                            }).uuid,
-                            qqparentsize: uploadData.retrieve({
-                                id: originalId
-                            }).size
-                        };
-                        params[uuidParamName] = uploadData.retrieve({
-                            id: scaledId
-                        }).uuid;
-                        uploadData.setParentId(scaledId, originalId);
-                        paramsStore.addReadOnly(scaledId, params);
-                    });
-                    if (scaledIds.length) {
-                        (function() {
-                            var param = {};
-                            param[uuidParamName] = uploadData.retrieve({
-                                id: originalId
-                            }).uuid;
-                            paramsStore.addReadOnly(originalId, param);
-                        })();
-                    }
-                }
-            }
-        });
-    };
-    qq.extend(qq.Scaler.prototype, {
-        scaleImage: function(id, specs, api) {
-            "use strict";
-            if (!qq.supportedFeatures.scaling) {
-                throw new qq.Error("Scaling is not supported in this browser!");
-            }
-            var scalingEffort = new qq.Promise(), log = api.log, file = api.getFile(id), uploadData = api.uploadData.retrieve({
-                id: id
-            }), name = uploadData && uploadData.name, uuid = uploadData && uploadData.uuid, scalingOptions = {
-                customResizer: specs.customResizer,
-                sendOriginal: false,
-                orient: specs.orient,
-                defaultType: specs.type || null,
-                defaultQuality: specs.quality,
-                failedToScaleText: "Unable to scale",
-                sizes: [ {
-                    name: "",
-                    maxSize: specs.maxSize
-                } ]
-            }, scaler = new qq.Scaler(scalingOptions, log);
-            if (!qq.Scaler || !qq.supportedFeatures.imagePreviews || !file) {
-                scalingEffort.failure();
-                log("Could not generate requested scaled image for " + id + ".  " + "Scaling is either not possible in this browser, or the file could not be located.", "error");
-            } else {
-                qq.bind(function() {
-                    var record = scaler.getFileRecords(uuid, name, file)[0];
-                    if (record && record.blob instanceof qq.BlobProxy) {
-                        record.blob.create().then(scalingEffort.success, scalingEffort.failure);
-                    } else {
-                        log(id + " is not a scalable image!", "error");
-                        scalingEffort.failure();
-                    }
-                }, this)();
-            }
-            return scalingEffort;
-        },
-        _determineOutputType: function(spec) {
-            "use strict";
-            var requestedType = spec.requestedType, defaultType = spec.defaultType, referenceType = spec.refType;
-            if (!defaultType && !requestedType) {
-                if (referenceType !== "image/jpeg") {
-                    return "image/png";
-                }
-                return referenceType;
-            }
-            if (!requestedType) {
-                return defaultType;
-            }
-            if (qq.indexOf(Object.keys(qq.Identify.prototype.PREVIEWABLE_MIME_TYPES), requestedType) >= 0) {
-                if (requestedType === "image/tiff") {
-                    return qq.supportedFeatures.tiffPreviews ? requestedType : defaultType;
-                }
-                return requestedType;
-            }
-            return defaultType;
-        },
-        _getName: function(originalName, scaledVersionProperties) {
-            "use strict";
-            var startOfExt = originalName.lastIndexOf("."), versionType = scaledVersionProperties.type || "image/png", referenceType = scaledVersionProperties.refType, scaledName = "", scaledExt = qq.getExtension(originalName), nameAppendage = "";
-            if (scaledVersionProperties.name && scaledVersionProperties.name.trim().length) {
-                nameAppendage = " (" + scaledVersionProperties.name + ")";
-            }
-            if (startOfExt >= 0) {
-                scaledName = originalName.substr(0, startOfExt);
-                if (referenceType !== versionType) {
-                    scaledExt = versionType.split("/")[1];
-                }
-                scaledName += nameAppendage + "." + scaledExt;
-            } else {
-                scaledName = originalName + nameAppendage;
-            }
-            return scaledName;
-        },
-        _getSortedSizes: function(sizes) {
-            "use strict";
-            sizes = qq.extend([], sizes);
-            return sizes.sort(function(a, b) {
-                if (a.maxSize > b.maxSize) {
-                    return 1;
-                }
-                if (a.maxSize < b.maxSize) {
-                    return -1;
-                }
-                return 0;
-            });
-        },
-        _generateScaledImage: function(spec, sourceFile) {
-            "use strict";
-            var self = this, customResizeFunction = spec.customResizeFunction, log = spec.log, maxSize = spec.maxSize, orient = spec.orient, type = spec.type, quality = spec.quality, failedText = spec.failedText, includeExif = spec.includeExif && sourceFile.type === "image/jpeg" && type === "image/jpeg", scalingEffort = new qq.Promise(), imageGenerator = new qq.ImageGenerator(log), canvas = document.createElement("canvas");
-            log("Attempting to generate scaled version for " + sourceFile.name);
-            imageGenerator.generate(sourceFile, canvas, {
-                maxSize: maxSize,
-                orient: orient,
-                customResizeFunction: customResizeFunction
-            }).then(function() {
-                var scaledImageDataUri = canvas.toDataURL(type, quality), signalSuccess = function() {
-                    log("Success generating scaled version for " + sourceFile.name);
-                    var blob = qq.dataUriToBlob(scaledImageDataUri);
-                    scalingEffort.success(blob);
-                };
-                if (includeExif) {
-                    self._insertExifHeader(sourceFile, scaledImageDataUri, log).then(function(scaledImageDataUriWithExif) {
-                        scaledImageDataUri = scaledImageDataUriWithExif;
-                        signalSuccess();
-                    }, function() {
-                        log("Problem inserting EXIF header into scaled image.  Using scaled image w/out EXIF data.", "error");
-                        signalSuccess();
-                    });
-                } else {
-                    signalSuccess();
-                }
-            }, function() {
-                log("Failed attempt to generate scaled version for " + sourceFile.name, "error");
-                scalingEffort.failure(failedText);
-            });
-            return scalingEffort;
-        },
-        _insertExifHeader: function(originalImage, scaledImageDataUri, log) {
-            "use strict";
-            var reader = new FileReader(), insertionEffort = new qq.Promise(), originalImageDataUri = "";
-            reader.onload = function() {
-                originalImageDataUri = reader.result;
-                insertionEffort.success(qq.ExifRestorer.restore(originalImageDataUri, scaledImageDataUri));
-            };
-            reader.onerror = function() {
-                log("Problem reading " + originalImage.name + " during attempt to transfer EXIF data to scaled version.", "error");
-                insertionEffort.failure();
-            };
-            reader.readAsDataURL(originalImage);
-            return insertionEffort;
-        },
-        _dataUriToBlob: function(dataUri) {
-            "use strict";
-            var byteString, mimeString, arrayBuffer, intArray;
-            if (dataUri.split(",")[0].indexOf("base64") >= 0) {
-                byteString = atob(dataUri.split(",")[1]);
-            } else {
-                byteString = decodeURI(dataUri.split(",")[1]);
-            }
-            mimeString = dataUri.split(",")[0].split(":")[1].split(";")[0];
-            arrayBuffer = new ArrayBuffer(byteString.length);
-            intArray = new Uint8Array(arrayBuffer);
-            qq.each(byteString, function(idx, character) {
-                intArray[idx] = character.charCodeAt(0);
-            });
-            return this._createBlob(arrayBuffer, mimeString);
-        },
-        _createBlob: function(data, mime) {
-            "use strict";
-            var BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder || window.MSBlobBuilder, blobBuilder = BlobBuilder && new BlobBuilder();
-            if (blobBuilder) {
-                blobBuilder.append(data);
-                return blobBuilder.getBlob(mime);
-            } else {
-                return new Blob([ data ], {
-                    type: mime
-                });
-            }
-        }
-    });
-    qq.ExifRestorer = function() {
-        var ExifRestorer = {};
-        ExifRestorer.KEY_STR = "ABCDEFGHIJKLMNOP" + "QRSTUVWXYZabcdef" + "ghijklmnopqrstuv" + "wxyz0123456789+/" + "=";
-        ExifRestorer.encode64 = function(input) {
-            var output = "", chr1, chr2, chr3 = "", enc1, enc2, enc3, enc4 = "", i = 0;
-            do {
-                chr1 = input[i++];
-                chr2 = input[i++];
-                chr3 = input[i++];
-                enc1 = chr1 >> 2;
-                enc2 = (chr1 & 3) << 4 | chr2 >> 4;
-                enc3 = (chr2 & 15) << 2 | chr3 >> 6;
-                enc4 = chr3 & 63;
-                if (isNaN(chr2)) {
-                    enc3 = enc4 = 64;
-                } else if (isNaN(chr3)) {
-                    enc4 = 64;
-                }
-                output = output + this.KEY_STR.charAt(enc1) + this.KEY_STR.charAt(enc2) + this.KEY_STR.charAt(enc3) + this.KEY_STR.charAt(enc4);
-                chr1 = chr2 = chr3 = "";
-                enc1 = enc2 = enc3 = enc4 = "";
-            } while (i < input.length);
-            return output;
-        };
-        ExifRestorer.restore = function(origFileBase64, resizedFileBase64) {
-            var expectedBase64Header = "data:image/jpeg;base64,";
-            if (!origFileBase64.match(expectedBase64Header)) {
-                return resizedFileBase64;
-            }
-            var rawImage = this.decode64(origFileBase64.replace(expectedBase64Header, ""));
-            var segments = this.slice2Segments(rawImage);
-            var image = this.exifManipulation(resizedFileBase64, segments);
-            return expectedBase64Header + this.encode64(image);
-        };
-        ExifRestorer.exifManipulation = function(resizedFileBase64, segments) {
-            var exifArray = this.getExifArray(segments), newImageArray = this.insertExif(resizedFileBase64, exifArray), aBuffer = new Uint8Array(newImageArray);
-            return aBuffer;
-        };
-        ExifRestorer.getExifArray = function(segments) {
-            var seg;
-            for (var x = 0; x < segments.length; x++) {
-                seg = segments[x];
-                if (seg[0] == 255 & seg[1] == 225) {
-                    return seg;
-                }
-            }
-            return [];
-        };
-        ExifRestorer.insertExif = function(resizedFileBase64, exifArray) {
-            var imageData = resizedFileBase64.replace("data:image/jpeg;base64,", ""), buf = this.decode64(imageData), separatePoint = buf.indexOf(255, 3), mae = buf.slice(0, separatePoint), ato = buf.slice(separatePoint), array = mae;
-            array = array.concat(exifArray);
-            array = array.concat(ato);
-            return array;
-        };
-        ExifRestorer.slice2Segments = function(rawImageArray) {
-            var head = 0, segments = [];
-            while (1) {
-                if (rawImageArray[head] == 255 & rawImageArray[head + 1] == 218) {
-                    break;
-                }
-                if (rawImageArray[head] == 255 & rawImageArray[head + 1] == 216) {
-                    head += 2;
-                } else {
-                    var length = rawImageArray[head + 2] * 256 + rawImageArray[head + 3], endPoint = head + length + 2, seg = rawImageArray.slice(head, endPoint);
-                    segments.push(seg);
-                    head = endPoint;
-                }
-                if (head > rawImageArray.length) {
-                    break;
-                }
-            }
-            return segments;
-        };
-        ExifRestorer.decode64 = function(input) {
-            var output = "", chr1, chr2, chr3 = "", enc1, enc2, enc3, enc4 = "", i = 0, buf = [];
-            var base64test = /[^A-Za-z0-9\+\/\=]/g;
-            if (base64test.exec(input)) {
-                throw new Error("There were invalid base64 characters in the input text.  " + "Valid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='");
-            }
-            input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
-            do {
-                enc1 = this.KEY_STR.indexOf(input.charAt(i++));
-                enc2 = this.KEY_STR.indexOf(input.charAt(i++));
-                enc3 = this.KEY_STR.indexOf(input.charAt(i++));
-                enc4 = this.KEY_STR.indexOf(input.charAt(i++));
-                chr1 = enc1 << 2 | enc2 >> 4;
-                chr2 = (enc2 & 15) << 4 | enc3 >> 2;
-                chr3 = (enc3 & 3) << 6 | enc4;
-                buf.push(chr1);
-                if (enc3 != 64) {
-                    buf.push(chr2);
-                }
-                if (enc4 != 64) {
-                    buf.push(chr3);
-                }
-                chr1 = chr2 = chr3 = "";
-                enc1 = enc2 = enc3 = enc4 = "";
-            } while (i < input.length);
-            return buf;
-        };
-        return ExifRestorer;
-    }();
-    qq.TotalProgress = function(callback, getSize) {
-        "use strict";
-        var perFileProgress = {}, totalLoaded = 0, totalSize = 0, lastLoadedSent = -1, lastTotalSent = -1, callbackProxy = function(loaded, total) {
-            if (loaded !== lastLoadedSent || total !== lastTotalSent) {
-                callback(loaded, total);
-            }
-            lastLoadedSent = loaded;
-            lastTotalSent = total;
-        }, noRetryableFiles = function(failed, retryable) {
-            var none = true;
-            qq.each(failed, function(idx, failedId) {
-                if (qq.indexOf(retryable, failedId) >= 0) {
-                    none = false;
-                    return false;
-                }
-            });
-            return none;
-        }, onCancel = function(id) {
-            updateTotalProgress(id, -1, -1);
-            delete perFileProgress[id];
-        }, onAllComplete = function(successful, failed, retryable) {
-            if (failed.length === 0 || noRetryableFiles(failed, retryable)) {
-                callbackProxy(totalSize, totalSize);
-                this.reset();
-            }
-        }, onNew = function(id) {
-            var size = getSize(id);
-            if (size > 0) {
-                updateTotalProgress(id, 0, size);
-                perFileProgress[id] = {
-                    loaded: 0,
-                    total: size
-                };
-            }
-        }, updateTotalProgress = function(id, newLoaded, newTotal) {
-            var oldLoaded = perFileProgress[id] ? perFileProgress[id].loaded : 0, oldTotal = perFileProgress[id] ? perFileProgress[id].total : 0;
-            if (newLoaded === -1 && newTotal === -1) {
-                totalLoaded -= oldLoaded;
-                totalSize -= oldTotal;
-            } else {
-                if (newLoaded) {
-                    totalLoaded += newLoaded - oldLoaded;
-                }
-                if (newTotal) {
-                    totalSize += newTotal - oldTotal;
-                }
-            }
-            callbackProxy(totalLoaded, totalSize);
-        };
-        qq.extend(this, {
-            onAllComplete: onAllComplete,
-            onStatusChange: function(id, oldStatus, newStatus) {
-                if (newStatus === qq.status.CANCELED || newStatus === qq.status.REJECTED) {
-                    onCancel(id);
-                } else if (newStatus === qq.status.SUBMITTING) {
-                    onNew(id);
-                }
-            },
-            onIndividualProgress: function(id, loaded, total) {
-                updateTotalProgress(id, loaded, total);
-                perFileProgress[id] = {
-                    loaded: loaded,
-                    total: total
-                };
-            },
-            onNewSize: function(id) {
-                onNew(id);
-            },
-            reset: function() {
-                perFileProgress = {};
-                totalLoaded = 0;
-                totalSize = 0;
-            }
-        });
-    };
-    qq.PasteSupport = function(o) {
-        "use strict";
-        var options, detachPasteHandler;
-        options = {
-            targetElement: null,
-            callbacks: {
-                log: function(message, level) {},
-                pasteReceived: function(blob) {}
-            }
-        };
-        function isImage(item) {
-            return item.type && item.type.indexOf("image/") === 0;
-        }
-        function registerPasteHandler() {
-            detachPasteHandler = qq(options.targetElement).attach("paste", function(event) {
-                var clipboardData = event.clipboardData;
-                if (clipboardData) {
-                    qq.each(clipboardData.items, function(idx, item) {
-                        if (isImage(item)) {
-                            var blob = item.getAsFile();
-                            options.callbacks.pasteReceived(blob);
-                        }
-                    });
-                }
-            });
-        }
-        function unregisterPasteHandler() {
-            if (detachPasteHandler) {
-                detachPasteHandler();
-            }
-        }
-        qq.extend(options, o);
-        registerPasteHandler();
-        qq.extend(this, {
-            reset: function() {
-                unregisterPasteHandler();
-            }
-        });
-    };
-    qq.FormSupport = function(options, startUpload, log) {
-        "use strict";
-        var self = this, interceptSubmit = options.interceptSubmit, formEl = options.element, autoUpload = options.autoUpload;
-        qq.extend(this, {
-            newEndpoint: null,
-            newAutoUpload: autoUpload,
-            attachedToForm: false,
-            getFormInputsAsObject: function() {
-                if (formEl == null) {
-                    return null;
-                }
-                return self._form2Obj(formEl);
-            }
-        });
-        function determineNewEndpoint(formEl) {
-            if (formEl.getAttribute("action")) {
-                self.newEndpoint = formEl.getAttribute("action");
-            }
-        }
-        function validateForm(formEl, nativeSubmit) {
-            if (formEl.checkValidity && !formEl.checkValidity()) {
-                log("Form did not pass validation checks - will not upload.", "error");
-                nativeSubmit();
-            } else {
-                return true;
-            }
-        }
-        function maybeUploadOnSubmit(formEl) {
-            var nativeSubmit = formEl.submit;
-            qq(formEl).attach("submit", function(event) {
-                event = event || window.event;
-                if (event.preventDefault) {
-                    event.preventDefault();
-                } else {
-                    event.returnValue = false;
-                }
-                validateForm(formEl, nativeSubmit) && startUpload();
-            });
-            formEl.submit = function() {
-                validateForm(formEl, nativeSubmit) && startUpload();
-            };
-        }
-        function determineFormEl(formEl) {
-            if (formEl) {
-                if (qq.isString(formEl)) {
-                    formEl = document.getElementById(formEl);
-                }
-                if (formEl) {
-                    log("Attaching to form element.");
-                    determineNewEndpoint(formEl);
-                    interceptSubmit && maybeUploadOnSubmit(formEl);
-                }
-            }
-            return formEl;
-        }
-        formEl = determineFormEl(formEl);
-        this.attachedToForm = !!formEl;
-    };
-    qq.extend(qq.FormSupport.prototype, {
-        _form2Obj: function(form) {
-            "use strict";
-            var obj = {}, notIrrelevantType = function(type) {
-                var irrelevantTypes = [ "button", "image", "reset", "submit" ];
-                return qq.indexOf(irrelevantTypes, type.toLowerCase()) < 0;
-            }, radioOrCheckbox = function(type) {
-                return qq.indexOf([ "checkbox", "radio" ], type.toLowerCase()) >= 0;
-            }, ignoreValue = function(el) {
-                if (radioOrCheckbox(el.type) && !el.checked) {
-                    return true;
-                }
-                return el.disabled && el.type.toLowerCase() !== "hidden";
-            }, selectValue = function(select) {
-                var value = null;
-                qq.each(qq(select).children(), function(idx, child) {
-                    if (child.tagName.toLowerCase() === "option" && child.selected) {
-                        value = child.value;
-                        return false;
-                    }
-                });
-                return value;
-            };
-            qq.each(form.elements, function(idx, el) {
-                if ((qq.isInput(el, true) || el.tagName.toLowerCase() === "textarea") && notIrrelevantType(el.type) && !ignoreValue(el)) {
-                    obj[el.name] = el.value;
-                } else if (el.tagName.toLowerCase() === "select" && !ignoreValue(el)) {
-                    var value = selectValue(el);
-                    if (value !== null) {
-                        obj[el.name] = value;
-                    }
-                }
-            });
-            return obj;
-        }
-    });
-    qq.traditional = qq.traditional || {};
-    qq.traditional.FormUploadHandler = function(options, proxy) {
-        "use strict";
-        var handler = this, getName = proxy.getName, getUuid = proxy.getUuid, log = proxy.log;
-        function getIframeContentJson(id, iframe) {
-            var response, doc, innerHtml;
-            try {
-                doc = iframe.contentDocument || iframe.contentWindow.document;
-                innerHtml = doc.body.innerHTML;
-                log("converting iframe's innerHTML to JSON");
-                log("innerHTML = " + innerHtml);
-                if (innerHtml && innerHtml.match(/^<pre/i)) {
-                    innerHtml = doc.body.firstChild.firstChild.nodeValue;
-                }
-                response = handler._parseJsonResponse(innerHtml);
-            } catch (error) {
-                log("Error when attempting to parse form upload response (" + error.message + ")", "error");
-                response = {
-                    success: false
-                };
-            }
-            return response;
-        }
-        function createForm(id, iframe) {
-            var params = options.paramsStore.get(id), method = options.method.toLowerCase() === "get" ? "GET" : "POST", endpoint = options.endpointStore.get(id), name = getName(id);
-            params[options.uuidName] = getUuid(id);
-            params[options.filenameParam] = name;
-            return handler._initFormForUpload({
-                method: method,
-                endpoint: endpoint,
-                params: params,
-                paramsInBody: options.paramsInBody,
-                targetName: iframe.name
-            });
-        }
-        this.uploadFile = function(id) {
-            var input = handler.getInput(id), iframe = handler._createIframe(id), promise = new qq.Promise(), form;
-            form = createForm(id, iframe);
-            form.appendChild(input);
-            handler._attachLoadEvent(iframe, function(responseFromMessage) {
-                log("iframe loaded");
-                var response = responseFromMessage ? responseFromMessage : getIframeContentJson(id, iframe);
-                handler._detachLoadEvent(id);
-                if (!options.cors.expected) {
-                    qq(iframe).remove();
-                }
-                if (response.success) {
-                    promise.success(response);
-                } else {
-                    promise.failure(response);
-                }
-            });
-            log("Sending upload request for " + id);
-            form.submit();
-            qq(form).remove();
-            return promise;
-        };
-        qq.extend(this, new qq.FormUploadHandler({
-            options: {
-                isCors: options.cors.expected,
-                inputName: options.inputName
-            },
-            proxy: {
-                onCancel: options.onCancel,
-                getName: getName,
-                getUuid: getUuid,
-                log: log
-            }
-        }));
-    };
-    qq.traditional = qq.traditional || {};
-    qq.traditional.XhrUploadHandler = function(spec, proxy) {
-        "use strict";
-        var handler = this, getName = proxy.getName, getSize = proxy.getSize, getUuid = proxy.getUuid, log = proxy.log, multipart = spec.forceMultipart || spec.paramsInBody, addChunkingSpecificParams = function(id, params, chunkData) {
-            var size = getSize(id), name = getName(id);
-            if (!spec.omitDefaultParams) {
-                params[spec.chunking.paramNames.partIndex] = chunkData.part;
-                params[spec.chunking.paramNames.partByteOffset] = chunkData.start;
-                params[spec.chunking.paramNames.chunkSize] = chunkData.size;
-                params[spec.chunking.paramNames.totalParts] = chunkData.count;
-                params[spec.totalFileSizeName] = size;
-            }
-            if (multipart && !spec.omitDefaultParams) {
-                params[spec.filenameParam] = name;
-            }
-        }, allChunksDoneRequester = new qq.traditional.AllChunksDoneAjaxRequester({
-            cors: spec.cors,
-            endpoint: spec.chunking.success.endpoint,
-            headers: spec.chunking.success.headers,
-            jsonPayload: spec.chunking.success.jsonPayload,
-            log: log,
-            method: spec.chunking.success.method,
-            params: spec.chunking.success.params
-        }), createReadyStateChangedHandler = function(id, xhr) {
-            var promise = new qq.Promise();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4) {
-                    var result = onUploadOrChunkComplete(id, xhr);
-                    if (result.success) {
-                        promise.success(result.response, xhr);
-                    } else {
-                        promise.failure(result.response, xhr);
-                    }
-                }
-            };
-            return promise;
-        }, getChunksCompleteParams = function(id) {
-            var params = spec.paramsStore.get(id), name = getName(id), size = getSize(id);
-            params[spec.uuidName] = getUuid(id);
-            params[spec.filenameParam] = name;
-            params[spec.totalFileSizeName] = size;
-            params[spec.chunking.paramNames.totalParts] = handler._getTotalChunks(id);
-            return params;
-        }, isErrorUploadResponse = function(xhr, response) {
-            return qq.indexOf([ 200, 201, 202, 203, 204 ], xhr.status) < 0 || spec.requireSuccessJson && !response.success || response.reset;
-        }, onUploadOrChunkComplete = function(id, xhr) {
-            var response;
-            log("xhr - server response received for " + id);
-            log("responseText = " + xhr.responseText);
-            response = parseResponse(true, xhr);
-            return {
-                success: !isErrorUploadResponse(xhr, response),
-                response: response
-            };
-        }, parseResponse = function(upload, xhr) {
-            var response = {};
-            try {
-                log(qq.format("Received response status {} with body: {}", xhr.status, xhr.responseText));
-                response = qq.parseJson(xhr.responseText);
-            } catch (error) {
-                upload && spec.requireSuccessJson && log("Error when attempting to parse xhr response text (" + error.message + ")", "error");
-            }
-            return response;
-        }, sendChunksCompleteRequest = function(id) {
-            var promise = new qq.Promise();
-            allChunksDoneRequester.complete(id, handler._createXhr(id), getChunksCompleteParams(id), spec.customHeaders.get(id)).then(function(xhr) {
-                promise.success(parseResponse(false, xhr), xhr);
-            }, function(xhr) {
-                promise.failure(parseResponse(false, xhr), xhr);
-            });
-            return promise;
-        }, setParamsAndGetEntityToSend = function(entityToSendParams) {
-            var fileOrBlob = entityToSendParams.fileOrBlob;
-            var id = entityToSendParams.id;
-            var xhr = entityToSendParams.xhr;
-            var xhrOverrides = entityToSendParams.xhrOverrides || {};
-            var customParams = entityToSendParams.customParams || {};
-            var defaultParams = entityToSendParams.params || {};
-            var xhrOverrideParams = xhrOverrides.params || {};
-            var params;
-            var formData = multipart ? new FormData() : null, method = xhrOverrides.method || spec.method, endpoint = xhrOverrides.endpoint || spec.endpointStore.get(id), name = getName(id), size = getSize(id);
-            if (spec.omitDefaultParams) {
-                params = qq.extend({}, customParams);
-                qq.extend(params, xhrOverrideParams);
-            } else {
-                params = qq.extend({}, customParams);
-                qq.extend(params, xhrOverrideParams);
-                qq.extend(params, defaultParams);
-                params[spec.uuidName] = getUuid(id);
-                params[spec.filenameParam] = name;
-                if (multipart) {
-                    params[spec.totalFileSizeName] = size;
-                } else if (!spec.paramsInBody) {
-                    params[spec.inputName] = name;
-                }
-            }
-            if (!spec.paramsInBody) {
-                endpoint = qq.obj2url(params, endpoint);
-            }
-            xhr.open(method, endpoint, true);
-            if (spec.cors.expected && spec.cors.sendCredentials) {
-                xhr.withCredentials = true;
-            }
-            if (multipart) {
-                if (spec.paramsInBody) {
-                    qq.obj2FormData(params, formData);
-                }
-                formData.append(spec.inputName, fileOrBlob);
-                return formData;
-            }
-            return fileOrBlob;
-        }, setUploadHeaders = function(headersOptions) {
-            var headerOverrides = headersOptions.headerOverrides;
-            var id = headersOptions.id;
-            var xhr = headersOptions.xhr;
-            if (headerOverrides) {
-                qq.each(headerOverrides, function(headerName, headerValue) {
-                    xhr.setRequestHeader(headerName, headerValue);
-                });
-            } else {
-                var extraHeaders = spec.customHeaders.get(id), fileOrBlob = handler.getFile(id);
-                xhr.setRequestHeader("Accept", "application/json");
-                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-                xhr.setRequestHeader("Cache-Control", "no-cache");
-                if (!multipart) {
-                    xhr.setRequestHeader("Content-Type", "application/octet-stream");
-                    xhr.setRequestHeader("X-Mime-Type", fileOrBlob.type);
-                }
-                qq.each(extraHeaders, function(name, val) {
-                    xhr.setRequestHeader(name, val);
-                });
-            }
-        };
-        qq.extend(this, {
-            uploadChunk: function(uploadChunkParams) {
-                var id = uploadChunkParams.id;
-                var chunkIdx = uploadChunkParams.chunkIdx;
-                var overrides = uploadChunkParams.overrides || {};
-                var resuming = uploadChunkParams.resuming;
-                var chunkData = handler._getChunkData(id, chunkIdx), xhr = handler._createXhr(id, chunkIdx), promise, toSend, customParams, params = {};
-                promise = createReadyStateChangedHandler(id, xhr);
-                handler._registerProgressHandler(id, chunkIdx, chunkData.size);
-                customParams = spec.paramsStore.get(id);
-                addChunkingSpecificParams(id, params, chunkData);
-                if (resuming) {
-                    params[spec.resume.paramNames.resuming] = true;
-                }
-                toSend = setParamsAndGetEntityToSend({
-                    fileOrBlob: chunkData.blob,
-                    id: id,
-                    customParams: customParams,
-                    params: params,
-                    xhr: xhr,
-                    xhrOverrides: overrides
-                });
-                setUploadHeaders({
-                    headerOverrides: overrides.headers,
-                    id: id,
-                    xhr: xhr
-                });
-                xhr.send(toSend);
-                return promise;
-            },
-            uploadFile: function(id) {
-                var fileOrBlob = handler.getFile(id), promise, xhr, customParams, toSend;
-                xhr = handler._createXhr(id);
-                handler._registerProgressHandler(id);
-                promise = createReadyStateChangedHandler(id, xhr);
-                customParams = spec.paramsStore.get(id);
-                toSend = setParamsAndGetEntityToSend({
-                    fileOrBlob: fileOrBlob,
-                    id: id,
-                    customParams: customParams,
-                    xhr: xhr
-                });
-                setUploadHeaders({
-                    id: id,
-                    xhr: xhr
-                });
-                xhr.send(toSend);
-                return promise;
-            }
-        });
-        qq.extend(this, new qq.XhrUploadHandler({
-            options: qq.extend({
-                namespace: "traditional"
-            }, spec),
-            proxy: qq.extend({
-                getEndpoint: spec.endpointStore.get
-            }, proxy)
-        }));
-        qq.override(this, function(super_) {
-            return {
-                finalizeChunks: function(id) {
-                    proxy.onFinalizing(id);
-                    if (spec.chunking.success.endpoint) {
-                        return sendChunksCompleteRequest(id);
-                    } else {
-                        return super_.finalizeChunks(id, qq.bind(parseResponse, this, true));
-                    }
-                }
-            };
-        });
-    };
-    qq.traditional.AllChunksDoneAjaxRequester = function(o) {
-        "use strict";
-        var requester, options = {
-            cors: {
-                allowXdr: false,
-                expected: false,
-                sendCredentials: false
-            },
-            endpoint: null,
-            log: function(str, level) {},
-            method: "POST"
-        }, promises = {}, endpointHandler = {
-            get: function(id) {
-                if (qq.isFunction(options.endpoint)) {
-                    return options.endpoint(id);
-                }
-                return options.endpoint;
-            }
-        };
-        qq.extend(options, o);
-        requester = qq.extend(this, new qq.AjaxRequester({
-            acceptHeader: "application/json",
-            contentType: options.jsonPayload ? "application/json" : "application/x-www-form-urlencoded",
-            validMethods: [ options.method ],
-            method: options.method,
-            endpointStore: endpointHandler,
-            allowXRequestedWithAndCacheControl: false,
-            cors: options.cors,
-            log: options.log,
-            onComplete: function(id, xhr, isError) {
-                var promise = promises[id];
-                delete promises[id];
-                if (isError) {
-                    promise.failure(xhr);
-                } else {
-                    promise.success(xhr);
-                }
-            }
-        }));
-        qq.extend(this, {
-            complete: function(id, xhr, params, headers) {
-                var promise = new qq.Promise();
-                options.log("Submitting All Chunks Done request for " + id);
-                promises[id] = promise;
-                requester.initTransport(id).withParams(options.params(id) || params).withHeaders(options.headers(id) || headers).send(xhr);
-                return promise;
-            }
-        });
-    };
-})(window);
-//# sourceMappingURL=fine-uploader.core.js.map
-
-/***/ }),
-
-/***/ "./node_modules/fine-uploader/lib/core/index.js":
-/*!******************************************************!*\
-  !*** ./node_modules/fine-uploader/lib/core/index.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(/*! ../../fine-uploader/fine-uploader.core */ "./node_modules/fine-uploader/fine-uploader/fine-uploader.core.js");
-
-
-/***/ }),
-
 /***/ "./node_modules/generate-js/generate.js":
 /*!**********************************************!*\
   !*** ./node_modules/generate-js/generate.js ***!
@@ -20743,1726 +12334,6 @@ module.exports = function isBuffer (obj) {
 
 /***/ }),
 
-/***/ "./node_modules/nanoid/format.js":
-/*!***************************************!*\
-  !*** ./node_modules/nanoid/format.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Secure random string generator with custom alphabet.
- *
- * Alphabet must contain 256 symbols or less. Otherwise, the generator
- * will not be secure.
- *
- * @param {generator} random The random bytes generator.
- * @param {string} alphabet Symbols to be used in new random string.
- * @param {size} size The number of symbols in new random string.
- *
- * @return {string} Random string.
- *
- * @example
- * const format = require('nanoid/format')
- *
- * function random (size) {
- *   const result = []
- *   for (let i = 0; i < size; i++) {
- *     result.push(randomByte())
- *   }
- *   return result
- * }
- *
- * format(random, "abcdef", 5) //=> "fbaef"
- *
- * @name format
- * @function
- */
-module.exports = function (random, alphabet, size) {
-  var mask = (2 << Math.log(alphabet.length - 1) / Math.LN2) - 1
-  var step = Math.ceil(1.6 * mask * size / alphabet.length)
-  size = +size
-
-  var id = ''
-  while (true) {
-    var bytes = random(step)
-    for (var i = 0; i < step; i++) {
-      var byte = bytes[i] & mask
-      if (alphabet[byte]) {
-        id += alphabet[byte]
-        if (id.length === size) return id
-      }
-    }
-  }
-}
-
-/**
- * @callback generator
- * @param {number} bytes The number of bytes to generate.
- * @return {number[]} Random bytes.
- */
-
-
-/***/ }),
-
-/***/ "./node_modules/prismjs/components/prism-clike.js":
-/*!********************************************************!*\
-  !*** ./node_modules/prismjs/components/prism-clike.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-Prism.languages.clike = {
-	'comment': [
-		{
-			pattern: /(^|[^\\])\/\*[\s\S]*?(?:\*\/|$)/,
-			lookbehind: true
-		},
-		{
-			pattern: /(^|[^\\:])\/\/.*/,
-			lookbehind: true,
-			greedy: true
-		}
-	],
-	'string': {
-		pattern: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
-		greedy: true
-	},
-	'class-name': {
-		pattern: /((?:\b(?:class|interface|extends|implements|trait|instanceof|new)\s+)|(?:catch\s+\())[\w.\\]+/i,
-		lookbehind: true,
-		inside: {
-			punctuation: /[.\\]/
-		}
-	},
-	'keyword': /\b(?:if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/,
-	'boolean': /\b(?:true|false)\b/,
-	'function': /\w+(?=\()/,
-	'number': /\b0x[\da-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:e[+-]?\d+)?/i,
-	'operator': /--?|\+\+?|!=?=?|<=?|>=?|==?=?|&&?|\|\|?|\?|\*|\/|~|\^|%/,
-	'punctuation': /[{}[\];(),.:]/
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/prismjs/components/prism-core.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/prismjs/components/prism-core.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var _self = (typeof window !== 'undefined')
-	? window   // if in browser
-	: (
-		(typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope)
-		? self // if in worker
-		: {}   // if in node js
-	);
-
-/**
- * Prism: Lightweight, robust, elegant syntax highlighting
- * MIT license http://www.opensource.org/licenses/mit-license.php/
- * @author Lea Verou http://lea.verou.me
- */
-
-var Prism = (function (_self){
-
-// Private helper vars
-var lang = /\blang(?:uage)?-([\w-]+)\b/i;
-var uniqueId = 0;
-
-var _ = {
-	manual: _self.Prism && _self.Prism.manual,
-	disableWorkerMessageHandler: _self.Prism && _self.Prism.disableWorkerMessageHandler,
-	util: {
-		encode: function (tokens) {
-			if (tokens instanceof Token) {
-				return new Token(tokens.type, _.util.encode(tokens.content), tokens.alias);
-			} else if (Array.isArray(tokens)) {
-				return tokens.map(_.util.encode);
-			} else {
-				return tokens.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\u00a0/g, ' ');
-			}
-		},
-
-		type: function (o) {
-			return Object.prototype.toString.call(o).slice(8, -1);
-		},
-
-		objId: function (obj) {
-			if (!obj['__id']) {
-				Object.defineProperty(obj, '__id', { value: ++uniqueId });
-			}
-			return obj['__id'];
-		},
-
-		// Deep clone a language definition (e.g. to extend it)
-		clone: function deepClone(o, visited) {
-			var clone, id, type = _.util.type(o);
-			visited = visited || {};
-
-			switch (type) {
-				case 'Object':
-					id = _.util.objId(o);
-					if (visited[id]) {
-						return visited[id];
-					}
-					clone = {};
-					visited[id] = clone;
-
-					for (var key in o) {
-						if (o.hasOwnProperty(key)) {
-							clone[key] = deepClone(o[key], visited);
-						}
-					}
-
-					return clone;
-
-				case 'Array':
-					id = _.util.objId(o);
-					if (visited[id]) {
-						return visited[id];
-					}
-					clone = [];
-					visited[id] = clone;
-
-					o.forEach(function (v, i) {
-						clone[i] = deepClone(v, visited);
-					});
-
-					return clone;
-
-				default:
-					return o;
-			}
-		}
-	},
-
-	languages: {
-		extend: function (id, redef) {
-			var lang = _.util.clone(_.languages[id]);
-
-			for (var key in redef) {
-				lang[key] = redef[key];
-			}
-
-			return lang;
-		},
-
-		/**
-		 * Insert a token before another token in a language literal
-		 * As this needs to recreate the object (we cannot actually insert before keys in object literals),
-		 * we cannot just provide an object, we need an object and a key.
-		 * @param inside The key (or language id) of the parent
-		 * @param before The key to insert before.
-		 * @param insert Object with the key/value pairs to insert
-		 * @param root The object that contains `inside`. If equal to Prism.languages, it can be omitted.
-		 */
-		insertBefore: function (inside, before, insert, root) {
-			root = root || _.languages;
-			var grammar = root[inside];
-			var ret = {};
-
-			for (var token in grammar) {
-				if (grammar.hasOwnProperty(token)) {
-
-					if (token == before) {
-						for (var newToken in insert) {
-							if (insert.hasOwnProperty(newToken)) {
-								ret[newToken] = insert[newToken];
-							}
-						}
-					}
-
-					// Do not insert token which also occur in insert. See #1525
-					if (!insert.hasOwnProperty(token)) {
-						ret[token] = grammar[token];
-					}
-				}
-			}
-
-			var old = root[inside];
-			root[inside] = ret;
-
-			// Update references in other language definitions
-			_.languages.DFS(_.languages, function(key, value) {
-				if (value === old && key != inside) {
-					this[key] = ret;
-				}
-			});
-
-			return ret;
-		},
-
-		// Traverse a language definition with Depth First Search
-		DFS: function DFS(o, callback, type, visited) {
-			visited = visited || {};
-
-			var objId = _.util.objId;
-
-			for (var i in o) {
-				if (o.hasOwnProperty(i)) {
-					callback.call(o, i, o[i], type || i);
-
-					var property = o[i],
-					    propertyType = _.util.type(property);
-
-					if (propertyType === 'Object' && !visited[objId(property)]) {
-						visited[objId(property)] = true;
-						DFS(property, callback, null, visited);
-					}
-					else if (propertyType === 'Array' && !visited[objId(property)]) {
-						visited[objId(property)] = true;
-						DFS(property, callback, i, visited);
-					}
-				}
-			}
-		}
-	},
-	plugins: {},
-
-	highlightAll: function(async, callback) {
-		_.highlightAllUnder(document, async, callback);
-	},
-
-	highlightAllUnder: function(container, async, callback) {
-		var env = {
-			callback: callback,
-			selector: 'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'
-		};
-
-		_.hooks.run('before-highlightall', env);
-
-		var elements = container.querySelectorAll(env.selector);
-
-		for (var i=0, element; element = elements[i++];) {
-			_.highlightElement(element, async === true, env.callback);
-		}
-	},
-
-	highlightElement: function(element, async, callback) {
-		// Find language
-		var language = 'none', grammar, parent = element;
-
-		while (parent && !lang.test(parent.className)) {
-			parent = parent.parentNode;
-		}
-
-		if (parent) {
-			language = (parent.className.match(lang) || [,'none'])[1].toLowerCase();
-			grammar = _.languages[language];
-		}
-
-		// Set language on the element, if not present
-		element.className = element.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
-
-		if (element.parentNode) {
-			// Set language on the parent, for styling
-			parent = element.parentNode;
-
-			if (/pre/i.test(parent.nodeName)) {
-				parent.className = parent.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
-			}
-		}
-
-		var code = element.textContent;
-
-		var env = {
-			element: element,
-			language: language,
-			grammar: grammar,
-			code: code
-		};
-
-		var insertHighlightedCode = function (highlightedCode) {
-			env.highlightedCode = highlightedCode;
-
-			_.hooks.run('before-insert', env);
-
-			env.element.innerHTML = env.highlightedCode;
-
-			_.hooks.run('after-highlight', env);
-			_.hooks.run('complete', env);
-			callback && callback.call(env.element);
-		}
-
-		_.hooks.run('before-sanity-check', env);
-
-		if (!env.code) {
-			_.hooks.run('complete', env);
-			return;
-		}
-
-		_.hooks.run('before-highlight', env);
-
-		if (!env.grammar) {
-			insertHighlightedCode(_.util.encode(env.code));
-			return;
-		}
-
-		if (async && _self.Worker) {
-			var worker = new Worker(_.filename);
-
-			worker.onmessage = function(evt) {
-				insertHighlightedCode(evt.data);
-			};
-
-			worker.postMessage(JSON.stringify({
-				language: env.language,
-				code: env.code,
-				immediateClose: true
-			}));
-		}
-		else {
-			insertHighlightedCode(_.highlight(env.code, env.grammar, env.language));
-		}
-	},
-
-	highlight: function (text, grammar, language) {
-		var env = {
-			code: text,
-			grammar: grammar,
-			language: language
-		};
-		_.hooks.run('before-tokenize', env);
-		env.tokens = _.tokenize(env.code, env.grammar);
-		_.hooks.run('after-tokenize', env);
-		return Token.stringify(_.util.encode(env.tokens), env.language);
-	},
-
-	matchGrammar: function (text, strarr, grammar, index, startPos, oneshot, target) {
-		for (var token in grammar) {
-			if(!grammar.hasOwnProperty(token) || !grammar[token]) {
-				continue;
-			}
-
-			if (token == target) {
-				return;
-			}
-
-			var patterns = grammar[token];
-			patterns = (_.util.type(patterns) === "Array") ? patterns : [patterns];
-
-			for (var j = 0; j < patterns.length; ++j) {
-				var pattern = patterns[j],
-					inside = pattern.inside,
-					lookbehind = !!pattern.lookbehind,
-					greedy = !!pattern.greedy,
-					lookbehindLength = 0,
-					alias = pattern.alias;
-
-				if (greedy && !pattern.pattern.global) {
-					// Without the global flag, lastIndex won't work
-					var flags = pattern.pattern.toString().match(/[imuy]*$/)[0];
-					pattern.pattern = RegExp(pattern.pattern.source, flags + "g");
-				}
-
-				pattern = pattern.pattern || pattern;
-
-				// Don’t cache length as it changes during the loop
-				for (var i = index, pos = startPos; i < strarr.length; pos += strarr[i].length, ++i) {
-
-					var str = strarr[i];
-
-					if (strarr.length > text.length) {
-						// Something went terribly wrong, ABORT, ABORT!
-						return;
-					}
-
-					if (str instanceof Token) {
-						continue;
-					}
-
-					if (greedy && i != strarr.length - 1) {
-						pattern.lastIndex = pos;
-						var match = pattern.exec(text);
-						if (!match) {
-							break;
-						}
-
-						var from = match.index + (lookbehind ? match[1].length : 0),
-						    to = match.index + match[0].length,
-						    k = i,
-						    p = pos;
-
-						for (var len = strarr.length; k < len && (p < to || (!strarr[k].type && !strarr[k - 1].greedy)); ++k) {
-							p += strarr[k].length;
-							// Move the index i to the element in strarr that is closest to from
-							if (from >= p) {
-								++i;
-								pos = p;
-							}
-						}
-
-						// If strarr[i] is a Token, then the match starts inside another Token, which is invalid
-						if (strarr[i] instanceof Token) {
-							continue;
-						}
-
-						// Number of tokens to delete and replace with the new match
-						delNum = k - i;
-						str = text.slice(pos, p);
-						match.index -= pos;
-					} else {
-						pattern.lastIndex = 0;
-
-						var match = pattern.exec(str),
-							delNum = 1;
-					}
-
-					if (!match) {
-						if (oneshot) {
-							break;
-						}
-
-						continue;
-					}
-
-					if(lookbehind) {
-						lookbehindLength = match[1] ? match[1].length : 0;
-					}
-
-					var from = match.index + lookbehindLength,
-					    match = match[0].slice(lookbehindLength),
-					    to = from + match.length,
-					    before = str.slice(0, from),
-					    after = str.slice(to);
-
-					var args = [i, delNum];
-
-					if (before) {
-						++i;
-						pos += before.length;
-						args.push(before);
-					}
-
-					var wrapped = new Token(token, inside? _.tokenize(match, inside) : match, alias, match, greedy);
-
-					args.push(wrapped);
-
-					if (after) {
-						args.push(after);
-					}
-
-					Array.prototype.splice.apply(strarr, args);
-
-					if (delNum != 1)
-						_.matchGrammar(text, strarr, grammar, i, pos, true, token);
-
-					if (oneshot)
-						break;
-				}
-			}
-		}
-	},
-
-	tokenize: function(text, grammar) {
-		var strarr = [text];
-
-		var rest = grammar.rest;
-
-		if (rest) {
-			for (var token in rest) {
-				grammar[token] = rest[token];
-			}
-
-			delete grammar.rest;
-		}
-
-		_.matchGrammar(text, strarr, grammar, 0, 0, false);
-
-		return strarr;
-	},
-
-	hooks: {
-		all: {},
-
-		add: function (name, callback) {
-			var hooks = _.hooks.all;
-
-			hooks[name] = hooks[name] || [];
-
-			hooks[name].push(callback);
-		},
-
-		run: function (name, env) {
-			var callbacks = _.hooks.all[name];
-
-			if (!callbacks || !callbacks.length) {
-				return;
-			}
-
-			for (var i=0, callback; callback = callbacks[i++];) {
-				callback(env);
-			}
-		}
-	},
-
-	Token: Token
-};
-
-_self.Prism = _;
-
-function Token(type, content, alias, matchedStr, greedy) {
-	this.type = type;
-	this.content = content;
-	this.alias = alias;
-	// Copy of the full string this token was created from
-	this.length = (matchedStr || "").length|0;
-	this.greedy = !!greedy;
-}
-
-Token.stringify = function(o, language) {
-	if (typeof o == 'string') {
-		return o;
-	}
-
-	if (Array.isArray(o)) {
-		return o.map(function(element) {
-			return Token.stringify(element, language);
-		}).join('');
-	}
-
-	var env = {
-		type: o.type,
-		content: Token.stringify(o.content, language),
-		tag: 'span',
-		classes: ['token', o.type],
-		attributes: {},
-		language: language
-	};
-
-	if (o.alias) {
-		var aliases = Array.isArray(o.alias) ? o.alias : [o.alias];
-		Array.prototype.push.apply(env.classes, aliases);
-	}
-
-	_.hooks.run('wrap', env);
-
-	var attributes = Object.keys(env.attributes).map(function(name) {
-		return name + '="' + (env.attributes[name] || '').replace(/"/g, '&quot;') + '"';
-	}).join(' ');
-
-	return '<' + env.tag + ' class="' + env.classes.join(' ') + '"' + (attributes ? ' ' + attributes : '') + '>' + env.content + '</' + env.tag + '>';
-};
-
-if (!_self.document) {
-	if (!_self.addEventListener) {
-		// in Node.js
-		return _;
-	}
-
-	if (!_.disableWorkerMessageHandler) {
-		// In worker
-		_self.addEventListener('message', function (evt) {
-			var message = JSON.parse(evt.data),
-				lang = message.language,
-				code = message.code,
-				immediateClose = message.immediateClose;
-
-			_self.postMessage(_.highlight(code, _.languages[lang], lang));
-			if (immediateClose) {
-				_self.close();
-			}
-		}, false);
-	}
-
-	return _;
-}
-
-//Get current script and highlight
-var script = document.currentScript || [].slice.call(document.getElementsByTagName("script")).pop();
-
-if (script) {
-	_.filename = script.src;
-
-	if (!_.manual && !script.hasAttribute('data-manual')) {
-		if(document.readyState !== "loading") {
-			if (window.requestAnimationFrame) {
-				window.requestAnimationFrame(_.highlightAll);
-			} else {
-				window.setTimeout(_.highlightAll, 16);
-			}
-		}
-		else {
-			document.addEventListener('DOMContentLoaded', _.highlightAll);
-		}
-	}
-}
-
-return _;
-
-})(_self);
-
-if ( true && module.exports) {
-	module.exports = Prism;
-}
-
-// hack for components to work correctly in node.js
-if (typeof global !== 'undefined') {
-	global.Prism = Prism;
-}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
-
-/***/ }),
-
-/***/ "./node_modules/prismjs/components/prism-javascript.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/prismjs/components/prism-javascript.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-Prism.languages.javascript = Prism.languages.extend('clike', {
-	'class-name': [
-		Prism.languages.clike['class-name'],
-		{
-			pattern: /(^|[^$\w\xA0-\uFFFF])[_$A-Z\xA0-\uFFFF][$\w\xA0-\uFFFF]*(?=\.(?:prototype|constructor))/,
-			lookbehind: true
-		}
-	],
-	'keyword': [
-		{
-			pattern: /((?:^|})\s*)(?:catch|finally)\b/,
-			lookbehind: true
-		},
-		{
-			pattern: /(^|[^.])\b(?:as|async(?=\s*(?:function\b|\(|[$\w\xA0-\uFFFF]|$))|await|break|case|class|const|continue|debugger|default|delete|do|else|enum|export|extends|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)\b/,
-			lookbehind: true
-		},
-	],
-	'number': /\b(?:(?:0[xX](?:[\dA-Fa-f](?:_[\dA-Fa-f])?)+|0[bB](?:[01](?:_[01])?)+|0[oO](?:[0-7](?:_[0-7])?)+)n?|(?:\d(?:_\d)?)+n|NaN|Infinity)\b|(?:\b(?:\d(?:_\d)?)+\.?(?:\d(?:_\d)?)*|\B\.(?:\d(?:_\d)?)+)(?:[Ee][+-]?(?:\d(?:_\d)?)+)?/,
-	// Allow for all non-ASCII characters (See http://stackoverflow.com/a/2008444)
-	'function': /#?[_$a-zA-Z\xA0-\uFFFF][$\w\xA0-\uFFFF]*(?=\s*(?:\.\s*(?:apply|bind|call)\s*)?\()/,
-	'operator': /-[-=]?|\+[+=]?|!=?=?|<<?=?|>>?>?=?|=(?:==?|>)?|&[&=]?|\|[|=]?|\*\*?=?|\/=?|~|\^=?|%=?|\?|\.{3}/
-});
-
-Prism.languages.javascript['class-name'][0].pattern = /(\b(?:class|interface|extends|implements|instanceof|new)\s+)[\w.\\]+/;
-
-Prism.languages.insertBefore('javascript', 'keyword', {
-	'regex': {
-		pattern: /((?:^|[^$\w\xA0-\uFFFF."'\])\s])\s*)\/(\[(?:[^\]\\\r\n]|\\.)*]|\\.|[^/\\\[\r\n])+\/[gimyus]{0,6}(?=\s*($|[\r\n,.;})\]]))/,
-		lookbehind: true,
-		greedy: true
-	},
-	// This must be declared before keyword because we use "function" inside the look-forward
-	'function-variable': {
-		pattern: /#?[_$a-zA-Z\xA0-\uFFFF][$\w\xA0-\uFFFF]*(?=\s*[=:]\s*(?:async\s*)?(?:\bfunction\b|(?:\((?:[^()]|\([^()]*\))*\)|[_$a-zA-Z\xA0-\uFFFF][$\w\xA0-\uFFFF]*)\s*=>))/,
-		alias: 'function'
-	},
-	'parameter': [
-		{
-			pattern: /(function(?:\s+[_$A-Za-z\xA0-\uFFFF][$\w\xA0-\uFFFF]*)?\s*\(\s*)(?!\s)(?:[^()]|\([^()]*\))+?(?=\s*\))/,
-			lookbehind: true,
-			inside: Prism.languages.javascript
-		},
-		{
-			pattern: /[_$a-z\xA0-\uFFFF][$\w\xA0-\uFFFF]*(?=\s*=>)/i,
-			inside: Prism.languages.javascript
-		},
-		{
-			pattern: /(\(\s*)(?!\s)(?:[^()]|\([^()]*\))+?(?=\s*\)\s*=>)/,
-			lookbehind: true,
-			inside: Prism.languages.javascript
-		},
-		{
-			pattern: /((?:\b|\s|^)(?!(?:as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|try|typeof|undefined|var|void|while|with|yield)(?![$\w\xA0-\uFFFF]))(?:[_$A-Za-z\xA0-\uFFFF][$\w\xA0-\uFFFF]*\s*)\(\s*)(?!\s)(?:[^()]|\([^()]*\))+?(?=\s*\)\s*\{)/,
-			lookbehind: true,
-			inside: Prism.languages.javascript
-		}
-	],
-	'constant': /\b[A-Z](?:[A-Z_]|\dx?)*\b/
-});
-
-Prism.languages.insertBefore('javascript', 'string', {
-	'template-string': {
-		pattern: /`(?:\\[\s\S]|\${(?:[^{}]|{(?:[^{}]|{[^}]*})*})+}|(?!\${)[^\\`])*`/,
-		greedy: true,
-		inside: {
-			'template-punctuation': {
-				pattern: /^`|`$/,
-				alias: 'string'
-			},
-			'interpolation': {
-				pattern: /((?:^|[^\\])(?:\\{2})*)\${(?:[^{}]|{(?:[^{}]|{[^}]*})*})+}/,
-				lookbehind: true,
-				inside: {
-					'interpolation-punctuation': {
-						pattern: /^\${|}$/,
-						alias: 'punctuation'
-					},
-					rest: Prism.languages.javascript
-				}
-			},
-			'string': /[\s\S]+/
-		}
-	}
-});
-
-if (Prism.languages.markup) {
-	Prism.languages.markup.tag.addInlined('script', 'javascript');
-}
-
-Prism.languages.js = Prism.languages.javascript;
-
-
-/***/ }),
-
-/***/ "./node_modules/prismjs/components/prism-markdown.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/prismjs/components/prism-markdown.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-(function (Prism) {
-
-	// Allow only one line break
-	var inner = /(?:\\.|[^\\\n\r]|(?:\r?\n|\r)(?!\r?\n|\r))/.source;
-
-	/**
-	 * This function is intended for the creation of the bold or italic pattern.
-	 *
-	 * This also adds a lookbehind group to the given pattern to ensure that the pattern is not backslash-escaped.
-	 *
-	 * _Note:_ Keep in mind that this adds a capturing group.
-	 *
-	 * @param {string} pattern
-	 * @param {boolean} starAlternative Whether to also add an alternative where all `_`s are replaced with `*`s.
-	 * @returns {RegExp}
-	 */
-	function createInline(pattern, starAlternative) {
-		pattern = pattern.replace(/<inner>/g, inner);
-		if (starAlternative) {
-			pattern = pattern + '|' + pattern.replace(/_/g, '\\*');
-		}
-		return RegExp(/((?:^|[^\\])(?:\\{2})*)/.source + '(?:' + pattern + ')');
-	}
-
-
-	var tableCell = /(?:\\.|``.+?``|`[^`\r\n]+`|[^\\|\r\n`])+/.source;
-	var tableRow = /\|?__(?:\|__)+\|?(?:(?:\r?\n|\r)|$)/.source.replace(/__/g, tableCell);
-	var tableLine = /\|?[ \t]*:?-{3,}:?[ \t]*(?:\|[ \t]*:?-{3,}:?[ \t]*)+\|?(?:\r?\n|\r)/.source;
-
-
-	Prism.languages.markdown = Prism.languages.extend('markup', {});
-	Prism.languages.insertBefore('markdown', 'prolog', {
-		'blockquote': {
-			// > ...
-			pattern: /^>(?:[\t ]*>)*/m,
-			alias: 'punctuation'
-		},
-		'table': {
-			pattern: RegExp('^' + tableRow + tableLine + '(?:' + tableRow + ')*', 'm'),
-			inside: {
-				'table-data-rows': {
-					pattern: RegExp('^(' + tableRow + tableLine + ')(?:' + tableRow + ')*$'),
-					lookbehind: true,
-					inside: {
-						'table-data': {
-							pattern: RegExp(tableCell),
-							inside: Prism.languages.markdown
-						},
-						'punctuation': /\|/
-					}
-				},
-				'table-line': {
-					pattern: RegExp('^(' + tableRow + ')' + tableLine + '$'),
-					lookbehind: true,
-					inside: {
-						'punctuation': /\||:?-{3,}:?/
-					}
-				},
-				'table-header-row': {
-					pattern: RegExp('^' + tableRow + '$'),
-					inside: {
-						'table-header': {
-							pattern: RegExp(tableCell),
-							alias: 'important',
-							inside: Prism.languages.markdown
-						},
-						'punctuation': /\|/
-					}
-				}
-			}
-		},
-		'code': [
-			{
-				// Prefixed by 4 spaces or 1 tab and preceded by an empty line
-				pattern: /(^[ \t]*(?:\r?\n|\r))(?: {4}|\t).+(?:(?:\r?\n|\r)(?: {4}|\t).+)*/m,
-				lookbehind: true,
-				alias: 'keyword'
-			},
-			{
-				// `code`
-				// ``code``
-				pattern: /``.+?``|`[^`\r\n]+`/,
-				alias: 'keyword'
-			},
-			{
-				// ```optional language
-				// code block
-				// ```
-				pattern: /^```[\s\S]*?^```$/m,
-				greedy: true,
-				inside: {
-					'code-block': {
-						pattern: /^(```.*(?:\r?\n|\r))[\s\S]+?(?=(?:\r?\n|\r)^```$)/m,
-						lookbehind: true
-					},
-					'code-language': {
-						pattern: /^(```).+/,
-						lookbehind: true
-					},
-					'punctuation': /```/
-				}
-			}
-		],
-		'title': [
-			{
-				// title 1
-				// =======
-
-				// title 2
-				// -------
-				pattern: /\S.*(?:\r?\n|\r)(?:==+|--+)(?=[ \t]*$)/m,
-				alias: 'important',
-				inside: {
-					punctuation: /==+$|--+$/
-				}
-			},
-			{
-				// # title 1
-				// ###### title 6
-				pattern: /(^\s*)#+.+/m,
-				lookbehind: true,
-				alias: 'important',
-				inside: {
-					punctuation: /^#+|#+$/
-				}
-			}
-		],
-		'hr': {
-			// ***
-			// ---
-			// * * *
-			// -----------
-			pattern: /(^\s*)([*-])(?:[\t ]*\2){2,}(?=\s*$)/m,
-			lookbehind: true,
-			alias: 'punctuation'
-		},
-		'list': {
-			// * item
-			// + item
-			// - item
-			// 1. item
-			pattern: /(^\s*)(?:[*+-]|\d+\.)(?=[\t ].)/m,
-			lookbehind: true,
-			alias: 'punctuation'
-		},
-		'url-reference': {
-			// [id]: http://example.com "Optional title"
-			// [id]: http://example.com 'Optional title'
-			// [id]: http://example.com (Optional title)
-			// [id]: <http://example.com> "Optional title"
-			pattern: /!?\[[^\]]+\]:[\t ]+(?:\S+|<(?:\\.|[^>\\])+>)(?:[\t ]+(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\((?:\\.|[^)\\])*\)))?/,
-			inside: {
-				'variable': {
-					pattern: /^(!?\[)[^\]]+/,
-					lookbehind: true
-				},
-				'string': /(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\((?:\\.|[^)\\])*\))$/,
-				'punctuation': /^[\[\]!:]|[<>]/
-			},
-			alias: 'url'
-		},
-		'bold': {
-			// **strong**
-			// __strong__
-
-			// allow one nested instance of italic text using the same delimiter
-			pattern: createInline(/__(?:(?!_)<inner>|_(?:(?!_)<inner>)+_)+__/.source, true),
-			lookbehind: true,
-			greedy: true,
-			inside: {
-				'content': {
-					pattern: /(^..)[\s\S]+(?=..$)/,
-					lookbehind: true,
-					inside: {} // see below
-				},
-				'punctuation': /\*\*|__/
-			}
-		},
-		'italic': {
-			// *em*
-			// _em_
-
-			// allow one nested instance of bold text using the same delimiter
-			pattern: createInline(/_(?:(?!_)<inner>|__(?:(?!_)<inner>)+__)+_/.source, true),
-			lookbehind: true,
-			greedy: true,
-			inside: {
-				'content': {
-					pattern: /(^.)[\s\S]+(?=.$)/,
-					lookbehind: true,
-					inside: {} // see below
-				},
-				'punctuation': /[*_]/
-			}
-		},
-		'strike': {
-			// ~~strike through~~
-			// ~strike~
-			pattern: createInline(/(~~?)(?:(?!~)<inner>)+?\2/.source, false),
-			lookbehind: true,
-			greedy: true,
-			inside: {
-				'content': {
-					pattern: /(^~~?)[\s\S]+(?=\1$)/,
-					lookbehind: true,
-					inside: {} // see below
-				},
-				'punctuation': /~~?/
-			}
-		},
-		'url': {
-			// [example](http://example.com "Optional title")
-			// [example][id]
-			// [example] [id]
-			pattern: createInline(/!?\[(?:(?!\])<inner>)+\](?:\([^\s)]+(?:[\t ]+"(?:\\.|[^"\\])*")?\)| ?\[(?:(?!\])<inner>)+\])/.source, false),
-			lookbehind: true,
-			greedy: true,
-			inside: {
-				'variable': {
-					pattern: /(\[)[^\]]+(?=\]$)/,
-					lookbehind: true
-				},
-				'content': {
-					pattern: /(^!?\[)[^\]]+(?=\])/,
-					lookbehind: true,
-					inside: {} // see below
-				},
-				'string': {
-					pattern: /"(?:\\.|[^"\\])*"(?=\)$)/
-				}
-			}
-		}
-	});
-
-	['url', 'bold', 'italic', 'strike'].forEach(function (token) {
-		['url', 'bold', 'italic', 'strike'].forEach(function (inside) {
-			if (token !== inside) {
-				Prism.languages.markdown[token].inside.content.inside[inside] = Prism.languages.markdown[inside];
-			}
-		});
-	});
-
-	Prism.hooks.add('after-tokenize', function (env) {
-		if (env.language !== 'markdown' && env.language !== 'md') {
-			return;
-		}
-
-		function walkTokens(tokens) {
-			if (!tokens || typeof tokens === 'string') {
-				return;
-			}
-
-			for (var i = 0, l = tokens.length; i < l; i++) {
-				var token = tokens[i];
-
-				if (token.type !== 'code') {
-					walkTokens(token.content);
-					continue;
-				}
-
-				/*
-				 * Add the correct `language-xxxx` class to this code block. Keep in mind that the `code-language` token
-				 * is optional. But the grammar is defined so that there is only one case we have to handle:
-				 *
-				 * token.content = [
-				 *     <span class="punctuation">```</span>,
-				 *     <span class="code-language">xxxx</span>,
-				 *     '\n', // exactly one new lines (\r or \n or \r\n)
-				 *     <span class="code-block">...</span>,
-				 *     '\n', // exactly one new lines again
-				 *     <span class="punctuation">```</span>
-				 * ];
-				 */
-
-				var codeLang = token.content[1];
-				var codeBlock = token.content[3];
-
-				if (codeLang && codeBlock &&
-					codeLang.type === 'code-language' && codeBlock.type === 'code-block' &&
-					typeof codeLang.content === 'string') {
-
-					// this might be a language that Prism does not support
-					var alias = 'language-' + codeLang.content.trim().split(/\s+/)[0].toLowerCase();
-
-					// add alias
-					if (!codeBlock.alias) {
-						codeBlock.alias = [alias];
-					} else if (typeof codeBlock.alias === 'string') {
-						codeBlock.alias = [codeBlock.alias, alias];
-					} else {
-						codeBlock.alias.push(alias);
-					}
-				}
-			}
-		}
-
-		walkTokens(env.tokens);
-	});
-
-	Prism.hooks.add('wrap', function (env) {
-		if (env.type !== 'code-block') {
-			return;
-		}
-
-		var codeLang = '';
-		for (var i = 0, l = env.classes.length; i < l; i++) {
-			var cls = env.classes[i];
-			var match = /language-(.+)/.exec(cls);
-			if (match) {
-				codeLang = match[1];
-				break;
-			}
-		}
-
-		var grammar = Prism.languages[codeLang];
-
-		if (!grammar) {
-			if (codeLang && codeLang !== 'none' && Prism.plugins.autoloader) {
-				var id = 'md-' + new Date().valueOf() + '-' + Math.floor(Math.random() * 1e16);
-				env.attributes['id'] = id;
-
-				Prism.plugins.autoloader.loadLanguages(codeLang, function () {
-					var ele = document.getElementById(id);
-					if (ele) {
-						ele.innerHTML = Prism.highlight(ele.textContent, Prism.languages[codeLang], codeLang);
-					}
-				});
-			}
-		} else {
-			// reverse Prism.util.encode
-			var code = env.content.replace(/&lt;/g, '<').replace(/&amp;/g, '&');
-
-			env.content = Prism.highlight(code, grammar, codeLang);
-		}
-	});
-
-	Prism.languages.md = Prism.languages.markdown;
-
-}(Prism));
-
-
-/***/ }),
-
-/***/ "./node_modules/prismjs/components/prism-markup-templating.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/prismjs/components/prism-markup-templating.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-(function (Prism) {
-
-	/**
-	 * Returns the placeholder for the given language id and index.
-	 *
-	 * @param {string} language
-	 * @param {string|number} index
-	 * @returns {string}
-	 */
-	function getPlaceholder(language, index) {
-		return '___' + language.toUpperCase() + index + '___';
-	}
-
-	Object.defineProperties(Prism.languages['markup-templating'] = {}, {
-		buildPlaceholders: {
-			/**
-			 * Tokenize all inline templating expressions matching `placeholderPattern`.
-			 *
-			 * If `replaceFilter` is provided, only matches of `placeholderPattern` for which `replaceFilter` returns
-			 * `true` will be replaced.
-			 *
-			 * @param {object} env The environment of the `before-tokenize` hook.
-			 * @param {string} language The language id.
-			 * @param {RegExp} placeholderPattern The matches of this pattern will be replaced by placeholders.
-			 * @param {(match: string) => boolean} [replaceFilter]
-			 */
-			value: function (env, language, placeholderPattern, replaceFilter) {
-				if (env.language !== language) {
-					return;
-				}
-
-				var tokenStack = env.tokenStack = [];
-
-				env.code = env.code.replace(placeholderPattern, function (match) {
-					if (typeof replaceFilter === 'function' && !replaceFilter(match)) {
-						return match;
-					}
-					var i = tokenStack.length;
-					var placeholder;
-
-					// Check for existing strings
-					while (env.code.indexOf(placeholder = getPlaceholder(language, i)) !== -1)
-						++i;
-
-					// Create a sparse array
-					tokenStack[i] = match;
-
-					return placeholder;
-				});
-
-				// Switch the grammar to markup
-				env.grammar = Prism.languages.markup;
-			}
-		},
-		tokenizePlaceholders: {
-			/**
-			 * Replace placeholders with proper tokens after tokenizing.
-			 *
-			 * @param {object} env The environment of the `after-tokenize` hook.
-			 * @param {string} language The language id.
-			 */
-			value: function (env, language) {
-				if (env.language !== language || !env.tokenStack) {
-					return;
-				}
-
-				// Switch the grammar back
-				env.grammar = Prism.languages[language];
-
-				var j = 0;
-				var keys = Object.keys(env.tokenStack);
-
-				function walkTokens(tokens) {
-					for (var i = 0; i < tokens.length; i++) {
-						// all placeholders are replaced already
-						if (j >= keys.length) {
-							break;
-						}
-
-						var token = tokens[i];
-						if (typeof token === 'string' || (token.content && typeof token.content === 'string')) {
-							var k = keys[j];
-							var t = env.tokenStack[k];
-							var s = typeof token === 'string' ? token : token.content;
-							var placeholder = getPlaceholder(language, k);
-
-							var index = s.indexOf(placeholder);
-							if (index > -1) {
-								++j;
-
-								var before = s.substring(0, index);
-								var middle = new Prism.Token(language, Prism.tokenize(t, env.grammar), 'language-' + language, t);
-								var after = s.substring(index + placeholder.length);
-
-								var replacement = [];
-								if (before) {
-									replacement.push.apply(replacement, walkTokens([before]));
-								}
-								replacement.push(middle);
-								if (after) {
-									replacement.push.apply(replacement, walkTokens([after]));
-								}
-
-								if (typeof token === 'string') {
-									tokens.splice.apply(tokens, [i, 1].concat(replacement));
-								} else {
-									token.content = replacement;
-								}
-							}
-						} else if (token.content /* && typeof token.content !== 'string' */) {
-							walkTokens(token.content);
-						}
-					}
-
-					return tokens;
-				}
-
-				walkTokens(env.tokens);
-			}
-		}
-	});
-
-}(Prism));
-
-
-/***/ }),
-
-/***/ "./node_modules/prismjs/components/prism-markup.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/prismjs/components/prism-markup.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-Prism.languages.markup = {
-	'comment': /<!--[\s\S]*?-->/,
-	'prolog': /<\?[\s\S]+?\?>/,
-	'doctype': /<!DOCTYPE[\s\S]+?>/i,
-	'cdata': /<!\[CDATA\[[\s\S]*?]]>/i,
-	'tag': {
-		pattern: /<\/?(?!\d)[^\s>\/=$<%]+(?:\s(?:\s*[^\s>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+(?=[\s>]))|(?=[\s/>])))+)?\s*\/?>/i,
-		greedy: true,
-		inside: {
-			'tag': {
-				pattern: /^<\/?[^\s>\/]+/i,
-				inside: {
-					'punctuation': /^<\/?/,
-					'namespace': /^[^\s>\/:]+:/
-				}
-			},
-			'attr-value': {
-				pattern: /=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+)/i,
-				inside: {
-					'punctuation': [
-						/^=/,
-						{
-							pattern: /^(\s*)["']|["']$/,
-							lookbehind: true
-						}
-					]
-				}
-			},
-			'punctuation': /\/?>/,
-			'attr-name': {
-				pattern: /[^\s>\/]+/,
-				inside: {
-					'namespace': /^[^\s>\/:]+:/
-				}
-			}
-
-		}
-	},
-	'entity': /&#?[\da-z]{1,8};/i
-};
-
-Prism.languages.markup['tag'].inside['attr-value'].inside['entity'] =
-	Prism.languages.markup['entity'];
-
-// Plugin to make entity title show the real entity, idea by Roman Komarov
-Prism.hooks.add('wrap', function(env) {
-
-	if (env.type === 'entity') {
-		env.attributes['title'] = env.content.replace(/&amp;/, '&');
-	}
-});
-
-Object.defineProperty(Prism.languages.markup.tag, 'addInlined', {
-	/**
-	 * Adds an inlined language to markup.
-	 *
-	 * An example of an inlined language is CSS with `<style>` tags.
-	 *
-	 * @param {string} tagName The name of the tag that contains the inlined language. This name will be treated as
-	 * case insensitive.
-	 * @param {string} lang The language key.
-	 * @example
-	 * addInlined('style', 'css');
-	 */
-	value: function addInlined(tagName, lang) {
-		var includedCdataInside = {};
-		includedCdataInside['language-' + lang] = {
-			pattern: /(^<!\[CDATA\[)[\s\S]+?(?=\]\]>$)/i,
-			lookbehind: true,
-			inside: Prism.languages[lang]
-		};
-		includedCdataInside['cdata'] = /^<!\[CDATA\[|\]\]>$/i;
-
-		var inside = {
-			'included-cdata': {
-				pattern: /<!\[CDATA\[[\s\S]*?\]\]>/i,
-				inside: includedCdataInside
-			}
-		};
-		inside['language-' + lang] = {
-			pattern: /[\s\S]+/,
-			inside: Prism.languages[lang]
-		};
-
-		var def = {};
-		def[tagName] = {
-			pattern: RegExp(/(<__[\s\S]*?>)(?:<!\[CDATA\[[\s\S]*?\]\]>\s*|[\s\S])*?(?=<\/__>)/.source.replace(/__/g, tagName), 'i'),
-			lookbehind: true,
-			greedy: true,
-			inside: inside
-		};
-
-		Prism.languages.insertBefore('markup', 'cdata', def);
-	}
-});
-
-Prism.languages.xml = Prism.languages.extend('markup', {});
-Prism.languages.html = Prism.languages.markup;
-Prism.languages.mathml = Prism.languages.markup;
-Prism.languages.svg = Prism.languages.markup;
-
-
-/***/ }),
-
-/***/ "./node_modules/prismjs/components/prism-php.js":
-/*!******************************************************!*\
-  !*** ./node_modules/prismjs/components/prism-php.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Original by Aaron Harun: http://aahacreative.com/2012/07/31/php-syntax-highlighting-prism/
- * Modified by Miles Johnson: http://milesj.me
- *
- * Supports the following:
- * 		- Extends clike syntax
- * 		- Support for PHP 5.3+ (namespaces, traits, generators, etc)
- * 		- Smarter constant and function matching
- *
- * Adds the following new token classes:
- * 		constant, delimiter, variable, function, package
- */
-(function (Prism) {
-	Prism.languages.php = Prism.languages.extend('clike', {
-		'keyword': /\b(?:__halt_compiler|abstract|and|array|as|break|callable|case|catch|class|clone|const|continue|declare|default|die|do|echo|else|elseif|empty|enddeclare|endfor|endforeach|endif|endswitch|endwhile|eval|exit|extends|final|finally|for|foreach|function|global|goto|if|implements|include|include_once|instanceof|insteadof|interface|isset|list|namespace|new|or|parent|print|private|protected|public|require|require_once|return|static|switch|throw|trait|try|unset|use|var|while|xor|yield)\b/i,
-		'boolean': {
-			pattern: /\b(?:false|true)\b/i,
-			alias: 'constant'
-		},
-		'constant': [
-			/\b[A-Z_][A-Z0-9_]*\b/,
-			/\b(?:null)\b/i,
-		],
-		'comment': {
-			pattern: /(^|[^\\])(?:\/\*[\s\S]*?\*\/|\/\/.*)/,
-			lookbehind: true
-		}
-	});
-
-	Prism.languages.insertBefore('php', 'string', {
-		'shell-comment': {
-			pattern: /(^|[^\\])#.*/,
-			lookbehind: true,
-			alias: 'comment'
-		}
-	});
-
-	Prism.languages.insertBefore('php', 'comment', {
-		'delimiter': {
-			pattern: /\?>$|^<\?(?:php(?=\s)|=)?/i,
-			alias: 'important'
-		}
-	});
-
-	Prism.languages.insertBefore('php', 'keyword', {
-		'variable': /\$+(?:\w+\b|(?={))/i,
-		'package': {
-			pattern: /(\\|namespace\s+|use\s+)[\w\\]+/,
-			lookbehind: true,
-			inside: {
-				punctuation: /\\/
-			}
-		}
-	});
-
-	// Must be defined after the function pattern
-	Prism.languages.insertBefore('php', 'operator', {
-		'property': {
-			pattern: /(->)[\w]+/,
-			lookbehind: true
-		}
-	});
-
-	var string_interpolation = {
-		pattern: /{\$(?:{(?:{[^{}]+}|[^{}]+)}|[^{}])+}|(^|[^\\{])\$+(?:\w+(?:\[.+?]|->\w+)*)/,
-		lookbehind: true,
-		inside: {
-			rest: Prism.languages.php
-		}
-	};
-
-	Prism.languages.insertBefore('php', 'string', {
-		'nowdoc-string': {
-			pattern: /<<<'([^']+)'(?:\r\n?|\n)(?:.*(?:\r\n?|\n))*?\1;/,
-			greedy: true,
-			alias: 'string',
-			inside: {
-				'delimiter': {
-					pattern: /^<<<'[^']+'|[a-z_]\w*;$/i,
-					alias: 'symbol',
-					inside: {
-						'punctuation': /^<<<'?|[';]$/
-					}
-				}
-			}
-		},
-		'heredoc-string': {
-			pattern: /<<<(?:"([^"]+)"(?:\r\n?|\n)(?:.*(?:\r\n?|\n))*?\1;|([a-z_]\w*)(?:\r\n?|\n)(?:.*(?:\r\n?|\n))*?\2;)/i,
-			greedy: true,
-			alias: 'string',
-			inside: {
-				'delimiter': {
-					pattern: /^<<<(?:"[^"]+"|[a-z_]\w*)|[a-z_]\w*;$/i,
-					alias: 'symbol',
-					inside: {
-						'punctuation': /^<<<"?|[";]$/
-					}
-				},
-				'interpolation': string_interpolation // See below
-			}
-		},
-		'single-quoted-string': {
-			pattern: /'(?:\\[\s\S]|[^\\'])*'/,
-			greedy: true,
-			alias: 'string'
-		},
-		'double-quoted-string': {
-			pattern: /"(?:\\[\s\S]|[^\\"])*"/,
-			greedy: true,
-			alias: 'string',
-			inside: {
-				'interpolation': string_interpolation // See below
-			}
-		}
-	});
-	// The different types of PHP strings "replace" the C-like standard string
-	delete Prism.languages.php['string'];
-
-	Prism.hooks.add('before-tokenize', function(env) {
-		if (!/<\?/.test(env.code)) {
-			return;
-		}
-
-		var phpPattern = /<\?(?:[^"'/#]|\/(?![*/])|("|')(?:\\[\s\S]|(?!\1)[^\\])*\1|(?:\/\/|#)(?:[^?\n\r]|\?(?!>))*|\/\*[\s\S]*?(?:\*\/|$))*?(?:\?>|$)/ig;
-		Prism.languages['markup-templating'].buildPlaceholders(env, 'php', phpPattern);
-	});
-
-	Prism.hooks.add('after-tokenize', function(env) {
-		Prism.languages['markup-templating'].tokenizePlaceholders(env, 'php');
-	});
-
-}(Prism));
-
-
-/***/ }),
-
-/***/ "./node_modules/prismjs/components/prism-sql.js":
-/*!******************************************************!*\
-  !*** ./node_modules/prismjs/components/prism-sql.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-Prism.languages.sql = {
-	'comment': {
-		pattern: /(^|[^\\])(?:\/\*[\s\S]*?\*\/|(?:--|\/\/|#).*)/,
-		lookbehind: true
-	},
-	'variable': [
-		{
-			pattern: /@(["'`])(?:\\[\s\S]|(?!\1)[^\\])+\1/,
-			greedy: true
-		},
-		/@[\w.$]+/
-	],
-	'string': {
-		pattern: /(^|[^@\\])("|')(?:\\[\s\S]|(?!\2)[^\\]|\2\2)*\2/,
-		greedy: true,
-		lookbehind: true
-	},
-	'function': /\b(?:AVG|COUNT|FIRST|FORMAT|LAST|LCASE|LEN|MAX|MID|MIN|MOD|NOW|ROUND|SUM|UCASE)(?=\s*\()/i, // Should we highlight user defined functions too?
-	'keyword': /\b(?:ACTION|ADD|AFTER|ALGORITHM|ALL|ALTER|ANALYZE|ANY|APPLY|AS|ASC|AUTHORIZATION|AUTO_INCREMENT|BACKUP|BDB|BEGIN|BERKELEYDB|BIGINT|BINARY|BIT|BLOB|BOOL|BOOLEAN|BREAK|BROWSE|BTREE|BULK|BY|CALL|CASCADED?|CASE|CHAIN|CHAR(?:ACTER|SET)?|CHECK(?:POINT)?|CLOSE|CLUSTERED|COALESCE|COLLATE|COLUMNS?|COMMENT|COMMIT(?:TED)?|COMPUTE|CONNECT|CONSISTENT|CONSTRAINT|CONTAINS(?:TABLE)?|CONTINUE|CONVERT|CREATE|CROSS|CURRENT(?:_DATE|_TIME|_TIMESTAMP|_USER)?|CURSOR|CYCLE|DATA(?:BASES?)?|DATE(?:TIME)?|DAY|DBCC|DEALLOCATE|DEC|DECIMAL|DECLARE|DEFAULT|DEFINER|DELAYED|DELETE|DELIMITERS?|DENY|DESC|DESCRIBE|DETERMINISTIC|DISABLE|DISCARD|DISK|DISTINCT|DISTINCTROW|DISTRIBUTED|DO|DOUBLE|DROP|DUMMY|DUMP(?:FILE)?|DUPLICATE|ELSE(?:IF)?|ENABLE|ENCLOSED|END|ENGINE|ENUM|ERRLVL|ERRORS|ESCAPED?|EXCEPT|EXEC(?:UTE)?|EXISTS|EXIT|EXPLAIN|EXTENDED|FETCH|FIELDS|FILE|FILLFACTOR|FIRST|FIXED|FLOAT|FOLLOWING|FOR(?: EACH ROW)?|FORCE|FOREIGN|FREETEXT(?:TABLE)?|FROM|FULL|FUNCTION|GEOMETRY(?:COLLECTION)?|GLOBAL|GOTO|GRANT|GROUP|HANDLER|HASH|HAVING|HOLDLOCK|HOUR|IDENTITY(?:_INSERT|COL)?|IF|IGNORE|IMPORT|INDEX|INFILE|INNER|INNODB|INOUT|INSERT|INT|INTEGER|INTERSECT|INTERVAL|INTO|INVOKER|ISOLATION|ITERATE|JOIN|KEYS?|KILL|LANGUAGE|LAST|LEAVE|LEFT|LEVEL|LIMIT|LINENO|LINES|LINESTRING|LOAD|LOCAL|LOCK|LONG(?:BLOB|TEXT)|LOOP|MATCH(?:ED)?|MEDIUM(?:BLOB|INT|TEXT)|MERGE|MIDDLEINT|MINUTE|MODE|MODIFIES|MODIFY|MONTH|MULTI(?:LINESTRING|POINT|POLYGON)|NATIONAL|NATURAL|NCHAR|NEXT|NO|NONCLUSTERED|NULLIF|NUMERIC|OFF?|OFFSETS?|ON|OPEN(?:DATASOURCE|QUERY|ROWSET)?|OPTIMIZE|OPTION(?:ALLY)?|ORDER|OUT(?:ER|FILE)?|OVER|PARTIAL|PARTITION|PERCENT|PIVOT|PLAN|POINT|POLYGON|PRECEDING|PRECISION|PREPARE|PREV|PRIMARY|PRINT|PRIVILEGES|PROC(?:EDURE)?|PUBLIC|PURGE|QUICK|RAISERROR|READS?|REAL|RECONFIGURE|REFERENCES|RELEASE|RENAME|REPEAT(?:ABLE)?|REPLACE|REPLICATION|REQUIRE|RESIGNAL|RESTORE|RESTRICT|RETURNS?|REVOKE|RIGHT|ROLLBACK|ROUTINE|ROW(?:COUNT|GUIDCOL|S)?|RTREE|RULE|SAVE(?:POINT)?|SCHEMA|SECOND|SELECT|SERIAL(?:IZABLE)?|SESSION(?:_USER)?|SET(?:USER)?|SHARE|SHOW|SHUTDOWN|SIMPLE|SMALLINT|SNAPSHOT|SOME|SONAME|SQL|START(?:ING)?|STATISTICS|STATUS|STRIPED|SYSTEM_USER|TABLES?|TABLESPACE|TEMP(?:ORARY|TABLE)?|TERMINATED|TEXT(?:SIZE)?|THEN|TIME(?:STAMP)?|TINY(?:BLOB|INT|TEXT)|TOP?|TRAN(?:SACTIONS?)?|TRIGGER|TRUNCATE|TSEQUAL|TYPES?|UNBOUNDED|UNCOMMITTED|UNDEFINED|UNION|UNIQUE|UNLOCK|UNPIVOT|UNSIGNED|UPDATE(?:TEXT)?|USAGE|USE|USER|USING|VALUES?|VAR(?:BINARY|CHAR|CHARACTER|YING)|VIEW|WAITFOR|WARNINGS|WHEN|WHERE|WHILE|WITH(?: ROLLUP|IN)?|WORK|WRITE(?:TEXT)?|YEAR)\b/i,
-	'boolean': /\b(?:TRUE|FALSE|NULL)\b/i,
-	'number': /\b0x[\da-f]+\b|\b\d+\.?\d*|\B\.\d+\b/i,
-	'operator': /[-+*\/=%^~]|&&?|\|\|?|!=?|<(?:=>?|<|>)?|>[>=]?|\b(?:AND|BETWEEN|IN|LIKE|NOT|OR|IS|DIV|REGEXP|RLIKE|SOUNDS LIKE|XOR)\b/i,
-	'punctuation': /[;[\]()`,.]/
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js":
-/*!*************************************************************************!*\
-  !*** ./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-(function () {
-
-	if (typeof self === 'undefined' || !self.Prism || !self.document) {
-		return;
-	}
-
-	/**
-	 * Plugin name which is used as a class name for <pre> which is activating the plugin
-	 * @type {String}
-	 */
-	var PLUGIN_NAME = 'line-numbers';
-
-	/**
-	 * Regular expression used for determining line breaks
-	 * @type {RegExp}
-	 */
-	var NEW_LINE_EXP = /\n(?!$)/g;
-
-	/**
-	 * Resizes line numbers spans according to height of line of code
-	 * @param {Element} element <pre> element
-	 */
-	var _resizeElement = function (element) {
-		var codeStyles = getStyles(element);
-		var whiteSpace = codeStyles['white-space'];
-
-		if (whiteSpace === 'pre-wrap' || whiteSpace === 'pre-line') {
-			var codeElement = element.querySelector('code');
-			var lineNumbersWrapper = element.querySelector('.line-numbers-rows');
-			var lineNumberSizer = element.querySelector('.line-numbers-sizer');
-			var codeLines = codeElement.textContent.split(NEW_LINE_EXP);
-
-			if (!lineNumberSizer) {
-				lineNumberSizer = document.createElement('span');
-				lineNumberSizer.className = 'line-numbers-sizer';
-
-				codeElement.appendChild(lineNumberSizer);
-			}
-
-			lineNumberSizer.style.display = 'block';
-
-			codeLines.forEach(function (line, lineNumber) {
-				lineNumberSizer.textContent = line || '\n';
-				var lineSize = lineNumberSizer.getBoundingClientRect().height;
-				lineNumbersWrapper.children[lineNumber].style.height = lineSize + 'px';
-			});
-
-			lineNumberSizer.textContent = '';
-			lineNumberSizer.style.display = 'none';
-		}
-	};
-
-	/**
-	 * Returns style declarations for the element
-	 * @param {Element} element
-	 */
-	var getStyles = function (element) {
-		if (!element) {
-			return null;
-		}
-
-		return window.getComputedStyle ? getComputedStyle(element) : (element.currentStyle || null);
-	};
-
-	window.addEventListener('resize', function () {
-		Array.prototype.forEach.call(document.querySelectorAll('pre.' + PLUGIN_NAME), _resizeElement);
-	});
-
-	Prism.hooks.add('complete', function (env) {
-		if (!env.code) {
-			return;
-		}
-
-		var code = env.element;
-		var pre = code.parentNode;
-
-		// works only for <code> wrapped inside <pre> (not inline)
-		if (!pre || !/pre/i.test(pre.nodeName)) {
-			return;
-		}
-
-		// Abort if line numbers already exists
-		if (code.querySelector('.line-numbers-rows')) {
-			return;
-		}
-
-		var addLineNumbers = false;
-		var lineNumbersRegex = /(?:^|\s)line-numbers(?:\s|$)/;
-
-		for (var element = code; element; element = element.parentNode) {
-			if (lineNumbersRegex.test(element.className)) {
-				addLineNumbers = true;
-				break;
-			}
-		}
-
-		// only add line numbers if <code> or one of its ancestors has the `line-numbers` class
-		if (!addLineNumbers) {
-			return;
-		}
-
-		// Remove the class 'line-numbers' from the <code>
-		code.className = code.className.replace(lineNumbersRegex, ' ');
-		// Add the class 'line-numbers' to the <pre>
-		if (!lineNumbersRegex.test(pre.className)) {
-			pre.className += ' line-numbers';
-		}
-
-		var match = env.code.match(NEW_LINE_EXP);
-		var linesNum = match ? match.length + 1 : 1;
-		var lineNumbersWrapper;
-
-		var lines = new Array(linesNum + 1).join('<span></span>');
-
-		lineNumbersWrapper = document.createElement('span');
-		lineNumbersWrapper.setAttribute('aria-hidden', 'true');
-		lineNumbersWrapper.className = 'line-numbers-rows';
-		lineNumbersWrapper.innerHTML = lines;
-
-		if (pre.hasAttribute('data-start')) {
-			pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
-		}
-
-		env.element.appendChild(lineNumbersWrapper);
-
-		_resizeElement(pre);
-
-		Prism.hooks.run('line-numbers', env);
-	});
-
-	Prism.hooks.add('line-numbers', function (env) {
-		env.plugins = env.plugins || {};
-		env.plugins.lineNumbers = true;
-	});
-
-	/**
-	 * Global exports
-	 */
-	Prism.plugins.lineNumbers = {
-		/**
-		 * Get node for provided line number
-		 * @param {Element} element pre element
-		 * @param {Number} number line number
-		 * @return {Element|undefined}
-		 */
-		getLine: function (element, number) {
-			if (element.tagName !== 'PRE' || !element.classList.contains(PLUGIN_NAME)) {
-				return;
-			}
-
-			var lineNumberRows = element.querySelector('.line-numbers-rows');
-			var lineNumberStart = parseInt(element.getAttribute('data-start'), 10) || 1;
-			var lineNumberEnd = lineNumberStart + (lineNumberRows.children.length - 1);
-
-			if (number < lineNumberStart) {
-				number = lineNumberStart;
-			}
-			if (number > lineNumberEnd) {
-				number = lineNumberEnd;
-			}
-
-			var lineIndex = number - lineNumberStart;
-
-			return lineNumberRows.children[lineIndex];
-		}
-	};
-
-}());
-
-
-/***/ }),
-
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -23689,412 +13560,6 @@ module.exports = SecureStorage;
 
 /***/ }),
 
-/***/ "./node_modules/shortid/index.js":
-/*!***************************************!*\
-  !*** ./node_modules/shortid/index.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-module.exports = __webpack_require__(/*! ./lib/index */ "./node_modules/shortid/lib/index.js");
-
-
-/***/ }),
-
-/***/ "./node_modules/shortid/lib/alphabet.js":
-/*!**********************************************!*\
-  !*** ./node_modules/shortid/lib/alphabet.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var randomFromSeed = __webpack_require__(/*! ./random/random-from-seed */ "./node_modules/shortid/lib/random/random-from-seed.js");
-
-var ORIGINAL = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-';
-var alphabet;
-var previousSeed;
-
-var shuffled;
-
-function reset() {
-    shuffled = false;
-}
-
-function setCharacters(_alphabet_) {
-    if (!_alphabet_) {
-        if (alphabet !== ORIGINAL) {
-            alphabet = ORIGINAL;
-            reset();
-        }
-        return;
-    }
-
-    if (_alphabet_ === alphabet) {
-        return;
-    }
-
-    if (_alphabet_.length !== ORIGINAL.length) {
-        throw new Error('Custom alphabet for shortid must be ' + ORIGINAL.length + ' unique characters. You submitted ' + _alphabet_.length + ' characters: ' + _alphabet_);
-    }
-
-    var unique = _alphabet_.split('').filter(function(item, ind, arr){
-       return ind !== arr.lastIndexOf(item);
-    });
-
-    if (unique.length) {
-        throw new Error('Custom alphabet for shortid must be ' + ORIGINAL.length + ' unique characters. These characters were not unique: ' + unique.join(', '));
-    }
-
-    alphabet = _alphabet_;
-    reset();
-}
-
-function characters(_alphabet_) {
-    setCharacters(_alphabet_);
-    return alphabet;
-}
-
-function setSeed(seed) {
-    randomFromSeed.seed(seed);
-    if (previousSeed !== seed) {
-        reset();
-        previousSeed = seed;
-    }
-}
-
-function shuffle() {
-    if (!alphabet) {
-        setCharacters(ORIGINAL);
-    }
-
-    var sourceArray = alphabet.split('');
-    var targetArray = [];
-    var r = randomFromSeed.nextValue();
-    var characterIndex;
-
-    while (sourceArray.length > 0) {
-        r = randomFromSeed.nextValue();
-        characterIndex = Math.floor(r * sourceArray.length);
-        targetArray.push(sourceArray.splice(characterIndex, 1)[0]);
-    }
-    return targetArray.join('');
-}
-
-function getShuffled() {
-    if (shuffled) {
-        return shuffled;
-    }
-    shuffled = shuffle();
-    return shuffled;
-}
-
-/**
- * lookup shuffled letter
- * @param index
- * @returns {string}
- */
-function lookup(index) {
-    var alphabetShuffled = getShuffled();
-    return alphabetShuffled[index];
-}
-
-function get () {
-  return alphabet || ORIGINAL;
-}
-
-module.exports = {
-    get: get,
-    characters: characters,
-    seed: setSeed,
-    lookup: lookup,
-    shuffled: getShuffled
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/shortid/lib/build.js":
-/*!*******************************************!*\
-  !*** ./node_modules/shortid/lib/build.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var generate = __webpack_require__(/*! ./generate */ "./node_modules/shortid/lib/generate.js");
-var alphabet = __webpack_require__(/*! ./alphabet */ "./node_modules/shortid/lib/alphabet.js");
-
-// Ignore all milliseconds before a certain time to reduce the size of the date entropy without sacrificing uniqueness.
-// This number should be updated every year or so to keep the generated id short.
-// To regenerate `new Date() - 0` and bump the version. Always bump the version!
-var REDUCE_TIME = 1459707606518;
-
-// don't change unless we change the algos or REDUCE_TIME
-// must be an integer and less than 16
-var version = 6;
-
-// Counter is used when shortid is called multiple times in one second.
-var counter;
-
-// Remember the last time shortid was called in case counter is needed.
-var previousSeconds;
-
-/**
- * Generate unique id
- * Returns string id
- */
-function build(clusterWorkerId) {
-    var str = '';
-
-    var seconds = Math.floor((Date.now() - REDUCE_TIME) * 0.001);
-
-    if (seconds === previousSeconds) {
-        counter++;
-    } else {
-        counter = 0;
-        previousSeconds = seconds;
-    }
-
-    str = str + generate(version);
-    str = str + generate(clusterWorkerId);
-    if (counter > 0) {
-        str = str + generate(counter);
-    }
-    str = str + generate(seconds);
-    return str;
-}
-
-module.exports = build;
-
-
-/***/ }),
-
-/***/ "./node_modules/shortid/lib/generate.js":
-/*!**********************************************!*\
-  !*** ./node_modules/shortid/lib/generate.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var alphabet = __webpack_require__(/*! ./alphabet */ "./node_modules/shortid/lib/alphabet.js");
-var random = __webpack_require__(/*! ./random/random-byte */ "./node_modules/shortid/lib/random/random-byte-browser.js");
-var format = __webpack_require__(/*! nanoid/format */ "./node_modules/nanoid/format.js");
-
-function generate(number) {
-    var loopCounter = 0;
-    var done;
-
-    var str = '';
-
-    while (!done) {
-        str = str + format(random, alphabet.get(), 1);
-        done = number < (Math.pow(16, loopCounter + 1 ) );
-        loopCounter++;
-    }
-    return str;
-}
-
-module.exports = generate;
-
-
-/***/ }),
-
-/***/ "./node_modules/shortid/lib/index.js":
-/*!*******************************************!*\
-  !*** ./node_modules/shortid/lib/index.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var alphabet = __webpack_require__(/*! ./alphabet */ "./node_modules/shortid/lib/alphabet.js");
-var build = __webpack_require__(/*! ./build */ "./node_modules/shortid/lib/build.js");
-var isValid = __webpack_require__(/*! ./is-valid */ "./node_modules/shortid/lib/is-valid.js");
-
-// if you are using cluster or multiple servers use this to make each instance
-// has a unique value for worker
-// Note: I don't know if this is automatically set when using third
-// party cluster solutions such as pm2.
-var clusterWorkerId = __webpack_require__(/*! ./util/cluster-worker-id */ "./node_modules/shortid/lib/util/cluster-worker-id-browser.js") || 0;
-
-/**
- * Set the seed.
- * Highly recommended if you don't want people to try to figure out your id schema.
- * exposed as shortid.seed(int)
- * @param seed Integer value to seed the random alphabet.  ALWAYS USE THE SAME SEED or you might get overlaps.
- */
-function seed(seedValue) {
-    alphabet.seed(seedValue);
-    return module.exports;
-}
-
-/**
- * Set the cluster worker or machine id
- * exposed as shortid.worker(int)
- * @param workerId worker must be positive integer.  Number less than 16 is recommended.
- * returns shortid module so it can be chained.
- */
-function worker(workerId) {
-    clusterWorkerId = workerId;
-    return module.exports;
-}
-
-/**
- *
- * sets new characters to use in the alphabet
- * returns the shuffled alphabet
- */
-function characters(newCharacters) {
-    if (newCharacters !== undefined) {
-        alphabet.characters(newCharacters);
-    }
-
-    return alphabet.shuffled();
-}
-
-/**
- * Generate unique id
- * Returns string id
- */
-function generate() {
-  return build(clusterWorkerId);
-}
-
-// Export all other functions as properties of the generate function
-module.exports = generate;
-module.exports.generate = generate;
-module.exports.seed = seed;
-module.exports.worker = worker;
-module.exports.characters = characters;
-module.exports.isValid = isValid;
-
-
-/***/ }),
-
-/***/ "./node_modules/shortid/lib/is-valid.js":
-/*!**********************************************!*\
-  !*** ./node_modules/shortid/lib/is-valid.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var alphabet = __webpack_require__(/*! ./alphabet */ "./node_modules/shortid/lib/alphabet.js");
-
-function isShortId(id) {
-    if (!id || typeof id !== 'string' || id.length < 6 ) {
-        return false;
-    }
-
-    var nonAlphabetic = new RegExp('[^' +
-      alphabet.get().replace(/[|\\{}()[\]^$+*?.-]/g, '\\$&') +
-    ']');
-    return !nonAlphabetic.test(id);
-}
-
-module.exports = isShortId;
-
-
-/***/ }),
-
-/***/ "./node_modules/shortid/lib/random/random-byte-browser.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/shortid/lib/random/random-byte-browser.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var crypto = typeof window === 'object' && (window.crypto || window.msCrypto); // IE 11 uses window.msCrypto
-
-var randomByte;
-
-if (!crypto || !crypto.getRandomValues) {
-    randomByte = function(size) {
-        var bytes = [];
-        for (var i = 0; i < size; i++) {
-            bytes.push(Math.floor(Math.random() * 256));
-        }
-        return bytes;
-    };
-} else {
-    randomByte = function(size) {
-        return crypto.getRandomValues(new Uint8Array(size));
-    };
-}
-
-module.exports = randomByte;
-
-
-/***/ }),
-
-/***/ "./node_modules/shortid/lib/random/random-from-seed.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/shortid/lib/random/random-from-seed.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// Found this seed-based random generator somewhere
-// Based on The Central Randomizer 1.3 (C) 1997 by Paul Houle (houle@msc.cornell.edu)
-
-var seed = 1;
-
-/**
- * return a random number based on a seed
- * @param seed
- * @returns {number}
- */
-function getNextValue() {
-    seed = (seed * 9301 + 49297) % 233280;
-    return seed/(233280.0);
-}
-
-function setSeed(_seed_) {
-    seed = _seed_;
-}
-
-module.exports = {
-    nextValue: getNextValue,
-    seed: setSeed
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/shortid/lib/util/cluster-worker-id-browser.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/shortid/lib/util/cluster-worker-id-browser.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = 0;
-
-
-/***/ }),
-
 /***/ "./node_modules/timers-browserify/main.js":
 /*!************************************************!*\
   !*** ./node_modules/timers-browserify/main.js ***!
@@ -24170,191 +13635,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/unescape/index.js":
-/*!****************************************!*\
-  !*** ./node_modules/unescape/index.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var extend = __webpack_require__(/*! extend-shallow */ "./node_modules/unescape/node_modules/extend-shallow/index.js");
-var regexCache = {};
-var all;
-
-var charSets = {
-  default: {
-    '&quot;': '"',
-    '&#34;': '"',
-
-    '&apos;': '\'',
-    '&#39;': '\'',
-
-    '&amp;': '&',
-    '&#38;': '&',
-
-    '&gt;': '>',
-    '&#62;': '>',
-
-    '&lt;': '<',
-    '&#60;': '<'
-  },
-  extras: {
-    '&cent;': '¢',
-    '&#162;': '¢',
-
-    '&copy;': '©',
-    '&#169;': '©',
-
-    '&euro;': '€',
-    '&#8364;': '€',
-
-    '&pound;': '£',
-    '&#163;': '£',
-
-    '&reg;': '®',
-    '&#174;': '®',
-
-    '&yen;': '¥',
-    '&#165;': '¥'
-  }
-};
-
-// don't merge char sets unless "all" is explicitly called
-Object.defineProperty(charSets, 'all', {
-  get: function() {
-    return all || (all = extend({}, charSets.default, charSets.extras));
-  }
-});
-
-/**
- * Convert HTML entities to HTML characters.
- *
- * @param  {String} `str` String with HTML entities to un-escape.
- * @return {String}
- */
-
-function unescape(str, type) {
-  if (!isString(str)) return '';
-  var chars = charSets[type || 'default'];
-  var regex = toRegex(type, chars);
-  return str.replace(regex, function(m) {
-    return chars[m];
-  });
-}
-
-function toRegex(type, chars) {
-  if (regexCache[type]) {
-    return regexCache[type];
-  }
-  var keys = Object.keys(chars).join('|');
-  var regex = new RegExp('(?=(' + keys + '))\\1', 'g');
-  regexCache[type] = regex;
-  return regex;
-}
-
-/**
- * Returns true if str is a non-empty string
- */
-
-function isString(str) {
-  return str && typeof str === 'string';
-}
-
-/**
- * Expose charSets
- */
-
-unescape.chars = charSets.default;
-unescape.extras = charSets.extras;
-// don't trip the "charSets" getter unless it's explicitly called
-Object.defineProperty(unescape, 'all', {
-  get: function() {
-    return charSets.all;
-  }
-});
-
-/**
- * Expose `unescape`
- */
-
-module.exports = unescape;
-
-
-/***/ }),
-
-/***/ "./node_modules/unescape/node_modules/extend-shallow/index.js":
-/*!********************************************************************!*\
-  !*** ./node_modules/unescape/node_modules/extend-shallow/index.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var isObject = __webpack_require__(/*! is-extendable */ "./node_modules/unescape/node_modules/is-extendable/index.js");
-
-module.exports = function extend(o/*, objects*/) {
-  if (!isObject(o)) { o = {}; }
-
-  var len = arguments.length;
-  for (var i = 1; i < len; i++) {
-    var obj = arguments[i];
-
-    if (isObject(obj)) {
-      assign(o, obj);
-    }
-  }
-  return o;
-};
-
-function assign(a, b) {
-  for (var key in b) {
-    if (hasOwn(b, key)) {
-      a[key] = b[key];
-    }
-  }
-}
-
-/**
- * Returns true if the given `key` is an own property of `obj`.
- */
-
-function hasOwn(obj, key) {
-  return Object.prototype.hasOwnProperty.call(obj, key);
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/unescape/node_modules/is-extendable/index.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/unescape/node_modules/is-extendable/index.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*!
- * is-extendable <https://github.com/jonschlinkert/is-extendable>
- *
- * Copyright (c) 2015, Jon Schlinkert.
- * Licensed under the MIT License.
- */
-
-
-
-module.exports = function isExtendable(val) {
-  return typeof val !== 'undefined' && val !== null
-    && (typeof val === 'object' || typeof val === 'function');
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/Apps.vue?vue&type=template&id=9a273f9c&":
 /*!****************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/pages/Apps.vue?vue&type=template&id=9a273f9c& ***!
@@ -24372,8 +13652,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "monoland", class: { "monoland--load": !_vm.fontLoaded } },
-    [_vm.fontLoaded ? _c("router-view") : _vm._e()],
+    { staticClass: "monoland", attrs: { "v-cloak": !_vm.fontLoaded } },
+    [_c("router-view")],
     1
   )
 }
@@ -24403,7 +13683,7 @@ var render = function() {
     "v-app",
     {},
     [
-      _c("v-menu-application"),
+      _c("v-menu-apps"),
       _vm._v(" "),
       _c(
         "v-content",
@@ -24414,37 +13694,18 @@ var render = function() {
                 "v-card",
                 { attrs: { height: "100%", color: "transparent", flat: "" } },
                 [
-                  _c("div", { staticClass: "v-mobile" }, [
-                    _c(
-                      "div",
-                      { staticClass: "v-mobile__wrap" },
-                      [_c("router-view", { key: _vm.$route.path })],
-                      1
-                    )
-                  ]),
+                  _c("router-view", { key: _vm.$route.path }),
                   _vm._v(" "),
                   _c(
-                    "v-bottom-nav",
-                    {
-                      attrs: {
-                        absolute: "",
-                        color: "white",
-                        value: true,
-                        active: _vm.appnav
-                      },
-                      on: {
-                        "update:active": function($event) {
-                          _vm.appnav = $event
-                        }
-                      }
-                    },
+                    "v-bottom-navigation",
+                    { attrs: { grow: "", absolute: "", shift: "" } },
                     [
                       _c(
                         "v-btn",
                         {
                           attrs: {
+                            text: "",
                             color: _vm.$root.theme,
-                            flat: "",
                             to: { name: "home" }
                           }
                         },
@@ -24460,13 +13721,13 @@ var render = function() {
                         "v-btn",
                         {
                           attrs: {
+                            text: "",
                             color: _vm.$root.theme,
-                            flat: "",
-                            to: { name: "user" }
+                            to: { name: "profile" }
                           }
                         },
                         [
-                          _c("span", [_vm._v("Pengguna")]),
+                          _c("span", [_vm._v("Profile")]),
                           _vm._v(" "),
                           _c("v-icon", [_vm._v("perm_identity")])
                         ],
@@ -24477,15 +13738,46 @@ var render = function() {
                         "v-btn",
                         {
                           attrs: {
+                            text: "",
                             color: _vm.$root.theme,
-                            flat: "",
-                            to: { name: "client" }
+                            to: { name: "password" }
                           }
                         },
                         [
-                          _c("span", [_vm._v("OAuth Klien")]),
+                          _c("span", [_vm._v("Password")]),
                           _vm._v(" "),
-                          _c("v-icon", [_vm._v("whatshot")])
+                          _c("v-icon", [_vm._v("lock")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: {
+                            text: "",
+                            color: _vm.$root.theme,
+                            to: { name: "setting" }
+                          }
+                        },
+                        [
+                          _c("span", [_vm._v("Setting")]),
+                          _vm._v(" "),
+                          _c("v-icon", [_vm._v("settings")])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { text: "", color: _vm.$root.theme },
+                          on: { click: _vm.signout }
+                        },
+                        [
+                          _c("span", [_vm._v("Signout")]),
+                          _vm._v(" "),
+                          _c("v-icon", [_vm._v("exit_to_app")])
                         ],
                         1
                       )
@@ -24495,12 +13787,7 @@ var render = function() {
                 ],
                 1
               )
-            : _c(
-                "div",
-                { staticClass: "v-page" },
-                [_c("router-view", { key: _vm.$route.path })],
-                1
-              )
+            : _c("router-view", { key: _vm.$route.path })
         ],
         1
       ),
@@ -24521,7 +13808,7 @@ var render = function() {
           _vm._v("\n        " + _vm._s(_vm.snackbar.text) + "\n        "),
           _c(
             "v-btn",
-            { attrs: { dark: "", flat: "" }, on: { click: _vm.closeSnackbar } },
+            { attrs: { dark: "", flat: "" }, on: { click: _vm.snackbarClose } },
             [_vm._v("Tutup")]
           )
         ],
@@ -24553,259 +13840,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-card",
-    { attrs: { height: "100%", color: "transparent", flat: "" } },
-    [
-      _c("v-header", { attrs: { crud: "" } }),
-      _vm._v(" "),
-      _vm.desktop
-        ? _c(
-            "v-card-text",
-            { class: { "pa-4": !_vm.tablet, "pa-3": _vm.tablet } },
-            [
-              _c("v-page-table", {
-                scopedSlots: _vm._u(
-                  [
-                    {
-                      key: "default",
-                      fn: function(props) {
-                        return [
-                          _c("td", [_vm._v(_vm._s(props.item.name))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(props.item.secret))]),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            [
-                              _c("v-icon", [
-                                _vm._v(_vm._s(props.item.lockicon))
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(props.item.updated_at))])
-                        ]
-                      }
-                    }
-                  ],
-                  null,
-                  false,
-                  1517277568
-                )
-              })
-            ],
-            1
-          )
-        : _c("v-page-list", {
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(props) {
-                  return [
-                    _c(
-                      "v-list-tile-avatar",
-                      [
-                        _c(
-                          "v-icon",
-                          {
-                            staticClass: "white--text",
-                            class: {
-                              "deep-orange": props.item.pinned,
-                              "grey lighten-1": !props.item.pinned
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                    " +
-                                _vm._s(
-                                  props.item.pinned ? "done" : "whatshot"
-                                ) +
-                                "\n                "
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-list-tile-content",
-                      [
-                        _c("v-list-tile-title", [
-                          _vm._v(_vm._s(props.item.name))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "v-list-tile-sub-title",
-                          { staticClass: "f-nunito" },
-                          [_vm._v(_vm._s(props.item.secret))]
-                        )
-                      ],
-                      1
-                    )
-                  ]
-                }
-              }
-            ])
-          }),
-      _vm._v(" "),
-      _c(
-        "v-page-form",
-        { attrs: { small: "" } },
-        [
-          _c(
-            "v-flex",
-            { attrs: { sm6: "", xs6: "" } },
-            [
-              _c("v-text-field", {
-                attrs: {
-                  label: "Id Klien",
-                  color: _vm.$root.theme,
-                  readonly: ""
-                },
-                model: {
-                  value: _vm.record.id,
-                  callback: function($$v) {
-                    _vm.$set(_vm.record, "id", $$v)
-                  },
-                  expression: "record.id"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-flex",
-            { attrs: { sm6: "", xs6: "" } },
-            [
-              _vm.form.mode === "edit"
-                ? _c("v-select", {
-                    attrs: {
-                      items: _vm.statuses,
-                      label: "Status",
-                      color: _vm.$root.theme
-                    },
-                    model: {
-                      value: _vm.record.revoked,
-                      callback: function($$v) {
-                        _vm.$set(_vm.record, "revoked", $$v)
-                      },
-                      expression: "record.revoked"
-                    }
-                  })
-                : _c("v-select", {
-                    attrs: {
-                      items: _vm.grants,
-                      label: "Grant",
-                      color: _vm.$root.theme
-                    },
-                    model: {
-                      value: _vm.record.grant,
-                      callback: function($$v) {
-                        _vm.$set(_vm.record, "grant", $$v)
-                      },
-                      expression: "record.grant"
-                    }
-                  })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-flex",
-            { attrs: { sm6: "", xs12: "" } },
-            [
-              _c("v-text-field", {
-                attrs: { label: "Nama Klien", color: _vm.$root.theme },
-                model: {
-                  value: _vm.record.name,
-                  callback: function($$v) {
-                    _vm.$set(_vm.record, "name", $$v)
-                  },
-                  expression: "record.name"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-flex",
-            { attrs: { sm6: "", xs12: "" } },
-            [
-              _c("v-text-field", {
-                attrs: { label: "Redirect", color: _vm.$root.theme },
-                model: {
-                  value: _vm.record.redirect,
-                  callback: function($$v) {
-                    _vm.$set(_vm.record, "redirect", $$v)
-                  },
-                  expression: "record.redirect"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-flex",
-            { attrs: { xs12: "" } },
-            [
-              _vm.form.mode === "edit"
-                ? _c("v-textarea", {
-                    attrs: { label: "Rahasia", color: _vm.$root.theme },
-                    model: {
-                      value: _vm.record.secret,
-                      callback: function($$v) {
-                        _vm.$set(_vm.record, "secret", $$v)
-                      },
-                      expression: "record.secret"
-                    }
-                  })
-                : _vm._e()
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("v-page-trash")
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/backend/Home/index.vue?vue&type=template&id=6a7a8f86&":
-/*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/pages/backend/Home/index.vue?vue&type=template&id=6a7a8f86& ***!
-  \******************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-card",
-    { attrs: { height: "100%", color: "transparent", flat: "" } },
-    [_c("v-header", { attrs: { searchable: false } })],
-    1
-  )
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -24829,179 +13864,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-card",
-    { attrs: { height: "100%", color: "transparent", flat: "" } },
-    [
-      _c(
-        "v-header",
-        { attrs: { searchable: false } },
-        [
-          _c(
-            "v-btn",
-            {
-              attrs: { color: _vm.$root.theme, icon: "", flat: "" },
-              on: {
-                click: function($event) {
-                  return _vm.updatePassword(_vm.user)
-                }
-              }
-            },
-            [_c("v-icon", [_vm._v("done")])],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-card-text",
-        { staticClass: "pa-0", style: _vm.dynHeight },
-        [
-          _c(
-            "v-container",
-            { staticClass: "pa-0", attrs: { "fill-height": "" } },
-            [
-              _c(
-                "v-layout",
-                { attrs: { "justify-center": "", wrap: "" } },
-                [
-                  _c(
-                    "v-card",
-                    { attrs: { flat: "", width: _vm.dynWidth } },
-                    [
-                      _c("v-card-image", {
-                        attrs: { uploader: false },
-                        model: {
-                          value: _vm.record.avatar,
-                          callback: function($$v) {
-                            _vm.$set(_vm.record, "avatar", $$v)
-                          },
-                          expression: "record.avatar"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-text",
-                        [
-                          _c(
-                            "v-layout",
-                            { attrs: { "justify-center": "", wrap: "" } },
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Katasandi Lama",
-                                      color: _vm.$root.theme,
-                                      "append-icon": _vm.hidden1
-                                        ? "visibility_off"
-                                        : "visibility",
-                                      type: _vm.hidden1 ? "password" : "text"
-                                    },
-                                    on: {
-                                      "click:append": function($event) {
-                                        _vm.hidden1 = !_vm.hidden1
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.user.old_password,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.user, "old_password", $$v)
-                                      },
-                                      expression: "user.old_password"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Katasandi Baru",
-                                      color: _vm.$root.theme,
-                                      "append-icon": _vm.hidden2
-                                        ? "visibility_off"
-                                        : "visibility",
-                                      type: _vm.hidden2 ? "password" : "text"
-                                    },
-                                    on: {
-                                      "click:append": function($event) {
-                                        _vm.hidden2 = !_vm.hidden2
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.user.password,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.user, "password", $$v)
-                                      },
-                                      expression: "user.password"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Konfirmasi Sandi",
-                                      color: _vm.$root.theme,
-                                      "append-icon": _vm.hidden3
-                                        ? "visibility_off"
-                                        : "visibility",
-                                      type: _vm.hidden3 ? "password" : "text"
-                                    },
-                                    on: {
-                                      "click:append": function($event) {
-                                        _vm.hidden3 = !_vm.hidden3
-                                      }
-                                    },
-                                    model: {
-                                      value: _vm.user.password_confirmation,
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.user,
-                                          "password_confirmation",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "user.password_confirmation"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -25025,144 +13888,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-card",
-    { attrs: { height: "100%", color: "transparent", flat: "" } },
-    [
-      _c(
-        "v-header",
-        { attrs: { searchable: false } },
-        [
-          _c(
-            "v-btn",
-            {
-              attrs: { color: _vm.$root.theme, icon: "", flat: "" },
-              on: { click: _vm.updateProfile }
-            },
-            [_c("v-icon", [_vm._v("done")])],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-card-text",
-        { staticClass: "pa-0", style: _vm.dynHeight },
-        [
-          _c(
-            "v-container",
-            { staticClass: "pa-0", attrs: { "fill-height": "" } },
-            [
-              _c(
-                "v-layout",
-                { attrs: { "justify-center": "", wrap: "" } },
-                [
-                  _c(
-                    "v-card",
-                    { attrs: { flat: "", width: _vm.dynWidth } },
-                    [
-                      _c("v-card-image", {
-                        model: {
-                          value: _vm.record.avatar,
-                          callback: function($$v) {
-                            _vm.$set(_vm.record, "avatar", $$v)
-                          },
-                          expression: "record.avatar"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-text",
-                        [
-                          _c(
-                            "v-layout",
-                            { attrs: { "justify-center": "", wrap: "" } },
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Nama Pengguna",
-                                      color: _vm.$root.theme
-                                    },
-                                    model: {
-                                      value: _vm.record.name,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.record, "name", $$v)
-                                      },
-                                      expression: "record.name"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Alamat Email",
-                                      color: _vm.$root.theme
-                                    },
-                                    model: {
-                                      value: _vm.record.email,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.record, "email", $$v)
-                                      },
-                                      expression: "record.email"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "" } },
-                                [
-                                  _c("v-select", {
-                                    attrs: {
-                                      label: "Warna Thema",
-                                      color: _vm.$root.theme,
-                                      items: _vm.colors
-                                    },
-                                    model: {
-                                      value: _vm.record.theme,
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.record, "theme", $$v)
-                                      },
-                                      expression: "record.theme"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -25186,173 +13912,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "v-card",
-    { attrs: { height: "100%", color: "transparent", flat: "" } },
-    [
-      _c(
-        "v-header",
-        { attrs: { searchable: false } },
-        [
-          _c(
-            "v-btn",
-            {
-              attrs: { color: _vm.$root.theme, icon: "", flat: "" },
-              on: { click: _vm.updateSetting }
-            },
-            [_c("v-icon", [_vm._v("done")])],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-card-text",
-        { staticClass: "pa-0", style: _vm.dynHeight },
-        [
-          _c(
-            "v-container",
-            { staticClass: "pa-0", attrs: { "fill-height": "" } },
-            [
-              _c(
-                "v-layout",
-                { attrs: { "justify-center": "", wrap: "" } },
-                [
-                  _c(
-                    "v-card",
-                    { attrs: { flat: "", width: _vm.dynWidth } },
-                    [
-                      _c("v-card-image", {
-                        attrs: { icon: "photo" },
-                        model: {
-                          value: _vm.setting.meta["avatar"],
-                          callback: function($$v) {
-                            _vm.$set(_vm.setting.meta, "avatar", $$v)
-                          },
-                          expression: "setting.meta['avatar']"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-text",
-                        [
-                          _c(
-                            "v-layout",
-                            { attrs: { "justify-center": "", wrap: "" } },
-                            [
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Nama Perusahaan",
-                                      color: _vm.$root.theme
-                                    },
-                                    model: {
-                                      value: _vm.setting.meta["name"],
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.setting.meta, "name", $$v)
-                                      },
-                                      expression: "setting.meta['name']"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs12: "" } },
-                                [
-                                  _c("v-textarea", {
-                                    attrs: {
-                                      label: "Slogan",
-                                      color: _vm.$root.theme
-                                    },
-                                    model: {
-                                      value: _vm.setting.meta["slogan"],
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.setting.meta,
-                                          "slogan",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "setting.meta['slogan']"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs6: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Tinggi",
-                                      color: _vm.$root.theme
-                                    },
-                                    model: {
-                                      value: _vm.setting.meta["height"],
-                                      callback: function($$v) {
-                                        _vm.$set(
-                                          _vm.setting.meta,
-                                          "height",
-                                          $$v
-                                        )
-                                      },
-                                      expression: "setting.meta['height']"
-                                    }
-                                  })
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-flex",
-                                { attrs: { xs6: "" } },
-                                [
-                                  _c("v-text-field", {
-                                    attrs: {
-                                      label: "Lebar",
-                                      color: _vm.$root.theme
-                                    },
-                                    model: {
-                                      value: _vm.setting.meta["width"],
-                                      callback: function($$v) {
-                                        _vm.$set(_vm.setting.meta, "width", $$v)
-                                      },
-                                      expression: "setting.meta['width']"
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -25377,148 +13937,30 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "v-card",
-    { attrs: { height: "100%", color: "transparent", flat: "" } },
+    "div",
+    { staticClass: "v-page" },
     [
-      _c("v-header", { attrs: { crud: "" } }),
+      _c("v-header", { attrs: { crud: "", absolute: "" } }),
       _vm._v(" "),
-      _vm.desktop
-        ? _c(
-            "v-card-text",
-            { class: { "pa-4": !_vm.tablet, "pa-3": _vm.tablet } },
-            [
-              _c("v-page-table", {
-                scopedSlots: _vm._u(
-                  [
-                    {
-                      key: "default",
-                      fn: function(props) {
-                        return [
-                          _c("td", [_vm._v(_vm._s(props.item.name))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(props.item.email))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(props.item.authent_name))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(props.item.updated_at))])
-                        ]
-                      }
-                    }
-                  ],
-                  null,
-                  false,
-                  2658588463
-                )
-              })
-            ],
-            1
-          )
-        : _c("v-page-list", {
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(props) {
-                  return [
-                    _c(
-                      "v-list-tile-avatar",
-                      [
-                        _c(
-                          "v-icon",
-                          {
-                            staticClass: "white--text",
-                            class: {
-                              "deep-orange": props.item.pinned,
-                              "grey lighten-1": !props.item.pinned
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                    " +
-                                _vm._s(
-                                  props.item.pinned ? "done" : "perm_identity"
-                                ) +
-                                "\n                "
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-list-tile-content",
-                      [
-                        _c("v-list-tile-title", [
-                          _vm._v(_vm._s(props.item.name))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "v-list-tile-sub-title",
-                          { staticClass: "f-nunito" },
-                          [_vm._v(_vm._s(props.item.email))]
-                        )
-                      ],
-                      1
-                    )
-                  ]
-                }
-              }
-            ])
-          }),
-      _vm._v(" "),
-      _c(
-        "v-page-form",
-        { attrs: { small: "" } },
-        [
-          _c(
-            "v-flex",
-            { attrs: { xs12: "" } },
-            [
-              _c("v-text-field", {
-                attrs: { label: "Nama Pengguna", color: _vm.$root.theme },
-                model: {
-                  value: _vm.record.name,
-                  callback: function($$v) {
-                    _vm.$set(_vm.record, "name", $$v)
-                  },
-                  expression: "record.name"
-                }
-              }),
-              _vm._v(" "),
-              _c("v-text-field", {
-                attrs: { label: "Email Pengguna", color: _vm.$root.theme },
-                model: {
-                  value: _vm.record.email,
-                  callback: function($$v) {
-                    _vm.$set(_vm.record, "email", $$v)
-                  },
-                  expression: "record.email"
-                }
-              }),
-              _vm._v(" "),
-              _c("v-select", {
-                attrs: { label: "Otentikasi", color: _vm.$root.theme },
-                model: {
-                  value: _vm.record.authent_id,
-                  callback: function($$v) {
-                    _vm.$set(_vm.record, "authent_id", $$v)
-                  },
-                  expression: "record.authent_id"
-                }
-              })
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c("v-page-trash")
+      _vm._m(0)
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "v-page__content" }, [
+      _c("div", { staticClass: "v-page__wrap" }, [
+        _vm._v(
+          "\n            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe voluptas molestias minima voluptatum sint fuga ea ipsum labore fugit, sed, accusamus illo non doloremque fugiat officia laboriosam harum? Eius, ipsam.\n        "
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -25563,825 +14005,58 @@ var render = function() {
                 },
                 [
                   _c(
-                    "v-card",
+                    "v-widget",
                     {
-                      staticClass: "v-card--auth mt-4 mx-auto",
-                      attrs: { elevation: "1", width: _vm.formwidth }
-                    },
-                    [
-                      _c(
-                        "v-sheet",
-                        {
-                          staticClass: "v-sheet--offset mx-auto pa-3",
-                          attrs: {
-                            color: "cyan",
-                            elevation: "9",
-                            "max-width": "calc(100% - 48px)"
-                          }
-                        },
-                        [
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "d-block text-uppercase font-weight-medium text-xs-center white--text"
-                            },
-                            [_vm._v("l o g i n")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "span",
-                            {
-                              staticClass:
-                                "d-block headline font-weight-light letter-space-1 text-uppercase text-xs-center mt-1 white--text"
-                            },
-                            [_vm._v("authentication")]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-text",
-                        [
-                          _c("v-text-field", {
-                            attrs: {
-                              color: "cyan",
-                              label: "Username",
-                              "prepend-inner-icon": "mail_outline",
-                              autocomplete: "off"
-                            },
-                            model: {
-                              value: _vm.username,
-                              callback: function($$v) {
-                                _vm.username = $$v
-                              },
-                              expression: "username"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("v-text-field", {
-                            attrs: {
-                              color: "cyan",
-                              label: "Password",
-                              "prepend-inner-icon": "lock_open",
-                              autocomplete: "off",
-                              "append-icon": _vm.showtext
-                                ? "visibility"
-                                : "visibility_off",
-                              type: _vm.showtext ? "text" : "password"
-                            },
-                            on: {
-                              "click:append": function($event) {
-                                _vm.showtext = !_vm.showtext
-                              }
-                            },
-                            model: {
-                              value: _vm.userpass,
-                              callback: function($$v) {
-                                _vm.userpass = $$v
-                              },
-                              expression: "userpass"
-                            }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-card-actions",
-                        { staticClass: "justify-center" },
-                        [
-                          _c(
-                            "v-btn",
-                            {
-                              attrs: { block: "", color: "cyan", flat: "" },
-                              on: { click: _vm.signin }
-                            },
-                            [_vm._v("login to apps")]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "d-block text-uppercase mt-5 text-xs-center white--text"
-                    },
-                    [_c("small", [_vm._v("monoland © 2019")])]
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/CardImage/index.vue?vue&type=template&id=de57f50c&":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/CardImage/index.vue?vue&type=template&id=de57f50c& ***!
-  \***************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "v-card__image", class: _vm.$root.theme + " lighten-5" },
-    [
-      _vm.uploader
-        ? _c(
-            "div",
-            { staticClass: "v-card__image--icon", attrs: { id: _vm.uuid } },
-            [
-              _c(
-                "v-progress-circular",
-                {
-                  attrs: {
-                    size: 80,
-                    color: "blue lighten-2",
-                    value: _vm.uplvalue
-                  }
-                },
-                [
-                  _c(
-                    "v-avatar",
-                    { attrs: { size: "72px", color: "transparent--grey" } },
-                    [
-                      _c("v-icon", { staticClass: "white--text" }, [
-                        _vm._v(_vm._s(_vm.icon))
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.photourl
-        ? _c("div", { staticClass: "v-card__image--wrap" }, [
-            _c("img", { attrs: { src: _vm.photourl, alt: "photo" } })
-          ])
-        : _vm._e()
-    ]
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/CodeEditor/index.vue?vue&type=template&id=cafc2a3e&":
-/*!****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/CodeEditor/index.vue?vue&type=template&id=cafc2a3e& ***!
-  \****************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _obj
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "v-editor" }, [
-    _vm.lineNumbers
-      ? _c(
-          "div",
-          {
-            staticClass: "v-editor__line-numbers",
-            attrs: { "aria-hidden": "true" }
-          },
-          _vm._l(_vm.lineNumbersCount, function(line) {
-            return _c(
-              "div",
-              { key: line, staticClass: "v-editor__line-number token comment" },
-              [_vm._v(_vm._s(line))]
-            )
-          }),
-          0
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _c("pre", {
-      ref: "pre",
-      staticClass: "v-editor__code",
-      class: ((_obj = {}), (_obj["language-" + _vm.language] = true), _obj),
-      attrs: {
-        contenteditable: !_vm.readonly,
-        spellCheck: "false",
-        autocapitalize: "off",
-        autocomplete: "off",
-        autocorrect: "off",
-        "data-gramm": "false"
-      },
-      domProps: { innerHTML: _vm._s(_vm.content) },
-      on: {
-        keydown: _vm.handleKeyDown,
-        keyup: _vm.handleKeyUp,
-        click: _vm.handleClick
-      }
-    })
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/Document/index.vue?vue&type=template&id=ff37d7fc&":
-/*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/Document/index.vue?vue&type=template&id=ff37d7fc& ***!
-  \**************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-dialog",
-    {
-      attrs: { persistent: "" },
-      scopedSlots: _vm._u([
-        {
-          key: "activator",
-          fn: function(ref) {
-            var on = ref.on
-            return [
-              _c("div", { staticClass: "v-file" }, [
-                _c("label", { staticClass: "caption" }, [
-                  _vm._v(_vm._s(_vm.label))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "v-file__wrap" },
-                  [
-                    _c("v-slide-x-transition", { attrs: { mode: "in-out" } }, [
-                      _vm.files.length === 0
-                        ? _c(
-                            "div",
-                            _vm._g(
-                              {
-                                staticClass: "v-file__bttn",
-                                class: _vm.$root.theme + "--text"
-                              },
-                              on
-                            ),
-                            [
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "v-file__text font-weight-regular text-uppercase"
-                                },
-                                [
-                                  _c("small", [
-                                    _vm._v("click to open document")
-                                  ])
-                                ]
-                              )
-                            ]
-                          )
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "v-slide-y-transition",
-                      {
-                        staticClass: "v-file__list",
-                        attrs: { group: "", tag: "div", mode: "in-out" }
+                      attrs: {
+                        color: "cyan",
+                        elevation: 1,
+                        width: _vm.formwidth
                       },
-                      [
-                        _vm._l(_vm.files, function(file, index) {
-                          return _vm.files.length
-                            ? [
-                                _c(
-                                  "div",
-                                  { key: index, staticClass: "v-file__item" },
-                                  [
-                                    _c("div", { staticClass: "v-file__data" }, [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "v-file__text subheading"
-                                        },
-                                        [_vm._v(_vm._s(file.name))]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "v-file__icon" },
-                                        [
-                                          _c(
-                                            "v-icon",
-                                            {
-                                              attrs: {
-                                                small: "",
-                                                color: _vm.$root.theme
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.removeFile(file)
-                                                }
-                                              }
-                                            },
-                                            [_vm._v("close")]
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "v-file__meta caption" },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            "Size: " +
-                                              _vm.formatBytes(file.byte) +
-                                              " | Mime: " +
-                                              file.mime
-                                          )
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ]
-                            : _vm._e()
-                        })
-                      ],
-                      2
-                    )
-                  ],
-                  1
-                )
-              ])
-            ]
-          }
-        }
-      ]),
-      model: {
-        value: _vm.dialog,
-        callback: function($$v) {
-          _vm.dialog = $$v
-        },
-        expression: "dialog"
-      }
-    },
-    [
-      _vm._v(" "),
-      _c(
-        "v-layout",
-        { attrs: { "align-center": "", "justify-center": "" } },
-        [
-          _c(
-            "v-flex",
-            { attrs: { md7: "" } },
-            [
-              _c(
-                "v-card",
-                { staticClass: "v-card--document" },
-                [
-                  _c(
-                    "v-fade-transition",
-                    { attrs: { origin: "center center" } },
-                    [
-                      _c(
-                        "div",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.showOverlay,
-                              expression: "showOverlay"
-                            }
-                          ],
-                          staticClass: "v-card--overlay",
-                          on: {
-                            click: function($event) {
-                              if ($event.target !== $event.currentTarget) {
-                                return null
-                              }
-                              return _vm.closeOverlay($event)
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "v-scale-transition",
-                            { attrs: { origin: "center center" } },
-                            [
-                              _c(
-                                "v-scale-transition",
-                                { attrs: { origin: "center center" } },
-                                [
-                                  _vm.showEdit
-                                    ? _c(
-                                        "v-sheet",
-                                        {
-                                          staticClass:
-                                            "elevation-3 px-3 pt-1 pb-2",
-                                          attrs: {
-                                            color: "white",
-                                            width: "320"
-                                          }
-                                        },
-                                        [
-                                          _c("v-text-field", {
-                                            ref: "fileName",
-                                            attrs: {
-                                              label: "File name",
-                                              "hide-details": ""
-                                            },
-                                            scopedSlots: _vm._u(
-                                              [
-                                                {
-                                                  key: "append",
-                                                  fn: function() {
-                                                    return [
-                                                      _c(
-                                                        "v-icon",
-                                                        {
-                                                          attrs: {
-                                                            color: "green"
-                                                          },
-                                                          on: {
-                                                            click:
-                                                              _vm.updateDocument
-                                                          }
-                                                        },
-                                                        [_vm._v("done")]
-                                                      )
-                                                    ]
-                                                  },
-                                                  proxy: true
-                                                }
-                                              ],
-                                              null,
-                                              false,
-                                              4291565957
-                                            ),
-                                            model: {
-                                              value: _vm.fileName,
-                                              callback: function($$v) {
-                                                _vm.fileName = $$v
-                                              },
-                                              expression: "fileName"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _vm.showDelete
-                                    ? _c(
-                                        "v-card",
-                                        {
-                                          staticClass:
-                                            "v-card--widget mt-4 mx-auto",
-                                          staticStyle: {
-                                            "border-radius": "4px"
-                                          },
-                                          attrs: {
-                                            elevation: "0",
-                                            width: "320"
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-sheet",
-                                            {
-                                              staticClass:
-                                                "v-sheet--offset py-3 px-3 mx-auto",
-                                              attrs: {
-                                                elevation: "0",
-                                                color: "deep-orange",
-                                                "max-width": "calc(100% - 32px)"
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "d-block title font-weight-regular mb-2 white--text"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s("Hapus dokumen?")
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "d-block f-nunito caption font-weight-regular text-uppercase white--text"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "konfirmasi penghapusan."
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-card-text",
-                                            {
-                                              staticClass: "px-3",
-                                              staticStyle: {
-                                                "text-align": "justify"
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "subheading font-weight-light"
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                            Menghapus dokumen ini juga akan menghapus semua data yang terhubung dengan ini. Anda tidak dapat membatalkan ini.\n                                        "
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-card-actions",
-                                            [
-                                              _c("v-spacer"),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-btn",
-                                                {
-                                                  attrs: {
-                                                    color: _vm.$root.theme,
-                                                    flat: ""
-                                                  },
-                                                  on: {
-                                                    click: _vm.deleteDocument
-                                                  }
-                                                },
-                                                [_vm._v("delete")]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-btn",
-                                                {
-                                                  attrs: {
-                                                    color: _vm.$root.theme,
-                                                    flat: ""
-                                                  },
-                                                  on: {
-                                                    click: _vm.closeOverlay
-                                                  }
-                                                },
-                                                [_vm._v("cancel")]
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    : _vm._e()
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-toolbar",
-                    {
-                      attrs: { flat: "", card: "", tabs: "" },
                       scopedSlots: _vm._u([
                         {
-                          key: "extension",
+                          key: "header",
                           fn: function() {
                             return [
                               _c(
-                                "v-tabs",
+                                "span",
                                 {
-                                  attrs: {
-                                    color: "transparent",
-                                    "slider-color": _vm.$root.theme
-                                  },
-                                  model: {
-                                    value: _vm.tabs,
-                                    callback: function($$v) {
-                                      _vm.tabs = $$v
-                                    },
-                                    expression: "tabs"
-                                  }
+                                  staticClass:
+                                    "d-block text-uppercase font-weight-medium text-xs-center white--text"
                                 },
-                                [
-                                  _c(
-                                    "v-tab",
-                                    {
-                                      ref: "upload",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.media = true
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Upload")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-tab",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          _vm.media = false
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Albums")]
-                                  )
-                                ],
-                                1
+                                [_vm._v("l o g i n")]
                               ),
                               _vm._v(" "),
                               _c(
-                                "div",
-                                { staticClass: "v-toolbar__actions" },
+                                "span",
+                                {
+                                  staticClass:
+                                    "d-block headline font-weight-light letter-space-1 text-uppercase text-xs-center mt-1 white--text"
+                                },
+                                [_vm._v("authentication")]
+                              )
+                            ]
+                          },
+                          proxy: true
+                        },
+                        {
+                          key: "actions",
+                          fn: function() {
+                            return [
+                              _c(
+                                "v-card-text",
+                                { staticClass: "px-6 justify-center" },
                                 [
                                   _c(
-                                    "v-slide-x-reverse-transition",
-                                    { attrs: { mode: "in-out" } },
-                                    [
-                                      _c(
-                                        "v-toolbar-items",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "show",
-                                              rawName: "v-show",
-                                              value: _vm.crudmode,
-                                              expression: "crudmode"
-                                            }
-                                          ]
-                                        },
-                                        [
-                                          _c(
-                                            "v-slide-x-reverse-transition",
-                                            { attrs: { mode: "in-out" } },
-                                            [
-                                              !_vm.hideEdit
-                                                ? _c(
-                                                    "v-btn",
-                                                    {
-                                                      attrs: { icon: "" },
-                                                      on: {
-                                                        click: _vm.openEdit
-                                                      }
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "v-icon",
-                                                        {
-                                                          attrs: {
-                                                            color:
-                                                              "grey darken-1"
-                                                          }
-                                                        },
-                                                        [_vm._v("edit")]
-                                                      )
-                                                    ],
-                                                    1
-                                                  )
-                                                : _vm._e()
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-btn",
-                                            {
-                                              attrs: { icon: "" },
-                                              on: { click: _vm.openDelete }
-                                            },
-                                            [
-                                              _c(
-                                                "v-icon",
-                                                {
-                                                  attrs: {
-                                                    color: "grey darken-1"
-                                                  }
-                                                },
-                                                [_vm._v("delete")]
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-slide-x-reverse-transition",
-                                    { attrs: { mode: "out-in" } },
-                                    [
-                                      _c(
-                                        "v-toolbar-items",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "show",
-                                              rawName: "v-show",
-                                              value:
-                                                !_vm.media && !_vm.crudmode,
-                                              expression: "!media && !crudmode"
-                                            }
-                                          ]
-                                        },
-                                        [
-                                          _c("v-text-field", {
-                                            staticStyle: {
-                                              margin: "-6px 12px 0 0"
-                                            },
-                                            attrs: {
-                                              color: _vm.$root.theme,
-                                              label: "Search",
-                                              "single-line": "",
-                                              "append-icon": "search"
-                                            },
-                                            model: {
-                                              value: _vm.search,
-                                              callback: function($$v) {
-                                                _vm.search = $$v
-                                              },
-                                              expression: "search"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    ],
-                                    1
+                                    "v-btn",
+                                    {
+                                      attrs: {
+                                        block: "",
+                                        color: "cyan",
+                                        outlined: ""
+                                      },
+                                      on: { click: _vm.signin }
+                                    },
+                                    [_vm._v("login to apps")]
                                   )
                                 ],
                                 1
@@ -26393,270 +14068,72 @@ var render = function() {
                       ])
                     },
                     [
-                      _c("v-toolbar-title", [_vm._v("Document")]),
-                      _vm._v(" "),
-                      _c("v-spacer"),
                       _vm._v(" "),
                       _c(
-                        "v-icon",
-                        {
-                          staticStyle: { margin: "-12px -4px 0 0" },
-                          attrs: { small: "" },
-                          on: { click: _vm.closeDialog }
-                        },
-                        [_vm._v("close")]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-text",
-                    { staticClass: "pa-0" },
-                    [
-                      _c(
-                        "v-slide-x-transition",
-                        { attrs: { mode: "in-out" } },
+                        "v-layout",
+                        { attrs: { wrap: "" } },
                         [
                           _c(
-                            "div",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.media,
-                                  expression: "media"
-                                }
-                              ],
-                              staticClass: "v-card__content py-3 px-4 mt-1"
-                            },
+                            "v-flex",
+                            { attrs: { xs12: "" } },
                             [
-                              _c(
-                                "div",
-                                { staticClass: "v-card__uploader" },
-                                [
-                                  _c(
-                                    "v-slide-x-transition",
-                                    { attrs: { mode: "in-out" } },
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "show",
-                                              rawName: "v-show",
-                                              value: !_vm.progress,
-                                              expression: "!progress"
-                                            }
-                                          ],
-                                          staticClass:
-                                            "v-card__uploader--button text-uppercase font-weight-medium",
-                                          class: _vm.$root.theme,
-                                          attrs: { id: _vm.uuid }
-                                        },
-                                        [
-                                          _c("small", [
-                                            _vm._v("choose a file to upload")
-                                          ])
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "v-slide-x-reverse-transition",
-                                    { attrs: { mode: "in-out" } },
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "show",
-                                              rawName: "v-show",
-                                              value: _vm.progress,
-                                              expression: "progress"
-                                            }
-                                          ],
-                                          staticClass:
-                                            "v-card__uploader--progress"
-                                        },
-                                        [
-                                          _c("v-progress-linear", {
-                                            attrs: {
-                                              indeterminate: _vm.combined,
-                                              color: _vm.$root.theme
-                                            },
-                                            model: {
-                                              value: _vm.uplvalue,
-                                              callback: function($$v) {
-                                                _vm.uplvalue = $$v
-                                              },
-                                              expression: "uplvalue"
-                                            }
-                                          })
-                                        ],
-                                        1
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            ]
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-slide-x-reverse-transition",
-                        { attrs: { mode: "in-out" } },
-                        [
-                          _c(
-                            "div",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: !_vm.media,
-                                  expression: "!media"
-                                }
-                              ],
-                              staticClass: "v-card__content pa-0 mt-1"
-                            },
-                            [
-                              _c("v-data-table", {
+                              _c("v-text-field", {
                                 attrs: {
-                                  headers: _vm.headers,
-                                  items: _vm.documents,
-                                  "total-items": _vm.totalDocuments,
-                                  loading: _vm.loading,
-                                  "select-all": "",
-                                  "hide-actions": ""
+                                  color: "cyan",
+                                  label: "Username",
+                                  "prepend-inner-icon": "mail_outline",
+                                  autocomplete: "off",
+                                  "hide-details": "",
+                                  "single-line": ""
                                 },
-                                scopedSlots: _vm._u([
-                                  {
-                                    key: "items",
-                                    fn: function(props) {
-                                      return [
-                                        _c(
-                                          "tr",
-                                          {
-                                            attrs: { active: props.selected },
-                                            on: {
-                                              click: function($event) {
-                                                props.selected = !props.selected
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _c(
-                                              "td",
-                                              [
-                                                _c("v-checkbox", {
-                                                  attrs: {
-                                                    "input-value":
-                                                      props.selected,
-                                                    primary: "",
-                                                    "hide-details": ""
-                                                  }
-                                                })
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(_vm._s(props.item.name))
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm.formatBytes(
-                                                    props.item.byte
-                                                  )
-                                                )
-                                              )
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(_vm._s(props.item.extn))
-                                            ]),
-                                            _vm._v(" "),
-                                            _c("td", [
-                                              _vm._v(
-                                                _vm._s(props.item.updated_at)
-                                              )
-                                            ])
-                                          ]
-                                        )
-                                      ]
-                                    }
-                                  }
-                                ]),
                                 model: {
-                                  value: _vm.selected,
+                                  value: _vm.login.username,
                                   callback: function($$v) {
-                                    _vm.selected = $$v
+                                    _vm.$set(_vm.login, "username", $$v)
                                   },
-                                  expression: "selected"
+                                  expression: "login.username"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { staticClass: "mt-4", attrs: { xs12: "" } },
+                            [
+                              _c("v-text-field", {
+                                attrs: {
+                                  "append-icon": _vm.showtext
+                                    ? "visibility"
+                                    : "visibility_off",
+                                  type: _vm.showtext ? "text" : "password",
+                                  color: "cyan",
+                                  label: "Password",
+                                  "prepend-inner-icon": "lock_open",
+                                  autocomplete: "off",
+                                  "hide-details": "",
+                                  "single-line": ""
+                                },
+                                on: {
+                                  "click:append": function($event) {
+                                    _vm.showtext = !_vm.showtext
+                                  }
+                                },
+                                model: {
+                                  value: _vm.login.userpass,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.login, "userpass", $$v)
+                                  },
+                                  expression: "login.userpass"
                                 }
                               })
                             ],
                             1
                           )
-                        ]
+                        ],
+                        1
                       )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-divider"),
-                  _vm._v(" "),
-                  _c(
-                    "v-card-actions",
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: {
-                            flat: "",
-                            color: _vm.$root.theme,
-                            disabled: _vm.disabledSelect
-                          },
-                          on: { click: _vm.emitDocument }
-                        },
-                        [_vm._v("select")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-btn",
-                        {
-                          attrs: { flat: "", color: "grey" },
-                          on: { click: _vm.closeDialog }
-                        },
-                        [_vm._v("cancel")]
-                      ),
-                      _vm._v(" "),
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _vm.media === false && _vm.loadMore
-                        ? _c(
-                            "v-btn",
-                            {
-                              attrs: {
-                                color: _vm.$root.theme,
-                                outline: "",
-                                small: ""
-                              },
-                              on: { click: _vm.fetchDocument }
-                            },
-                            [_c("small", [_vm._v("load more")])]
-                          )
-                        : _vm._e()
                     ],
                     1
                   )
@@ -26668,10 +14145,57 @@ var render = function() {
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { color: _vm.snackbar.color },
+          model: {
+            value: _vm.snackbar.state,
+            callback: function($$v) {
+              _vm.$set(_vm.snackbar, "state", $$v)
+            },
+            expression: "snackbar.state"
+          }
+        },
+        [
+          _vm._v("\n        " + _vm._s(_vm.snackbar.text) + "\n        "),
+          _c(
+            "v-btn",
+            { attrs: { dark: "", text: "" }, on: { click: _vm.snackbarClose } },
+            [_vm._v("Tutup")]
+          )
+        ],
+        1
       )
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/project/Home/index.vue?vue&type=template&id=a80f8dd0&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/pages/project/Home/index.vue?vue&type=template&id=a80f8dd0& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -26697,9 +14221,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "v-header" },
+    {
+      staticClass: "v-page__header",
+      class: { absolute: _vm.absolute, mobile: _vm.$vuetify.breakpoint.xsOnly }
+    },
     [
-      _c("v-scale-transition", [
+      _c("v-fade-transition", [
         _c(
           "div",
           {
@@ -26707,36 +14234,72 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.search.state,
-                expression: "search.state"
+                value: _vm.toolbar.search,
+                expression: "toolbar.search"
               }
             ],
-            staticClass: "v-search"
+            key: "search",
+            staticClass: "v-page__header--search"
           },
           [
             _c(
               "v-toolbar",
-              {
-                staticClass: "v-toolbar--search",
-                attrs: { card: "", absolute: "", flat: "", color: "white" }
-              },
+              { staticClass: "no-shadow", attrs: { flat: "" } },
               [
-                _c("input", {
-                  ref: "input",
-                  staticClass: "headline font-weight-light",
-                  attrs: { type: "text", placeholder: "Search" },
-                  on: { input: _vm.bouncing }
-                }),
-                _vm._v(" "),
-                _c("v-spacer"),
+                _c("v-scale-transition", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.toolbar.search,
+                        expression: "toolbar.search"
+                      },
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.searchText,
+                        expression: "searchText"
+                      }
+                    ],
+                    key: "text-search",
+                    ref: "input",
+                    staticClass: "headline font-weight-light",
+                    attrs: { type: "text", placeholder: "Search" },
+                    domProps: { value: _vm.searchText },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.searchText = $event.target.value
+                      }
+                    }
+                  })
+                ]),
                 _vm._v(" "),
                 _c(
-                  "v-btn",
-                  {
-                    attrs: { color: _vm.$root.theme, flat: "", icon: "" },
-                    on: { click: _vm.closeSearch }
-                  },
-                  [_c("v-icon", [_vm._v("close")])],
+                  "v-scale-transition",
+                  [
+                    _c(
+                      "v-btn",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.toolbar.search,
+                            expression: "toolbar.search"
+                          }
+                        ],
+                        key: "close-search",
+                        attrs: { icon: "", color: _vm.$root.theme },
+                        on: { click: _vm.searchClose }
+                      },
+                      [_c("v-icon", [_vm._v("close")])],
+                      1
+                    )
+                  ],
                   1
                 )
               ],
@@ -26755,47 +14318,37 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.deleted,
-                expression: "deleted"
+                value: _vm.toolbar.delete,
+                expression: "toolbar.delete"
               }
             ],
-            staticClass: "v-delete"
+            key: "deleted",
+            staticClass: "v-page__header--delete"
           },
           [
             _c(
-              "v-toolbar",
+              "v-btn",
               {
-                staticClass: "v-toolbar--delete",
-                attrs: { card: "", absolute: "", flat: "", color: "white" }
+                attrs: { icon: "", color: _vm.$root.theme },
+                on: { click: _vm.deleteClose }
               },
-              [
-                _c(
-                  "v-btn",
-                  {
-                    attrs: { color: _vm.$root.theme, flat: "", icon: "" },
-                    on: { click: _vm.releaseTrash }
-                  },
-                  [_c("v-icon", [_vm._v("close")])],
-                  1
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "title" }, [
-                  _vm._v(_vm._s(_vm.trash.selected.length))
-                ]),
-                _vm._v(" "),
-                _c("v-spacer"),
-                _vm._v(" "),
-                _c(
-                  "v-btn",
-                  {
-                    staticClass: "ma-1",
-                    attrs: { color: _vm.$root.theme, flat: "", icon: "" },
-                    on: { click: _vm.openDelete }
-                  },
-                  [_c("v-icon", [_vm._v("delete")])],
-                  1
-                )
-              ],
+              [_c("v-icon", [_vm._v("close")])],
+              1
+            ),
+            _vm._v(" "),
+            _c("v-toolbar-title", [
+              _vm._v(_vm._s(_vm.table.selected.length + " Selected"))
+            ]),
+            _vm._v(" "),
+            _c("v-spacer"),
+            _vm._v(" "),
+            _c(
+              "v-btn",
+              {
+                attrs: { icon: "", color: _vm.$root.theme },
+                on: { click: _vm.deleteRecord }
+              },
+              [_c("v-icon", [_vm._v("delete")])],
               1
             )
           ],
@@ -26805,158 +14358,168 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-toolbar",
-        {
-          staticClass: "v-toolbar--application",
-          attrs: {
-            absolute: _vm.absolute,
-            fixed: _vm.fixed,
-            card: "",
-            flat: "",
-            color: _vm.color
-          }
-        },
+        { attrs: { flat: "" } },
         [
           _vm._t("navigate", [
-            _c("v-toolbar-side-icon", {
-              on: {
-                click: function($event) {
-                  _vm.$root.navdrawer = !_vm.$root.navdrawer
+            _c(
+              "v-btn",
+              {
+                attrs: { icon: "" },
+                on: {
+                  click: function($event) {
+                    _vm.$root.navdrawer = !_vm.$root.navdrawer
+                  }
                 }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("v-spacer"),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              staticClass: "d-block title",
-              class: { "no--search": !_vm.searchable }
-            },
-            [_vm._v(_vm._s(_vm.page.title))]
-          ),
-          _vm._v(" "),
-          _c("v-spacer"),
-          _vm._v(" "),
-          !_vm.$vuetify.breakpoint.xsOnly && _vm.crud
-            ? [
-                _c(
-                  "v-btn",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: !_vm.disabled.add,
-                        expression: "!disabled.add"
-                      }
+              },
+              [_c("v-icon", [_vm._v("menu")])],
+              1
+            ),
+            _vm._v(" "),
+            _c("v-toolbar-title", [_vm._v(_vm._s(_vm.page.title))]),
+            _vm._v(" "),
+            _c("v-spacer"),
+            _vm._v(" "),
+            !_vm.$vuetify.breakpoint.xsOnly && _vm.crud
+              ? [
+                  _c(
+                    "v-scale-transition",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.disabled.add,
+                              expression: "!disabled.add"
+                            }
+                          ],
+                          key: "newDesktop",
+                          attrs: { icon: "", color: _vm.$root.theme },
+                          on: { click: _vm.newFormOpen }
+                        },
+                        [_c("v-icon", [_vm._v("add")])],
+                        1
+                      )
                     ],
-                    staticClass: "ma-1",
-                    attrs: { color: _vm.$root.theme, flat: "", icon: "" },
-                    on: { click: _vm.openNewForm }
-                  },
-                  [_c("v-icon", [_vm._v("add")])],
-                  1
-                ),
-                _vm._v(" "),
-                _vm._t("default"),
-                _vm._v(" "),
-                _c(
-                  "v-btn",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: !_vm.disabled.edit,
-                        expression: "!disabled.edit"
-                      }
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._t("default"),
+                  _vm._v(" "),
+                  _c(
+                    "v-scale-transition",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.disabled.edit,
+                              expression: "!disabled.edit"
+                            }
+                          ],
+                          key: "edit",
+                          attrs: { icon: "", color: _vm.$root.theme },
+                          on: { click: _vm.editFormOpen }
+                        },
+                        [_c("v-icon", [_vm._v("edit")])],
+                        1
+                      )
                     ],
-                    staticClass: "ma-1",
-                    attrs: { color: _vm.$root.theme, flat: "", icon: "" },
-                    on: { click: _vm.openEditForm }
-                  },
-                  [_c("v-icon", [_vm._v("edit")])],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-btn",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: !_vm.disabled.delete,
-                        expression: "!disabled.delete"
-                      }
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-scale-transition",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.disabled.delete,
+                              expression: "!disabled.delete"
+                            }
+                          ],
+                          key: "trash",
+                          attrs: { icon: "", color: _vm.$root.theme },
+                          on: { click: _vm.trashFormOpen }
+                        },
+                        [_c("v-icon", [_vm._v("delete")])],
+                        1
+                      )
                     ],
-                    staticClass: "ma-1",
-                    attrs: { color: _vm.$root.theme, flat: "", icon: "" },
-                    on: { click: _vm.openDelete }
-                  },
-                  [_c("v-icon", [_vm._v("delete")])],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "v-btn",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: !_vm.disabled.refresh,
-                        expression: "!disabled.refresh"
-                      }
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-scale-transition",
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.disabled.refresh,
+                              expression: "!disabled.refresh"
+                            }
+                          ],
+                          key: "reload",
+                          attrs: { icon: "", color: _vm.$root.theme },
+                          on: { click: _vm.reloadRecord }
+                        },
+                        [_c("v-icon", [_vm._v("refresh")])],
+                        1
+                      )
                     ],
-                    staticClass: "ma-1",
-                    attrs: { color: _vm.$root.theme, flat: "", icon: "" },
-                    on: { click: _vm.refresh }
-                  },
-                  [_c("v-icon", [_vm._v("refresh")])],
-                  1
-                )
-              ]
-            : !_vm.$vuetify.breakpoint.xsOnly && !_vm.crud
-            ? [_vm._t("default")]
-            : _vm.$vuetify.breakpoint.xsOnly && _vm.crud
-            ? [
-                _c(
-                  "v-btn",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: !_vm.disabled.add,
-                        expression: "!disabled.add"
-                      }
-                    ],
-                    staticClass: "ma-1",
-                    attrs: { color: _vm.$root.theme, flat: "", icon: "" },
-                    on: { click: _vm.openNewForm }
-                  },
-                  [_c("v-icon", [_vm._v("add")])],
-                  1
-                ),
-                _vm._v(" "),
-                _vm._t("default")
-              ]
-            : _vm._t("default"),
-          _vm._v(" "),
-          _vm.searchable
-            ? _c(
-                "v-btn",
-                {
-                  attrs: { color: _vm.$root.theme, flat: "", icon: "" },
-                  on: { click: _vm.openSearch }
-                },
-                [_c("v-icon", [_vm._v("search")])],
-                1
-              )
-            : _vm._e()
+                    1
+                  )
+                ]
+              : !_vm.$vuetify.breakpoint.xsOnly && !_vm.crud
+              ? [_vm._t("default")]
+              : _vm.$vuetify.breakpoint.xsOnly && _vm.crud
+              ? [
+                  _c(
+                    "v-btn",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: !_vm.disabled.add,
+                          expression: "!disabled.add"
+                        }
+                      ],
+                      key: "newMobile",
+                      attrs: { icon: "", color: _vm.$root.theme },
+                      on: { click: _vm.newFormOpen }
+                    },
+                    [_c("v-icon", [_vm._v("add")])],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._t("default")
+                ]
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "v-btn",
+              {
+                attrs: { icon: "", color: _vm.$root.theme },
+                on: { click: _vm.searchOpen }
+              },
+              [_c("v-icon", [_vm._v("search")])],
+              1
+            )
+          ])
         ],
         2
       )
@@ -26971,123 +14534,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuAccount/index.vue?vue&type=template&id=2c515746&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/MenuAccount/index.vue?vue&type=template&id=2c515746& ***!
-  \*****************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-list",
-    { staticClass: "v-list--more" },
-    [
-      _c(
-        "v-list-tile",
-        {
-          attrs: {
-            "active-class": _vm.$root.theme + "--text",
-            to: { name: "profile" }
-          }
-        },
-        [
-          _c(
-            "v-list-tile-action",
-            [_c("v-icon", [_vm._v("perm_contact_calendar")])],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-list-tile-content",
-            [_c("v-list-tile-title", [_vm._v("Profile")])],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "v-list-tile",
-        {
-          attrs: {
-            "active-class": _vm.$root.theme + "--text",
-            to: { name: "password" }
-          }
-        },
-        [
-          _c("v-list-tile-action", [_c("v-icon", [_vm._v("lock")])], 1),
-          _vm._v(" "),
-          _c(
-            "v-list-tile-content",
-            [_c("v-list-tile-title", [_vm._v("Katasandi")])],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _vm.$auth.authent === "administrator"
-        ? _c(
-            "v-list-tile",
-            {
-              attrs: {
-                "active-class": _vm.$root.theme + "--text",
-                to: { name: "setting" }
-              }
-            },
-            [
-              _c("v-list-tile-action", [_c("v-icon", [_vm._v("settings")])], 1),
-              _vm._v(" "),
-              _c(
-                "v-list-tile-content",
-                [_c("v-list-tile-title", [_vm._v("Setting")])],
-                1
-              )
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "v-list-tile",
-        {
-          attrs: { "active-class": _vm.$root.theme + "--text" },
-          on: { click: _vm.signout }
-        },
-        [
-          _c("v-list-tile-action", [_c("v-icon", [_vm._v("exit_to_app")])], 1),
-          _vm._v(" "),
-          _c(
-            "v-list-tile-content",
-            [_c("v-list-tile-title", [_vm._v("Keluar")])],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuApplication/index.vue?vue&type=template&id=35a8cd40&":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/MenuApplication/index.vue?vue&type=template&id=35a8cd40& ***!
-  \*********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuApps/index.vue?vue&type=template&id=47afc850&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/MenuApps/index.vue?vue&type=template&id=47afc850& ***!
+  \**************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -27113,17 +14563,38 @@ var render = function() {
     },
     [
       _c(
-        "v-toolbar",
-        { attrs: { flat: "", color: "white" } },
+        "v-img",
+        {
+          class: _vm.$root.theme + " lighten-3",
+          attrs: { "aspect-ratio": 16 / 9, src: _vm.image }
+        },
         [
           _c(
-            "v-list",
-            { staticClass: "v-list--user" },
+            "v-layout",
+            {
+              staticClass: "lightbox white",
+              class: _vm.$root.theme + "--text",
+              attrs: { column: "", "fill-height": "" }
+            },
             [
+              _c("v-spacer"),
+              _vm._v(" "),
               _c(
-                "v-list-tile",
+                "v-avatar",
                 {
-                  attrs: { avatar: "" },
+                  staticClass: "ml-4 mb-3 elevation-2",
+                  attrs: { size: "56", color: "white" }
+                },
+                [_c("v-img", { attrs: { src: "/images/photo-holder.png" } })],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "v-flex",
+                {
+                  staticClass: "v-user px-4 py-2 white--text",
+                  class: { expand: _vm.expand },
+                  attrs: { shrink: "" },
                   on: {
                     click: function($event) {
                       _vm.expand = !_vm.expand
@@ -27131,52 +14602,29 @@ var render = function() {
                   }
                 },
                 [
-                  _c(
-                    "v-list-tile-avatar",
-                    [
-                      _vm.user.avatar
-                        ? _c("img", { attrs: { src: _vm.user.avatar } })
-                        : _c(
-                            "v-icon",
-                            { staticClass: "grey darken-1 white--text" },
-                            [_vm._v("perm_identity")]
-                          )
-                    ],
-                    1
-                  ),
+                  _c("div", { staticClass: "v-user__content" }, [
+                    _c(
+                      "div",
+                      { staticClass: "font-weight-medium line-height1" },
+                      [_vm._v(_vm._s(_vm.auth.user.name))]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "body-2" }, [
+                      _vm._v(_vm._s(_vm.auth.user.email))
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c(
-                    "v-list-tile-content",
+                    "div",
+                    { staticClass: "v-user__action" },
                     [
-                      _c(
-                        "v-list-tile-title",
-                        { staticClass: "font-weight-medium" },
-                        [_vm._v(_vm._s(_vm.user.name))]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "v-list-tile-sub-title",
-                        { staticClass: "caption f-nunito line-height1" },
-                        [_vm._v(_vm._s(_vm.user.email))]
-                      )
+                      _c("v-icon", { attrs: { dark: "" } }, [
+                        _vm._v("arrow_drop_down")
+                      ])
                     ],
                     1
-                  ),
-                  _vm._v(" "),
-                  !_vm.$vuetify.breakpoint.xsOnly
-                    ? _c(
-                        "v-list-tile-action",
-                        { class: { expand: _vm.expand } },
-                        [
-                          _c("v-icon", { attrs: { color: "grey lighten-1" } }, [
-                            _vm._v("keyboard_arrow_down")
-                          ])
-                        ],
-                        1
-                      )
-                    : _vm._e()
-                ],
-                1
+                  )
+                ]
               )
             ],
             1
@@ -27185,625 +14633,221 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm.$vuetify.breakpoint.xsOnly
-        ? [_c("v-menu-account")]
-        : [
-            _c("v-expand-transition", [
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.expand,
-                      expression: "expand"
-                    }
-                  ],
-                  staticClass: "more__wrap"
-                },
-                [_c("v-menu-account"), _vm._v(" "), _c("v-divider")],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "v-list",
-              { staticClass: "v-list--main" },
-              [
-                _vm._l(_vm.menus, function(menu, index) {
-                  return [
-                    menu.type === "item"
-                      ? _c(
-                          "v-list-tile",
+      _c(
+        "v-list",
+        [
+          _c("v-expand-transition", [
+            !_vm.$vuetify.breakpoint.xsOnly
+              ? _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.expand,
+                        expression: "expand"
+                      }
+                    ],
+                    staticClass: "v-user__menu"
+                  },
+                  [
+                    _c(
+                      "v-list",
+                      [
+                        _c(
+                          "v-list-item",
                           {
                             attrs: {
                               "active-class": _vm.$root.theme + "--text",
-                              to: menu.to
+                              to: { name: "profile" }
                             }
                           },
                           [
                             _c(
-                              "v-list-tile-action",
-                              [_c("v-icon", [_vm._v(_vm._s(menu.icon))])],
+                              "v-list-item-action",
+                              [_c("v-icon", [_vm._v("perm_identity")])],
                               1
                             ),
                             _vm._v(" "),
                             _c(
-                              "v-list-tile-content",
+                              "v-list-item-content",
+                              [_c("v-list-item-title", [_vm._v("Profile")])],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-item",
+                          {
+                            attrs: {
+                              "active-class": _vm.$root.theme + "--text",
+                              to: { name: "password" }
+                            }
+                          },
+                          [
+                            _c(
+                              "v-list-item-action",
+                              [_c("v-icon", [_vm._v("lock")])],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-item-content",
+                              [_c("v-list-item-title", [_vm._v("Katasandi")])],
+                              1
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _vm.auth.authent === "administrator"
+                          ? _c(
+                              "v-list-item",
+                              {
+                                attrs: {
+                                  "active-class": _vm.$root.theme + "--text",
+                                  to: { name: "setting" }
+                                }
+                              },
                               [
-                                _c("v-list-tile-title", [
-                                  _vm._v(_vm._s(menu.text))
-                                ])
+                                _c(
+                                  "v-list-item-action",
+                                  [_c("v-icon", [_vm._v("settings")])],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "v-list-item-content",
+                                  [
+                                    _c("v-list-item-title", [_vm._v("Setting")])
+                                  ],
+                                  1
+                                )
                               ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c(
+                          "v-list-item",
+                          {
+                            attrs: {
+                              "active-class": _vm.$root.theme + "--text"
+                            },
+                            on: { click: _vm.signout }
+                          },
+                          [
+                            _c(
+                              "v-list-item-action",
+                              [_c("v-icon", [_vm._v("exit_to_app")])],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "v-list-item-content",
+                              [_c("v-list-item-title", [_vm._v("Keluar")])],
                               1
                             )
                           ],
                           1
                         )
-                      : menu.type === "divider"
-                      ? _c("v-divider", { class: menu.class })
-                      : menu.type === "subheader"
-                      ? _c(
-                          "v-subheader",
-                          { staticClass: "text-uppercase", class: menu.class },
-                          [_vm._v(_vm._s(menu.text))]
-                        )
-                      : _c(
-                          "v-list-group",
-                          { attrs: { "prepend-icon": menu.icon } },
-                          [
-                            _c(
-                              "v-list-tile",
-                              {
-                                attrs: { slot: "activator" },
-                                slot: "activator"
-                              },
-                              [
-                                _c("v-list-tile-title", [
-                                  _vm._v(_vm._s(menu.text))
-                                ])
-                              ],
-                              1
-                            ),
-                            _vm._v(" "),
-                            _vm._l(menu.items, function(item, index) {
-                              return [
-                                _c(
-                                  "v-list-tile",
-                                  { attrs: { to: item.to } },
-                                  [
-                                    _c(
-                                      "v-list-tile-action",
-                                      [
-                                        _c("v-icon", [
-                                          _vm._v(_vm._s(item.icon))
-                                        ])
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "v-list-tile-content",
-                                      [
-                                        _c("v-list-tile-title", [
-                                          _vm._v(_vm._s(item.text))
-                                        ])
-                                      ],
-                                      1
-                                    )
-                                  ],
-                                  1
-                                )
-                              ]
-                            })
-                          ],
-                          2
-                        )
-                  ]
-                })
-              ],
-              2
-            )
-          ]
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageForm/index.vue?vue&type=template&id=2b5b98da&":
-/*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/PageForm/index.vue?vue&type=template&id=2b5b98da& ***!
-  \**************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-dialog",
-    {
-      attrs: { transition: _vm.transition, "hide-overlay": "", fullscreen: "" },
-      model: {
-        value: _vm.form.state,
-        callback: function($$v) {
-          _vm.$set(_vm.form, "state", $$v)
-        },
-        expression: "form.state"
-      }
-    },
-    [
-      _vm.$vuetify.breakpoint.xsOnly
-        ? _c(
-            "v-card",
-            { attrs: { height: "100%", flat: "" } },
-            [
-              _c(
-                "v-toolbar",
-                { attrs: { color: "white", card: "", flat: "" } },
-                [
-                  _c(
-                    "v-btn",
-                    { attrs: { icon: "" }, on: { click: _vm.closeForm } },
-                    [_c("v-icon", [_vm._v("arrow_back")])],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "d-block title" }, [
-                    _vm._v(_vm._s(_vm.page.title))
-                  ]),
-                  _vm._v(" "),
-                  _c("v-spacer"),
-                  _vm._v(" "),
-                  _c(
-                    "v-btn",
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("v-divider")
+                  ],
+                  1
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.menus, function(menu, index) {
+            return [
+              menu.type === "item"
+                ? _c(
+                    "v-list-item",
                     {
-                      attrs: { icon: "", color: _vm.$root.theme, flat: "" },
-                      on: { click: _vm.submitForm }
-                    },
-                    [_c("v-icon", [_vm._v("done")])],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-container",
-                { attrs: { "grid-list-xs": "" } },
-                [
-                  _c(
-                    "v-layout",
-                    { attrs: { wrap: "" } },
-                    [_vm._t("default")],
-                    2
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        : _c(
-            "v-card",
-            { class: _vm.$root.theme + " lighten-5", attrs: { flat: "" } },
-            [
-              _c(
-                "v-toolbar",
-                {
-                  attrs: {
-                    color: _vm.$root.theme + " lighten-4",
-                    extended: "",
-                    flat: ""
-                  }
-                },
-                [
-                  _c(
-                    "v-btn",
-                    { attrs: { icon: "" }, on: { click: _vm.closeForm } },
-                    [_c("v-icon", [_vm._v("close")])],
-                    1
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "v-layout",
-                { attrs: { row: "", "pb-2": "" } },
-                [
-                  _c(
-                    "v-flex",
-                    {
+                      key: index,
                       attrs: {
-                        xs8: !_vm.small,
-                        "offset-xs2": !_vm.small,
-                        xs6: _vm.small,
-                        "offset-xs3": _vm.small
+                        "active-class": _vm.$root.theme + "--text",
+                        to: menu.to
                       }
                     },
                     [
                       _c(
-                        "v-widget",
-                        {
-                          staticStyle: { "margin-top": "-56px !important" },
-                          attrs: { form: "" }
-                        },
-                        [
-                          _c(
-                            "v-container",
-                            {
-                              staticClass: "px-0 pb-0 pt-2",
-                              attrs: { "grid-list-lg": "" }
-                            },
-                            [
-                              _c(
-                                "v-layout",
-                                { attrs: { wrap: "" } },
-                                [_vm._t("default")],
-                                2
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "v-card-actions",
-                            { attrs: { slot: "actions" }, slot: "actions" },
-                            [
-                              _c("v-spacer"),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { color: _vm.$root.theme, flat: "" },
-                                  on: { click: _vm.submitForm }
-                                },
-                                [_vm._v(_vm._s(_vm.submitName))]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "v-btn",
-                                {
-                                  attrs: { color: _vm.$root.theme, flat: "" },
-                                  on: { click: _vm.closeForm }
-                                },
-                                [_vm._v(_vm._s(_vm.cancelName))]
-                              )
-                            ],
-                            1
-                          )
-                        ],
+                        "v-list-item-action",
+                        [_c("v-icon", [_vm._v(_vm._s(menu.icon))])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-list-item-content",
+                        [_c("v-list-item-title", [_vm._v(_vm._s(menu.text))])],
                         1
                       )
                     ],
                     1
                   )
-                ],
-                1
-              )
-            ],
-            1
-          )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageList/index.vue?vue&type=template&id=0d229798&":
-/*!**************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/PageList/index.vue?vue&type=template&id=0d229798& ***!
-  \**************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-list",
-    { staticClass: "v-list--table", attrs: { "two-line": "", subheader: "" } },
-    [
-      _vm._l(_vm.records, function(record, index) {
-        return [
-          _c(
-            "v-list-tile",
-            {
-              directives: [
-                {
-                  name: "press",
-                  rawName: "v-press",
-                  value: function() {
-                    return _vm.pressListItem(record)
-                  },
-                  expression: "() => pressListItem(record)"
-                }
-              ],
-              attrs: { avatar: "" },
-              on: {
-                click: function($event) {
-                  return _vm.openEditForm(record)
-                }
-              }
-            },
-            [_vm._t("default", null, { item: record, index: index })],
-            2
-          ),
-          _vm._v(" "),
-          _c("v-divider", { attrs: { inset: "" } })
-        ]
-      })
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageTable/index.vue?vue&type=template&id=7078a264&":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/PageTable/index.vue?vue&type=template&id=7078a264& ***!
-  \***************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-widget",
-    { attrs: { table: "" } },
-    [
-      _c(
-        "v-data-table",
-        {
-          attrs: {
-            headers: _vm.headers,
-            items: _vm.records,
-            pagination: _vm.table.paging,
-            "total-items": _vm.table.total,
-            "rows-per-page-items": _vm.table.page,
-            loading: _vm.table.loader,
-            "select-all": ""
-          },
-          on: {
-            "update:pagination": function($event) {
-              return _vm.$set(_vm.table, "paging", $event)
-            }
-          },
-          scopedSlots: _vm._u(
-            [
-              {
-                key: "items",
-                fn: function(props) {
-                  return [
-                    _c(
-                      "tr",
-                      {
-                        attrs: { active: props.selected },
-                        on: {
-                          click: function($event) {
-                            props.selected = !props.selected
-                          }
-                        }
-                      },
-                      [
-                        _c(
-                          "td",
-                          [
-                            _c("v-checkbox", {
-                              attrs: {
-                                "input-value": props.selected,
-                                primary: "",
-                                "hide-details": ""
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _vm._t("default", null, {
-                          item: props.item,
-                          index: props.index
-                        })
-                      ],
-                      2
-                    )
-                  ]
-                }
-              }
-            ],
-            null,
-            true
-          ),
-          model: {
-            value: _vm.table.selected,
-            callback: function($$v) {
-              _vm.$set(_vm.table, "selected", $$v)
-            },
-            expression: "table.selected"
-          }
-        },
-        [
-          _c("v-progress-linear", {
-            attrs: {
-              slot: "progress",
-              color: "teal",
-              height: "1",
-              indeterminate: ""
-            },
-            slot: "progress"
-          }),
-          _vm._v(" "),
-          _vm._v(" "),
-          _c("template", { slot: "no-data" }, [
-            _c(
-              "div",
-              { staticClass: "v-datatable__message" },
-              [
-                _c("v-icon", [_vm._v("sms_failed")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "v-datatable__text" }, [
-                  _vm._v(_vm._s(_vm.table.message))
-                ])
-              ],
-              1
-            )
-          ])
+                : menu.type === "divider"
+                ? _c("v-divider", { key: index, class: menu.class })
+                : menu.type === "subheader"
+                ? _c(
+                    "v-subheader",
+                    {
+                      key: index,
+                      staticClass: "text-uppercase",
+                      class: menu.class
+                    },
+                    [_vm._v(_vm._s(menu.text))]
+                  )
+                : _c(
+                    "v-list-group",
+                    { key: index, attrs: { "prepend-icon": menu.icon } },
+                    [
+                      _c(
+                        "v-list-item",
+                        { attrs: { slot: "activator" }, slot: "activator" },
+                        [_c("v-list-item-title", [_vm._v(_vm._s(menu.text))])],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _vm._l(menu.items, function(item, idx) {
+                        return [
+                          _c(
+                            "v-list-item",
+                            { key: idx, attrs: { to: item.to } },
+                            [
+                              _c(
+                                "v-list-item-action",
+                                [_c("v-icon", [_vm._v(_vm._s(item.icon))])],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "v-list-item-content",
+                                [
+                                  _c("v-list-item-title", [
+                                    _vm._v(_vm._s(item.text))
+                                  ])
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      })
+                    ],
+                    2
+                  )
+            ]
+          })
         ],
         2
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageTrash/index.vue?vue&type=template&id=64f6ac90&":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/PageTrash/index.vue?vue&type=template&id=64f6ac90& ***!
-  \***************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-dialog",
-    {
-      attrs: { "max-width": "332px", persistent: "" },
-      model: {
-        value: _vm.trash.state,
-        callback: function($$v) {
-          _vm.$set(_vm.trash, "state", $$v)
-        },
-        expression: "trash.state"
-      }
-    },
-    [
-      _c(
-        "v-card",
-        {
-          staticClass: "v-card--widget mt-4 mx-auto",
-          staticStyle: { "border-radius": "4px" },
-          attrs: { elevation: "0" }
-        },
-        [
-          _c(
-            "v-sheet",
-            {
-              staticClass: "v-sheet--offset py-3 px-3 mx-auto",
-              attrs: {
-                elevation: "0",
-                color: "deep-orange",
-                "max-width": "calc(100% - 32px)"
-              }
-            },
-            [
-              _c(
-                "span",
-                {
-                  staticClass:
-                    "d-block title font-weight-regular mb-2 white--text"
-                },
-                [_vm._v(_vm._s("Hapus " + _vm.trashCount + " data?"))]
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  staticClass:
-                    "d-block f-nunito caption font-weight-regular text-uppercase white--text"
-                },
-                [_vm._v("konfirmasi penghapusan data.")]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "v-card-text",
-            { staticClass: "px-3", staticStyle: { "text-align": "justify" } },
-            [
-              _c("span", { staticClass: "subheading font-weight-light" }, [
-                _vm._v(
-                  "\n                Menghapus data ini juga akan menghapus semua data yang terhubung dengan ini. Anda tidak dapat membatalkan ini.\n            "
-                )
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "v-card-actions",
-            [
-              _c("v-spacer"),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { color: _vm.$root.theme, flat: "" },
-                  on: { click: _vm.postDelete }
-                },
-                [_vm._v(_vm._s(_vm.submitName))]
-              ),
-              _vm._v(" "),
-              _c(
-                "v-btn",
-                {
-                  attrs: { color: _vm.$root.theme, flat: "" },
-                  on: { click: _vm.closeDelete }
-                },
-                [_vm._v(_vm._s(_vm.cancelName))]
-              )
-            ],
-            1
-          )
-        ],
-        1
       )
     ],
     1
@@ -27834,43 +14878,43 @@ var render = function() {
   return _c(
     "v-card",
     {
-      staticClass: "v-card--widget mt-4 mx-auto",
+      staticClass: "v-card--widget mt-6 mx-auto",
       staticStyle: { "border-radius": "4px" },
-      attrs: { elevation: "0" }
+      attrs: { elevation: _vm.elevation, width: _vm.width }
     },
     [
       _c(
         "v-sheet",
         {
           staticClass: "v-sheet--offset py-3 mx-auto",
-          class: _vm.dynPX,
-          attrs: {
-            elevation: "0",
-            color: _vm.$root.theme,
-            "max-width": _vm.dynCalc
-          }
+          class: _vm.dynClass,
+          attrs: { elevation: "0", color: _vm.color, "max-width": _vm.dynWidth }
         },
         [
-          _c(
-            "span",
-            {
-              staticClass: "d-block title font-weight-regular mb-2 white--text"
-            },
-            [_vm._v(_vm._s(_vm.title))]
-          ),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              staticClass:
-                "d-block f-nunito caption font-weight-regular text-uppercase white--text"
-            },
-            [_vm._v(_vm._s(_vm.subtitle))]
-          )
-        ]
+          _vm._t("header", [
+            _c(
+              "span",
+              {
+                staticClass:
+                  "d-block title font-weight-regular mb-2 white--text"
+              },
+              [_vm._v(_vm._s(_vm.title))]
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass:
+                  "d-block f-nunito caption font-weight-regular text-uppercase white--text"
+              },
+              [_vm._v(_vm._s(_vm.subtitle))]
+            )
+          ])
+        ],
+        2
       ),
       _vm._v(" "),
-      _c("v-card-text", { class: _vm.dynPX }, [_vm._t("default")], 2),
+      _c("v-card-text", { class: _vm.dynClass }, [_vm._t("default")], 2),
       _vm._v(" "),
       _vm._t("actions")
     ],
@@ -31800,35 +18844,26 @@ var bugsnagKey = '0b8e3f0b2f226634167a4551f01faa22';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
-/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mixins_AuthProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mixins/AuthProvider */ "./resources/apps/mixins/AuthProvider.js");
-/* harmony import */ var vuetify_es5_util_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuetify/es5/util/helpers */ "./node_modules/vuetify/es5/util/helpers.js");
-/* harmony import */ var vuetify_es5_util_helpers__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vuetify_es5_util_helpers__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _parts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./parts */ "./resources/apps/parts/index.js");
-/* harmony import */ var hammerjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! hammerjs */ "./node_modules/hammerjs/hammer.js");
-/* harmony import */ var hammerjs__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(hammerjs__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _pages_Apps_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Apps.vue */ "./resources/apps/pages/Apps.vue");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./routes */ "./resources/apps/routes/index.js");
-/* harmony import */ var _mixins_DataProvider__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./mixins/DataProvider */ "./resources/apps/mixins/DataProvider.js");
+/* harmony import */ var _parts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./parts */ "./resources/apps/parts/index.js");
+/* harmony import */ var hammerjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! hammerjs */ "./node_modules/hammerjs/hammer.js");
+/* harmony import */ var hammerjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(hammerjs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _pages_Apps_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Apps.vue */ "./resources/apps/pages/Apps.vue");
+/* harmony import */ var _plugin_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./plugin/router */ "./resources/apps/plugin/router.js");
+/* harmony import */ var _plugin_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./plugin/store */ "./resources/apps/plugin/store.js");
+/* harmony import */ var _plugin_vuetify__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./plugin/vuetify */ "./resources/apps/plugin/vuetify.js");
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false; // import component
 
 
+Object.keys(_parts__WEBPACK_IMPORTED_MODULE_1__).forEach(function (part) {
+  vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_parts__WEBPACK_IMPORTED_MODULE_1__[part].name, _parts__WEBPACK_IMPORTED_MODULE_1__[part]);
+}); // add press directive
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_mixins_AuthProvider__WEBPACK_IMPORTED_MODULE_2__["AuthProvider"]);
-
-var dialogMove = Object(vuetify_es5_util_helpers__WEBPACK_IMPORTED_MODULE_3__["createSimpleTransition"])('dialog-move-transition');
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('dialog-move-transition', dialogMove);
-
-Object.keys(_parts__WEBPACK_IMPORTED_MODULE_4__).forEach(function (part) {
-  vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(_parts__WEBPACK_IMPORTED_MODULE_4__[part].name, _parts__WEBPACK_IMPORTED_MODULE_4__[part]);
-});
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('press', {
   bind: function bind(el, binding) {
     if (typeof binding.value === 'function') {
-      var mc = new hammerjs__WEBPACK_IMPORTED_MODULE_5___default.a(el);
+      var mc = new hammerjs__WEBPACK_IMPORTED_MODULE_2___default.a(el);
       mc.get('press').set({
         time: 1000
       });
@@ -31839,27 +18874,22 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('press', {
 
 
 
+
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  router: _routes__WEBPACK_IMPORTED_MODULE_7__["default"],
-  store: _mixins_DataProvider__WEBPACK_IMPORTED_MODULE_8__["default"],
+  router: _plugin_router__WEBPACK_IMPORTED_MODULE_4__["default"],
+  store: _plugin_store__WEBPACK_IMPORTED_MODULE_5__["default"],
+  vuetify: _plugin_vuetify__WEBPACK_IMPORTED_MODULE_6__["default"],
   data: function data() {
     return {
       theme: null,
       navdrawer: false
     };
   },
-  beforeCreate: function beforeCreate() {
-    var _this = this;
-
-    this.$nextTick(function () {
-      _this.navdrawer = _this.$vuetify.breakpoint.name === 'lg' || _this.$vuetify.breakpoint.name === 'xl';
-    });
-  },
   created: function created() {
-    this.$store.commit('setAuth', this.$auth);
+    this.navdrawer = this.$vuetify.breakpoint.name === 'lg' || this.$vuetify.breakpoint.name === 'xl';
   },
   render: function render(h) {
-    return h(_pages_Apps_vue__WEBPACK_IMPORTED_MODULE_6__["default"]);
+    return h(_pages_Apps_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
   }
 }).$mount('#monoland');
 
@@ -31869,20 +18899,16 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*!***********************************************!*\
   !*** ./resources/apps/mixins/AuthProvider.js ***!
   \***********************************************/
-/*! exports provided: Auth, AuthProvider */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Auth", function() { return Auth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthProvider", function() { return AuthProvider; });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var crypto_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! crypto-js */ "./node_modules/crypto-js/index.js");
-/* harmony import */ var crypto_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(crypto_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var secure_web_storage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! secure-web-storage */ "./node_modules/secure-web-storage/secure-storage.js");
-/* harmony import */ var secure_web_storage__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(secure_web_storage__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _apps_env_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @apps/.env.js */ "./resources/apps/.env.js");
+/* harmony import */ var crypto_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! crypto-js */ "./node_modules/crypto-js/index.js");
+/* harmony import */ var crypto_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(crypto_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var secure_web_storage__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! secure-web-storage */ "./node_modules/secure-web-storage/secure-storage.js");
+/* harmony import */ var secure_web_storage__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(secure_web_storage__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _apps_env_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @apps/.env.js */ "./resources/apps/.env.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -31891,9 +18917,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
- // import bugsnag from '@bugsnag/js';
 
- // const bugsnagClient = bugsnag(bugsnagKey);
 
 var Authentication =
 /*#__PURE__*/
@@ -31901,27 +18925,27 @@ function () {
   function Authentication() {
     _classCallCheck(this, Authentication);
 
-    var SECRET_KEY = _apps_env_js__WEBPACK_IMPORTED_MODULE_3__["secretKey"];
-    this.store = new secure_web_storage__WEBPACK_IMPORTED_MODULE_2___default.a(localStorage, {
+    var SECRET_KEY = _apps_env_js__WEBPACK_IMPORTED_MODULE_2__["secretKey"];
+    this.store = new secure_web_storage__WEBPACK_IMPORTED_MODULE_1___default.a(localStorage, {
       hash: function hash(key) {
-        key = crypto_js__WEBPACK_IMPORTED_MODULE_1__["SHA256"](key, SECRET_KEY);
+        key = crypto_js__WEBPACK_IMPORTED_MODULE_0__["SHA256"](key, SECRET_KEY);
         return key.toString();
       },
       encrypt: function encrypt(data) {
-        data = crypto_js__WEBPACK_IMPORTED_MODULE_1__["AES"].encrypt(data, SECRET_KEY);
+        data = crypto_js__WEBPACK_IMPORTED_MODULE_0__["AES"].encrypt(data, SECRET_KEY);
         data = data.toString();
         return data;
       },
       decrypt: function decrypt(data) {
-        data = crypto_js__WEBPACK_IMPORTED_MODULE_1__["AES"].decrypt(data, SECRET_KEY);
-        data = data.toString(crypto_js__WEBPACK_IMPORTED_MODULE_1__["enc"].Utf8);
+        data = crypto_js__WEBPACK_IMPORTED_MODULE_0__["AES"].decrypt(data, SECRET_KEY);
+        data = data.toString(crypto_js__WEBPACK_IMPORTED_MODULE_0__["enc"].Utf8);
         return data;
       }
     });
     this.user = null;
     this.mode = 'client-mode';
-    this.siteKey = _apps_env_js__WEBPACK_IMPORTED_MODULE_3__["siteKey"];
-    this.secretKey = _apps_env_js__WEBPACK_IMPORTED_MODULE_3__["secretKey"];
+    this.siteKey = _apps_env_js__WEBPACK_IMPORTED_MODULE_2__["siteKey"];
+    this.secretKey = _apps_env_js__WEBPACK_IMPORTED_MODULE_2__["secretKey"];
   }
 
   _createClass(Authentication, [{
@@ -32013,1434 +19037,8 @@ function () {
 
   return Authentication;
 }();
-/**
- * export Auth to router check
- */
 
-
-var Auth = new Authentication();
-/**
- * export AuthProvider to vue plugin
- */
-
-var AuthProvider = {
-  install: function install(Vue) {
-    if (this.installed) return;
-    this.installed = true;
-    /**
-     * adding $auth to vue instance
-     */
-
-    var $auth = new Authentication();
-    Object.defineProperty(Vue.prototype, '$auth', {
-      get: function get() {
-        return $auth;
-      }
-    });
-    /**
-     * adding $http to vue instance
-     */
-
-    Object.defineProperty(Vue.prototype, '$http', {
-      get: function get() {
-        var headers = {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
-        };
-        headers = Object.assign({
-          'Authorization': $auth.token
-        }, headers);
-        return axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-          baseURL: _apps_env_js__WEBPACK_IMPORTED_MODULE_3__["baseURL"],
-          headers: headers
-        });
-      }
-    });
-    /**
-     * adding $message to vue instance
-     */
-
-    var $message = {};
-    Object.defineProperty(Vue.prototype, '$message', {
-      get: function get() {
-        return $message;
-      },
-      set: function set(newval) {
-        $message = {
-          color: 'success',
-          text: newval,
-          state: true
-        };
-        this.$root.snackbar = $message;
-      }
-    });
-    /**
-     * adding $error to vue instance
-     */
-
-    var $error = {};
-    Object.defineProperty(Vue.prototype, '$error', {
-      get: function get() {
-        return $error;
-      },
-      set: function set(newval) {
-        // bugsnagClient.notify(new Error(newval));
-        if (newval.hasOwnProperty('response')) {
-          var _newval$response$data = newval.response.data,
-              message = _newval$response$data.message,
-              errors = _newval$response$data.errors;
-          var status = newval.response.status;
-
-          if (status === 401) {
-            $auth.signout();
-          } else if (errors) {
-            $error = {
-              color: 'error',
-              text: message,
-              state: true
-            };
-            this.$root.snackbar = $error;
-          } else {
-            $error = {
-              color: 'error',
-              text: 'there is an error while data process on server.',
-              state: true
-            };
-            this.$root.snackbar = $error;
-          }
-        } else if (newval.hasOwnProperty('message')) {
-          $error = {
-            color: 'error',
-            text: newval.message,
-            state: true
-          };
-          this.$root.snackbar = $error;
-        } else {
-          $error = {
-            color: 'error',
-            text: 'there is an error while data process on server.',
-            state: true
-          };
-          this.$root.snackbar = $error;
-        }
-
-        if (false) {}
-      }
-    });
-  }
-};
-
-/***/ }),
-
-/***/ "./resources/apps/mixins/DataProvider.js":
-/*!***********************************************!*\
-  !*** ./resources/apps/mixins/DataProvider.js ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
-
-vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
-  state: {
-    auth: null,
-    http: null,
-    setRecord: function setRecord() {},
-    afterSelected: function afterSelected() {},
-    afterOpenForm: function afterOpenForm() {},
-    afterPost: function afterPost() {},
-    beforePost: function beforePost() {},
-    afterAddnew: function afterAddnew() {},
-    beforeAddnew: function beforeAddnew() {},
-    cancelAddnew: function cancelAddnew() {
-      return false;
-    },
-    afterUpdate: function afterUpdate() {},
-    beforeUpdate: function beforeUpdate() {},
-    cancelUpdate: function cancelUpdate() {
-      return false;
-    },
-    afterDelete: function afterDelete() {},
-    beforeDelete: function beforeDelete() {},
-    cancelDelete: function cancelDelete() {
-      return false;
-    },
-    overideState: function overideState() {},
-    headers: [],
-    records: [],
-    record: {},
-    documents: [],
-    multiple: true,
-    dataurl: null,
-    primaryId: 'id',
-    setting: {
-      id: null,
-      meta: {
-        avatar: null
-      }
-    },
-    page: {
-      state: 'default',
-      icon: null,
-      title: null
-    },
-    form: {
-      state: false,
-      mode: 'addnew'
-    },
-    search: {
-      state: false,
-      text: null
-    },
-    trash: {
-      state: false,
-      selected: []
-    },
-    snackbar: {
-      state: false,
-      text: null,
-      color: null
-    },
-    disabled: {
-      add: false,
-      "delete": true,
-      edit: true,
-      find: false,
-      link: true,
-      refresh: false
-    },
-    table: {
-      message: 'There is no data to display',
-      initial: true,
-      loader: false,
-      page: [10, 25, 50],
-      total: 0,
-      paging: {},
-      selected: []
-    }
-  },
-  getters: {
-    check: function check(state) {
-      return state.auth.check;
-    },
-    theme: function theme(state) {
-      return state.auth.theme;
-    },
-    menus: function menus(state) {
-      return state.auth.menus;
-    },
-    user: function user(state) {
-      return state.auth.user;
-    },
-    deleted: function deleted(state) {
-      return state.trash.selected.length > 0;
-    },
-    trashCount: function trashCount(state) {
-      if (state.page.state !== 'pinned') {
-        return state.table.selected.length;
-      }
-
-      return state.trash.selected.length;
-    }
-  },
-  mutations: {
-    setAuth: function setAuth(state, payload) {
-      state.auth = payload;
-    },
-    auth: function auth(state, payload) {
-      Object.keys(payload).forEach(function (key) {
-        state.auth[key] = payload[key];
-      });
-    },
-    http: function http(state, payload) {
-      state.http = payload;
-    },
-    dataurl: function dataurl(state, payload) {
-      state.dataurl = payload;
-    },
-    headers: function headers(state, payload) {
-      state.headers = payload;
-    },
-    multiple: function multiple(state, payload) {
-      state.multiple = payload;
-    },
-    records: function records(state, payload) {
-      state.records = payload;
-    },
-    pushRecords: function pushRecords(state, payload) {
-      state.records.push(payload);
-    },
-    spliceRecords: function spliceRecords(state, index) {
-      state.records.splice(index, 1);
-    },
-    documents: function documents(state, payload) {
-      state.documents = payload;
-    },
-    pushDocuments: function pushDocuments(state, payload) {
-      state.documents.push(payload);
-    },
-    spliceDocuments: function spliceDocuments(state, index) {
-      state.documents.splice(index, 1);
-    },
-    record: function record(state, payload) {
-      state.record = payload;
-    },
-    setting: function setting(state, payload) {
-      state.setting = payload;
-    },
-    setRecord: function setRecord(state, payload) {
-      state.setRecord = payload;
-    },
-    form: function form(state, payload) {
-      Object.keys(payload).forEach(function (key) {
-        state.form[key] = payload[key];
-      });
-    },
-    disabled: function disabled(state, payload) {
-      Object.keys(payload).forEach(function (key) {
-        state.disabled[key] = payload[key];
-      });
-    },
-    page: function page(state, payload) {
-      Object.keys(payload).forEach(function (key) {
-        state.page[key] = payload[key];
-      });
-    },
-    search: function search(state, payload) {
-      Object.keys(payload).forEach(function (key) {
-        state.search[key] = payload[key];
-      });
-    },
-    snackbar: function snackbar(state, payload) {
-      Object.keys(payload).forEach(function (key) {
-        state.snackbar[key] = payload[key];
-      });
-    },
-    table: function table(state, payload) {
-      Object.keys(payload).forEach(function (key) {
-        state.table[key] = payload[key];
-      });
-    },
-    paging: function paging(state, payload) {
-      Object.keys(payload).forEach(function (key) {
-        state.table.paging[key] = payload[key];
-      });
-    },
-    trash: function trash(state, payload) {
-      Object.keys(payload).forEach(function (key) {
-        state.trash[key] = payload[key];
-      });
-    },
-    pushDeleted: function pushDeleted(state, payload) {
-      var idx = state.trash.selected.findIndex(function (obj) {
-        return obj.id === payload.id;
-      });
-      payload.pinned = idx === -1;
-
-      if (idx === -1) {
-        state.trash.selected.push(payload);
-      } else {
-        state.trash.selected.splice(idx, 1);
-      }
-
-      if (state.trash.selected.length === 0) {
-        state.page.state = 'default';
-      }
-    },
-    reset: function reset(state) {
-      state.setRecord = function () {};
-
-      state.afterSelected = function () {};
-
-      state.afterOpenForm = function () {};
-
-      state.afterPost = function () {};
-
-      state.beforePost = function () {};
-
-      state.afterAddnew = function () {};
-
-      state.beforeAddnew = function () {};
-
-      state.cancelAddnew = function () {
-        return false;
-      };
-
-      state.afterUpdate = function () {};
-
-      state.beforeUpdate = function () {};
-
-      state.cancelUpdate = function () {
-        return false;
-      };
-
-      state.afterDelete = function () {};
-
-      state.beforeDelete = function () {};
-
-      state.cancelDelete = function () {
-        return false;
-      };
-
-      state.overideState = function () {};
-
-      state.headers = [];
-      state.records = [];
-      state.record = {};
-      state.multiple = true;
-      state.dataurl = null;
-      state.primaryId = 'id';
-      state.setting = {
-        id: null,
-        meta: {
-          avatar: null
-        }
-      };
-      state.page = {
-        state: 'default',
-        icon: null,
-        title: null
-      };
-      state.form = {
-        state: false,
-        mode: 'addnew'
-      };
-      state.search = {
-        state: false,
-        text: null
-      };
-      state["delete"] = {
-        state: false,
-        selected: []
-      };
-      state.snackbar = {
-        state: false,
-        text: null,
-        color: null
-      };
-      state.disabled = {
-        add: false,
-        "delete": true,
-        edit: true,
-        find: false,
-        link: true,
-        refresh: false
-      };
-      state.table = {
-        message: 'There is no data to display',
-        initial: true,
-        loader: false,
-        page: [10, 25, 50],
-        total: 0,
-        paging: {},
-        selected: []
-      };
-    }
-  },
-  actions: {
-    auth: function auth(_ref, payload) {
-      var commit = _ref.commit;
-      commit('auth', payload);
-    },
-    setHeaders: function setHeaders(_ref2, payload) {
-      var commit = _ref2.commit;
-      commit('headers', payload);
-    },
-    setPageInfo: function setPageInfo(_ref3, payload) {
-      var commit = _ref3.commit;
-      commit('page', payload);
-    },
-    setPageUrl: function setPageUrl(_ref4, payload) {
-      var commit = _ref4.commit;
-      commit('dataurl', payload);
-    },
-    setRecord: function setRecord(_ref5, payload) {
-      var commit = _ref5.commit;
-      commit('setRecord', function () {
-        commit('record', payload);
-      });
-    },
-    newRecord: function newRecord(_ref6) {
-      var state = _ref6.state;
-      state.setRecord();
-    },
-    resetStore: function resetStore(_ref7) {
-      var commit = _ref7.commit;
-      commit('reset');
-    },
-    fetchCombo: function () {
-      var _fetchCombo = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref8, payloads) {
-        var dispatch, state, url, callback, params, _ref9, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                dispatch = _ref8.dispatch, state = _ref8.state;
-                _context.prev = 1;
-                url = payloads['url'];
-                callback = payloads['callback'];
-                params = payloads['params'];
-                _context.next = 7;
-                return state.http.get(url, {
-                  params: params
-                });
-
-              case 7:
-                _ref9 = _context.sent;
-                data = _ref9.data;
-                if (typeof callback === 'function') callback(data);
-                _context.next = 15;
-                break;
-
-              case 12:
-                _context.prev = 12;
-                _context.t0 = _context["catch"](1);
-                dispatch('errors', _context.t0);
-
-              case 15:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, null, [[1, 12]]);
-      }));
-
-      function fetchCombo(_x, _x2) {
-        return _fetchCombo.apply(this, arguments);
-      }
-
-      return fetchCombo;
-    }(),
-    openSearch: function openSearch(_ref10) {
-      var commit = _ref10.commit;
-      commit('search', {
-        state: true
-      });
-    },
-    closeSearch: function closeSearch(_ref11) {
-      var commit = _ref11.commit;
-      commit('search', {
-        state: false,
-        text: null
-      });
-    },
-    fetchMenus: function () {
-      var _fetchMenus = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref12) {
-        var commit, dispatch, state, _ref13, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                commit = _ref12.commit, dispatch = _ref12.dispatch, state = _ref12.state;
-                _context2.prev = 1;
-                _context2.next = 4;
-                return state.http.get('/api/menus');
-
-              case 4:
-                _ref13 = _context2.sent;
-                data = _ref13.data;
-                dispatch('auth', {
-                  menus: data
-                });
-                _context2.next = 12;
-                break;
-
-              case 9:
-                _context2.prev = 9;
-                _context2.t0 = _context2["catch"](1);
-                dispatch('errors', _context2.t0);
-
-              case 12:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2, null, [[1, 9]]);
-      }));
-
-      function fetchMenus(_x3) {
-        return _fetchMenus.apply(this, arguments);
-      }
-
-      return fetchMenus;
-    }(),
-    fetchData: function () {
-      var _fetchData = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref14, payload) {
-        var commit, dispatch, state, url, params, _ref15, _ref15$data, data, meta;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                commit = _ref14.commit, dispatch = _ref14.dispatch, state = _ref14.state;
-                commit('table', {
-                  loader: true
-                });
-                _context3.prev = 2;
-                url = state.dataurl;
-                params = state.table.paging;
-
-                if (payload) {
-                  params = payload;
-                }
-
-                _context3.next = 8;
-                return state.http.get(url, {
-                  params: params
-                });
-
-              case 8:
-                _ref15 = _context3.sent;
-                _ref15$data = _ref15.data;
-                data = _ref15$data.data;
-                meta = _ref15$data.meta;
-                commit('records', data);
-                commit('table', {
-                  total: meta.total,
-                  initial: false,
-                  selected: []
-                });
-                _context3.next = 19;
-                break;
-
-              case 16:
-                _context3.prev = 16;
-                _context3.t0 = _context3["catch"](2);
-                dispatch('errors', _context3.t0);
-
-              case 19:
-                _context3.prev = 19;
-                commit('table', {
-                  loader: false
-                });
-                return _context3.finish(19);
-
-              case 22:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[2, 16, 19, 22]]);
-      }));
-
-      function fetchData(_x4, _x5) {
-        return _fetchData.apply(this, arguments);
-      }
-
-      return fetchData;
-    }(),
-    refetch: function refetch(_ref16, payload) {
-      var commit = _ref16.commit,
-          dispatch = _ref16.dispatch,
-          state = _ref16.state;
-
-      if (payload["new"] && payload["new"].length > 0) {
-        commit('paging', {
-          search: payload["new"]
-        });
-        dispatch('fetchData');
-      } else {
-        if (payload.old && payload.old.length > 0) {
-          commit('paging', {
-            search: null
-          });
-          dispatch('fetchData');
-        } else {
-          if (state.table.initial) return;
-          dispatch('fetchData', payload.fetch);
-        }
-      }
-    },
-    refresh: function refresh(_ref17) {
-      var dispatch = _ref17.dispatch;
-      dispatch('fetchData');
-    },
-    afterSelected: function afterSelected(_ref18, payload) {
-      var state = _ref18.state;
-      state.afterSelected(payload);
-    },
-    afterOpenForm: function afterOpenForm(_ref19, payload) {
-      var state = _ref19.state;
-      state.afterOpenForm(payload);
-    },
-    pressListItem: function pressListItem(_ref20, payload) {
-      var commit = _ref20.commit,
-          state = _ref20.state;
-      if (state.page.state === 'pinned') return;
-      commit('page', {
-        state: 'pinned'
-      });
-      commit('pushDeleted', payload);
-    },
-    releaseTrash: function releaseTrash(_ref21) {
-      var commit = _ref21.commit,
-          state = _ref21.state;
-      var trashing = state.trash.selected;
-      Object.keys(trashing).forEach(function (key) {
-        var idx = state.records.findIndex(function (obj) {
-          return obj.id === trashing[key].id;
-        });
-
-        if (idx !== -1) {
-          state.records[idx].pinned = false;
-        }
-      });
-      commit('trash', {
-        selected: []
-      });
-      commit('page', {
-        state: 'default'
-      });
-    },
-    openNewForm: function openNewForm(_ref22) {
-      var commit = _ref22.commit,
-          dispatch = _ref22.dispatch,
-          state = _ref22.state;
-      dispatch('newRecord');
-      commit('form', {
-        state: true,
-        mode: 'addnew'
-      });
-      dispatch('afterOpenForm');
-    },
-    openEditForm: function openEditForm(_ref23, payload) {
-      var commit = _ref23.commit,
-          dispatch = _ref23.dispatch,
-          state = _ref23.state;
-
-      if (payload.constructor === Object) {
-        if (state.page.state === 'pinned') {
-          commit('pushDeleted', payload);
-          return;
-        } else {
-          commit('record', payload);
-        }
-      }
-
-      commit('form', {
-        state: true,
-        mode: 'edit'
-      });
-      dispatch('afterOpenForm');
-    },
-    openDelete: function openDelete(_ref24) {
-      var commit = _ref24.commit;
-      commit('trash', {
-        state: true
-      });
-    },
-    closeForm: function closeForm(_ref25) {
-      var state = _ref25.state,
-          dispatch = _ref25.dispatch;
-      state.form.mode === 'edit' ? dispatch('closeUpdate') : dispatch('closeAddnew');
-    },
-    closeUpdate: function closeUpdate(_ref26) {
-      var state = _ref26.state,
-          commit = _ref26.commit;
-      commit('form', {
-        state: false,
-        mode: null
-      });
-      commit('table', {
-        selected: []
-      });
-    },
-    closeAddnew: function closeAddnew(_ref27) {
-      var commit = _ref27.commit;
-      commit('form', {
-        state: false,
-        mode: null
-      });
-    },
-    closeDelete: function closeDelete(_ref28) {
-      var commit = _ref28.commit;
-      commit('trash', {
-        state: false
-      });
-    },
-    closeSnackbar: function closeSnackbar(_ref29) {
-      var commit = _ref29.commit;
-      commit('snackbar', {
-        state: false
-      });
-    },
-    submitForm: function submitForm(_ref30) {
-      var state = _ref30.state,
-          dispatch = _ref30.dispatch;
-      state.form.mode === 'edit' ? dispatch('postUpdate') : dispatch('postAddnew');
-    },
-    afterPost: function afterPost(_ref31, payload) {
-      var state = _ref31.state;
-      state.afterPost(payload);
-    },
-    beforePost: function beforePost(_ref32, payload) {
-      var state = _ref32.state;
-      state.beforePost(payload);
-    },
-    afterUpdate: function afterUpdate(_ref33, payload) {
-      var state = _ref33.state;
-      state.afterUpdate(payload);
-    },
-    beforeUpdate: function beforeUpdate(_ref34, payload) {
-      var state = _ref34.state;
-      state.beforeUpdate(payload);
-    },
-    cancelUpdate: function cancelUpdate(_ref35, payload) {
-      var state = _ref35.state;
-      state.cancelUpdate(payload);
-    },
-    postUpdate: function () {
-      var _postUpdate = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref36) {
-        var commit, dispatch, state, primaryKey, _ref37, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                commit = _ref36.commit, dispatch = _ref36.dispatch, state = _ref36.state;
-                _context4.prev = 1;
-                dispatch('beforeUpdate');
-                dispatch('beforePost');
-
-                if (!state.cancelUpdate()) {
-                  _context4.next = 7;
-                  break;
-                }
-
-                commit('form', {
-                  state: false,
-                  mode: null
-                });
-                return _context4.abrupt("return");
-
-              case 7:
-                primaryKey = state.record[state.primaryId];
-                _context4.next = 10;
-                return state.http.put(state.dataurl + '/' + primaryKey, state.record);
-
-              case 10:
-                _ref37 = _context4.sent;
-                data = _ref37.data;
-                commit('record', data);
-                commit('form', {
-                  state: false,
-                  mode: null
-                });
-                commit('table', {
-                  selected: []
-                });
-                dispatch('message', 'proses update berhasil!');
-                dispatch('afterUpdate');
-                dispatch('afterPost');
-                _context4.next = 24;
-                break;
-
-              case 20:
-                _context4.prev = 20;
-                _context4.t0 = _context4["catch"](1);
-                dispatch('errors', _context4.t0);
-                commit('form', {
-                  state: false,
-                  mode: null
-                });
-
-              case 24:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4, null, [[1, 20]]);
-      }));
-
-      function postUpdate(_x6) {
-        return _postUpdate.apply(this, arguments);
-      }
-
-      return postUpdate;
-    }(),
-    afterAddnew: function afterAddnew(_ref38, payload) {
-      var state = _ref38.state;
-      state.afterAddnew(payload);
-    },
-    beforeAddnew: function beforeAddnew(_ref39, payload) {
-      var state = _ref39.state;
-      state.beforeAddnew(payload);
-    },
-    cancelAddnew: function cancelAddnew(_ref40, payload) {
-      var state = _ref40.state;
-      state.cancelAddnew(payload);
-    },
-    postAddnew: function () {
-      var _postAddnew = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(_ref41) {
-        var commit, dispatch, state, _ref42, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                commit = _ref41.commit, dispatch = _ref41.dispatch, state = _ref41.state;
-                _context5.prev = 1;
-                dispatch('beforeAddnew');
-                dispatch('beforePost');
-
-                if (!state.cancelAddnew()) {
-                  _context5.next = 7;
-                  break;
-                }
-
-                commit('form', {
-                  state: false,
-                  mode: null
-                });
-                return _context5.abrupt("return");
-
-              case 7:
-                _context5.next = 9;
-                return state.http.post(state.dataurl, state.record);
-
-              case 9:
-                _ref42 = _context5.sent;
-                data = _ref42.data;
-                commit('pushRecords', data);
-                commit('form', {
-                  state: false,
-                  mode: null
-                });
-                dispatch('message', 'proses simpan berhasil!');
-                dispatch('afterAddnew');
-                dispatch('afterPost');
-                _context5.next = 22;
-                break;
-
-              case 18:
-                _context5.prev = 18;
-                _context5.t0 = _context5["catch"](1);
-                dispatch('errors', _context5.t0);
-                commit('form', {
-                  state: false,
-                  mode: null
-                });
-
-              case 22:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5, null, [[1, 18]]);
-      }));
-
-      function postAddnew(_x7) {
-        return _postAddnew.apply(this, arguments);
-      }
-
-      return postAddnew;
-    }(),
-    afterDelete: function afterDelete(_ref43, payload) {
-      var state = _ref43.state;
-      state.afterDelete(payload);
-    },
-    beforeDelete: function beforeDelete(_ref44, payload) {
-      var state = _ref44.state;
-      state.beforeDelete(payload);
-    },
-    cancelDelete: function cancelDelete(_ref45, payload) {
-      var state = _ref45.state;
-      state.cancelDelete(payload);
-    },
-    postDelete: function () {
-      var _postDelete = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(_ref46) {
-        var commit, dispatch, state, response, selected, currentRecord, index, primaryKey;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                commit = _ref46.commit, dispatch = _ref46.dispatch, state = _ref46.state;
-                _context6.prev = 1;
-                dispatch('beforeDelete');
-
-                if (!state.cancelDelete()) {
-                  _context6.next = 6;
-                  break;
-                }
-
-                commit('form', {
-                  state: false,
-                  mode: null
-                });
-                return _context6.abrupt("return");
-
-              case 6:
-                selected = state.table.selected;
-                currentRecord = state.record;
-
-                if (state.page.state === 'pinned') {
-                  selected = state.trash.selected;
-                  currentRecord = state.table.selected[0];
-                }
-
-                if (!(selected.length <= 1)) {
-                  _context6.next = 18;
-                  break;
-                }
-
-                index = state.records.findIndex(function (obj) {
-                  return obj.id === currentRecord.id;
-                });
-                primaryKey = state.record[state.primaryId];
-                _context6.next = 14;
-                return state.http["delete"](state.dataurl + '/' + primaryKey);
-
-              case 14:
-                response = _context6.sent;
-
-                if (response) {
-                  commit('spliceRecords', index);
-                }
-
-                _context6.next = 22;
-                break;
-
-              case 18:
-                _context6.next = 20;
-                return state.http.post(state.dataurl + '/bulks', selected);
-
-              case 20:
-                response = _context6.sent;
-
-                if (response) {
-                  selected.forEach(function (record) {
-                    var index = state.records.findIndex(function (obj) {
-                      return obj.id === record.id;
-                    });
-                    commit('spliceRecords', index);
-                  });
-                }
-
-              case 22:
-                _context6.next = 27;
-                break;
-
-              case 24:
-                _context6.prev = 24;
-                _context6.t0 = _context6["catch"](1);
-                dispatch('errors', _context6.t0);
-
-              case 27:
-                _context6.prev = 27;
-                commit('trash', {
-                  state: false
-                });
-                dispatch('message', 'proses hapus berhasil!');
-                commit('page', {
-                  state: 'default'
-                });
-                return _context6.finish(27);
-
-              case 32:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6, null, [[1, 24, 27, 32]]);
-      }));
-
-      function postDelete(_x8) {
-        return _postDelete.apply(this, arguments);
-      }
-
-      return postDelete;
-    }(),
-    updateProfile: function () {
-      var _updateProfile = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(_ref47) {
-        var dispatch, state, _ref48, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
-          while (1) {
-            switch (_context7.prev = _context7.next) {
-              case 0:
-                dispatch = _ref47.dispatch, state = _ref47.state;
-                _context7.prev = 1;
-                _context7.next = 4;
-                return state.http.put('/api/profile', state.record);
-
-              case 4:
-                _ref48 = _context7.sent;
-                data = _ref48.data;
-                dispatch('auth', {
-                  update: data,
-                  theme: data.theme
-                });
-                dispatch('message', 'update profile berhasil!');
-                _context7.next = 13;
-                break;
-
-              case 10:
-                _context7.prev = 10;
-                _context7.t0 = _context7["catch"](1);
-                dispatch('errors', _context7.t0);
-
-              case 13:
-              case "end":
-                return _context7.stop();
-            }
-          }
-        }, _callee7, null, [[1, 10]]);
-      }));
-
-      function updateProfile(_x9) {
-        return _updateProfile.apply(this, arguments);
-      }
-
-      return updateProfile;
-    }(),
-    updatePassword: function () {
-      var _updatePassword = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(_ref49, payload) {
-        var dispatch, state;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                dispatch = _ref49.dispatch, state = _ref49.state;
-                _context8.prev = 1;
-                _context8.next = 4;
-                return state.http.put('/api/password', payload);
-
-              case 4:
-                dispatch('message', 'update password berhasil!');
-                _context8.next = 10;
-                break;
-
-              case 7:
-                _context8.prev = 7;
-                _context8.t0 = _context8["catch"](1);
-                dispatch('errors', _context8.t0);
-
-              case 10:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8, null, [[1, 7]]);
-      }));
-
-      function updatePassword(_x10, _x11) {
-        return _updatePassword.apply(this, arguments);
-      }
-
-      return updatePassword;
-    }(),
-    fetchSetting: function () {
-      var _fetchSetting = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(_ref50) {
-        var commit, state, _ref51, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
-          while (1) {
-            switch (_context9.prev = _context9.next) {
-              case 0:
-                commit = _ref50.commit, state = _ref50.state;
-                _context9.prev = 1;
-                _context9.next = 4;
-                return state.http.get('/api/setting/company');
-
-              case 4:
-                _ref51 = _context9.sent;
-                data = _ref51.data;
-                commit('setting', data);
-                _context9.next = 12;
-                break;
-
-              case 9:
-                _context9.prev = 9;
-                _context9.t0 = _context9["catch"](1);
-                dispatch('errors', _context9.t0);
-
-              case 12:
-              case "end":
-                return _context9.stop();
-            }
-          }
-        }, _callee9, null, [[1, 9]]);
-      }));
-
-      function fetchSetting(_x12) {
-        return _fetchSetting.apply(this, arguments);
-      }
-
-      return fetchSetting;
-    }(),
-    updateSetting: function () {
-      var _updateSetting = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(_ref52) {
-        var dispatch, state;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
-          while (1) {
-            switch (_context10.prev = _context10.next) {
-              case 0:
-                dispatch = _ref52.dispatch, state = _ref52.state;
-                _context10.prev = 1;
-                _context10.next = 4;
-                return state.http.put('/api/setting/company', state.setting);
-
-              case 4:
-                dispatch('message', 'proses update berhasil!');
-                _context10.next = 10;
-                break;
-
-              case 7:
-                _context10.prev = 7;
-                _context10.t0 = _context10["catch"](1);
-                dispatch('errors', _context10.t0);
-
-              case 10:
-              case "end":
-                return _context10.stop();
-            }
-          }
-        }, _callee10, null, [[1, 7]]);
-      }));
-
-      function updateSetting(_x13) {
-        return _updateSetting.apply(this, arguments);
-      }
-
-      return updateSetting;
-    }(),
-    overideState: function overideState(_ref53, payload) {
-      var state = _ref53.state;
-      state.overideState(payload);
-    },
-    message: function message(_ref54, payload) {
-      var commit = _ref54.commit;
-      commit('snackbar', {
-        color: 'success',
-        text: payload,
-        state: true
-      });
-    },
-    errors: function errors(_ref55, payload) {
-      var commit = _ref55.commit,
-          state = _ref55.state;
-
-      if (payload.hasOwnProperty('response')) {
-        var _payload$response$dat = payload.response.data,
-            message = _payload$response$dat.message,
-            errors = _payload$response$dat.errors;
-        var status = payload.response.status;
-
-        if (status === 401) {
-          state.auth.signout();
-        } else if (errors) {
-          commit('snackbar', {
-            color: 'error',
-            text: message,
-            state: true
-          });
-        } else {
-          commit('snackbar', {
-            color: 'error',
-            text: 'there is an error while data process on server.',
-            state: true
-          });
-        }
-      } else if (payload.hasOwnProperty('message')) {
-        commit('snackbar', {
-          color: 'error',
-          text: payload.message,
-          state: true
-        });
-      } else {
-        commit('snackbar', {
-          color: 'error',
-          text: payload,
-          state: true
-        });
-      }
-
-      if (false) {}
-    }
-  }
-});
-/* harmony default export */ __webpack_exports__["default"] = (store);
-
-/***/ }),
-
-/***/ "./resources/apps/mixins/PageMixins.js":
-/*!*********************************************!*\
-  !*** ./resources/apps/mixins/PageMixins.js ***!
-  \*********************************************/
-/*! exports provided: pageMixins */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pageMixins", function() { return pageMixins; });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-var pageMixins = {
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['auth', 'table', 'page', 'record', 'multiple', 'trash', 'form', 'search']), {
-    trashed: function trashed() {
-      return 'false';
-    },
-    desktop: function desktop() {
-      return !this.$vuetify.breakpoint.xsOnly;
-    },
-    tablet: function tablet() {
-      return this.$vuetify.breakpoint.smOnly;
-    }
-  }),
-  created: function created() {
-    this.$store.commit('http', this.$http);
-    this.resetStore();
-    if (!this.$root.theme) this.$root.theme = this.auth.theme;
-  },
-  mounted: function mounted() {
-    this.newRecord();
-    this.fetchData();
-  },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['resetStore', 'setHeaders', 'setPageInfo', 'setPageUrl', 'setRecord', 'newRecord', 'fetchData', 'afterSelected', 'overideState'])),
-  watch: {
-    'auth.theme': function authTheme(newval) {
-      this.$root.theme = newval;
-    },
-    'table.selected': function tableSelected(newval) {
-      switch (newval.length) {
-        case 0:
-          if (this.search.text && this.search.text.length > 0) {
-            this.$store.commit('search', {
-              state: true
-            });
-          }
-
-          this.$store.commit('record', {});
-          this.$store.commit('page', {
-            state: 'default'
-          });
-          break;
-
-        case 1:
-          this.$store.commit('search', {
-            state: false
-          });
-          this.$store.commit('record', newval[0]);
-          this.$store.commit('page', {
-            state: 'select'
-          });
-          this.afterSelected(this.record);
-          break;
-
-        default:
-          if (!this.multiple) {
-            this.$store.commit('table', {
-              selected: []
-            });
-            this.$store.commit('record', {});
-            this.$store.commit('page', {
-              state: 'default'
-            });
-          } else {
-            this.$store.commit('search', {
-              state: false
-            });
-            this.$store.commit('page', {
-              state: 'delete'
-            });
-          }
-
-          break;
-      }
-    },
-    'page.state': function pageState(newval) {
-      switch (newval) {
-        case 'delete':
-          this.$store.commit('disabled', {
-            add: true,
-            "delete": false,
-            edit: true,
-            find: true,
-            link: true
-          });
-          break;
-
-        case 'select':
-          this.$store.commit('disabled', {
-            add: true,
-            "delete": false,
-            edit: false,
-            find: true,
-            link: false
-          });
-          this.overideState();
-          break;
-
-        default:
-          this.$store.commit('disabled', {
-            add: false,
-            "delete": true,
-            edit: true,
-            find: false,
-            link: true
-          });
-          break;
-      }
-    },
-    'table.paging': {
-      handler: function handler(newval) {
-        this.$store.dispatch('refetch', {
-          fetch: newval
-        });
-      },
-      deep: true
-    },
-    'search.text': function searchText(newval, oldval) {
-      this.$store.dispatch('refetch', {
-        "new": newval,
-        old: oldval
-      });
-    }
-  }
-};
+/* harmony default export */ __webpack_exports__["default"] = (new Authentication());
 
 /***/ }),
 
@@ -33646,75 +19244,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_1ca64b69___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_1ca64b69___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/apps/pages/backend/Home/index.vue":
-/*!*****************************************************!*\
-  !*** ./resources/apps/pages/backend/Home/index.vue ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_6a7a8f86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=6a7a8f86& */ "./resources/apps/pages/backend/Home/index.vue?vue&type=template&id=6a7a8f86&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/pages/backend/Home/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_6a7a8f86___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_6a7a8f86___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/apps/pages/backend/Home/index.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/apps/pages/backend/Home/index.vue?vue&type=script&lang=js&":
-/*!******************************************************************************!*\
-  !*** ./resources/apps/pages/backend/Home/index.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/backend/Home/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/apps/pages/backend/Home/index.vue?vue&type=template&id=6a7a8f86&":
-/*!************************************************************************************!*\
-  !*** ./resources/apps/pages/backend/Home/index.vue?vue&type=template&id=6a7a8f86& ***!
-  \************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_6a7a8f86___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=6a7a8f86& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/backend/Home/index.vue?vue&type=template&id=6a7a8f86&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_6a7a8f86___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_6a7a8f86___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -34000,7 +19529,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************************************!*\
   !*** ./resources/apps/pages/backend/index.js ***!
   \***********************************************/
-/*! exports provided: Base, Client, Home, Password, Profile, Setting, User */
+/*! exports provided: Base, Client, Password, Profile, Setting, User */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -34011,21 +19540,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Client */ "./resources/apps/pages/backend/Client/index.vue");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Client", function() { return _Client__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Home */ "./resources/apps/pages/backend/Home/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Home", function() { return _Home__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _Password__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Password */ "./resources/apps/pages/backend/Password/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Password", function() { return _Password__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _Password__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Password */ "./resources/apps/pages/backend/Password/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Password", function() { return _Password__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony import */ var _Profile__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Profile */ "./resources/apps/pages/backend/Profile/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Profile", function() { return _Profile__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _Profile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Profile */ "./resources/apps/pages/backend/Profile/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Profile", function() { return _Profile__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+/* harmony import */ var _Setting__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Setting */ "./resources/apps/pages/backend/Setting/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Setting", function() { return _Setting__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
-/* harmony import */ var _Setting__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Setting */ "./resources/apps/pages/backend/Setting/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Setting", function() { return _Setting__WEBPACK_IMPORTED_MODULE_5__["default"]; });
-
-/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./User */ "./resources/apps/pages/backend/User/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "User", function() { return _User__WEBPACK_IMPORTED_MODULE_6__["default"]; });
-
+/* harmony import */ var _User__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./User */ "./resources/apps/pages/backend/User/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "User", function() { return _User__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
 
 
@@ -34121,18 +19646,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/apps/parts/CardImage/index.vue":
-/*!**************************************************!*\
-  !*** ./resources/apps/parts/CardImage/index.vue ***!
-  \**************************************************/
+/***/ "./resources/apps/pages/project/Home/index.vue":
+/*!*****************************************************!*\
+  !*** ./resources/apps/pages/project/Home/index.vue ***!
+  \*****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_de57f50c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=de57f50c& */ "./resources/apps/parts/CardImage/index.vue?vue&type=template&id=de57f50c&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/CardImage/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _index_vue_vue_type_template_id_a80f8dd0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=a80f8dd0& */ "./resources/apps/pages/project/Home/index.vue?vue&type=template&id=a80f8dd0&");
+/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/pages/project/Home/index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -34142,8 +19667,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_de57f50c___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_de57f50c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _index_vue_vue_type_template_id_a80f8dd0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _index_vue_vue_type_template_id_a80f8dd0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -34153,407 +19678,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/apps/parts/CardImage/index.vue"
+component.options.__file = "resources/apps/pages/project/Home/index.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/apps/parts/CardImage/index.vue?vue&type=script&lang=js&":
-/*!***************************************************************************!*\
-  !*** ./resources/apps/parts/CardImage/index.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************/
+/***/ "./resources/apps/pages/project/Home/index.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/apps/pages/project/Home/index.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/CardImage/index.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/project/Home/index.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/apps/parts/CardImage/index.vue?vue&type=template&id=de57f50c&":
-/*!*********************************************************************************!*\
-  !*** ./resources/apps/parts/CardImage/index.vue?vue&type=template&id=de57f50c& ***!
-  \*********************************************************************************/
+/***/ "./resources/apps/pages/project/Home/index.vue?vue&type=template&id=a80f8dd0&":
+/*!************************************************************************************!*\
+  !*** ./resources/apps/pages/project/Home/index.vue?vue&type=template&id=a80f8dd0& ***!
+  \************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_de57f50c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=de57f50c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/CardImage/index.vue?vue&type=template&id=de57f50c&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_de57f50c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_a80f8dd0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=a80f8dd0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/pages/project/Home/index.vue?vue&type=template&id=a80f8dd0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_a80f8dd0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_de57f50c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/apps/parts/CodeEditor/index.vue":
-/*!***************************************************!*\
-  !*** ./resources/apps/parts/CodeEditor/index.vue ***!
-  \***************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_cafc2a3e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=cafc2a3e& */ "./resources/apps/parts/CodeEditor/index.vue?vue&type=template&id=cafc2a3e&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/CodeEditor/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_cafc2a3e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_cafc2a3e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/apps/parts/CodeEditor/index.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/apps/parts/CodeEditor/index.vue?vue&type=script&lang=js&":
-/*!****************************************************************************!*\
-  !*** ./resources/apps/parts/CodeEditor/index.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/CodeEditor/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/apps/parts/CodeEditor/index.vue?vue&type=template&id=cafc2a3e&":
-/*!**********************************************************************************!*\
-  !*** ./resources/apps/parts/CodeEditor/index.vue?vue&type=template&id=cafc2a3e& ***!
-  \**********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_cafc2a3e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=cafc2a3e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/CodeEditor/index.vue?vue&type=template&id=cafc2a3e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_cafc2a3e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_cafc2a3e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_a80f8dd0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
-/***/ "./resources/apps/parts/CodeEditor/utils/getIndent.js":
-/*!************************************************************!*\
-  !*** ./resources/apps/parts/CodeEditor/utils/getIndent.js ***!
-  \************************************************************/
-/*! exports provided: getIndent, getDeindentLevel */
+/***/ "./resources/apps/pages/project/index.js":
+/*!***********************************************!*\
+  !*** ./resources/apps/pages/project/index.js ***!
+  \***********************************************/
+/*! exports provided: Home */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getIndent", function() { return getIndent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDeindentLevel", function() { return getDeindentLevel; });
-var getLine = function getLine(plain, cursorPos) {
-  var startSlice = plain.slice(0, cursorPos);
-  var lastNewline = startSlice.lastIndexOf("\n") + 1;
-  var lineSlice = startSlice.slice(lastNewline);
-  return lineSlice;
-};
-
-var indentRe = /^\s+/;
-var getIndent = function getIndent(plain, cursorPos) {
-  var line = getLine(plain, cursorPos);
-  var matches = line.match(indentRe);
-  if (matches === null) return "";
-  return matches[0] || "";
-};
-var deindentSpacesRe = /^(\t| {2})* {2}$/;
-var getDeindentLevel = function getDeindentLevel(plain, cursorPos) {
-  var line = getLine(plain, cursorPos);
-  if (!deindentSpacesRe.test(line)) return 0;
-  return 2;
-};
-
-/***/ }),
-
-/***/ "./resources/apps/parts/CodeEditor/utils/htmlToPlain.js":
-/*!**************************************************************!*\
-  !*** ./resources/apps/parts/CodeEditor/utils/htmlToPlain.js ***!
-  \**************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var unescape__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! unescape */ "./node_modules/unescape/index.js");
-/* harmony import */ var unescape__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(unescape__WEBPACK_IMPORTED_MODULE_0__);
-
-
-var htmlToPlain = function htmlToPlain(html) {
-  return unescape__WEBPACK_IMPORTED_MODULE_0___default()(html.replace(/<br>/gm, "\n").replace(/<\/?[^>]*>/gm, ""));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (htmlToPlain);
-
-/***/ }),
-
-/***/ "./resources/apps/parts/CodeEditor/utils/normalizeHtml.js":
-/*!****************************************************************!*\
-  !*** ./resources/apps/parts/CodeEditor/utils/normalizeHtml.js ***!
-  \****************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var normalizeHtml = function normalizeHtml(html) {
-  return html.replace("\n", "<br>");
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (normalizeHtml);
-
-/***/ }),
-
-/***/ "./resources/apps/parts/CodeEditor/utils/prism.js":
-/*!********************************************************!*\
-  !*** ./resources/apps/parts/CodeEditor/utils/prism.js ***!
-  \********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! prismjs/components/prism-core */ "./node_modules/prismjs/components/prism-core.js");
-/* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prismjs_components_prism_clike__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prismjs/components/prism-clike */ "./node_modules/prismjs/components/prism-clike.js");
-/* harmony import */ var prismjs_components_prism_clike__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_clike__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var prismjs_components_prism_markup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prismjs/components/prism-markup */ "./node_modules/prismjs/components/prism-markup.js");
-/* harmony import */ var prismjs_components_prism_markup__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_markup__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var prismjs_components_prism_markup_templating__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prismjs/components/prism-markup-templating */ "./node_modules/prismjs/components/prism-markup-templating.js");
-/* harmony import */ var prismjs_components_prism_markup_templating__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_markup_templating__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var prismjs_components_prism_php__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prismjs/components/prism-php */ "./node_modules/prismjs/components/prism-php.js");
-/* harmony import */ var prismjs_components_prism_php__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_php__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var prismjs_components_prism_markdown__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prismjs/components/prism-markdown */ "./node_modules/prismjs/components/prism-markdown.js");
-/* harmony import */ var prismjs_components_prism_markdown__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_markdown__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var prismjs_components_prism_javascript__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prismjs/components/prism-javascript */ "./node_modules/prismjs/components/prism-javascript.js");
-/* harmony import */ var prismjs_components_prism_javascript__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_javascript__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var prismjs_components_prism_sql__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prismjs/components/prism-sql */ "./node_modules/prismjs/components/prism-sql.js");
-/* harmony import */ var prismjs_components_prism_sql__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_sql__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var prismjs_plugins_line_numbers_prism_line_numbers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! prismjs/plugins/line-numbers/prism-line-numbers */ "./node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js");
-/* harmony import */ var prismjs_plugins_line_numbers_prism_line_numbers__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(prismjs_plugins_line_numbers_prism_line_numbers__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var escape_html__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! escape-html */ "./node_modules/escape-html/index.js");
-/* harmony import */ var escape_html__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(escape_html__WEBPACK_IMPORTED_MODULE_9__);
-
-
-
-
-
-
-
-
-
-
-
-function wrap(code, lang) {
-  if (lang === "text") {
-    code = escape_html__WEBPACK_IMPORTED_MODULE_9___default()(code);
-  }
-
-  return "<code class=\"language-".concat(lang, "\">").concat(code, "</code>");
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (function (str, lang) {
-  if (!lang) {
-    return wrap(str, "text");
-  }
-
-  lang = lang.toLowerCase();
-  var rawLang = lang;
-
-  if (lang === "vue" || lang === "html") {
-    lang = "markup";
-  }
-
-  if (lang === "md") {
-    lang = "markdown";
-  }
-
-  if (lang === "ts") {
-    lang = "typescript";
-  }
-
-  if (prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_0___default.a.languages[lang]) {
-    var code = prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_0___default.a.highlight(str, prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_0___default.a.languages[lang], lang);
-    return wrap(code, rawLang);
-  }
-
-  return wrap(str, "text");
-});
-
-/***/ }),
-
-/***/ "./resources/apps/parts/CodeEditor/utils/selection-range.js":
-/*!******************************************************************!*\
-  !*** ./resources/apps/parts/CodeEditor/utils/selection-range.js ***!
-  \******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var dom_iterator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dom-iterator */ "./node_modules/dom-iterator/index.js");
-/* harmony import */ var dom_iterator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(dom_iterator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function position(el, pos) {
-  var selection = window.getSelection();
-
-  if (1 == arguments.length) {
-    if (!selection.rangeCount) return;
-    var indexes = {};
-
-    var _range = selection.getRangeAt(0);
-
-    var clone = _range.cloneRange();
-
-    clone.selectNodeContents(el);
-    clone.setEnd(_range.endContainer, _range.endOffset);
-    indexes.end = clone.toString().length;
-    clone.setStart(_range.startContainer, _range.startOffset);
-    indexes.start = indexes.end - clone.toString().length;
-    indexes.atStart = clone.startOffset === 0;
-    indexes.commonAncestorContainer = clone.commonAncestorContainer;
-    indexes.endContainer = clone.endContainer;
-    indexes.startContainer = clone.startContainer;
-    return indexes;
-  }
-
-  var setSelection = pos.end && pos.end !== pos.start;
-  var length = 0;
-  var range = document.createRange();
-  var it = dom_iterator__WEBPACK_IMPORTED_MODULE_0___default()(el).select(Node.TEXT_NODE).revisit(false);
-  var next;
-  var startindex;
-  var start = pos.start > el.textContent.length ? el.textContent.length : pos.start;
-  var end = pos.end > el.textContent.length ? el.textContent.length : pos.end;
-  var atStart = pos.atStart;
-
-  while (next = it.next()) {
-    var olen = length;
-    length += next.textContent.length;
-    var atLength = atStart ? length > start : length >= start;
-
-    if (!startindex && atLength) {
-      startindex = true;
-      range.setStart(next, start - olen);
-
-      if (!setSelection) {
-        range.collapse(true);
-        makeSelection(el, range);
-        break;
-      }
-    }
-
-    if (setSelection && length >= end) {
-      range.setEnd(next, end - olen);
-      makeSelection(el, range);
-      break;
-    }
-  }
-}
-
-function makeSelection(el, range) {
-  var selection = window.getSelection();
-  el.focus();
-  selection.removeAllRanges();
-  selection.addRange(range);
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (position);
-
-/***/ }),
-
-/***/ "./resources/apps/parts/Document/index.vue":
-/*!*************************************************!*\
-  !*** ./resources/apps/parts/Document/index.vue ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_ff37d7fc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=ff37d7fc& */ "./resources/apps/parts/Document/index.vue?vue&type=template&id=ff37d7fc&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/Document/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_ff37d7fc___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_ff37d7fc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/apps/parts/Document/index.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/apps/parts/Document/index.vue?vue&type=script&lang=js&":
-/*!**************************************************************************!*\
-  !*** ./resources/apps/parts/Document/index.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/Document/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/apps/parts/Document/index.vue?vue&type=template&id=ff37d7fc&":
-/*!********************************************************************************!*\
-  !*** ./resources/apps/parts/Document/index.vue?vue&type=template&id=ff37d7fc& ***!
-  \********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_ff37d7fc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=ff37d7fc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/Document/index.vue?vue&type=template&id=ff37d7fc&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_ff37d7fc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_ff37d7fc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Home */ "./resources/apps/pages/project/Home/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Home", function() { return _Home__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
 
 
@@ -34628,155 +19800,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/apps/parts/MenuAccount/index.vue":
-/*!****************************************************!*\
-  !*** ./resources/apps/parts/MenuAccount/index.vue ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_2c515746___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=2c515746& */ "./resources/apps/parts/MenuAccount/index.vue?vue&type=template&id=2c515746&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/MenuAccount/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_2c515746___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_2c515746___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/apps/parts/MenuAccount/index.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/apps/parts/MenuAccount/index.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./resources/apps/parts/MenuAccount/index.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuAccount/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/apps/parts/MenuAccount/index.vue?vue&type=template&id=2c515746&":
-/*!***********************************************************************************!*\
-  !*** ./resources/apps/parts/MenuAccount/index.vue?vue&type=template&id=2c515746& ***!
-  \***********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_2c515746___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=2c515746& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuAccount/index.vue?vue&type=template&id=2c515746&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_2c515746___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_2c515746___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/apps/parts/MenuApplication/index.vue":
-/*!********************************************************!*\
-  !*** ./resources/apps/parts/MenuApplication/index.vue ***!
-  \********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_35a8cd40___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=35a8cd40& */ "./resources/apps/parts/MenuApplication/index.vue?vue&type=template&id=35a8cd40&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/MenuApplication/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_35a8cd40___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_35a8cd40___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/apps/parts/MenuApplication/index.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/apps/parts/MenuApplication/index.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************!*\
-  !*** ./resources/apps/parts/MenuApplication/index.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuApplication/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/apps/parts/MenuApplication/index.vue?vue&type=template&id=35a8cd40&":
-/*!***************************************************************************************!*\
-  !*** ./resources/apps/parts/MenuApplication/index.vue?vue&type=template&id=35a8cd40& ***!
-  \***************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_35a8cd40___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=35a8cd40& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuApplication/index.vue?vue&type=template&id=35a8cd40&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_35a8cd40___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_35a8cd40___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/apps/parts/PageForm/index.vue":
+/***/ "./resources/apps/parts/MenuApps/index.vue":
 /*!*************************************************!*\
-  !*** ./resources/apps/parts/PageForm/index.vue ***!
+  !*** ./resources/apps/parts/MenuApps/index.vue ***!
   \*************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_2b5b98da___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=2b5b98da& */ "./resources/apps/parts/PageForm/index.vue?vue&type=template&id=2b5b98da&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/PageForm/index.vue?vue&type=script&lang=js&");
+/* harmony import */ var _index_vue_vue_type_template_id_47afc850___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=47afc850& */ "./resources/apps/parts/MenuApps/index.vue?vue&type=template&id=47afc850&");
+/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/MenuApps/index.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -34787,8 +19821,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_2b5b98da___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_2b5b98da___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _index_vue_vue_type_template_id_47afc850___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _index_vue_vue_type_template_id_47afc850___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -34798,245 +19832,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/apps/parts/PageForm/index.vue"
+component.options.__file = "resources/apps/parts/MenuApps/index.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/apps/parts/PageForm/index.vue?vue&type=script&lang=js&":
+/***/ "./resources/apps/parts/MenuApps/index.vue?vue&type=script&lang=js&":
 /*!**************************************************************************!*\
-  !*** ./resources/apps/parts/PageForm/index.vue?vue&type=script&lang=js& ***!
+  !*** ./resources/apps/parts/MenuApps/index.vue?vue&type=script&lang=js& ***!
   \**************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageForm/index.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuApps/index.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/apps/parts/PageForm/index.vue?vue&type=template&id=2b5b98da&":
+/***/ "./resources/apps/parts/MenuApps/index.vue?vue&type=template&id=47afc850&":
 /*!********************************************************************************!*\
-  !*** ./resources/apps/parts/PageForm/index.vue?vue&type=template&id=2b5b98da& ***!
+  !*** ./resources/apps/parts/MenuApps/index.vue?vue&type=template&id=47afc850& ***!
   \********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_2b5b98da___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=2b5b98da& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageForm/index.vue?vue&type=template&id=2b5b98da&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_2b5b98da___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_47afc850___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=47afc850& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/MenuApps/index.vue?vue&type=template&id=47afc850&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_47afc850___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_2b5b98da___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/apps/parts/PageList/index.vue":
-/*!*************************************************!*\
-  !*** ./resources/apps/parts/PageList/index.vue ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_0d229798___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=0d229798& */ "./resources/apps/parts/PageList/index.vue?vue&type=template&id=0d229798&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/PageList/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_0d229798___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_0d229798___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/apps/parts/PageList/index.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/apps/parts/PageList/index.vue?vue&type=script&lang=js&":
-/*!**************************************************************************!*\
-  !*** ./resources/apps/parts/PageList/index.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageList/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/apps/parts/PageList/index.vue?vue&type=template&id=0d229798&":
-/*!********************************************************************************!*\
-  !*** ./resources/apps/parts/PageList/index.vue?vue&type=template&id=0d229798& ***!
-  \********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_0d229798___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=0d229798& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageList/index.vue?vue&type=template&id=0d229798&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_0d229798___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_0d229798___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/apps/parts/PageTable/index.vue":
-/*!**************************************************!*\
-  !*** ./resources/apps/parts/PageTable/index.vue ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_7078a264___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=7078a264& */ "./resources/apps/parts/PageTable/index.vue?vue&type=template&id=7078a264&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/PageTable/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_7078a264___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_7078a264___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/apps/parts/PageTable/index.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/apps/parts/PageTable/index.vue?vue&type=script&lang=js&":
-/*!***************************************************************************!*\
-  !*** ./resources/apps/parts/PageTable/index.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageTable/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/apps/parts/PageTable/index.vue?vue&type=template&id=7078a264&":
-/*!*********************************************************************************!*\
-  !*** ./resources/apps/parts/PageTable/index.vue?vue&type=template&id=7078a264& ***!
-  \*********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_7078a264___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=7078a264& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageTable/index.vue?vue&type=template&id=7078a264&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_7078a264___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_7078a264___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/apps/parts/PageTrash/index.vue":
-/*!**************************************************!*\
-  !*** ./resources/apps/parts/PageTrash/index.vue ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_64f6ac90___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=64f6ac90& */ "./resources/apps/parts/PageTrash/index.vue?vue&type=template&id=64f6ac90&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/PageTrash/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_64f6ac90___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_64f6ac90___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/apps/parts/PageTrash/index.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/apps/parts/PageTrash/index.vue?vue&type=script&lang=js&":
-/*!***************************************************************************!*\
-  !*** ./resources/apps/parts/PageTrash/index.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageTrash/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/apps/parts/PageTrash/index.vue?vue&type=template&id=64f6ac90&":
-/*!*********************************************************************************!*\
-  !*** ./resources/apps/parts/PageTrash/index.vue?vue&type=template&id=64f6ac90& ***!
-  \*********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_64f6ac90___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=64f6ac90& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/PageTrash/index.vue?vue&type=template&id=64f6ac90&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_64f6ac90___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_64f6ac90___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_47afc850___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -35115,51 +19942,19 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************!*\
   !*** ./resources/apps/parts/index.js ***!
   \***************************************/
-/*! exports provided: CardImage, CodeEditor, Document, Header, MenuAccount, MenuApplication, PageForm, PageList, PageTable, PageTrash, Widget */
+/*! exports provided: Header, MenuApps, Widget */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CardImage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CardImage */ "./resources/apps/parts/CardImage/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CardImage", function() { return _CardImage__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Header */ "./resources/apps/parts/Header/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Header", function() { return _Header__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _CodeEditor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CodeEditor */ "./resources/apps/parts/CodeEditor/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "CodeEditor", function() { return _CodeEditor__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+/* harmony import */ var _MenuApps__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MenuApps */ "./resources/apps/parts/MenuApps/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MenuApps", function() { return _MenuApps__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _Document__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Document */ "./resources/apps/parts/Document/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Document", function() { return _Document__WEBPACK_IMPORTED_MODULE_2__["default"]; });
-
-/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Header */ "./resources/apps/parts/Header/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Header", function() { return _Header__WEBPACK_IMPORTED_MODULE_3__["default"]; });
-
-/* harmony import */ var _MenuAccount__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MenuAccount */ "./resources/apps/parts/MenuAccount/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MenuAccount", function() { return _MenuAccount__WEBPACK_IMPORTED_MODULE_4__["default"]; });
-
-/* harmony import */ var _MenuApplication__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./MenuApplication */ "./resources/apps/parts/MenuApplication/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MenuApplication", function() { return _MenuApplication__WEBPACK_IMPORTED_MODULE_5__["default"]; });
-
-/* harmony import */ var _PageForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PageForm */ "./resources/apps/parts/PageForm/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageForm", function() { return _PageForm__WEBPACK_IMPORTED_MODULE_6__["default"]; });
-
-/* harmony import */ var _PageList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PageList */ "./resources/apps/parts/PageList/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageList", function() { return _PageList__WEBPACK_IMPORTED_MODULE_7__["default"]; });
-
-/* harmony import */ var _PageTable__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PageTable */ "./resources/apps/parts/PageTable/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageTable", function() { return _PageTable__WEBPACK_IMPORTED_MODULE_8__["default"]; });
-
-/* harmony import */ var _PageTrash__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PageTrash */ "./resources/apps/parts/PageTrash/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageTrash", function() { return _PageTrash__WEBPACK_IMPORTED_MODULE_9__["default"]; });
-
-/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Widget */ "./resources/apps/parts/Widget/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Widget", function() { return _Widget__WEBPACK_IMPORTED_MODULE_10__["default"]; });
-
-
-
-
-
-
-
-
+/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Widget */ "./resources/apps/parts/Widget/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Widget", function() { return _Widget__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
 
 
@@ -35167,10 +19962,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/apps/routes/index.js":
-/*!****************************************!*\
-  !*** ./resources/apps/routes/index.js ***!
-  \****************************************/
+/***/ "./resources/apps/plugin/router.js":
+/*!*****************************************!*\
+  !*** ./resources/apps/plugin/router.js ***!
+  \*****************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -35180,24 +19975,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _apps_mixins_AuthProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @apps/mixins/AuthProvider */ "./resources/apps/mixins/AuthProvider.js");
-/* harmony import */ var _apps_pages_frontend__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @apps/pages/frontend */ "./resources/apps/pages/frontend/index.js");
-/* harmony import */ var _apps_pages_backend__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @apps/pages/backend */ "./resources/apps/pages/backend/index.js");
+/* harmony import */ var _apps_pages_project__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @apps/pages/project */ "./resources/apps/pages/project/index.js");
+/* harmony import */ var _apps_pages_frontend__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @apps/pages/frontend */ "./resources/apps/pages/frontend/index.js");
+/* harmony import */ var _apps_pages_backend__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @apps/pages/backend */ "./resources/apps/pages/backend/index.js");
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 
+
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
-  routes: [// front
+  mode: 'hash',
+  base: '/',
+  routes: [// frontend
   {
     path: '/',
     name: 'login',
-    component: _apps_pages_frontend__WEBPACK_IMPORTED_MODULE_3__["Login"]
+    component: _apps_pages_frontend__WEBPACK_IMPORTED_MODULE_4__["Login"]
   }, // backend
   {
-    path: 'backend',
-    component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_4__["Base"],
+    path: '/backend',
+    component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_5__["Base"],
     meta: {
       auth: true
     },
@@ -35209,29 +20008,30 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     }, {
       path: 'client',
       name: 'client',
-      component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_4__["Client"]
+      component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_5__["Client"]
     }, {
       path: 'password',
       name: 'password',
-      component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_4__["Password"]
+      component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_5__["Password"]
     }, {
       path: 'profile',
       name: 'profile',
-      component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_4__["Profile"]
+      component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_5__["Profile"]
     }, {
       path: 'setting',
       name: 'setting',
-      component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_4__["Setting"]
+      component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_5__["Setting"]
     }, {
       path: 'user',
       name: 'user',
-      component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_4__["User"]
-    }, {
+      component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_5__["User"]
+    }, // project
+    {
       path: 'home',
       name: 'home',
-      component: _apps_pages_backend__WEBPACK_IMPORTED_MODULE_4__["Home"]
+      component: _apps_pages_project__WEBPACK_IMPORTED_MODULE_3__["Home"]
     }]
-  }, // 404
+  }, // fallback
   {
     path: '*',
     redirect: {
@@ -35243,7 +20043,7 @@ router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (record) {
     return record.meta.auth;
   })) {
-    if (!_apps_mixins_AuthProvider__WEBPACK_IMPORTED_MODULE_2__["Auth"].check) {
+    if (!_apps_mixins_AuthProvider__WEBPACK_IMPORTED_MODULE_2__["default"].check) {
       next({
         name: 'login'
       });
@@ -35251,7 +20051,7 @@ router.beforeEach(function (to, from, next) {
       next();
     }
   } else {
-    if (to.name === 'login' && _apps_mixins_AuthProvider__WEBPACK_IMPORTED_MODULE_2__["Auth"].check) {
+    if (to.name === 'login' && _apps_mixins_AuthProvider__WEBPACK_IMPORTED_MODULE_2__["default"].check) {
       next({
         name: 'home'
       });
@@ -35260,14 +20060,342 @@ router.beforeEach(function (to, from, next) {
     }
   }
 });
+router.onError(function () {
+  _apps_mixins_AuthProvider__WEBPACK_IMPORTED_MODULE_2__["default"].signout();
+  router.push({
+    name: 'login'
+  });
+});
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
 
-/***/ "./resources/design/monoland.styl":
+/***/ "./resources/apps/plugin/store.js":
 /*!****************************************!*\
-  !*** ./resources/design/monoland.styl ***!
+  !*** ./resources/apps/plugin/store.js ***!
   \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./router */ "./resources/apps/plugin/router.js");
+/* harmony import */ var _apps_mixins_AuthProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @apps/mixins/AuthProvider */ "./resources/apps/mixins/AuthProvider.js");
+/* harmony import */ var _apps_env_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @apps/.env.js */ "./resources/apps/.env.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
+  state: {
+    auth: _apps_mixins_AuthProvider__WEBPACK_IMPORTED_MODULE_5__["default"],
+    http: axios__WEBPACK_IMPORTED_MODULE_3___default.a.create({
+      baseURL: _apps_env_js__WEBPACK_IMPORTED_MODULE_6__["baseURL"],
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      }
+    }),
+    disabled: {
+      add: false,
+      "delete": true,
+      edit: true,
+      find: false,
+      link: true,
+      refresh: false
+    },
+    login: {
+      username: null,
+      userpass: null
+    },
+    menus: [],
+    page: {
+      state: 'default',
+      icon: null,
+      title: null,
+      subtitle: null
+    },
+    toolbar: {
+      search: false,
+      "delete": false,
+      text: null
+    },
+    snackbar: {
+      state: false,
+      text: null,
+      color: null
+    },
+    table: {
+      initial: true,
+      loader: false,
+      page: [10, 25, 50],
+      total: 0,
+      paging: {},
+      selected: []
+    }
+  },
+  mutations: {
+    disabled: function disabled(state, payload) {
+      Object.keys(payload).forEach(function (key) {
+        state.disabled[key] = payload[key];
+      });
+    },
+    fetchAppMenus: function fetchAppMenus(state, payload) {
+      if (payload) state.auth.menus = payload;
+      state.menus = state.auth.menus;
+    },
+    toolbar: function toolbar(state, payload) {
+      Object.keys(payload).forEach(function (key) {
+        state.toolbar[key] = payload[key];
+      });
+    },
+    snackbar: function snackbar(state, payload) {
+      Object.keys(payload).forEach(function (key) {
+        state.snackbar[key] = payload[key];
+      });
+    },
+    token: function token(state, payload) {
+      state.auth.token = payload;
+      state.http.defaults.headers.common['Authorization'] = state.auth.token;
+    },
+    user: function user(state, payload) {
+      state.auth.user = payload;
+    }
+  },
+  actions: {
+    fetchAppMenus: function () {
+      var _fetchAppMenus = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref) {
+        var commit, dispatch, state, _ref2, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref.commit, dispatch = _ref.dispatch, state = _ref.state;
+                _context.prev = 1;
+                _context.next = 4;
+                return state.http.get('/api/menus');
+
+              case 4:
+                _ref2 = _context.sent;
+                data = _ref2.data;
+                commit('fetchAppMenus', data);
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context["catch"](1);
+                dispatch('errors', _context.t0);
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 9]]);
+      }));
+
+      function fetchAppMenus(_x) {
+        return _fetchAppMenus.apply(this, arguments);
+      }
+
+      return fetchAppMenus;
+    }(),
+    deleteClose: function deleteClose(_ref3) {
+      var commit = _ref3.commit;
+      commit('toolbar', {
+        "delete": false
+      });
+    },
+    deleteOpen: function deleteOpen(_ref4) {
+      var commit = _ref4.commit;
+      commit('toolbar', {
+        "delete": true
+      });
+    },
+    deleteRecord: function deleteRecord() {},
+    editFormOpen: function editFormOpen() {},
+    newFormOpen: function newFormOpen() {},
+    reloadRecord: function reloadRecord() {},
+    searchClose: function searchClose(_ref5) {
+      var commit = _ref5.commit;
+      commit('toolbar', {
+        search: false,
+        text: null
+      });
+    },
+    searchOpen: function searchOpen(_ref6) {
+      var commit = _ref6.commit;
+      commit('toolbar', {
+        search: true
+      });
+    },
+    signin: function () {
+      var _signin = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref7) {
+        var commit, dispatch, state, token, user;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref7.commit, dispatch = _ref7.dispatch, state = _ref7.state;
+                _context2.prev = 1;
+                _context2.next = 4;
+                return state.http.post('/oauth/token', {
+                  grant_type: 'password',
+                  client_id: state.auth.siteKey,
+                  client_secret: state.auth.secretKey,
+                  username: state.login.username,
+                  password: state.login.userpass,
+                  scope: '*'
+                });
+
+              case 4:
+                token = _context2.sent;
+                commit('token', token.data);
+                _context2.next = 8;
+                return state.http.get('/api/user');
+
+              case 8:
+                user = _context2.sent;
+                commit('user', user.data);
+                _router__WEBPACK_IMPORTED_MODULE_4__["default"].push({
+                  name: 'home'
+                });
+                _context2.next = 16;
+                break;
+
+              case 13:
+                _context2.prev = 13;
+                _context2.t0 = _context2["catch"](1);
+                dispatch('errors', _context2.t0);
+
+              case 16:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[1, 13]]);
+      }));
+
+      function signin(_x2) {
+        return _signin.apply(this, arguments);
+      }
+
+      return signin;
+    }(),
+    signout: function signout(_ref8) {
+      var state = _ref8.state;
+      state.auth.signout();
+      _router__WEBPACK_IMPORTED_MODULE_4__["default"].push({
+        name: 'login'
+      });
+    },
+    snackbarClose: function snackbarClose(_ref9) {
+      var commit = _ref9.commit;
+      commit('snackbar', {
+        state: false
+      });
+    },
+    trashFormOpen: function trashFormOpen() {},
+    errors: function errors(_ref10, payload) {
+      var commit = _ref10.commit,
+          state = _ref10.state;
+
+      if (payload.hasOwnProperty('response')) {
+        var _payload$response$dat = payload.response.data,
+            message = _payload$response$dat.message,
+            error = _payload$response$dat.error,
+            hint = _payload$response$dat.hint;
+        var status = payload.response.status;
+
+        if (status === 401) {
+          state.auth.signout();
+        } else if (error && hint) {
+          commit('snackbar', {
+            color: 'error',
+            text: hint,
+            state: true
+          });
+        } else if (error && !hint) {
+          commit('snackbar', {
+            color: 'error',
+            text: message,
+            state: true
+          });
+        } else {
+          commit('snackbar', {
+            color: 'error',
+            text: 'there is an error while data process on server.',
+            state: true
+          });
+        }
+      } else if (payload.hasOwnProperty('message')) {
+        commit('snackbar', {
+          color: 'error',
+          text: payload.message,
+          state: true
+        });
+      } else {
+        commit('snackbar', {
+          color: 'error',
+          text: payload,
+          state: true
+        });
+      }
+
+      window.console.clear();
+    }
+  }
+}));
+
+/***/ }),
+
+/***/ "./resources/apps/plugin/vuetify.js":
+/*!******************************************!*\
+  !*** ./resources/apps/plugin/vuetify.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
+/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_1__);
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify__WEBPACK_IMPORTED_MODULE_1___default.a);
+/* harmony default export */ __webpack_exports__["default"] = (new vuetify__WEBPACK_IMPORTED_MODULE_1___default.a({}));
+
+/***/ }),
+
+/***/ "./resources/design/main.styl":
+/*!************************************!*\
+  !*** ./resources/design/main.styl ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -35276,14 +20404,14 @@ router.beforeEach(function (to, from, next) {
 /***/ }),
 
 /***/ 0:
-/*!************************************************************************!*\
-  !*** multi ./resources/apps/index.js ./resources/design/monoland.styl ***!
-  \************************************************************************/
+/*!********************************************************************!*\
+  !*** multi ./resources/apps/index.js ./resources/design/main.styl ***!
+  \********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /Users/monoland/Sites/awesome/resources/apps/index.js */"./resources/apps/index.js");
-module.exports = __webpack_require__(/*! /Users/monoland/Sites/awesome/resources/design/monoland.styl */"./resources/design/monoland.styl");
+module.exports = __webpack_require__(/*! /Users/monoland/Sites/awesome/resources/design/main.styl */"./resources/design/main.styl");
 
 
 /***/ })

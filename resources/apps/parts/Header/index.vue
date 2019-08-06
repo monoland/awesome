@@ -1,93 +1,105 @@
 <template>
-    <div class="v-header">
-        <v-scale-transition>
-            <div class="v-search" v-show="search.state">
-                <v-toolbar card class="v-toolbar--search" absolute flat color="white">
-                    <input 
-                        @input="bouncing" 
-                        ref="input"
-                        class="headline font-weight-light" 
-                        type="text" 
-                        placeholder="Search"
-                    >
+    <div class="v-page__header" :class="{ 'absolute': absolute, 'mobile': $vuetify.breakpoint.xsOnly }">
+        <v-fade-transition>
+            <div class="v-page__header--search" key="search" v-show="toolbar.search">
+                <v-toolbar class="no-shadow" flat>
+                    <v-scale-transition>
+                        <input v-show="toolbar.search"
+                            v-model="searchText"
+                            ref="input"
+                            class="headline font-weight-light" 
+                            type="text"
+                            key="text-search" 
+                            placeholder="Search"
+                        >
+                    </v-scale-transition>
 
-                    <v-spacer></v-spacer>
-                    <v-btn :color="$root.theme" flat icon @click="closeSearch">
-                        <v-icon>close</v-icon>
-                    </v-btn>
+                    <v-scale-transition>
+                        <v-btn icon key="close-search" :color="$root.theme" @click="searchClose" v-show="toolbar.search">
+                            <v-icon>close</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
                 </v-toolbar>
             </div>
-        </v-scale-transition>
-
+        </v-fade-transition>
+        
         <v-scale-transition>
-            <div class="v-delete" v-show="deleted">
-                <v-toolbar card class="v-toolbar--delete" absolute flat color="white">
-                    <v-btn :color="$root.theme" flat icon @click="releaseTrash">
-                        <v-icon>close</v-icon>
-                    </v-btn>
-                    <div class="title">{{ trash.selected.length }}</div>
-                    <v-spacer></v-spacer>
-                    <v-btn :color="$root.theme" flat class="ma-1" icon @click="openDelete">
-                        <v-icon>delete</v-icon>
-                    </v-btn>
-                </v-toolbar>
-            </div>
-        </v-scale-transition>
-
-        <v-toolbar :absolute="absolute" :fixed="fixed" card class="v-toolbar--application" flat :color="color">
-            <slot name="navigate">
-                <v-toolbar-side-icon @click="$root.navdrawer = !$root.navdrawer"></v-toolbar-side-icon>
-            </slot>
-
-            <v-spacer></v-spacer>
-            <span class="d-block title" :class="{'no--search': !searchable}">{{ page.title }}</span>
-            <v-spacer></v-spacer>
-            
-            <template v-if="!$vuetify.breakpoint.xsOnly && crud">
-                <v-btn :color="$root.theme" flat class="ma-1" icon @click="openNewForm" v-show="!disabled.add">
-                    <v-icon>add</v-icon>
+            <div class="v-page__header--delete" key="deleted" v-show="toolbar.delete">
+                <v-btn icon :color="$root.theme" @click="deleteClose">
+                    <v-icon>close</v-icon>
                 </v-btn>
 
-                <slot></slot>
+                <v-toolbar-title>{{ `${table.selected.length} Selected` }}</v-toolbar-title>
 
-                <v-btn :color="$root.theme" flat class="ma-1" icon @click="openEditForm" v-show="!disabled.edit">
-                    <v-icon>edit</v-icon>
-                </v-btn>
+                <v-spacer></v-spacer>
 
-                <v-btn :color="$root.theme" flat class="ma-1" icon @click="openDelete" v-show="!disabled.delete">
+                <v-btn icon :color="$root.theme" @click="deleteRecord">
                     <v-icon>delete</v-icon>
                 </v-btn>
+            </div>
+        </v-scale-transition>
 
-                <v-btn :color="$root.theme" flat class="ma-1" icon @click="refresh" v-show="!disabled.refresh">
-                    <v-icon>refresh</v-icon>
+        <v-toolbar flat>
+            <slot name="navigate">
+                <v-btn icon @click="$root.navdrawer = !$root.navdrawer">
+                    <v-icon>menu</v-icon>
                 </v-btn>
-            </template>
 
-            <template v-else-if="!$vuetify.breakpoint.xsOnly && !crud">
-                <slot></slot>
-            </template>
+                <v-toolbar-title>{{ page.title }}</v-toolbar-title>
 
-            <template v-else-if="$vuetify.breakpoint.xsOnly && crud">
-                <v-btn :color="$root.theme" flat class="ma-1" icon @click="openNewForm" v-show="!disabled.add">
-                    <v-icon>add</v-icon>
+                <v-spacer></v-spacer>
+
+                <template v-if="!$vuetify.breakpoint.xsOnly && crud">
+                    <v-scale-transition>
+                        <v-btn icon key="newDesktop" :color="$root.theme" @click="newFormOpen" v-show="!disabled.add">
+                            <v-icon>add</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
+
+                    <slot></slot>
+
+                    <v-scale-transition>
+                        <v-btn icon key="edit" :color="$root.theme" @click="editFormOpen" v-show="!disabled.edit">
+                            <v-icon>edit</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
+
+                    <v-scale-transition>
+                        <v-btn icon key="trash" :color="$root.theme" @click="trashFormOpen" v-show="!disabled.delete">
+                            <v-icon>delete</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
+
+                    <v-scale-transition>
+                        <v-btn icon key="reload" :color="$root.theme" @click="reloadRecord" v-show="!disabled.refresh">
+                            <v-icon>refresh</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
+                </template>
+
+                <template v-else-if="!$vuetify.breakpoint.xsOnly && !crud">
+                    <slot></slot>
+                </template>
+
+                <template v-else-if="$vuetify.breakpoint.xsOnly && crud">
+                    <v-btn icon key="newMobile" :color="$root.theme" @click="newFormOpen" v-show="!disabled.add">
+                        <v-icon>add</v-icon>
+                    </v-btn>
+                    
+                    <slot></slot>
+                </template>
+
+                <v-btn icon :color="$root.theme" @click="searchOpen">
+                    <v-icon>search</v-icon>
                 </v-btn>
-                
-                <slot></slot>
-            </template>
-
-            <slot v-else></slot>
-
-            <v-btn :color="$root.theme" flat icon @click="openSearch" v-if="searchable">
-                <v-icon>search</v-icon>
-            </v-btn>
-
+            </slot>
         </v-toolbar>
     </div>
 </template>
 
 <script>
 import { debounce } from 'debounce';
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
     name: 'v-header',
@@ -98,19 +110,9 @@ export default {
             default: false
         },
 
-        fixed: {
-            type: Boolean,
-            default: false
-        },
-
         crud: {
             type: Boolean,
             default: false
-        },
-
-        color: {
-            type: String,
-            default: 'white'
         },
 
         searchable: {
@@ -120,28 +122,48 @@ export default {
     },
 
     computed: {
-        ...mapState(['disabled', 'page', 'search', 'trash']),
-        ...mapGetters(['deleted'])
+        ...mapState(['disabled', 'page', 'table', 'toolbar']),
+
+        dynStyle: function() {
+            if (this.fixed) {
+                return `width: calc(100% - ${this.$vuetify.application.left}px)`;
+            }
+
+            return null;
+        }
     },
+
+    data:() => ({
+        searchText: null
+    }),
 
     methods: {
         ...mapActions([
-            'closeSearch', 'openNewForm', 
-            'openEditForm', 'openDelete', 'refresh',
-            'releaseTrash'
+            'deleteClose', 'deleteRecord', 'editFormOpen', 'newFormOpen', 
+            'reloadRecord', 'searchClose', 'searchOpen', 'trashFormOpen'
         ]),
 
-        bouncing: debounce(function(e) {
-            this.$store.commit('search', { text: e.target.value });
+        bouncing: debounce(function (value) {
+            this.$store.commit('toolbar', { text: value });
         }, 1000),
+    },
 
-        openSearch: function() {
-            this.$store.dispatch('openSearch');
-            
-            this.$nextTick(() => {
-                this.$refs.input.focus();
-            });
+    watch: {
+        searchText: function(newVal) {
+            this.bouncing(newVal);
+        },
+
+        toolbar: {
+            handler: function(newVal) {
+                if ( newVal.search === true ) {
+                    this.$nextTick(() => this.$refs.input.focus());
+                }
+
+                this.searchText = newVal.text;
+            },
+
+            deep: true 
         }
     }
-}
+};
 </script>

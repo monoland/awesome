@@ -4,6 +4,6 @@
 
 <script>
 export default {
-    name: 'page-password'
+    name: 'page-home'
 };
 </script>

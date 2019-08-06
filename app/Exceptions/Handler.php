@@ -65,7 +65,11 @@ class Handler extends ExceptionHandler
         if ($exception instanceof TokenMismatchException) {
             return redirect()->guest('/');
         }
-        
+
+        if ($this->isHttpException($exception) && $exception->getStatusCode() === 404) {
+            return redirect()->guest('/');
+        }
+
         return parent::render($request, $exception);
     }
 }

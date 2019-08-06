@@ -1,20 +1,14 @@
 import Vue from 'vue';
-import Vuetify from 'vuetify';
-import { AuthProvider } from './mixins/AuthProvider';
 
 Vue.config.productionTip = false;
-Vue.use(Vuetify);
-Vue.use(AuthProvider);
 
-import { createSimpleTransition } from 'vuetify/es5/util/helpers';
-const dialogMove = createSimpleTransition('dialog-move-transition');
-Vue.component('dialog-move-transition', dialogMove);
-
+// import component
 import * as Parts from './parts';
 Object.keys(Parts).forEach((part) => {
     Vue.component(Parts[part].name, Parts[part]);
 });
 
+// add press directive
 import Hammer from 'hammerjs';
 Vue.directive('press', {
     bind:(el, binding) => {
@@ -27,27 +21,21 @@ Vue.directive('press', {
 });
 
 import Apps from './pages/Apps.vue';
-import router from './routes';
-import store from './mixins/DataProvider';
+import router from './plugin/router';
+import store from './plugin/store';
+import vuetify from './plugin/vuetify';
 
 new Vue({
     router,
     store,
+    vuetify,
     
     data:() => ({
         theme: null,
         navdrawer: false,
     }),
-    
-    beforeCreate() {
-        this.$nextTick(() => {
-            this.navdrawer = this.$vuetify.breakpoint.name === 'lg' || this.$vuetify.breakpoint.name === 'xl'
-        });
-    },
-    
     created() {
-        this.$store.commit('setAuth', this.$auth);
+        this.navdrawer = this.$vuetify.breakpoint.name === 'lg' || this.$vuetify.breakpoint.name === 'xl';
     },
-
     render: h => h(Apps)
 }).$mount('#monoland');

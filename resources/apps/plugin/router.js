@@ -1,20 +1,20 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { Auth } from '@apps/mixins/AuthProvider';
+import Auth from '@apps/mixins/AuthProvider';
 
 Vue.use(VueRouter);
 
-import * as apps from '@apps/pages/application';
+import * as project from '@apps/pages/project';
 import * as frontend from '@apps/pages/frontend';
 import * as backend from '@apps/pages/backend';
 
-let router = new VueRouter({
-    mode: 'history',
+const router = new VueRouter({
+    mode: 'hash',
     base: '/',
     routes: [
-        // front
+        // frontend
         { path: '/', name: 'login', component: frontend.Login },
-
+        
         // backend
         { path: '/backend', component: backend.Base, meta: { auth: true }, children: [
             { path: '', redirect: { name: 'home' }},
@@ -23,12 +23,12 @@ let router = new VueRouter({
             { path: 'profile', name: 'profile', component: backend.Profile },
             { path: 'setting', name: 'setting', component: backend.Setting },
             { path: 'user', name: 'user', component: backend.User },
-
-            // application
-            { path: 'home', name: 'home', component: apps.Home },
+            
+            // project
+            { path: 'home', name: 'home', component: project.Home },
         ]},
 
-        // 404
+        // fallback
         { path: '*', redirect: { name: 'login' }},
     ]
 });
@@ -49,7 +49,7 @@ router.beforeEach((to, from, next) => {
     }
 });
 
-router.onError(error => {
+router.onError(() => {
     Auth.signout();
     router.push({ name: 'login' });
 });

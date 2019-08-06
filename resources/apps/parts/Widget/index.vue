@@ -1,17 +1,24 @@
 <template>
-    <v-card elevation="0" class="v-card--widget mt-4 mx-auto" style="border-radius: 4px;">
+    <v-card 
+        class="v-card--widget mt-6 mx-auto" 
+        style="border-radius: 4px;"
+        :elevation="elevation" 
+        :width="width"
+    >
         <v-sheet
             class="v-sheet--offset py-3 mx-auto"
             elevation="0"
-            :color="$root.theme"
-            :max-width="dynCalc"
-            :class="dynPX"
+            :color="color"
+            :max-width="dynWidth"
+            :class="dynClass"
         >
-            <span class="d-block title font-weight-regular mb-2 white--text">{{ title }}</span>
-            <span class="d-block f-nunito caption font-weight-regular text-uppercase white--text">{{ subtitle }}</span>
+            <slot name="header">
+                <span class="d-block title font-weight-regular mb-2 white--text">{{ title }}</span>
+                <span class="d-block f-nunito caption font-weight-regular text-uppercase white--text">{{ subtitle }}</span>
+            </slot>
         </v-sheet>
 
-        <v-card-text :class="dynPX">
+        <v-card-text :class="dynClass">
             <slot></slot>
         </v-card-text>
 
@@ -20,24 +27,23 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
     name: 'v-widget',
-    
-    computed: {
 
+    computed: {
         ...mapState(['page']),
 
-        dynPX: function() {
+        dynClass: function() {
             if (this.$vuetify.breakpoint.smOnly) {
                 return (this.table ? 'px-3 pb-1' : 'px-3');
             }
 
-            return ( this.table ? 'px-4 pb-1' : 'px-4');
+            return ( this.table ? 'px-6 pb-1' : 'px-6');
         },
 
-        dynCalc: function() {
+        dynWidth: function() {
             if (this.$vuetify.breakpoint.smOnly) {
                 return 'calc(100% - 32px)';
             }
@@ -63,14 +69,29 @@ export default {
     },
 
     props: {
-        table: {
-            type: Boolean,
-            default: false
+        color: {
+            type: String,
+            default:() => this.$root.theme
+        },
+
+        elevation: {
+            type: Number,
+            default: 0
         },
 
         form: {
             type: Boolean,
             default: false
+        },
+
+        table: {
+            type: Boolean,
+            default: false
+        },
+
+        width: {
+            type: String,
+            default: undefined
         }
     }
 }
