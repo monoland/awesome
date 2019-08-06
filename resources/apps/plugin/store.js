@@ -19,25 +19,70 @@ export default new Vuex.Store({
             }
         }),
 
+        setRecord:() => {},
+
+        dataUrl: null,
         disabled: { add: false, delete: true, edit: true, find: false, link: true, refresh: false },
+        documents: [],
         login: { username: null, userpass: null },
+        headers: [],
         menus: [],
         page: { state: 'default', icon: null, title: null, subtitle: null },
+        records: [],
+        record: {},
         toolbar: { search: false, delete: false, text: null },
         snackbar: { state: false, text: null, color: null },
         table: { initial: true, loader: false, page: [10, 25, 50], total: 0, paging: {}, selected: [] }
     },
 
     mutations: {
+        dataUrl: function(state, payload) {
+            state.dataUrl = payload;
+        },
+
         disabled: function(state, payload) {
             Object.keys(payload).forEach(key => {
                 state.disabled[key] = payload[key];
             });
         },
 
+        documents: function(state, payload) {
+            state.documents = payload;
+        },
+
+        documentPush: function(state, payload) {
+            state.documents.push(payload);
+        },
+
+        documentSplice: function(state, index) {
+            state.documents.splice(index, 1);
+        },
+
         fetchAppMenus: function(state, payload) {
             if (payload) state.auth.menus = payload;
             state.menus = state.auth.menus;
+        },
+
+        pageInfo: function(state, payload) {
+            Object.keys(payload).forEach(key => {
+                state.page[key] = payload[key];
+            });
+        },
+
+        record: function(state, payload) {
+            state.record = payload;
+        },
+
+        records: function(state, payload) {
+            state.records = payload;
+        },
+
+        recordPush: function(state, payload) {
+            state.records.push(payload);
+        },
+
+        recordSplice: function(state, index) {
+            state.records.splice(index, 1);
         },
 
         toolbar: function(state, payload) {
@@ -46,10 +91,18 @@ export default new Vuex.Store({
             });
         },
 
+        setRecord: function(state, payload) {
+            state.setRecord = payload;
+        },
+
         snackbar: function(state, payload) {
             Object.keys(payload).forEach(key => {
                 state.snackbar[key] = payload[key];
             });
+        },
+
+        tableHeaders: function(state, payload) {
+            state.headers = payload;
         },
 
         token: function(state, payload) {
@@ -63,13 +116,8 @@ export default new Vuex.Store({
     },
 
     actions: {
-        fetchAppMenus: async function({commit, dispatch, state}) {
-            try {
-                let { data } = await state.http.get('/api/menus');
-                commit('fetchAppMenus', data);
-            } catch (error) {
-                dispatch('errors', error);
-            }
+        dataUrl: function({ commit }, payload) {
+            commit('dataUrl', payload);
         },
 
         deleteClose: function({ commit }) {
@@ -84,7 +132,20 @@ export default new Vuex.Store({
 
         editFormOpen: function() {},
 
+        fetchAppMenus: async function({commit, dispatch, state}) {
+            try {
+                let { data } = await state.http.get('/api/menus');
+                commit('fetchAppMenus', data);
+            } catch (error) {
+                dispatch('errors', error);
+            }
+        },
+
         newFormOpen: function() {},
+
+        pageInfo: function({ commit }, payload) {
+            commit('pageInfo', payload);
+        },
 
         reloadRecord: function() {},
 
@@ -94,6 +155,12 @@ export default new Vuex.Store({
 
         searchOpen: function({ commit }) {
             commit('toolbar', { search: true });
+        },
+
+        setRecord: function({ commit }, payload) {
+            commit('setRecord', () => {
+                commit('record', payload);
+            });
         },
 
         signin: async function({ commit, dispatch, state }) {
@@ -125,6 +192,10 @@ export default new Vuex.Store({
 
         snackbarClose: function({ commit }) {
             commit('snackbar', { state: false });
+        },
+
+        tableHeaders: function({ commit }, payload) {
+            commit('tableHeaders', payload);
         },
 
         trashFormOpen: function() {},

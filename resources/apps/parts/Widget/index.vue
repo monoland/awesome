@@ -1,19 +1,18 @@
 <template>
     <v-card 
-        class="v-card--widget mt-6 mx-auto" 
+        class="v-card--widget mt-4 mx-auto" 
         style="border-radius: 4px;"
         :elevation="elevation" 
         :width="width"
     >
         <v-sheet
             class="v-sheet--offset py-3 mx-auto"
-            elevation="0"
             :color="color"
             :max-width="dynWidth"
             :class="dynClass"
         >
             <slot name="header">
-                <span class="d-block title font-weight-regular mb-2 white--text">{{ title }}</span>
+                <span class="d-block line-height1 title font-weight-regular mb-1 white--text">{{ title }}</span>
                 <span class="d-block f-nunito caption font-weight-regular text-uppercase white--text">{{ subtitle }}</span>
             </slot>
         </v-sheet>
@@ -36,19 +35,11 @@ export default {
         ...mapState(['page']),
 
         dynClass: function() {
-            if (this.$vuetify.breakpoint.smOnly) {
-                return (this.table ? 'px-3 pb-1' : 'px-3');
-            }
-
-            return ( this.table ? 'px-6 pb-1' : 'px-6');
+            return ( this.table ? 'px-4 pb-2' : 'px-6');
         },
 
         dynWidth: function() {
-            if (this.$vuetify.breakpoint.smOnly) {
-                return 'calc(100% - 32px)';
-            }
-
-            return 'calc(100% - 48px)';
+            return 'calc(100% - 32px)';
         },
 
         title: function() {
@@ -71,7 +62,9 @@ export default {
     props: {
         color: {
             type: String,
-            default:() => this.$root.theme
+            default: function() {
+                return this.$root.theme;  
+            } 
         },
 
         elevation: {

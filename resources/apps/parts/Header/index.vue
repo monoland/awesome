@@ -102,7 +102,7 @@ import { debounce } from 'debounce';
 import { mapState, mapActions } from 'vuex';
 
 export default {
-    name: 'v-header',
+    name: 'v-page-header',
 
     props: {
         absolute: {

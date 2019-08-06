@@ -6,6 +6,6 @@ export const pageMixins = {
     },
 
     methods: {
-        ...mapActions([])
+        ...mapActions(['dataUrl', 'pageInfo', 'setRecord', 'tableHeaders'])
     }
 };

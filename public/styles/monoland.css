@@ -24047,6 +24047,9 @@ html {
 }.v-card > .v-bottom-navigation:last-child {
   border-radius: 0 !important;
 }
+.v-card--widget {
+  border: 1px solid rgba(17,17,17,0.1);
+}
 .v-header {
   position: relative;
 }
@@ -24107,7 +24110,7 @@ html {
   border-color: rgba(17,17,17,0.1);
 }
 .line-height1 {
-  line-height: 1;
+  line-height: 1 !important;
 }
 .v-page {
   position: relative;
@@ -24131,6 +24134,9 @@ html {
   padding-bottom: 56px;
   padding-top: 56px;
   z-index: 0;
+}
+.v-page__header:not(.mobile) ~ .v-page__content > .v-page__wrap {
+  padding: 16px;
 }
 .v-page__header--delete,
 .v-page__header--search {
@@ -24162,7 +24168,7 @@ html {
   max-width: 100%;
 }
 .v-sheet--offset {
-  margin-top: -24px;
+  margin-top: -16px;
 }
 .v-text-field.theme--light > .v-input__control > .v-input__slot:before {
   border-color: rgba(0,0,0,0.18) !important;
