@@ -33,7 +33,7 @@
                     </v-scale-transition>
 
                     <v-slide-x-reverse-transition>
-                        <v-toolbar-title key="title" v-show="toolbar.delete">{{ `${table.selected.length} Selected` }}</v-toolbar-title>
+                        <v-toolbar-title key="title" v-show="toolbar.delete">{{ `${table.selected.length}` }} <span class="d-inline-block ml-2">Selected</span> </v-toolbar-title>
                     </v-slide-x-reverse-transition>
                     
                     <v-spacer></v-spacer>

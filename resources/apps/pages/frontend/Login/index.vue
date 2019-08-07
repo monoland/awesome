@@ -68,11 +68,9 @@ export default {
         ...mapState(['login', 'snackbar']),
 
         cssbackground: function() {
-            let image = null;
+            let image = 'https://awesome.loc/mediafiles/original/2e18c72308d567a0939cd918f962a1abf3727035.jpg';
 
-            if (!image) return '';
-
-            return `background: url(${image}) no-repeat center center fixed;`;
+            return `background: url(${image}); background-position: center; background-repeat: no-repeat; background-size: cover;`;
         },
 
         formwidth: function() {

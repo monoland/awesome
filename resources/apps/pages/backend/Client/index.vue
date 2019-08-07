@@ -114,7 +114,7 @@ export default {
 
         this.pageInfo({
             icon: 'whatshot',
-            title: 'Klien',
+            title: 'OAuth Klien',
         });
 
         this.dataUrl(`/api/client`);

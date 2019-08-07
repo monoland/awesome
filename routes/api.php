@@ -19,7 +19,7 @@ Route::middleware(['api', 'auth:api'])->group(function () {
     Route::post('users/bulkdelete', 'Mono\UserController@bulkdelete');
 
     Route::resource('users', 'Mono\UserController')->only(['index', 'store', 'update', 'destroy']);
-    Route::resource('setting', 'Mono\SettingController')->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('setting', 'Mono\SettingController')->only(['index', 'store', 'update', 'show', 'destroy']);
     Route::resource('client', 'Mono\ClientController')->only(['index', 'store', 'update', 'destroy']);
     Route::post('document/bulkdelete', 'Mono\DocumentController@bulkdelete');
     Route::resource('document', 'Mono\DocumentController')->only(['index', 'update', 'destroy']);

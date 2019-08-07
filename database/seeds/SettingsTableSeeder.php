@@ -16,7 +16,8 @@ class SettingsTableSeeder extends Seeder
         $model->id = 'company';
         $model->name = 'Monoland';
         $model->slogan = 'Build your apps with passion';
-        $model->avatar = null;
+        $model->avatar = '';
+        $model->background = '';
         $model->height = '120px';
         $model->width = '120px';
         $model->save();

@@ -123,12 +123,13 @@ class Setting extends Model
         DB::beginTransaction();
 
         try {
-            if ($request->id === 'company') {
-                $model->name = $request->meta['name'];
-                $model->slogan = $request->meta['slogan'];
-                $model->avatar = $request->meta['avatar'];
-                $model->height = $request->meta['height'];
-                $model->width = $request->meta['width'];
+            if ($model->id === 'company') {
+                $model->name = $request->name;
+                $model->slogan = $request->slogan;
+                $model->avatar = $request->avatar;
+                $model->background = $request->background;
+                $model->height = $request->height;
+                $model->width = $request->width;
             }
 
             $model->save();

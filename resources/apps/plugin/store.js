@@ -148,6 +148,12 @@ export default new Vuex.Store({
             state.menus = state.auth.menus;
         },
 
+        field: function(state, payload) {
+            Object.keys(payload).forEach(key => {
+                state.record[key] = payload[key];
+            });
+        },
+
         form: function(state, payload) {
             Object.keys(payload).forEach(key => {
                 state.form[key] = payload[key];
@@ -617,6 +623,35 @@ export default new Vuex.Store({
             commit('upload', { callback: payload });
         },
 
+        settingAvatar: function({ commit }, payload) {
+            commit('field', { avatar: payload.path });
+        },
+
+        settingBackground: function({ commit }, payload) {
+            commit('field', { background: payload.path });
+        },
+
+        settingUpdate: async function({ dispatch, state }) {
+            try {
+                await state.http.put(
+                    '/api/setting/company', state.record
+                );
+                
+                dispatch('message', 'proses update berhasil!');
+            } catch (error) {
+                dispatch('errors', error);
+            }
+        },
+
+        settingFetch: async function({ commit, dispatch, state }) {
+            try {
+                let { data: { meta }} = await state.http.get('/api/setting/company');
+                commit('record', meta);
+            } catch (error) {
+                dispatch('errors', error);
+            }
+        },
+
         signin: async function({ commit, dispatch, state }) {
             try {
                 let token = await state.http.post('/oauth/token', {
@@ -652,7 +687,9 @@ export default new Vuex.Store({
             commit('tableHeaders', payload);
         },
 
-        trashFormClose: function({ commit }) {
+        trashFormClose: function({ commit, state }) {
+            state.table.selected.forEach(record => record.pinned = false);
+
             commit('trash', { state: false });
             commit('table', { selected: [] });
             commit('toolbar', { delete: false });
@@ -664,8 +701,7 @@ export default new Vuex.Store({
 
         errors: function({ commit, state }, payload) {
             if (payload.hasOwnProperty('response')) {
-                
-                let { message, error, hint } = payload.response.data;
+                let { message, errors, error, hint } = payload.response.data;
                 let status = payload.response.status;
 
                 if (status === 401) {
@@ -676,7 +712,13 @@ export default new Vuex.Store({
                         text: hint,
                         state: true
                     });
-                }  else if (error && !hint) {
+                } else if (error && !hint) {
+                    commit('snackbar', {
+                        color: 'error',
+                        text: message,
+                        state: true
+                    });
+                } else if (errors && message) {
                     commit('snackbar', {
                         color: 'error',
                         text: message,

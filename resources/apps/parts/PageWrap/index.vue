@@ -22,7 +22,7 @@
             <div class="v-page__wrap">
                 <slot></slot>
 
-                <v-page-trash></v-page-trash>
+                <v-page-trash v-if="!noTrash"></v-page-trash>
             </div>
         </div>
     </div>
@@ -44,6 +44,11 @@ export default {
         },
 
         flat: {
+            type: Boolean,
+            default: false
+        },
+
+        noTrash: {
             type: Boolean,
             default: false
         },
