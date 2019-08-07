@@ -1,11 +1,11 @@
 <template>
     <v-page-wrap crud absolute searchable with-progress>
         <template #add-button>
-            <v-uploader class="v-btn static" v-show="!disabled.add">
+            <v-document-upload class="v-btn static" v-show="!disabled.add">
                 <v-btn icon :color="$root.theme">
                     <v-icon>add</v-icon>
                 </v-btn>
-            </v-uploader>
+            </v-document-upload>
         </template>
 
         <v-desktop-table v-if="desktop"

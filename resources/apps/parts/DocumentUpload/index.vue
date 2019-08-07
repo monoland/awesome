@@ -11,7 +11,7 @@ import shortid from 'shortid';
 import qq from 'fine-uploader/lib/core';
 
 export default {
-    name: 'v-uploader',
+    name: 'v-document-upload',
 
     props: {
         acceptFiles: {
@@ -27,6 +27,11 @@ export default {
         callbacks: {
             type: Function,
             default:() => {}
+        },
+
+        documentName: {
+            type: String,
+            default: null
         }
     },
 
@@ -45,6 +50,8 @@ export default {
     methods: {
         initFineUploader: function() {
             let _this = this;
+            let requestUrl = this.documentName ? '/api/document?documentName=' + this.documentName : '/api/document';
+            let combineUrl = this.documentName ? '/api/document?documentName=' + this.documentName + '&completed=true' : '/api/document?completed=true';
 
             let options = {
                 button: document.getElementById(_this.uuid),
@@ -53,7 +60,7 @@ export default {
                     customHeaders: {
                         Authorization: _this.auth.token
                     },
-                    endpoint: '/api/document',
+                    endpoint: requestUrl,
                     filenameParam: 'fileName',
                     inputName: 'fileUpload',
                     uuidName: 'uuid',
@@ -71,7 +78,7 @@ export default {
                         totalParts: 'totalParts'
                     },
                     success: {
-                        endpoint: '/api/document?completed=true'
+                        endpoint: combineUrl
                     }
                 },
 
