@@ -52,57 +52,70 @@
                 <v-btn icon @click="$root.navdrawer = !$root.navdrawer">
                     <v-icon>menu</v-icon>
                 </v-btn>
+            </slot>
 
-                <v-toolbar-title>{{ page.title }}</v-toolbar-title>
+            <v-toolbar-title>{{ page.title }}</v-toolbar-title>
 
-                <v-spacer></v-spacer>
+            <v-progress-linear v-if="withProgress"
+                :active="upload.progress"
+                :indeterminate="upload.combined"
+                :color="$root.theme"
+                :value="upload.value"
+                absolute
+                bottom
+            ></v-progress-linear>
 
-                <template v-if="!$vuetify.breakpoint.xsOnly && crud">
-                    <div class="v-page__header--actions" :class="{ 'selected': selected }">
-                        <v-scale-transition>
+            <v-spacer></v-spacer>
+
+            <template v-if="!$vuetify.breakpoint.xsOnly && crud">
+                <div class="v-page__header--actions" :class="{ 'selected': selected }">
+                    <v-scale-transition>
+                        <slot name="add-button">
                             <v-btn class="static" icon key="newDesktop" :color="$root.theme" @click="newFormOpen" v-show="!disabled.add">
                                 <v-icon>add</v-icon>
                             </v-btn>
-                        </v-scale-transition>
-
-                        <slot></slot>
-
-                        <v-scale-transition>
-                            <v-btn icon key="edit" :color="$root.theme" @click="editFormOpen" v-show="!disabled.edit">
-                                <v-icon>edit</v-icon>
-                            </v-btn>
-                        </v-scale-transition>
-
-                        <v-scale-transition>
-                            <v-btn icon key="trash" :color="$root.theme" @click="trashFormOpen" v-show="!disabled.delete">
-                                <v-icon>delete</v-icon>
-                            </v-btn>
-                        </v-scale-transition>
-
-                        <v-scale-transition>
-                            <v-btn icon key="reload" :color="$root.theme" @click="recordReload" v-show="!disabled.refresh">
-                                <v-icon>refresh</v-icon>
-                            </v-btn>
-                        </v-scale-transition>
-                    </div>
-                </template>
-
-                <template v-else-if="!$vuetify.breakpoint.xsOnly && !crud">
+                        </slot>
+                    </v-scale-transition>
+                    
                     <slot></slot>
-                </template>
 
-                <template v-else-if="$vuetify.breakpoint.xsOnly && crud">
+                    <v-scale-transition>
+                        <v-btn icon key="edit" :color="$root.theme" @click="editFormOpen" v-show="!disabled.edit">
+                            <v-icon>edit</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
+
+                    <v-scale-transition>
+                        <v-btn icon key="trash" :color="$root.theme" @click="trashFormOpen" v-show="!disabled.delete">
+                            <v-icon>delete</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
+
+                    <v-scale-transition>
+                        <v-btn icon key="reload" :color="$root.theme" @click="recordReload" v-show="!disabled.refresh">
+                            <v-icon>refresh</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
+                </div>
+            </template>
+
+            <template v-else-if="!$vuetify.breakpoint.xsOnly && !crud">
+                <slot></slot>
+            </template>
+
+            <template v-else-if="$vuetify.breakpoint.xsOnly && crud">
+                <slot name="add-button">
                     <v-btn icon key="newMobile" :color="$root.theme" @click="newFormOpen" v-show="!disabled.add">
                         <v-icon>add</v-icon>
                     </v-btn>
-                    
-                    <slot></slot>
-                </template>
+                </slot>
+                
+                <slot></slot>
+            </template>
 
-                <v-btn icon :color="$root.theme" @click="searchOpen">
-                    <v-icon>search</v-icon>
-                </v-btn>
-            </slot>
+            <v-btn icon :color="$root.theme" @click="searchOpen" v-if="searchable">
+                <v-icon>search</v-icon>
+            </v-btn>
         </v-toolbar>
     </div>
 </template>
@@ -125,6 +138,11 @@ export default {
             default: false
         },
 
+        withProgress: {
+            type: Boolean,
+            default: false
+        },
+
         searchable: {
             type: Boolean,
             default: true
@@ -132,7 +150,7 @@ export default {
     },
 
     computed: {
-        ...mapState(['disabled', 'page', 'table', 'toolbar']),
+        ...mapState(['disabled', 'page', 'table', 'toolbar', 'upload']),
 
         selected: function() {
             return this.table.selected.length > 0;

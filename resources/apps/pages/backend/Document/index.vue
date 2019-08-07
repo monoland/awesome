@@ -1,5 +1,13 @@
 <template>
-    <v-page-wrap>
+    <v-page-wrap crud absolute searchable with-progress>
+        <template #add-button>
+            <v-uploader class="v-btn static" v-show="!disabled.add">
+                <v-btn icon :color="$root.theme">
+                    <v-icon>add</v-icon>
+                </v-btn>
+            </v-uploader>
+        </template>
+
         <v-desktop-table v-if="desktop"
             :single="single"
         ></v-desktop-table>
@@ -8,7 +16,7 @@
             <template v-slot:default="{ item }">
                 <v-list-item-content>
                     <v-list-item-title>{{ item.name }}</v-list-item-title>
-                    <v-list-item-subtitle class="f-nunito">{{ item.email }}</v-list-item-subtitle>
+                    <v-list-item-subtitle class="f-nunito">{{ item.mime }}</v-list-item-subtitle>
                 </v-list-item-content>
             </template>
         </v-mobile-table>
@@ -16,27 +24,10 @@
         <v-page-form small>
             <v-flex xs12>
                 <v-text-field
-                    label="Nama Pengguna"
+                    label="Nama Dokumen"
                     :color="$root.theme"
                     v-model="record.name"
                 ></v-text-field>
-            </v-flex>
-
-            <v-flex xs12>
-                <v-text-field
-                    label="Email Pengguna"
-                    :color="$root.theme"
-                    v-model="record.email"
-                ></v-text-field>
-            </v-flex>
-
-            <v-flex xs12>
-                <v-select
-                    label="Otentikasi"
-                    :items="authents"
-                    :color="$root.theme"
-                    v-model="record.authent_id"
-                ></v-select>
             </v-flex>
         </v-page-form>
     </v-page-wrap>
@@ -46,37 +37,37 @@
 import { pageMixins } from '@apps/mixins/PageMixins';
 
 export default {
-    name: 'page-user',
+    name: 'page-document',
 
     mixins: [pageMixins],
 
     data:() => ({
         single: false,
-        authents: [
-            { text: 'Administrator', value: 1 }
-        ]
     }),
 
     created() {
         this.tableHeaders([
             { text: 'Name', value: 'name' },
-            { text: 'Email', value: 'email' },
-            { text: 'Otentikasi', value: 'authent_name' },
+            { text: 'Ekstensi', value: 'extn' },
+            { text: 'Mime', value: 'mime' },
+            { text: 'Ukuran', value: 'byte' },
             { text: 'Updated', value: 'updated_at', class: 'date-updated' }
         ]);
 
         this.pageInfo({
-            icon: 'people',
-            title: 'Pengguna',
+            icon: 'filter_none',
+            title: 'Dokumen',
         });
 
-        this.dataUrl(`/api/users`);
+        this.dataUrl(`/api/document`);
 
         this.setRecord({
             id: null,
-            name: null,
-            email: null,
-            authent_id: null
+            name: null
+        });
+
+        this.setUploadCallback(() => {
+            this.$store.dispatch('recordReload');
         });
     }
 };

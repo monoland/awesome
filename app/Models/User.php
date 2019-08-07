@@ -6,7 +6,6 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserResource;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
 
@@ -106,9 +105,10 @@ class User extends Authenticatable
             $model->email = $request->email;
             $model->authent_id = $request->authent_id;
             $model->password = Hash::make('12345678');
+            $model->theme = 'blue-grey';
             $model->save();
 
-            DB::commit();            
+            DB::commit();
 
             return new UserResource($model);
         } catch (\Exception $e) {
@@ -137,7 +137,7 @@ class User extends Authenticatable
             if ($request->has('avatar')) {
                 $model->avatar = $request->avatar;
             }
-            
+
             if ($request->has('authorization')) {
                 $model->authorization = $request->authorization;
             }

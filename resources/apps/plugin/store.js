@@ -48,7 +48,8 @@ export default new Vuex.Store({
         toolbar: { search: false, delete: false, text: null },
         trash: { state: false },
         snackbar: { state: false, text: null, color: null },
-        table: { initial: true, loader: false, page: [10, 25, 50], total: 0, paging: {}, selected: [] }
+        table: { initial: true, loader: false, page: [10, 25, 50], total: 0, paging: {}, selected: [] },
+        upload: { callback: null, combined: false, progress: false, value: 0 }
     },
 
     mutations: {
@@ -186,6 +187,8 @@ export default new Vuex.Store({
         selectedPush: function(state, payload) {
             let idx = state.table.selected.findIndex(obj => obj.id === payload.id);
 
+            payload.pinned = idx === -1;
+
             if (idx === -1) {
                 state.table.selected.push(payload);
             } else {
@@ -216,6 +219,12 @@ export default new Vuex.Store({
         token: function(state, payload) {
             state.auth.token = payload;
             state.http.defaults.headers.common['Authorization'] = state.auth.token;
+        },
+
+        upload: function(state, payload) {
+            Object.keys(payload).forEach(key => {
+                state.upload[key] = payload[key];
+            });
         },
 
         user: function(state, payload) {
@@ -479,6 +488,10 @@ export default new Vuex.Store({
             commit('afterFormOpen', payload);
         },
 
+        setAfterSelected: function({ commit }, payload) {
+            commit('afterSelected', payload);
+        },
+
         setAfterUpdate: function({ commit }, payload) {
             commit('afterUpdate', payload);
         },
@@ -521,8 +534,8 @@ export default new Vuex.Store({
             });
         },
 
-        setAfterSelected: function({ commit }, payload) {
-            commit('afterSelected', payload);
+        setUploadCallback: function({ commit }, payload) {
+            commit('upload', { callback: payload });
         },
 
         signin: async function({ commit, dispatch, state }) {
@@ -564,7 +577,6 @@ export default new Vuex.Store({
             commit('trash', { state: false });
             commit('table', { selected: [] });
             commit('toolbar', { delete: false });
-            commit('pageInfo', { state: 'default' });
         },
 
         trashFormOpen: function({ commit }) {

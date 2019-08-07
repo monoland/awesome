@@ -1,0 +1,22 @@
+.v-uploader
+    position: relative
+
+    &__button
+        cursor: pointer
+        position: relative
+        z-index: 1
+
+        input
+            font-size: 29px !important
+            width: calc(100% + 185px)
+
+    &.v-btn.static
+        & ^[0]__button
+            position: absolute !important
+            height: 100%
+            width: 100%
+            border-radius: 50%
+
+        &:before
+            border-radius: 50%
+        

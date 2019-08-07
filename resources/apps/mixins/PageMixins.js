@@ -2,7 +2,10 @@ import { mapState, mapActions } from 'vuex';
 
 export const pageMixins = {
     computed: {
-        ...mapState(['headers', 'page', 'record', 'records', 'table', 'toolbar']),
+        ...mapState([
+            'disabled', 'form', 'headers', 'page', 
+            'record', 'records', 'table', 'toolbar'
+        ]),
 
         desktop: function() {
             return !this.$vuetify.breakpoint.xsOnly;
@@ -26,7 +29,8 @@ export const pageMixins = {
         ...mapActions([
             'afterSelected', 'dataUrl', 'recordFetch', 'initStore', 
             'overideState', 'pageInfo', 'recordNew', 'setRecord', 
-            'setAfterSelected', 'setOverideState', 'tableHeaders'
+            'setAfterSelected', 'setOverideState', 'tableHeaders',
+            'newFormOpen', 'setUploadCallback'
         ])
     },
 

@@ -26,9 +26,9 @@ export default {
 
     methods: {
         setFontLoaded: function() {
-            setTimeout(() => {
+            this.$nextTick(() => {
                 this.fontLoaded = true;
-            }, 500);
+            });
         }
     }
 };

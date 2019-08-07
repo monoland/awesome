@@ -1,6 +1,10 @@
+export { default as CodeEditor } from './CodeEditor';
 export { default as DesktopTable } from './DesktopTable';
-export { default as Header } from './Header';
 export { default as MenuApps } from './MenuApps';
 export { default as MobileTable } from './MobileTable';
 export { default as PageForm } from './PageForm';
+export { default as PageHeader } from './PageHeader';
+export { default as PageTrash } from './PageTrash';
+export { default as PageWrap } from './PageWrap';
+export { default as Uploader } from './Uploader';
 export { default as Widget } from './Widget';

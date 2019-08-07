@@ -19,6 +19,7 @@ const router = new VueRouter({
         { path: '/backend', component: backend.Base, meta: { auth: true }, children: [
             { path: '', redirect: { name: 'home' }},
             { path: 'client', name: 'client', component: backend.Client },
+            { path: 'document', name: 'document', component: backend.Document },
             { path: 'password', name: 'password', component: backend.Password },
             { path: 'profile', name: 'profile', component: backend.Profile },
             { path: 'setting', name: 'setting', component: backend.Setting },

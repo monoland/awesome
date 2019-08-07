@@ -4,8 +4,12 @@
             <v-list-item :key="index" v-press="() => recordPress(record)" @click="editFormOpen(record)">
                 <v-list-item-avatar>
                     <v-scale-transition mode="out-in">
-                        <v-icon :key="`icon-${onSelected}`" :class="dynClass(record)" class="white--text">
-                            {{ dynIcon(record) }}
+                        <v-icon 
+                            :key="`icon-${record.pinned}`" 
+                            :class="{ 'deep-orange': record.pinned, 'grey lighten-1': !record.pinned }"
+                            class="white--text"
+                        >
+                            {{ record.pinned ? 'done' : 'perm_identity' }}
                         </v-icon>
                     </v-scale-transition>
                 </v-list-item-avatar>
@@ -13,7 +17,7 @@
                 <slot :item="record" :index="index"></slot>
             </v-list-item>
 
-            <v-divider :key="`d-${index}`" inset></v-divider>
+            <v-divider :key="`divider-${index}`" inset></v-divider>
         </template>
     </v-list>
 </template>

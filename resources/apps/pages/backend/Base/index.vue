@@ -44,7 +44,7 @@
             :color="snackbar.color"
         >
             {{ snackbar.text }}
-            <v-btn dark flat @click="snackbarClose">Tutup</v-btn>
+            <v-btn dark text @click="snackbarClose">Tutup</v-btn>
         </v-snackbar>
     </v-app>
 </template>

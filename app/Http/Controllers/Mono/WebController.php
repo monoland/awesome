@@ -80,7 +80,9 @@ class WebController extends Controller
     {
         return response()->json([
             ['type' => 'item', 'icon' => 'dashboard', 'text' => 'Beranda', 'to' => ['name' => 'home']],
-            ['type' => 'subheader', 'text' => 'Masters', 'class' => 'mt-2'],
+            ['type' => 'subheader', 'text' => 'Master', 'class' => 'mt-2'],
+            ['type' => 'item', 'icon' => 'filter_none', 'text' => 'Dokumen', 'to' => ['name' => 'document']],
+            ['type' => 'subheader', 'text' => 'Utilitas', 'class' => 'mt-2'],
             ['type' => 'item', 'icon' => 'people', 'text' => 'Pengguna', 'to' => ['name' => 'user']],
             ['type' => 'item', 'icon' => 'whatshot', 'text' => 'OAuth Klien', 'to' => ['name' => 'client']],
         ]);
