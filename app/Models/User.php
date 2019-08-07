@@ -106,6 +106,8 @@ class User extends Authenticatable
             $model->authent_id = $request->authent_id;
             $model->password = Hash::make('12345678');
             $model->theme = 'blue-grey';
+            $model->avatar = '/images/photo-holder.png';
+            $model->background = '/images/drawer-holder.svg';
             $model->save();
 
             DB::commit();
@@ -138,12 +140,12 @@ class User extends Authenticatable
                 $model->avatar = $request->avatar;
             }
 
-            if ($request->has('authorization')) {
-                $model->authorization = $request->authorization;
+            if ($request->has('background')) {
+                $model->background = $request->background;
             }
 
-            if ($request->has('avatar')) {
-                $model->avatar = $request->avatar;
+            if ($request->has('authorization')) {
+                $model->authorization = $request->authorization;
             }
 
             if ($request->has('theme')) {

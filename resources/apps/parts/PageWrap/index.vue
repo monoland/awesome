@@ -2,13 +2,18 @@
     <div class="v-page">
         <slot name="toolbar">
             <v-page-header 
-                :absolute.sync="absolute"
-                :crud.sync="crud"  
-                :searchable.sync="searchable"
-                :withProgress.sync="withProgress"
+                :absolute="absolute"
+                :crud="crud"  
+                :flat="flat"
+                :searchable="searchable"
+                :withProgress="withProgress"
             >
                 <template #add-button>
                     <slot name="add-button"></slot>
+                </template>
+
+                <template #default>
+                    <slot name="toolbar-default"></slot>
                 </template>
             </v-page-header>
         </slot>
@@ -34,6 +39,11 @@ export default {
         },
 
         crud: {
+            type: Boolean,
+            default: false
+        },
+
+        flat: {
             type: Boolean,
             default: false
         },

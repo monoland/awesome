@@ -1,5 +1,5 @@
 <template>
-    <v-page-wrap>
+    <v-page-wrap crud absolute searchable with-progress>
         <v-widget table v-if="desktop">
             <v-data-table
                 v-model="table.selected"

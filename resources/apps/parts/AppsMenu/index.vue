@@ -1,11 +1,15 @@
 <template>
     <v-navigation-drawer v-model="$root.navdrawer" app>
-        <v-img :aspect-ratio="16/9" :class="`${$root.theme} lighten-3`" :src="image">
-            <v-layout column fill-height class="lightbox white" :class="`${$root.theme}--text`">
+        <v-img 
+            :aspect-ratio="16/9" 
+            :class="`${$root.theme} lighten-3`" 
+            :src="$root.background"
+        >
+            <v-layout column fill-height class="lightbox" :class="`${$root.theme}--text`">
                 <v-spacer></v-spacer>
 
                 <v-avatar size="56" class="ml-4 mb-3 elevation-2" color="white">
-                    <v-img src="/images/photo-holder.png"></v-img>
+                    <v-img :src="$root.avatar"></v-img>
                 </v-avatar>
                 
                 <v-flex class="v-user px-4 py-2 white--text" :class="{ 'expand': expand }" shrink @click="expand = !expand">
@@ -20,42 +24,42 @@
             </v-layout>
         </v-img>
 
+        <v-expand-transition>
+            <div class="v-user__menu" v-show="expand" v-if="!$vuetify.breakpoint.xsOnly">
+                <v-list>
+                    <v-list-item :active-class="$root.theme + '--text'" :to="{ name: 'profile' }">
+                        <v-list-item-action><v-icon>perm_identity</v-icon></v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Profile</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item :active-class="$root.theme + '--text'" :to="{ name: 'password' }">
+                        <v-list-item-action><v-icon>lock</v-icon></v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Katasandi</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item :active-class="$root.theme + '--text'" :to="{ name: 'setting' }" v-if="auth.authent === 'administrator'">
+                        <v-list-item-action><v-icon>settings</v-icon></v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Setting</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item :active-class="$root.theme + '--text'" @click="signout">
+                        <v-list-item-action><v-icon>exit_to_app</v-icon></v-list-item-action>
+                        <v-list-item-content>
+                            <v-list-item-title>Keluar</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </v-list>
+                <v-divider></v-divider>
+            </div>
+        </v-expand-transition>
+
         <v-list>
-            <v-expand-transition>
-                <div class="v-user__menu" v-show="expand" v-if="!$vuetify.breakpoint.xsOnly">
-                    <v-list>
-                        <v-list-item :active-class="$root.theme + '--text'" :to="{ name: 'profile' }">
-                            <v-list-item-action><v-icon>perm_identity</v-icon></v-list-item-action>
-                            <v-list-item-content>
-                                <v-list-item-title>Profile</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-
-                        <v-list-item :active-class="$root.theme + '--text'" :to="{ name: 'password' }">
-                            <v-list-item-action><v-icon>lock</v-icon></v-list-item-action>
-                            <v-list-item-content>
-                                <v-list-item-title>Katasandi</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-
-                        <v-list-item :active-class="$root.theme + '--text'" :to="{ name: 'setting' }" v-if="auth.authent === 'administrator'">
-                            <v-list-item-action><v-icon>settings</v-icon></v-list-item-action>
-                            <v-list-item-content>
-                                <v-list-item-title>Setting</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-
-                        <v-list-item :active-class="$root.theme + '--text'" @click="signout">
-                            <v-list-item-action><v-icon>exit_to_app</v-icon></v-list-item-action>
-                            <v-list-item-content>
-                                <v-list-item-title>Keluar</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list>
-                    <v-divider></v-divider>
-                </div>
-            </v-expand-transition>
-
             <template v-for="(menu, index) in menus">
                 <v-list-item :active-class="$root.theme + '--text'" :to="menu.to" :key="index" v-if="menu.type === 'item'">
                     <v-list-item-action><v-icon>{{ menu.icon }}</v-icon></v-list-item-action>
@@ -99,14 +103,7 @@
 import { mapState, mapActions } from 'vuex';
 
 export default {
-    name: 'v-menu-apps',
-
-    props: {
-        image: {
-            type: String,
-            default: ''
-        }
-    },
+    name: 'v-apps-menu',
 
     computed: {
         ...mapState(['auth', 'menus'])

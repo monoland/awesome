@@ -43,12 +43,30 @@ class Authentication
         if (!response) return;
 
         this.store.setItem('user', response);
+        this.store.setItem('avatar', response.avatar);
+        this.store.setItem('background', response.background);
         this.store.setItem('theme', response.theme);
         this.store.setItem('authent', response.authent_name);
     }
 
     set update(user) {
         this.store.setItem('user', user);
+    }
+
+    get avatar() {
+        return this.store.getItem('avatar');
+    }
+
+    set avatar(avatar) {
+        this.store.setItem('avatar', avatar);
+    }
+
+    get background() {
+        return this.store.getItem('background');
+    }
+
+    set background(background) {
+        this.store.setItem('background', background);
     }
 
     get authent() {

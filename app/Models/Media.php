@@ -25,6 +25,10 @@ class Media
                 return ['error' => 'File is too large.', 'preventRetry' => true];
             }
 
+            if (!$request->has('mediaName')) {
+                return ['error' => 'Must have a filename.', 'preventRetry' => true];
+            }
+
             $file = $request->file($handle->inputName);
 
             $file->storeAs($uuid, $partIndex, $handle->chunksFolder);
@@ -47,10 +51,15 @@ class Media
 
             $filename = explode('.', $request[$handle->fileName]);
             $extension = array_pop($filename);
+            $mediaName = sha1($request->mediaName);
 
             $chunkPath = storage_path($handle->chunksFolder . DIRECTORY_SEPARATOR . $uuid);
-            $storePath = $handle->uploadFolder . DIRECTORY_SEPARATOR . $uuid . '.' . $extension;
+            $storePath = $handle->uploadFolder . DIRECTORY_SEPARATOR . $mediaName . '.' . $extension;
             $mediaPath = storage_path($storePath);
+
+            if (File::exists($mediaPath)) {
+                unlink($mediaPath);
+            }
 
             $target = fopen($mediaPath, 'wb');
 
@@ -69,29 +78,16 @@ class Media
             $types = File::type(storage_path($storePath));
             $mimes = File::mimeType(storage_path($storePath));
 
-            $infos = [
+            $result = [
                 'filename' => $request[$handle->fileName],
                 'bytes' => $bytes,
                 'extension' => $exten,
                 'type' => $types,
                 'mime' => $mimes,
-                'path' => $uuid . '.' . $exten
+                'path' => route('imagecache', ['template' => 'original', 'filename' => $mediaName . '.' . $exten])
             ];
 
-            if (in_array($exten, ['jpg', 'jpeg', 'png'])) {
-                $result = array_merge($infos, [
-                    'url' => [
-                        'small' => route('imagecache', ['template' => 'small', 'filename' => $uuid . '.' . $exten]),
-                        'medium' => route('imagecache', ['template' => 'medium', 'filename' => $uuid . '.' . $exten]),
-                        'large' => route('imagecache', ['template' => 'large', 'filename' => $uuid . '.' . $exten]),
-                        'original' => route('imagecache', ['template' => 'original', 'filename' => $uuid . '.' . $exten])
-                    ]
-                ]);
-            } else {
-                $result = $infos;
-            }
-
-            return ['success' => true, 'uuid' => $uuid, 'fileinfo' => $result];
+            return ['success' => true, 'uuid' => $uuid, 'record' => $result];
         } catch (\Exception $e) {
             (new static)->cleanChunkDir($uuid);
 

@@ -21,6 +21,7 @@ class UserResource extends JsonResource
             'authent_id' => $this->authent_id,
             'authent_name' => $this->authent->name,
             'avatar' => $this->avatar,
+            'background' => $this->background,
             'theme' => $this->theme,
             'pinned' => false,
             'updated_at' => (string) $this->updated_at,

@@ -52,48 +52,72 @@ export default new Vuex.Store({
         upload: { callback: null, combined: false, progress: false, value: 0 }
     },
 
+    getters: {
+        avatar: function(state) {
+            return state.auth.avatar;
+        },
+
+        background: function(state) {
+            return state.auth.background;
+        },
+    },
+
     mutations: {
-        afterAddnew: function({ state }, payload) {
+        afterAddnew: function(state, payload) {
             state.afterAddnew = payload;
         },
 
-        afterDelete: function({ state }, payload) {
+        afterDelete: function(state, payload) {
             state.afterDelete = payload;
         },
 
-        afterFormOpen: function({ state }, payload) {
+        afterFormOpen: function(state, payload) {
             state.afterFormOpen = payload;
         },
 
-        afterUpdate: function({ state }, payload) {
+        afterUpdate: function(state, payload) {
             state.afterUpdate = payload;
         },
 
-        afterSelected: function({ state }, payload) {
+        afterSelected: function(state, payload) {
             state.afterSelected = payload;
         },
 
-        beforeAddnew: function({ state }, payload) {
+        auth: function(state, payload) {
+            Object.keys(payload).forEach(key => {
+                state.auth[key] = payload[key];
+            });
+        },
+
+        authAvatar: function(state, payload) {
+            state.auth.avatar = payload;
+        },
+
+        authBackground: function(state, payload) {
+            state.auth.background = payload;
+        },
+
+        beforeAddnew: function(state, payload) {
             state.beforeAddnew = payload;
         },
 
-        beforeDelete: function({ state }, payload) {
+        beforeDelete: function(state, payload) {
             state.beforeDelete = payload;
         },
 
-        beforeUpdate: function({ state }, payload) {
+        beforeUpdate: function(state, payload) {
             state.beforeUpdate = payload;
         },
 
-        cancelAddnew: function({ state }, payload) {
+        cancelAddnew: function(state, payload) {
             state.cancelAddnew = payload;
         },
 
-        cancelDelete: function({ state }, payload) {
+        cancelDelete: function(state, payload) {
             state.cancelDelete = payload;
         },
 
-        cancelUpdate: function({ state }, payload) {
+        cancelUpdate: function(state, payload) {
             state.cancelUpdate = payload;
         },
 
@@ -317,6 +341,61 @@ export default new Vuex.Store({
 
         pageInfo: function({ commit }, payload) {
             commit('pageInfo', payload);
+        },
+
+        passwordUpdate: async function({ dispatch, state }, payload) {
+            try {
+                await state.http.put(
+                    '/api/password', payload
+                );
+                
+                dispatch('message', 'update password berhasil!');
+            } catch (error) {
+                dispatch('errors', error);
+            }
+        },
+
+        profileAvatar: async function({ commit, dispatch, state }, payload) {
+            try {
+                let { data } = await state.http.put(
+                    '/api/profile', { avatar: payload.path }
+                );
+                
+                commit('auth', { avatar: data.avatar });
+                dispatch('message', 'update avatar berhasil!');
+            } catch (error) {
+                dispatch('errors', error);
+            }
+        },
+
+        profileBackground: async function({ commit, dispatch, state }, payload) {
+            try {
+                let { data } = await state.http.put(
+                    '/api/profile', { background: payload.path }
+                );
+                
+                commit('auth', { background: data.background });
+                dispatch('message', 'update background berhasil!');
+            } catch (error) {
+                dispatch('errors', error);
+            }
+        },
+
+        profileUpdate: async function({ commit, dispatch, state }, payload) {
+            try {
+                let { data } = await state.http.put(
+                    '/api/profile', {
+                        name: payload.name,
+                        email: payload.email,
+                        theme: payload.theme
+                    }
+                );
+
+                commit('auth', { name: data.name, email: data.email, theme: data.theme });
+                dispatch('message', 'update profile berhasil!');
+            } catch (error) {
+                dispatch('errors', error);
+            }
         },
 
         recordAddnew: async function({ commit, dispatch, state }) {

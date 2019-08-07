@@ -24199,6 +24199,9 @@ html {
 .v-card--widget {
   border: 1px solid rgba(17,17,17,0.1);
 }
+.v-card--flat.v-sheet {
+  border-radius: 0;
+}
 .v-header {
   position: relative;
 }
@@ -24242,7 +24245,7 @@ html {
   height: 100%;
   width: 100%;
   background: currentColor;
-  opacity: 0.72;
+  opacity: 0.54;
   z-index: 0;
 }
 .v-navigation-drawer .lightbox:after {
@@ -24273,9 +24276,10 @@ html {
   margin-right: 16px;
 }
 .v-page {
-  position: relative;
-  min-height: 100%;
+  position: absolute;
   height: 100%;
+  overflow: hidden;
+  width: 100%;
 }
 .v-page__header {
   position: relative;
@@ -24295,7 +24299,7 @@ html {
   padding-top: 56px;
   z-index: 0;
 }
-.v-page__header:not(.mobile) ~ .v-page__content > .v-page__wrap {
+.v-page__header:not(.mobile):not(.flat) ~ .v-page__content > .v-page__wrap {
   padding: 16px;
 }
 .v-page__header--actions {
@@ -24336,6 +24340,7 @@ html {
   position: relative;
   flex: 1 1 auto;
   max-width: 100%;
+  overflow-y: auto;
 }
 .v-sheet--offset {
   margin-top: -16px;
@@ -24379,20 +24384,19 @@ html {
 }
 .v-uploader__button {
   cursor: pointer;
-  position: relative;
+  position: absolute !important;
+  height: 100%;
+  width: 100%;
   z-index: 1;
 }
 .v-uploader__button input {
   font-size: 29px !important;
   width: calc(100% + 185px);
 }
-.v-uploader.v-btn.static .v-uploader__button {
-  position: absolute !important;
-  height: 100%;
-  width: 100%;
+.v-uploader.v-btn .v-uploader__button {
   border-radius: 50%;
 }
-.v-uploader.v-btn.static:before {
+.v-uploader.v-btn:before {
   border-radius: 50%;
 }
 .v-user {
@@ -24406,9 +24410,6 @@ html {
 }
 .v-user__content {
   flex: 1 1 0;
-}
-.v-user__menu .v-list {
-  padding-top: 0;
 }
 .v-user .v-user__action .v-icon {
   transform: rotate(0deg);

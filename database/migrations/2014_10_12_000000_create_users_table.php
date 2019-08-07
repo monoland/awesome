@@ -20,7 +20,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->bigInteger('authent_id')->index();
-            $table->string('avatar')->nullable();
+            $table->string('avatar')->nullable()->default('/images/photo-holder.png');
+            $table->string('background')->nullable()->default('/images/drawer-holder.svg');
             $table->string('theme')->default('blue-grey');
             $table->rememberToken();
             $table->timestamps();

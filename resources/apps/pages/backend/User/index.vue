@@ -1,5 +1,5 @@
 <template>
-    <v-page-wrap>
+    <v-page-wrap crud absolute searchable with-progress>
         <v-desktop-table v-if="desktop"
             :single="single"
         ></v-desktop-table>

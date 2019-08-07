@@ -1,6 +1,6 @@
 <template>
     <v-app v-cloak>
-        <v-menu-apps></v-menu-apps>
+        <v-apps-menu></v-apps-menu>
         
         <v-content :class="`${$root.theme} lighten-5`">
             <v-card height="100%" color="transparent" flat v-if="$vuetify.breakpoint.xsOnly">
@@ -60,7 +60,11 @@ export default {
     },
 
     created() {
-        if (!this.$root.theme) this.$root.theme = this.auth.theme;
+        if (!this.$root.theme) {
+            this.$root.theme = this.auth.theme;
+            this.$root.avatar = this.auth.avatar;
+            this.$root.background = this.auth.background;
+        }
     },
 
     methods: {

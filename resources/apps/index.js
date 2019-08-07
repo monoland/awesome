@@ -36,6 +36,8 @@ new Vue({
     vuetify,
     
     data:() => ({
+        avatar: null,
+        background: null,
         theme: null,
         navdrawer: false,
     }),

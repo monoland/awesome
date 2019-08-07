@@ -6,6 +6,7 @@ Route::middleware('throttle:200,1')->group(function () {
 
 Route::middleware(['auth:api', 'throttle:5000,1'])->group(function () {
     Route::post('document', 'Mono\DocumentController@store')->name('document.store');
+    Route::post('media', 'Mono\MediaController@store')->name('media.store');
 });
 
 Route::middleware(['api', 'auth:api'])->group(function () {

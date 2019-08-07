@@ -1,5 +1,5 @@
 <template>
-    <div class="v-page__header" :class="{ 'absolute': absolute, 'mobile': $vuetify.breakpoint.xsOnly }">
+    <div class="v-page__header" :class="{ 'absolute': absolute, 'flat': flat, 'mobile': $vuetify.breakpoint.xsOnly }">
         <v-slide-x-reverse-transition>
             <div class="v-page__header--search" key="search" v-show="toolbar.search">
                 <v-toolbar class="no-shadow" flat>
@@ -113,6 +113,10 @@
                 <slot></slot>
             </template>
 
+            <template v-else-if="$vuetify.breakpoint.xsOnly && !crud">
+                <slot></slot>
+            </template>
+
             <v-btn icon :color="$root.theme" @click="searchOpen" v-if="searchable">
                 <v-icon>search</v-icon>
             </v-btn>
@@ -134,6 +138,11 @@ export default {
         },
 
         crud: {
+            type: Boolean,
+            default: false
+        },
+
+        flat: {
             type: Boolean,
             default: false
         },
