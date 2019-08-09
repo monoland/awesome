@@ -36,7 +36,15 @@ export default new Vuex.Store({
 
         dataUrl: null,
         disabled: { add: false, delete: true, edit: true, find: false, link: true, refresh: false },
-        documents: [],
+        
+        document: { files: [], footerProps: { 
+            'items-per-page-options': [5, 10, 20]
+        }, initial: true, loader: false, options: {
+            itemsPerPage: 5, page: 1
+        }, params: {
+            itemsPerPage: 5, page: 1, sortBy: null, sortDesc: null
+        }, records: [], total: 0, selected: [], state: false },
+
         form: { state: false, mode: 'addnew' },
         login: { username: null, userpass: null },
         headers: [],
@@ -48,8 +56,16 @@ export default new Vuex.Store({
         toolbar: { search: false, delete: false, text: null },
         trash: { state: false },
         snackbar: { state: false, text: null, color: null },
-        table: { initial: true, loader: false, page: [10, 25, 50], total: 0, paging: {}, selected: [] },
-        upload: { callback: null, combined: false, progress: false, value: 0 }
+        
+        table: { initial: true, loader: false, options: {
+            itemsPerPage: 10, page: 1
+        }, footerProps: { 
+            'items-per-page-options': [10, 25, 50]
+        }, total: 0, params: {
+            itemsPerPage: 10, page: 1, sortBy: null, sortDesc: null
+        }, selected: [] },
+        
+        upload: { combined: false, progress: false, value: 0 }
     },
 
     getters: {
@@ -131,16 +147,24 @@ export default new Vuex.Store({
             });
         },
 
-        documents: function(state, payload) {
-            state.documents = payload;
+        document: function(state, payload) {
+            Object.keys(payload).forEach(key => {
+                state.document[key] = payload[key];
+            });
+        },
+
+        documentParams: function(state, payload) {
+            Object.keys(payload).forEach(key => {
+                state.document.params[key] = payload[key];
+            });
         },
 
         documentPush: function(state, payload) {
-            state.documents.push(payload);
+            state.document.records.push(payload);
         },
 
         documentSplice: function(state, index) {
-            state.documents.splice(index, 1);
+            state.document.records.splice(index, 1);
         },
 
         fetchAppMenus: function(state, payload) {
@@ -176,9 +200,9 @@ export default new Vuex.Store({
             });
         },
 
-        paging: function(state, payload) {
+        params: function(state, payload) {
             Object.keys(payload).forEach(key => {
-                state.table.paging[key] = payload[key];
+                state.table.params[key] = payload[key];
             });
         },
 
@@ -200,6 +224,12 @@ export default new Vuex.Store({
 
         recordSplice: function(state, index) {
             state.records.splice(index, 1);
+        },
+
+        tableParams: function(state, payload) {
+            Object.keys(payload).forEach(key => {
+                state.table.params[key] = payload[key];
+            });
         },
 
         toolbar: function(state, payload) {
@@ -277,6 +307,43 @@ export default new Vuex.Store({
 
         deleteOpen: function({ commit }) {
             commit('toolbar', { delete: true });
+        },
+
+        documentClose: function({ commit }) {
+            commit('document', { state: false });
+        },
+
+        documentFetch: async function({ commit, dispatch, state }, payload) {
+            try {
+                let { data: { data, meta }} = await state.http.get( 
+                    '/api/document', { params: payload.params }
+                );
+
+                commit('document', { 
+                    records: data, total: meta.total, selected: [] 
+                });
+            } catch (error) {
+                dispatch('errors', error);
+            }
+        },
+
+        documentOpen: function({ commit }) {
+            commit('document', { state: true });
+        },
+
+        documentRemove: function({ state }, payload) {
+            let idx = state.document.files.findIndex(obj => obj.id === payload.id);
+
+            if (idx !== -1) {
+                state.document.files.splice(idx, 1);
+            }
+        },
+
+        documentSelect: function({ commit, state }) {
+            commit('document', { 
+                files: state.document.selected,
+                state: false
+             });
         },
 
         editFormClose: function({ commit }) {
@@ -479,7 +546,11 @@ export default new Vuex.Store({
 
             try {
                 let url = state.dataUrl;
-                let params = state.table.paging;
+                let params = state.table.params;
+
+                if (url.includes('/api/document')) {
+                    commit('document', { records: [] });
+                }
 
                 if (payload) params = payload;
                 
@@ -508,11 +579,11 @@ export default new Vuex.Store({
 
         recordRefetch: function({commit, dispatch, state}, payload) {
             if (payload.new && (payload.new.length > 0)) {
-                commit('paging', { search: payload.new });
+                commit('params', { search: payload.new });
                 dispatch('recordFetch');
             } else {
                 if (payload.old && (payload.old.length > 0)) {
-                    commit('paging', { search: null });
+                    commit('params', { search: null });
                     dispatch('recordFetch');
                 } else {
                     if (state.table.initial) return;
@@ -617,10 +688,6 @@ export default new Vuex.Store({
             commit('setRecord', () => {
                 commit('record', payload);
             });
-        },
-
-        setUploadCallback: function({ commit }, payload) {
-            commit('upload', { callback: payload });
         },
 
         settingAvatar: function({ commit }, payload) {

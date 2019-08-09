@@ -74,7 +74,7 @@ class Document extends Model
      */
     public function scopeFilterOn($query, $request)
     {
-        $sortaz = $request->descending === 'true' ? 'desc' : 'asc';
+        $sortaz = $request->sortDesc === 'true' ? 'desc' : 'asc';
         $sortby = $request->has('sortBy') ? $request->sortBy : null;
         $search = $request->has('search') ? strtolower($request->search) : null;
 
@@ -187,10 +187,7 @@ class Document extends Model
             $model->hash = sha1($request->totalFileSize . '-' . $request->totalParts . '-' . $request->fileName);
 
             if (in_array($model->extn, ['jpg', 'jpeg', 'png'])) {
-                $model->furl = route('imagecache', [
-                    'template' => 'original',
-                    'filename' => $chunk_uuid . '.' . $model->extn
-                ]);
+                $model->furl = '/mediafiles/original/' . $chunk_uuid . '.' . $model->extn;
             }
 
             $request->user()->documents()->save($model);

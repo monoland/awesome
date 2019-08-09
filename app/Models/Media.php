@@ -84,7 +84,7 @@ class Media
                 'extension' => $exten,
                 'type' => $types,
                 'mime' => $mimes,
-                'path' => route('imagecache', ['template' => 'original', 'filename' => $mediaName . '.' . $exten])
+                'path' => '/mediafiles/original/' . $mediaName . '.' . $exten
             ];
 
             return ['success' => true, 'uuid' => $uuid, 'record' => $result];

@@ -1,6 +1,8 @@
 export { default as CodeEditor } from './CodeEditor';
 export { default as DesktopTable } from './DesktopTable';
 export { default as DocumentUpload } from './DocumentUpload';
+export { default as FileBrowser } from './FileBrowser';
+export { default as FileItem } from './FileItem';
 export { default as AppsMenu } from './AppsMenu';
 export { default as MediaUpload } from './MediaUpload';
 export { default as MobileTable } from './MobileTable';

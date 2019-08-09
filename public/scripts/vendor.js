@@ -12658,7 +12658,8 @@ var __assign = undefined && undefined.__assign || function () {
         staticClass: 'v-alert__dismissible',
         props: {
           color: color,
-          icon: true
+          icon: true,
+          small: true
         },
         attrs: {
           'aria-label': this.$vuetify.lang.t(this.closeLabel)
@@ -22155,6 +22156,12 @@ var __spread = undefined && undefined.__spread || function () {
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(_util_mixins__WEBPACK_IMPORTED_MODULE_0__["default"])(_mixins_header__WEBPACK_IMPORTED_MODULE_3__["default"]).extend({
   name: 'v-data-table-header-mobile',
+  props: {
+    sortByText: {
+      type: String,
+      default: '$vuetify.dataTable.sortBy'
+    }
+  },
   methods: {
     genSortChip: function genSortChip(props) {
       var _this = this;
@@ -22193,7 +22200,7 @@ var __spread = undefined && undefined.__spread || function () {
       });
       return this.$createElement(_VSelect_VSelect__WEBPACK_IMPORTED_MODULE_1__["default"], {
         props: {
-          label: 'Sort by',
+          label: this.$vuetify.lang.t(this.sortByText),
           items: sortHeaders,
           hideDetails: true,
           multiple: this.options.multiSort,
@@ -29612,7 +29619,8 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_12__["default"])(O
       touchArea: {
         left: 0,
         right: 0
-      }
+      },
+      stackMinZIndex: 6
     };
   },
   computed: {
@@ -31079,7 +31087,8 @@ var baseMixins = Object(_util_mixins__WEBPACK_IMPORTED_MODULE_7__["default"])(_m
       var backgroundOpacity = this.backgroundOpacity == null ? this.backgroundColor ? 1 : 0.3 : parseFloat(this.backgroundOpacity);
       return {
         opacity: backgroundOpacity,
-        width: Object(_util_helpers__WEBPACK_IMPORTED_MODULE_6__["convertToUnit"])(this.normalizedBuffer, '%')
+        left: Object(_util_helpers__WEBPACK_IMPORTED_MODULE_6__["convertToUnit"])(this.normalizedValue, '%'),
+        width: Object(_util_helpers__WEBPACK_IMPORTED_MODULE_6__["convertToUnit"])(this.normalizedBuffer - this.normalizedValue, '%')
       };
     },
     classes: function classes() {
@@ -32009,7 +32018,9 @@ __webpack_require__.r(__webpack_exports__);
       return props;
     },
     genHoverIndex: function genHoverIndex(e, i) {
-      return i + (this.isHalfEvent(e) ? 0.5 : 1);
+      var isHalf = this.isHalfEvent(e);
+      if (this.$vuetify.rtl) isHalf = !isHalf;
+      return i + (isHalf ? 0.5 : 1);
     },
     getIconName: function getIconName(props) {
       var isFull = this.isHovering ? props.isHovered : props.isFilled;
@@ -35230,7 +35241,7 @@ __webpack_require__.r(__webpack_exports__);
         'v-speed-dial--left': this.left,
         'v-speed-dial--absolute': this.absolute,
         'v-speed-dial--fixed': this.fixed
-      }, _a["v-speed-dial--direction-" + this.direction] = true, _a;
+      }, _a["v-speed-dial--direction-" + this.direction] = true, _a['v-speed-dial--is-active'] = this.isActive, _a;
     }
   },
   render: function render(h) {
@@ -35265,7 +35276,7 @@ __webpack_require__.r(__webpack_exports__);
     if (this.isActive) {
       var btnCount_1 = 0;
       children = (this.$slots.default || []).map(function (b, i) {
-        if (b.tag && typeof b.componentOptions !== 'undefined' && b.componentOptions.Ctor.options.name === 'v-btn') {
+        if (b.tag && typeof b.componentOptions !== 'undefined' && (b.componentOptions.Ctor.options.name === 'v-btn' || b.componentOptions.Ctor.options.name === 'v-tooltip')) {
           btnCount_1++;
           return h('div', {
             style: {
@@ -37092,6 +37103,9 @@ var dirtyTypes = ['color', 'file', 'time', 'date', 'datetime-local', 'week', 'mo
   watch: {
     labelValue: 'setLabelWidth',
     outlined: 'setLabelWidth',
+    prefix: function prefix() {
+      this.$nextTick(this.setPrefixWidth);
+    },
     isFocused: function isFocused(val) {
       // Sets validationState from validatable
       this.hasColor = val;
@@ -38889,10 +38903,6 @@ __webpack_require__.r(__webpack_exports__);
   name: 'v-tooltip',
   props: {
     closeDelay: {
-      type: [Number, String],
-      default: 0
-    },
-    debounce: {
       type: [Number, String],
       default: 0
     },
@@ -41823,7 +41833,7 @@ function () {
 
   Vuetify.install = _install__WEBPACK_IMPORTED_MODULE_0__["install"];
   Vuetify.installed = false;
-  Vuetify.version = "2.0.4";
+  Vuetify.version = "2.0.5";
   return Vuetify;
 }();
 
@@ -41972,7 +41982,8 @@ __webpack_require__.r(__webpack_exports__);
       sortDescending: ': Sorted descending. Activate to remove sorting.',
       sortAscending: ': Sorted ascending. Activate to sort descending.',
       sortNone: ': Not sorted. Activate to sort ascending.'
-    }
+    },
+    sortBy: 'Sort by'
   },
   dataFooter: {
     itemsPerPageText: 'Items per page:',

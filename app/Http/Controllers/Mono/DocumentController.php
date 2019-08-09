@@ -19,7 +19,7 @@ class DocumentController extends Controller
         $this->authorize('viewAny', Document::class);
         
         return new DocumentCollection(
-            $request->user()->documents()->filterOn($request)->paginate($request->rowsPerPage)
+            $request->user()->documents()->filterOn($request)->paginate($request->itemsPerPage)
         );
     }
 

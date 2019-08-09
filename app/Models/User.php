@@ -75,7 +75,7 @@ class User extends Authenticatable
      */
     public function scopeFilterOn($query, $request)
     {
-        $sortaz = $request->descending === 'true' ? 'desc' : 'asc';
+        $sortaz = $request->sortDesc === 'true' ? 'desc' : 'asc';
         $sortby = $request->has('sortBy') ? $request->sortBy : null;
         $search = $request->has('search') ? strtolower($request->search) : null;
 

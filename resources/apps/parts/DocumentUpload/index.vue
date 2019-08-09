@@ -24,7 +24,7 @@ export default {
             default:() => (['png', 'jpg', 'jpeg', 'pdf', 'zip']) 
         },
 
-        callbacks: {
+        callback: {
             type: Function,
             default:() => {}
         },
@@ -106,8 +106,8 @@ export default {
                         if (!response.success) {
                             _this.$store.dispatch('errors', response.error);
                         } else {
-                            if (typeof _this.upload.callback === 'function') {
-                                _this.upload.callback(response.record)
+                            if (typeof _this.callback === 'function') {
+                                _this.callback(response.record)
                             }
 
                             _this.$store.commit('upload', {
@@ -122,11 +122,14 @@ export default {
                         if (xhrOrXdr && xhrOrXdr.status == 401) {
                             _this.$store.dispatch('signout');
                         } else {
-                            _this.upload.value = 0;
-                            _this.progress = false;
-                            _this.combined = false;
                             _this.$store.dispatch('errors', errorReason);
                         }
+
+                        _this.$store.commit('upload', {
+                            combined: false,
+                            progress: false,
+                            value: 0
+                        });
                     },
                 }
             };

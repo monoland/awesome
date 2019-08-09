@@ -7,6 +7,9 @@
                 :items="records"
                 :single-select="single"
                 :loading="table.loader"
+                :options.sync="table.options"
+                :server-items-length="table.total"
+                :footer-props="table.footerProps"
                 item-key="id"
                 show-select
             >
@@ -109,7 +112,7 @@ export default {
             { text: 'Nama', value: 'name' },
             { text: 'Secret', value: 'secret' },
             { text: 'Revoke', value: 'lockicon', sortable: false, align: 'center', class: 'icontag' },
-            { text: 'Updated', value: 'updated_at', class: 'date-updated' }
+            { text: 'Updated', value: 'updated_at', class: 'date-field' }
         ]);
 
         this.pageInfo({

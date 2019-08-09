@@ -19,7 +19,7 @@ class ClientController extends Controller
         $this->authorize('viewAny', Client::class);
         
         return new ClientCollection(
-            Client::filterOn($request)->paginate($request->rowsPerPage)
+            Client::filterOn($request)->paginate($request->itemsPerPage)
         );
     }
 

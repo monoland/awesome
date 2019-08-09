@@ -6,6 +6,9 @@
             :items="records"
             :single-select="single"
             :loading="table.loader"
+            :options.sync="table.options"
+            :server-items-length="table.total"
+            :footer-props="table.footerProps"
             item-key="id"
             show-select
         >

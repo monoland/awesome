@@ -56,9 +56,27 @@ export const pageMixins = {
             }
         },
 
-        'table.paging': {
-            handler: function(newval) {
-                this.$store.dispatch('recordRefetch', { fetch: newval });
+        'table.options': {
+            handler: function(newVal) {
+                if (this.table.initial) {
+                    this.$store.commit('table', { initial: false });
+                    return;
+                }
+
+                this.$store.commit('tableParams', {
+                    itemsPerPage: newVal.itemsPerPage, 
+                    page: newVal.page, 
+                    sortBy: newVal.sortBy[0], 
+                    sortDesc: newVal.sortDesc[0]
+                });
+            },
+
+            deep: true
+        },
+
+        'table.params': {
+            handler: function(newVal) {
+                this.$store.dispatch('recordRefetch', { fetch: newVal });
             },
 
             deep: true

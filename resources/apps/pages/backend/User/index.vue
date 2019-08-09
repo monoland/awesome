@@ -62,7 +62,7 @@ export default {
             { text: 'Name', value: 'name' },
             { text: 'Email', value: 'email' },
             { text: 'Otentikasi', value: 'authent_name' },
-            { text: 'Updated', value: 'updated_at', class: 'date-updated' }
+            { text: 'Updated', value: 'updated_at', class: 'date-field' }
         ]);
 
         this.pageInfo({

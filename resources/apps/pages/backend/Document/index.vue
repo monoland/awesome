@@ -1,16 +1,35 @@
 <template>
     <v-page-wrap crud absolute searchable with-progress>
         <template #add-button>
-            <v-document-upload class="v-btn static" v-show="!disabled.add">
+            <v-document-upload class="v-btn static" :callback="callback"  v-show="!disabled.add">
                 <v-btn icon :color="$root.theme">
                     <v-icon>add</v-icon>
                 </v-btn>
             </v-document-upload>
         </template>
 
-        <v-desktop-table v-if="desktop"
-            :single="single"
-        ></v-desktop-table>
+        <v-widget table v-if="desktop">
+            <v-data-table
+                v-model="table.selected"
+                :headers="headers"
+                :items="records"
+                :single-select="single"
+                :loading="table.loader"
+                :options.sync="table.options"
+                :server-items-length="table.total"
+                :footer-props="table.footerProps"
+                item-key="id"
+                show-select
+            >
+                <template #:progress>
+                    <v-progress-linear :color="color" height="1" indeterminate></v-progress-linear>
+                </template>
+
+                <template v-slot:item.byte="{ value }">
+                    {{ $root.formatBytes(value) }}
+                </template>
+            </v-data-table>
+        </v-widget>
 
         <v-mobile-table icon="perm_identity" v-else>
             <template v-slot:default="{ item }">
@@ -50,8 +69,8 @@ export default {
             { text: 'Name', value: 'name' },
             { text: 'Ekstensi', value: 'extn' },
             { text: 'Mime', value: 'mime' },
-            { text: 'Ukuran', value: 'byte' },
-            { text: 'Updated', value: 'updated_at', class: 'date-updated' }
+            { text: 'Ukuran', value: 'byte', align: 'end', class: 'number-field' },
+            { text: 'Updated', value: 'updated_at', class: 'date-field' }
         ]);
 
         this.pageInfo({
@@ -65,10 +84,13 @@ export default {
             id: null,
             name: null
         });
+    },
 
-        this.setUploadCallback(() => {
+    methods: {
+        callback: function(record) {
+            this.$store.commit('documentPush', record);
             this.$store.dispatch('recordReload');
-        });
+        }
     }
 };
 </script>

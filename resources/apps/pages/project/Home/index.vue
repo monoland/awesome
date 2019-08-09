@@ -1,5 +1,6 @@
 <template>
     <v-page-wrap no-trash>
+        <!--  -->
     </v-page-wrap>
 </template>
 
@@ -18,8 +19,12 @@ export default {
         });
     },
 
+    data:() => ({
+        files: null
+    }),
+
     methods: {
-        ...mapActions(['pageInfo', 'initStore'])
+        ...mapActions(['documentOpen', 'pageInfo', 'initStore']),
     }
 };
 </script>

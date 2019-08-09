@@ -19,7 +19,7 @@ class UserController extends Controller
         $this->authorize('viewAny', User::class);
 
         return new UserCollection(
-            User::filterOn($request)->paginate($request->rowsPerPage)
+            User::filterOn($request)->paginate($request->itemsPerPage)
         );
     }
 

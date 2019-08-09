@@ -21,7 +21,7 @@ class DummyClass extends Controller
         $this->authorize('viewAny', DummyModelClass::class);
 
         return new DummyModelClassCollection(
-            $ParentDummyModelVariable->DummyModelVariables()->filterOn($request)->paginate($request->rowsPerPage)
+            $ParentDummyModelVariable->DummyModelVariables()->filterOn($request)->paginate($request->itemsPerPage)
         );
     }
 

@@ -1979,6 +1979,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'page-client',
@@ -2018,7 +2021,7 @@ __webpack_require__.r(__webpack_exports__);
     }, {
       text: 'Updated',
       value: 'updated_at',
-      "class": 'date-updated'
+      "class": 'date-field'
     }]);
     this.pageInfo({
       icon: 'whatshot',
@@ -2083,6 +2086,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'page-document',
@@ -2093,8 +2115,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    var _this = this;
-
     this.tableHeaders([{
       text: 'Name',
       value: 'name'
@@ -2106,11 +2126,13 @@ __webpack_require__.r(__webpack_exports__);
       value: 'mime'
     }, {
       text: 'Ukuran',
-      value: 'byte'
+      value: 'byte',
+      align: 'end',
+      "class": 'number-field'
     }, {
       text: 'Updated',
       value: 'updated_at',
-      "class": 'date-updated'
+      "class": 'date-field'
     }]);
     this.pageInfo({
       icon: 'filter_none',
@@ -2121,9 +2143,12 @@ __webpack_require__.r(__webpack_exports__);
       id: null,
       name: null
     });
-    this.setUploadCallback(function () {
-      _this.$store.dispatch('recordReload');
-    });
+  },
+  methods: {
+    callback: function callback(record) {
+      this.$store.commit('documentPush', record);
+      this.$store.dispatch('recordReload');
+    }
   }
 });
 
@@ -2618,7 +2643,7 @@ __webpack_require__.r(__webpack_exports__);
     }, {
       text: 'Updated',
       value: 'updated_at',
-      "class": 'date-updated'
+      "class": 'date-field'
     }]);
     this.pageInfo({
       icon: 'people',
@@ -2717,7 +2742,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: 'page-login',
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['login', 'snackbar']), {
     cssbackground: function cssbackground() {
-      var image = 'https://awesome.loc/mediafiles/original/2e18c72308d567a0939cd918f962a1abf3727035.jpg';
+      var image = '/mediafiles/original/2e18c72308d567a0939cd918f962a1abf3727035.jpg';
       return "background: url(".concat(image, "); background-position: center; background-repeat: no-repeat; background-size: cover;");
     },
     formwidth: function formwidth() {
@@ -2761,6 +2786,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'page-home',
@@ -2771,7 +2797,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       title: 'Beranda'
     });
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['pageInfo', 'initStore']))
+  data: function data() {
+    return {
+      files: null
+    };
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['documentOpen', 'pageInfo', 'initStore']))
 });
 
 /***/ }),
@@ -3311,6 +3342,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'v-desktop-table',
@@ -3374,7 +3408,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return ['png', 'jpg', 'jpeg', 'pdf', 'zip'];
       }
     },
-    callbacks: {
+    callback: {
       type: Function,
       "default": function _default() {}
     },
@@ -3451,8 +3485,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             if (!response.success) {
               _this.$store.dispatch('errors', response.error);
             } else {
-              if (typeof _this.upload.callback === 'function') {
-                _this.upload.callback(response.record);
+              if (typeof _this.callback === 'function') {
+                _this.callback(response.record);
               }
 
               _this.$store.commit('upload', {
@@ -3466,16 +3500,327 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             if (xhrOrXdr && xhrOrXdr.status == 401) {
               _this.$store.dispatch('signout');
             } else {
-              _this.upload.value = 0;
-              _this.progress = false;
-              _this.combined = false;
-
               _this.$store.dispatch('errors', errorReason);
             }
+
+            _this.$store.commit('upload', {
+              combined: false,
+              progress: false,
+              value: 0
+            });
           }
         }
       };
       return new fine_uploader_lib_core__WEBPACK_IMPORTED_MODULE_2___default.a.FineUploaderBasic(options);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/FileBrowser/index.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/FileBrowser/index.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var debounce__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! debounce */ "./node_modules/debounce/index.js");
+/* harmony import */ var debounce__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(debounce__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'v-file-browser',
+  props: {
+    multiple: {
+      type: Boolean,
+      "default": false
+    },
+    value: null
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['document', 'upload'])),
+  data: function data() {
+    return {
+      dialog: false,
+      headers: [{
+        text: 'Name',
+        value: 'name'
+      }, {
+        text: 'Ekstensi',
+        value: 'extn'
+      }, {
+        text: 'Mime',
+        value: 'mime'
+      }, {
+        text: 'Ukuran',
+        value: 'byte'
+      }],
+      loader: false,
+      params: {},
+      searchText: null,
+      selected: [],
+      tab: 'upload'
+    };
+  },
+  created: function created() {
+    if (this.value) this.$store.commit('document', {
+      files: this.value
+    });
+  },
+  mounted: function mounted() {
+    if (this.document.records.length === 0) this.documentFetch({
+      params: this.document.params
+    });
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['documentClose', 'documentFetch', 'documentRemove', 'documentSelect']), {
+    callback: function callback(record) {
+      this.$store.commit('documentPush', record);
+      this.tab = 'files';
+    },
+    close: function close() {
+      this.$store.dispatch('documentClose');
+      this.tab = 'upload';
+    },
+    bouncing: Object(debounce__WEBPACK_IMPORTED_MODULE_0__["debounce"])(function (value) {
+      this.$store.commit('documentParams', {
+        search: value
+      });
+      this.documentFetch({
+        params: this.document.params
+      });
+    }, 1000),
+    onSelect: function onSelect() {
+      var _this = this;
+
+      this.$store.dispatch('documentSelect');
+      this.$nextTick(function () {
+        _this.$emit('input', _this.document.files);
+
+        _this.tab = 'upload';
+      });
+    }
+  }),
+  watch: {
+    searchText: function searchText(newVal) {
+      this.bouncing(newVal);
+    },
+    'document.options': {
+      handler: function handler(newVal) {
+        if (this.document.initial) {
+          this.$store.commit('document', {
+            initial: false
+          });
+          return;
+        }
+
+        this.$store.commit('documentParams', {
+          itemsPerPage: newVal.itemsPerPage,
+          page: newVal.page,
+          sortBy: newVal.sortBy[0],
+          sortDesc: newVal.sortDesc[0]
+        });
+      },
+      deep: true
+    },
+    'document.params': {
+      handler: function handler(newVal) {
+        if (this.document.initial) return;
+        this.documentFetch({
+          params: newVal
+        });
+      },
+      deep: true
+    },
+    value: function value(newVal) {
+      if (newVal) this.$store.commit('document', {
+        files: newVal
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/FileItem/index.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/FileItem/index.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'v-fileitem',
+  props: {
+    clickable: {
+      type: Boolean,
+      "default": false
+    },
+    closeable: {
+      type: Boolean,
+      "default": false
+    },
+    icon: {
+      type: String,
+      "default": 'attach_file'
+    }
+  },
+  methods: {
+    onClick: function onClick() {
+      if (this.clickable) this.$emit('click');
+    },
+    onClose: function onClose() {
+      if (!this.clickable) this.$emit('click');
     }
   }
 });
@@ -24241,8 +24586,16 @@ var render = function() {
                   items: _vm.records,
                   "single-select": _vm.single,
                   loading: _vm.table.loader,
+                  options: _vm.table.options,
+                  "server-items-length": _vm.table.total,
+                  "footer-props": _vm.table.footerProps,
                   "item-key": "id",
                   "show-select": ""
+                },
+                on: {
+                  "update:options": function($event) {
+                    return _vm.$set(_vm.table, "options", $event)
+                  }
                 },
                 scopedSlots: _vm._u(
                   [
@@ -24478,7 +24831,8 @@ var render = function() {
                       expression: "!disabled.add"
                     }
                   ],
-                  staticClass: "v-btn static"
+                  staticClass: "v-btn static",
+                  attrs: { callback: _vm.callback }
                 },
                 [
                   _c(
@@ -24499,7 +24853,73 @@ var render = function() {
     [
       _vm._v(" "),
       _vm.desktop
-        ? _c("v-desktop-table", { attrs: { single: _vm.single } })
+        ? _c(
+            "v-widget",
+            { attrs: { table: "" } },
+            [
+              _c("v-data-table", {
+                attrs: {
+                  headers: _vm.headers,
+                  items: _vm.records,
+                  "single-select": _vm.single,
+                  loading: _vm.table.loader,
+                  options: _vm.table.options,
+                  "server-items-length": _vm.table.total,
+                  "footer-props": _vm.table.footerProps,
+                  "item-key": "id",
+                  "show-select": ""
+                },
+                on: {
+                  "update:options": function($event) {
+                    return _vm.$set(_vm.table, "options", $event)
+                  }
+                },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: ":progress",
+                      fn: function() {
+                        return [
+                          _c("v-progress-linear", {
+                            attrs: {
+                              color: _vm.color,
+                              height: "1",
+                              indeterminate: ""
+                            }
+                          })
+                        ]
+                      },
+                      proxy: true
+                    },
+                    {
+                      key: "item.byte",
+                      fn: function(ref) {
+                        var value = ref.value
+                        return [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.$root.formatBytes(value)) +
+                              "\n            "
+                          )
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  4060277009
+                ),
+                model: {
+                  value: _vm.table.selected,
+                  callback: function($$v) {
+                    _vm.$set(_vm.table, "selected", $$v)
+                  },
+                  expression: "table.selected"
+                }
+              })
+            ],
+            1
+          )
         : _c("v-mobile-table", {
             attrs: { icon: "perm_identity" },
             scopedSlots: _vm._u([
@@ -26037,8 +26457,16 @@ var render = function() {
           items: _vm.records,
           "single-select": _vm.single,
           loading: _vm.table.loader,
+          options: _vm.table.options,
+          "server-items-length": _vm.table.total,
+          "footer-props": _vm.table.footerProps,
           "item-key": "id",
           "show-select": ""
+        },
+        on: {
+          "update:options": function($event) {
+            return _vm.$set(_vm.table, "options", $event)
+          }
         },
         scopedSlots: _vm._u([
           {
@@ -26096,6 +26524,511 @@ var render = function() {
       _vm._t("default")
     ],
     2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/FileBrowser/index.vue?vue&type=template&id=65c815ca&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/FileBrowser/index.vue?vue&type=template&id=65c815ca& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-dialog",
+    {
+      attrs: { persistent: "", width: "800" },
+      scopedSlots: _vm._u([
+        {
+          key: "activator",
+          fn: function(ref) {
+            var on = ref.on
+            return [
+              _c("div", { staticClass: "v-file" }, [
+                _c(
+                  "div",
+                  { staticClass: "v-file__wrap" },
+                  [
+                    _c(
+                      "v-slide-x-transition",
+                      { attrs: { mode: "in-out" } },
+                      [
+                        _vm.document.files.length === 0
+                          ? _c(
+                              "v-fileitem",
+                              _vm._g(
+                                {
+                                  staticClass: "v-file__bttn",
+                                  attrs: { clickable: "" }
+                                },
+                                on
+                              ),
+                              [
+                                _vm._v(
+                                  "\n                        Klik untuk buka file browser\n                    "
+                                )
+                              ]
+                            )
+                          : _vm._e()
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-slide-x-reverse-transition",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.document.files.length,
+                            expression: "document.files.length"
+                          }
+                        ],
+                        staticClass: "v-file__list",
+                        attrs: { group: "", tag: "div", mode: "in-out" }
+                      },
+                      [
+                        _vm._l(_vm.document.files, function(file, index) {
+                          return [
+                            _c(
+                              "v-fileitem",
+                              {
+                                key: index,
+                                staticClass: "v-file__item",
+                                attrs: { closeable: "" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.documentRemove(file)
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "d-flex justify-space-between"
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "text-truncate" },
+                                      [_vm._v(_vm._s(file.name))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "v-chip",
+                                      {
+                                        attrs: {
+                                          small: "",
+                                          label: "",
+                                          color: _vm.$root.theme,
+                                          dark: ""
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "text-truncate" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                "Size: " +
+                                                  _vm.$root.formatBytes(
+                                                    file.byte
+                                                  )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            )
+                          ]
+                        })
+                      ],
+                      2
+                    )
+                  ],
+                  1
+                )
+              ])
+            ]
+          }
+        }
+      ]),
+      model: {
+        value: _vm.document.state,
+        callback: function($$v) {
+          _vm.$set(_vm.document, "state", $$v)
+        },
+        expression: "document.state"
+      }
+    },
+    [
+      _vm._v(" "),
+      _c(
+        "v-card",
+        { staticClass: "v-filebrowser" },
+        [
+          _c(
+            "v-toolbar",
+            {
+              attrs: { color: _vm.$root.theme, dark: "", flat: "" },
+              scopedSlots: _vm._u([
+                {
+                  key: "extension",
+                  fn: function() {
+                    return [
+                      _c(
+                        "v-tabs",
+                        {
+                          staticClass: "px-4",
+                          attrs: { "background-color": "transparent" },
+                          model: {
+                            value: _vm.tab,
+                            callback: function($$v) {
+                              _vm.tab = $$v
+                            },
+                            expression: "tab"
+                          }
+                        },
+                        [
+                          _c("v-tabs-slider", { attrs: { color: "white" } }),
+                          _vm._v(" "),
+                          _c("v-tab", { attrs: { href: "#upload" } }, [
+                            _vm._v("unggah")
+                          ]),
+                          _vm._v(" "),
+                          _c("v-tab", { attrs: { href: "#files" } }, [
+                            _vm._v("files")
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "v-filebrowser__search" },
+                        [
+                          _c(
+                            "v-slide-x-reverse-transition",
+                            [
+                              _vm.tab === "files"
+                                ? _c("v-text-field", {
+                                    attrs: {
+                                      label: "Cari File",
+                                      "hide-details": "",
+                                      "single-line": ""
+                                    },
+                                    model: {
+                                      value: _vm.searchText,
+                                      callback: function($$v) {
+                                        _vm.searchText = $$v
+                                      },
+                                      expression: "searchText"
+                                    }
+                                  })
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  },
+                  proxy: true
+                }
+              ])
+            },
+            [
+              _c("v-toolbar-title", [_vm._v("File Browser")]),
+              _vm._v(" "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "v-btn",
+                { attrs: { icon: "" }, on: { click: _vm.close } },
+                [_c("v-icon", [_vm._v("close")])],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-text",
+            { staticClass: "v-filebrowser__wrap pa-0" },
+            [
+              _c("v-slide-x-transition", { attrs: { mode: "in-out" } }, [
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.tab === "upload",
+                        expression: "tab === 'upload'"
+                      }
+                    ],
+                    staticClass: "v-filebrowser__content"
+                  },
+                  [
+                    _c(
+                      "v-layout",
+                      {
+                        staticClass: "lightbox",
+                        class: _vm.$root.theme + "--text",
+                        attrs: {
+                          "fill-height": "",
+                          "align-center": "",
+                          "justify-center": ""
+                        }
+                      },
+                      [
+                        _c(
+                          "v-document-upload",
+                          {
+                            staticClass: "v-btn",
+                            attrs: { callback: _vm.callback }
+                          },
+                          [
+                            _c(
+                              "v-btn",
+                              {
+                                attrs: {
+                                  depressed: "",
+                                  color: _vm.$root.theme,
+                                  dark: ""
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                unggah file\n                            "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("v-progress-linear", {
+                              attrs: {
+                                active: _vm.upload.progress,
+                                indeterminate: _vm.upload.combined,
+                                value: _vm.upload.value,
+                                absolute: "",
+                                bottom: "",
+                                color: "yellow"
+                              }
+                            })
+                          ],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-slide-x-reverse-transition",
+                { attrs: { mode: "in-out" } },
+                [
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.tab === "files",
+                          expression: "tab === 'files'"
+                        }
+                      ],
+                      staticClass: "v-filebrowser__content pa-0"
+                    },
+                    [
+                      _c("v-data-table", {
+                        attrs: {
+                          headers: _vm.headers,
+                          items: _vm.document.records,
+                          "single-select": !_vm.multiple,
+                          loading: _vm.document.loader,
+                          options: _vm.document.options,
+                          "server-items-length": _vm.document.total,
+                          "footer-props": _vm.document.footerProps,
+                          "item-key": "id",
+                          "fixed-header": "",
+                          "show-select": "",
+                          height: "288px"
+                        },
+                        on: {
+                          "update:options": function($event) {
+                            return _vm.$set(_vm.document, "options", $event)
+                          }
+                        },
+                        scopedSlots: _vm._u([
+                          {
+                            key: ":progress",
+                            fn: function() {
+                              return [
+                                _c("v-progress-linear", {
+                                  attrs: {
+                                    color: _vm.color,
+                                    height: "1",
+                                    indeterminate: ""
+                                  }
+                                })
+                              ]
+                            },
+                            proxy: true
+                          }
+                        ]),
+                        model: {
+                          value: _vm.document.selected,
+                          callback: function($$v) {
+                            _vm.$set(_vm.document, "selected", $$v)
+                          },
+                          expression: "document.selected"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "v-filebrowser__foot" },
+            [
+              _c(
+                "v-btn",
+                {
+                  attrs: {
+                    color: _vm.$root.theme,
+                    disabled:
+                      _vm.tab === "upload" ||
+                      _vm.document.selected.length === 0,
+                    dark:
+                      _vm.tab === "files" && _vm.document.selected.length !== 0,
+                    depressed: ""
+                  },
+                  on: { click: _vm.onSelect }
+                },
+                [_vm._v("select")]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/FileItem/index.vue?vue&type=template&id=54f42096&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/apps/parts/FileItem/index.vue?vue&type=template&id=54f42096& ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass:
+        "v-alert v-sheet theme--light v-alert--border v-alert--border-left",
+      on: { click: _vm.onClick }
+    },
+    [
+      _c(
+        "div",
+        { staticClass: "v-alert__wrapper" },
+        [
+          _c(
+            "v-icon",
+            { staticClass: "v-alert__icon", attrs: { color: _vm.$root.theme } },
+            [_vm._v(_vm._s(_vm.icon))]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "v-alert__content" },
+            [_vm._t("default")],
+            2
+          ),
+          _vm._v(" "),
+          _c("div", {
+            staticClass:
+              "v-alert__border v-alert__border--left cyan v-alert__border--has-color"
+          }),
+          _vm._v(" "),
+          _vm.closeable && !_vm.clickable
+            ? _c(
+                "v-btn",
+                {
+                  staticClass: "v-alert__dismissible",
+                  attrs: {
+                    color: _vm.$root.theme,
+                    depressed: "",
+                    small: "",
+                    icon: ""
+                  },
+                  on: {
+                    click: function($event) {
+                      $event.stopPropagation()
+                      return _vm.onClose($event)
+                    }
+                  }
+                },
+                [_c("v-icon", [_vm._v("cancel")])],
+                1
+              )
+            : _vm._e()
+        ],
+        1
+      )
+    ]
   )
 }
 var staticRenderFns = []
@@ -27227,7 +28160,7 @@ function normalizeComponent (
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /*!
-  * vue-router v3.0.7
+  * vue-router v3.1.1
   * (c) 2019 Evan You
   * @license MIT
   */
@@ -27247,6 +28180,14 @@ function warn (condition, message) {
 
 function isError (err) {
   return Object.prototype.toString.call(err).indexOf('Error') > -1
+}
+
+function isExtendedError (constructor, err) {
+  return (
+    err instanceof constructor ||
+    // _name is to support IE9 too
+    (err && (err.name === constructor.name || err._name === constructor._name))
+  )
 }
 
 function extend (a, b) {
@@ -27615,200 +28556,6 @@ function queryIncludes (current, target) {
   }
   return true
 }
-
-/*  */
-
-// work around weird flow bug
-var toTypes = [String, Object];
-var eventTypes = [String, Array];
-
-var Link = {
-  name: 'RouterLink',
-  props: {
-    to: {
-      type: toTypes,
-      required: true
-    },
-    tag: {
-      type: String,
-      default: 'a'
-    },
-    exact: Boolean,
-    append: Boolean,
-    replace: Boolean,
-    activeClass: String,
-    exactActiveClass: String,
-    event: {
-      type: eventTypes,
-      default: 'click'
-    }
-  },
-  render: function render (h) {
-    var this$1 = this;
-
-    var router = this.$router;
-    var current = this.$route;
-    var ref = router.resolve(this.to, current, this.append);
-    var location = ref.location;
-    var route = ref.route;
-    var href = ref.href;
-
-    var classes = {};
-    var globalActiveClass = router.options.linkActiveClass;
-    var globalExactActiveClass = router.options.linkExactActiveClass;
-    // Support global empty active class
-    var activeClassFallback = globalActiveClass == null
-      ? 'router-link-active'
-      : globalActiveClass;
-    var exactActiveClassFallback = globalExactActiveClass == null
-      ? 'router-link-exact-active'
-      : globalExactActiveClass;
-    var activeClass = this.activeClass == null
-      ? activeClassFallback
-      : this.activeClass;
-    var exactActiveClass = this.exactActiveClass == null
-      ? exactActiveClassFallback
-      : this.exactActiveClass;
-    var compareTarget = location.path
-      ? createRoute(null, location, null, router)
-      : route;
-
-    classes[exactActiveClass] = isSameRoute(current, compareTarget);
-    classes[activeClass] = this.exact
-      ? classes[exactActiveClass]
-      : isIncludedRoute(current, compareTarget);
-
-    var handler = function (e) {
-      if (guardEvent(e)) {
-        if (this$1.replace) {
-          router.replace(location);
-        } else {
-          router.push(location);
-        }
-      }
-    };
-
-    var on = { click: guardEvent };
-    if (Array.isArray(this.event)) {
-      this.event.forEach(function (e) { on[e] = handler; });
-    } else {
-      on[this.event] = handler;
-    }
-
-    var data = {
-      class: classes
-    };
-
-    if (this.tag === 'a') {
-      data.on = on;
-      data.attrs = { href: href };
-    } else {
-      // find the first <a> child and apply listener and href
-      var a = findAnchor(this.$slots.default);
-      if (a) {
-        // in case the <a> is a static node
-        a.isStatic = false;
-        var aData = a.data = extend({}, a.data);
-        aData.on = on;
-        var aAttrs = a.data.attrs = extend({}, a.data.attrs);
-        aAttrs.href = href;
-      } else {
-        // doesn't have <a> child, apply listener to self
-        data.on = on;
-      }
-    }
-
-    return h(this.tag, data, this.$slots.default)
-  }
-}
-
-function guardEvent (e) {
-  // don't redirect with control keys
-  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) { return }
-  // don't redirect when preventDefault called
-  if (e.defaultPrevented) { return }
-  // don't redirect on right click
-  if (e.button !== undefined && e.button !== 0) { return }
-  // don't redirect if `target="_blank"`
-  if (e.currentTarget && e.currentTarget.getAttribute) {
-    var target = e.currentTarget.getAttribute('target');
-    if (/\b_blank\b/i.test(target)) { return }
-  }
-  // this may be a Weex event which doesn't have this method
-  if (e.preventDefault) {
-    e.preventDefault();
-  }
-  return true
-}
-
-function findAnchor (children) {
-  if (children) {
-    var child;
-    for (var i = 0; i < children.length; i++) {
-      child = children[i];
-      if (child.tag === 'a') {
-        return child
-      }
-      if (child.children && (child = findAnchor(child.children))) {
-        return child
-      }
-    }
-  }
-}
-
-var _Vue;
-
-function install (Vue) {
-  if (install.installed && _Vue === Vue) { return }
-  install.installed = true;
-
-  _Vue = Vue;
-
-  var isDef = function (v) { return v !== undefined; };
-
-  var registerInstance = function (vm, callVal) {
-    var i = vm.$options._parentVnode;
-    if (isDef(i) && isDef(i = i.data) && isDef(i = i.registerRouteInstance)) {
-      i(vm, callVal);
-    }
-  };
-
-  Vue.mixin({
-    beforeCreate: function beforeCreate () {
-      if (isDef(this.$options.router)) {
-        this._routerRoot = this;
-        this._router = this.$options.router;
-        this._router.init(this);
-        Vue.util.defineReactive(this, '_route', this._router.history.current);
-      } else {
-        this._routerRoot = (this.$parent && this.$parent._routerRoot) || this;
-      }
-      registerInstance(this, this);
-    },
-    destroyed: function destroyed () {
-      registerInstance(this);
-    }
-  });
-
-  Object.defineProperty(Vue.prototype, '$router', {
-    get: function get () { return this._routerRoot._router }
-  });
-
-  Object.defineProperty(Vue.prototype, '$route', {
-    get: function get () { return this._routerRoot._route }
-  });
-
-  Vue.component('RouterView', View);
-  Vue.component('RouterLink', Link);
-
-  var strats = Vue.config.optionMergeStrategies;
-  // use the same hook merging strategy for route hooks
-  strats.beforeRouteEnter = strats.beforeRouteLeave = strats.beforeRouteUpdate = strats.created;
-}
-
-/*  */
-
-var inBrowser = typeof window !== 'undefined';
 
 /*  */
 
@@ -28347,171 +29094,6 @@ function fillParams (
 
 /*  */
 
-function createRouteMap (
-  routes,
-  oldPathList,
-  oldPathMap,
-  oldNameMap
-) {
-  // the path list is used to control path matching priority
-  var pathList = oldPathList || [];
-  // $flow-disable-line
-  var pathMap = oldPathMap || Object.create(null);
-  // $flow-disable-line
-  var nameMap = oldNameMap || Object.create(null);
-
-  routes.forEach(function (route) {
-    addRouteRecord(pathList, pathMap, nameMap, route);
-  });
-
-  // ensure wildcard routes are always at the end
-  for (var i = 0, l = pathList.length; i < l; i++) {
-    if (pathList[i] === '*') {
-      pathList.push(pathList.splice(i, 1)[0]);
-      l--;
-      i--;
-    }
-  }
-
-  return {
-    pathList: pathList,
-    pathMap: pathMap,
-    nameMap: nameMap
-  }
-}
-
-function addRouteRecord (
-  pathList,
-  pathMap,
-  nameMap,
-  route,
-  parent,
-  matchAs
-) {
-  var path = route.path;
-  var name = route.name;
-  if (true) {
-    assert(path != null, "\"path\" is required in a route configuration.");
-    assert(
-      typeof route.component !== 'string',
-      "route config \"component\" for path: " + (String(path || name)) + " cannot be a " +
-      "string id. Use an actual component instead."
-    );
-  }
-
-  var pathToRegexpOptions = route.pathToRegexpOptions || {};
-  var normalizedPath = normalizePath(
-    path,
-    parent,
-    pathToRegexpOptions.strict
-  );
-
-  if (typeof route.caseSensitive === 'boolean') {
-    pathToRegexpOptions.sensitive = route.caseSensitive;
-  }
-
-  var record = {
-    path: normalizedPath,
-    regex: compileRouteRegex(normalizedPath, pathToRegexpOptions),
-    components: route.components || { default: route.component },
-    instances: {},
-    name: name,
-    parent: parent,
-    matchAs: matchAs,
-    redirect: route.redirect,
-    beforeEnter: route.beforeEnter,
-    meta: route.meta || {},
-    props: route.props == null
-      ? {}
-      : route.components
-        ? route.props
-        : { default: route.props }
-  };
-
-  if (route.children) {
-    // Warn if route is named, does not redirect and has a default child route.
-    // If users navigate to this route by name, the default child will
-    // not be rendered (GH Issue #629)
-    if (true) {
-      if (route.name && !route.redirect && route.children.some(function (child) { return /^\/?$/.test(child.path); })) {
-        warn(
-          false,
-          "Named Route '" + (route.name) + "' has a default child route. " +
-          "When navigating to this named route (:to=\"{name: '" + (route.name) + "'\"), " +
-          "the default child route will not be rendered. Remove the name from " +
-          "this route and use the name of the default child route for named " +
-          "links instead."
-        );
-      }
-    }
-    route.children.forEach(function (child) {
-      var childMatchAs = matchAs
-        ? cleanPath((matchAs + "/" + (child.path)))
-        : undefined;
-      addRouteRecord(pathList, pathMap, nameMap, child, record, childMatchAs);
-    });
-  }
-
-  if (route.alias !== undefined) {
-    var aliases = Array.isArray(route.alias)
-      ? route.alias
-      : [route.alias];
-
-    aliases.forEach(function (alias) {
-      var aliasRoute = {
-        path: alias,
-        children: route.children
-      };
-      addRouteRecord(
-        pathList,
-        pathMap,
-        nameMap,
-        aliasRoute,
-        parent,
-        record.path || '/' // matchAs
-      );
-    });
-  }
-
-  if (!pathMap[record.path]) {
-    pathList.push(record.path);
-    pathMap[record.path] = record;
-  }
-
-  if (name) {
-    if (!nameMap[name]) {
-      nameMap[name] = record;
-    } else if ( true && !matchAs) {
-      warn(
-        false,
-        "Duplicate named routes definition: " +
-        "{ name: \"" + name + "\", path: \"" + (record.path) + "\" }"
-      );
-    }
-  }
-}
-
-function compileRouteRegex (path, pathToRegexpOptions) {
-  var regex = pathToRegexp_1(path, [], pathToRegexpOptions);
-  if (true) {
-    var keys = Object.create(null);
-    regex.keys.forEach(function (key) {
-      warn(!keys[key.name], ("Duplicate param keys in route with path: \"" + path + "\""));
-      keys[key.name] = true;
-    });
-  }
-  return regex
-}
-
-function normalizePath (path, parent, strict) {
-  if (!strict) { path = path.replace(/\/$/, ''); }
-  if (path[0] === '/') { return path }
-  if (parent == null) { return path }
-  return cleanPath(((parent.path) + "/" + path))
-}
-
-/*  */
-
 function normalizeLocation (
   raw,
   current,
@@ -28566,6 +29148,417 @@ function normalizeLocation (
     query: query,
     hash: hash
   }
+}
+
+/*  */
+
+// work around weird flow bug
+var toTypes = [String, Object];
+var eventTypes = [String, Array];
+
+var noop = function () {};
+
+var Link = {
+  name: 'RouterLink',
+  props: {
+    to: {
+      type: toTypes,
+      required: true
+    },
+    tag: {
+      type: String,
+      default: 'a'
+    },
+    exact: Boolean,
+    append: Boolean,
+    replace: Boolean,
+    activeClass: String,
+    exactActiveClass: String,
+    event: {
+      type: eventTypes,
+      default: 'click'
+    }
+  },
+  render: function render (h) {
+    var this$1 = this;
+
+    var router = this.$router;
+    var current = this.$route;
+    var ref = router.resolve(
+      this.to,
+      current,
+      this.append
+    );
+    var location = ref.location;
+    var route = ref.route;
+    var href = ref.href;
+
+    var classes = {};
+    var globalActiveClass = router.options.linkActiveClass;
+    var globalExactActiveClass = router.options.linkExactActiveClass;
+    // Support global empty active class
+    var activeClassFallback =
+      globalActiveClass == null ? 'router-link-active' : globalActiveClass;
+    var exactActiveClassFallback =
+      globalExactActiveClass == null
+        ? 'router-link-exact-active'
+        : globalExactActiveClass;
+    var activeClass =
+      this.activeClass == null ? activeClassFallback : this.activeClass;
+    var exactActiveClass =
+      this.exactActiveClass == null
+        ? exactActiveClassFallback
+        : this.exactActiveClass;
+
+    var compareTarget = route.redirectedFrom
+      ? createRoute(null, normalizeLocation(route.redirectedFrom), null, router)
+      : route;
+
+    classes[exactActiveClass] = isSameRoute(current, compareTarget);
+    classes[activeClass] = this.exact
+      ? classes[exactActiveClass]
+      : isIncludedRoute(current, compareTarget);
+
+    var handler = function (e) {
+      if (guardEvent(e)) {
+        if (this$1.replace) {
+          router.replace(location, null, noop);
+        } else {
+          router.push(location, null, noop);
+        }
+      }
+    };
+
+    var on = { click: guardEvent };
+    if (Array.isArray(this.event)) {
+      this.event.forEach(function (e) {
+        on[e] = handler;
+      });
+    } else {
+      on[this.event] = handler;
+    }
+
+    var data = { class: classes };
+
+    var scopedSlot =
+      !this.$scopedSlots.$hasNormal &&
+      this.$scopedSlots.default &&
+      this.$scopedSlots.default({
+        href: href,
+        route: route,
+        navigate: handler,
+        isActive: classes[activeClass],
+        isExactActive: classes[exactActiveClass]
+      });
+
+    if (scopedSlot) {
+      if (scopedSlot.length === 1) {
+        return scopedSlot[0]
+      } else if (scopedSlot.length > 1 || !scopedSlot.length) {
+        if (true) {
+          warn(
+            false,
+            ("RouterLink with to=\"" + (this.props.to) + "\" is trying to use a scoped slot but it didn't provide exactly one child.")
+          );
+        }
+        return scopedSlot.length === 0 ? h() : h('span', {}, scopedSlot)
+      }
+    }
+
+    if (this.tag === 'a') {
+      data.on = on;
+      data.attrs = { href: href };
+    } else {
+      // find the first <a> child and apply listener and href
+      var a = findAnchor(this.$slots.default);
+      if (a) {
+        // in case the <a> is a static node
+        a.isStatic = false;
+        var aData = (a.data = extend({}, a.data));
+        aData.on = on;
+        var aAttrs = (a.data.attrs = extend({}, a.data.attrs));
+        aAttrs.href = href;
+      } else {
+        // doesn't have <a> child, apply listener to self
+        data.on = on;
+      }
+    }
+
+    return h(this.tag, data, this.$slots.default)
+  }
+}
+
+function guardEvent (e) {
+  // don't redirect with control keys
+  if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) { return }
+  // don't redirect when preventDefault called
+  if (e.defaultPrevented) { return }
+  // don't redirect on right click
+  if (e.button !== undefined && e.button !== 0) { return }
+  // don't redirect if `target="_blank"`
+  if (e.currentTarget && e.currentTarget.getAttribute) {
+    var target = e.currentTarget.getAttribute('target');
+    if (/\b_blank\b/i.test(target)) { return }
+  }
+  // this may be a Weex event which doesn't have this method
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+  return true
+}
+
+function findAnchor (children) {
+  if (children) {
+    var child;
+    for (var i = 0; i < children.length; i++) {
+      child = children[i];
+      if (child.tag === 'a') {
+        return child
+      }
+      if (child.children && (child = findAnchor(child.children))) {
+        return child
+      }
+    }
+  }
+}
+
+var _Vue;
+
+function install (Vue) {
+  if (install.installed && _Vue === Vue) { return }
+  install.installed = true;
+
+  _Vue = Vue;
+
+  var isDef = function (v) { return v !== undefined; };
+
+  var registerInstance = function (vm, callVal) {
+    var i = vm.$options._parentVnode;
+    if (isDef(i) && isDef(i = i.data) && isDef(i = i.registerRouteInstance)) {
+      i(vm, callVal);
+    }
+  };
+
+  Vue.mixin({
+    beforeCreate: function beforeCreate () {
+      if (isDef(this.$options.router)) {
+        this._routerRoot = this;
+        this._router = this.$options.router;
+        this._router.init(this);
+        Vue.util.defineReactive(this, '_route', this._router.history.current);
+      } else {
+        this._routerRoot = (this.$parent && this.$parent._routerRoot) || this;
+      }
+      registerInstance(this, this);
+    },
+    destroyed: function destroyed () {
+      registerInstance(this);
+    }
+  });
+
+  Object.defineProperty(Vue.prototype, '$router', {
+    get: function get () { return this._routerRoot._router }
+  });
+
+  Object.defineProperty(Vue.prototype, '$route', {
+    get: function get () { return this._routerRoot._route }
+  });
+
+  Vue.component('RouterView', View);
+  Vue.component('RouterLink', Link);
+
+  var strats = Vue.config.optionMergeStrategies;
+  // use the same hook merging strategy for route hooks
+  strats.beforeRouteEnter = strats.beforeRouteLeave = strats.beforeRouteUpdate = strats.created;
+}
+
+/*  */
+
+var inBrowser = typeof window !== 'undefined';
+
+/*  */
+
+function createRouteMap (
+  routes,
+  oldPathList,
+  oldPathMap,
+  oldNameMap
+) {
+  // the path list is used to control path matching priority
+  var pathList = oldPathList || [];
+  // $flow-disable-line
+  var pathMap = oldPathMap || Object.create(null);
+  // $flow-disable-line
+  var nameMap = oldNameMap || Object.create(null);
+
+  routes.forEach(function (route) {
+    addRouteRecord(pathList, pathMap, nameMap, route);
+  });
+
+  // ensure wildcard routes are always at the end
+  for (var i = 0, l = pathList.length; i < l; i++) {
+    if (pathList[i] === '*') {
+      pathList.push(pathList.splice(i, 1)[0]);
+      l--;
+      i--;
+    }
+  }
+
+  return {
+    pathList: pathList,
+    pathMap: pathMap,
+    nameMap: nameMap
+  }
+}
+
+function addRouteRecord (
+  pathList,
+  pathMap,
+  nameMap,
+  route,
+  parent,
+  matchAs
+) {
+  var path = route.path;
+  var name = route.name;
+  if (true) {
+    assert(path != null, "\"path\" is required in a route configuration.");
+    assert(
+      typeof route.component !== 'string',
+      "route config \"component\" for path: " + (String(
+        path || name
+      )) + " cannot be a " + "string id. Use an actual component instead."
+    );
+  }
+
+  var pathToRegexpOptions =
+    route.pathToRegexpOptions || {};
+  var normalizedPath = normalizePath(path, parent, pathToRegexpOptions.strict);
+
+  if (typeof route.caseSensitive === 'boolean') {
+    pathToRegexpOptions.sensitive = route.caseSensitive;
+  }
+
+  var record = {
+    path: normalizedPath,
+    regex: compileRouteRegex(normalizedPath, pathToRegexpOptions),
+    components: route.components || { default: route.component },
+    instances: {},
+    name: name,
+    parent: parent,
+    matchAs: matchAs,
+    redirect: route.redirect,
+    beforeEnter: route.beforeEnter,
+    meta: route.meta || {},
+    props:
+      route.props == null
+        ? {}
+        : route.components
+          ? route.props
+          : { default: route.props }
+  };
+
+  if (route.children) {
+    // Warn if route is named, does not redirect and has a default child route.
+    // If users navigate to this route by name, the default child will
+    // not be rendered (GH Issue #629)
+    if (true) {
+      if (
+        route.name &&
+        !route.redirect &&
+        route.children.some(function (child) { return /^\/?$/.test(child.path); })
+      ) {
+        warn(
+          false,
+          "Named Route '" + (route.name) + "' has a default child route. " +
+            "When navigating to this named route (:to=\"{name: '" + (route.name) + "'\"), " +
+            "the default child route will not be rendered. Remove the name from " +
+            "this route and use the name of the default child route for named " +
+            "links instead."
+        );
+      }
+    }
+    route.children.forEach(function (child) {
+      var childMatchAs = matchAs
+        ? cleanPath((matchAs + "/" + (child.path)))
+        : undefined;
+      addRouteRecord(pathList, pathMap, nameMap, child, record, childMatchAs);
+    });
+  }
+
+  if (!pathMap[record.path]) {
+    pathList.push(record.path);
+    pathMap[record.path] = record;
+  }
+
+  if (route.alias !== undefined) {
+    var aliases = Array.isArray(route.alias) ? route.alias : [route.alias];
+    for (var i = 0; i < aliases.length; ++i) {
+      var alias = aliases[i];
+      if ( true && alias === path) {
+        warn(
+          false,
+          ("Found an alias with the same value as the path: \"" + path + "\". You have to remove that alias. It will be ignored in development.")
+        );
+        // skip in dev to make it work
+        continue
+      }
+
+      var aliasRoute = {
+        path: alias,
+        children: route.children
+      };
+      addRouteRecord(
+        pathList,
+        pathMap,
+        nameMap,
+        aliasRoute,
+        parent,
+        record.path || '/' // matchAs
+      );
+    }
+  }
+
+  if (name) {
+    if (!nameMap[name]) {
+      nameMap[name] = record;
+    } else if ( true && !matchAs) {
+      warn(
+        false,
+        "Duplicate named routes definition: " +
+          "{ name: \"" + name + "\", path: \"" + (record.path) + "\" }"
+      );
+    }
+  }
+}
+
+function compileRouteRegex (
+  path,
+  pathToRegexpOptions
+) {
+  var regex = pathToRegexp_1(path, [], pathToRegexpOptions);
+  if (true) {
+    var keys = Object.create(null);
+    regex.keys.forEach(function (key) {
+      warn(
+        !keys[key.name],
+        ("Duplicate param keys in route with path: \"" + path + "\"")
+      );
+      keys[key.name] = true;
+    });
+  }
+  return regex
+}
+
+function normalizePath (
+  path,
+  parent,
+  strict
+) {
+  if (!strict) { path = path.replace(/\/$/, ''); }
+  if (path[0] === '/') { return path }
+  if (parent == null) { return path }
+  return cleanPath(((parent.path) + "/" + path))
 }
 
 /*  */
@@ -28807,20 +29800,27 @@ function handleScroll (
   // wait until re-render finishes before scrolling
   router.app.$nextTick(function () {
     var position = getScrollPosition();
-    var shouldScroll = behavior.call(router, to, from, isPop ? position : null);
+    var shouldScroll = behavior.call(
+      router,
+      to,
+      from,
+      isPop ? position : null
+    );
 
     if (!shouldScroll) {
       return
     }
 
     if (typeof shouldScroll.then === 'function') {
-      shouldScroll.then(function (shouldScroll) {
-        scrollToPosition((shouldScroll), position);
-      }).catch(function (err) {
-        if (true) {
-          assert(false, err.toString());
-        }
-      });
+      shouldScroll
+        .then(function (shouldScroll) {
+          scrollToPosition((shouldScroll), position);
+        })
+        .catch(function (err) {
+          if (true) {
+            assert(false, err.toString());
+          }
+        });
     } else {
       scrollToPosition(shouldScroll, position);
     }
@@ -28876,12 +29876,22 @@ function isNumber (v) {
   return typeof v === 'number'
 }
 
+var hashStartsWithNumberRE = /^#\d/;
+
 function scrollToPosition (shouldScroll, position) {
   var isObject = typeof shouldScroll === 'object';
   if (isObject && typeof shouldScroll.selector === 'string') {
-    var el = document.querySelector(shouldScroll.selector);
+    // getElementById would still fail if the selector contains a more complicated query like #main[data-attr]
+    // but at the same time, it doesn't make much sense to select an element with an id and an extra selector
+    var el = hashStartsWithNumberRE.test(shouldScroll.selector) // $flow-disable-line
+      ? document.getElementById(shouldScroll.selector.slice(1)) // $flow-disable-line
+      : document.querySelector(shouldScroll.selector);
+
     if (el) {
-      var offset = shouldScroll.offset && typeof shouldScroll.offset === 'object' ? shouldScroll.offset : {};
+      var offset =
+        shouldScroll.offset && typeof shouldScroll.offset === 'object'
+          ? shouldScroll.offset
+          : {};
       offset = normalizeOffset(offset);
       position = getElementPosition(el, offset);
     } else if (isValidPosition(shouldScroll)) {
@@ -29081,6 +30091,22 @@ function once (fn) {
   }
 }
 
+var NavigationDuplicated = /*@__PURE__*/(function (Error) {
+  function NavigationDuplicated () {
+    Error.call(this, 'Navigating to current location is not allowed');
+    this.name = this._name = 'NavigationDuplicated';
+  }
+
+  if ( Error ) NavigationDuplicated.__proto__ = Error;
+  NavigationDuplicated.prototype = Object.create( Error && Error.prototype );
+  NavigationDuplicated.prototype.constructor = NavigationDuplicated;
+
+  return NavigationDuplicated;
+}(Error));
+
+// support IE9
+NavigationDuplicated._name = 'NavigationDuplicated';
+
 /*  */
 
 var History = function History (router, base) {
@@ -29114,29 +30140,41 @@ History.prototype.onError = function onError (errorCb) {
   this.errorCbs.push(errorCb);
 };
 
-History.prototype.transitionTo = function transitionTo (location, onComplete, onAbort) {
+History.prototype.transitionTo = function transitionTo (
+  location,
+  onComplete,
+  onAbort
+) {
     var this$1 = this;
 
   var route = this.router.match(location, this.current);
-  this.confirmTransition(route, function () {
-    this$1.updateRoute(route);
-    onComplete && onComplete(route);
-    this$1.ensureURL();
+  this.confirmTransition(
+    route,
+    function () {
+      this$1.updateRoute(route);
+      onComplete && onComplete(route);
+      this$1.ensureURL();
 
-    // fire ready cbs once
-    if (!this$1.ready) {
-      this$1.ready = true;
-      this$1.readyCbs.forEach(function (cb) { cb(route); });
+      // fire ready cbs once
+      if (!this$1.ready) {
+        this$1.ready = true;
+        this$1.readyCbs.forEach(function (cb) {
+          cb(route);
+        });
+      }
+    },
+    function (err) {
+      if (onAbort) {
+        onAbort(err);
+      }
+      if (err && !this$1.ready) {
+        this$1.ready = true;
+        this$1.readyErrorCbs.forEach(function (cb) {
+          cb(err);
+        });
+      }
     }
-  }, function (err) {
-    if (onAbort) {
-      onAbort(err);
-    }
-    if (err && !this$1.ready) {
-      this$1.ready = true;
-      this$1.readyErrorCbs.forEach(function (cb) { cb(err); });
-    }
-  });
+  );
 };
 
 History.prototype.confirmTransition = function confirmTransition (route, onComplete, onAbort) {
@@ -29144,9 +30182,15 @@ History.prototype.confirmTransition = function confirmTransition (route, onCompl
 
   var current = this.current;
   var abort = function (err) {
-    if (isError(err)) {
+    // after merging https://github.com/vuejs/vue-router/pull/2771 we
+    // When the user navigates through history through back/forward buttons
+    // we do not want to throw the error. We only throw it if directly calling
+    // push/replace. That's why it's not included in isError
+    if (!isExtendedError(NavigationDuplicated, err) && isError(err)) {
       if (this$1.errorCbs.length) {
-        this$1.errorCbs.forEach(function (cb) { cb(err); });
+        this$1.errorCbs.forEach(function (cb) {
+          cb(err);
+        });
       } else {
         warn(false, 'uncaught error during route navigation:');
         console.error(err);
@@ -29160,10 +30204,13 @@ History.prototype.confirmTransition = function confirmTransition (route, onCompl
     route.matched.length === current.matched.length
   ) {
     this.ensureURL();
-    return abort()
+    return abort(new NavigationDuplicated(route))
   }
 
-  var ref = resolveQueue(this.current.matched, route.matched);
+  var ref = resolveQueue(
+    this.current.matched,
+    route.matched
+  );
     var updated = ref.updated;
     var deactivated = ref.deactivated;
     var activated = ref.activated;
@@ -29194,10 +30241,8 @@ History.prototype.confirmTransition = function confirmTransition (route, onCompl
           abort(to);
         } else if (
           typeof to === 'string' ||
-          (typeof to === 'object' && (
-            typeof to.path === 'string' ||
-            typeof to.name === 'string'
-          ))
+          (typeof to === 'object' &&
+            (typeof to.path === 'string' || typeof to.name === 'string'))
         ) {
           // next('/') or next({ path: '/' }) -> redirect
           abort();
@@ -29231,7 +30276,9 @@ History.prototype.confirmTransition = function confirmTransition (route, onCompl
       onComplete(route);
       if (this$1.router.app) {
         this$1.router.app.$nextTick(function () {
-          postEnterCbs.forEach(function (cb) { cb(); });
+          postEnterCbs.forEach(function (cb) {
+            cb();
+          });
         });
       }
     });
@@ -29334,9 +30381,13 @@ function extractEnterGuards (
   cbs,
   isValid
 ) {
-  return extractGuards(activated, 'beforeRouteEnter', function (guard, _, match, key) {
-    return bindEnterGuard(guard, match, key, cbs, isValid)
-  })
+  return extractGuards(
+    activated,
+    'beforeRouteEnter',
+    function (guard, _, match, key) {
+      return bindEnterGuard(guard, match, key, cbs, isValid)
+    }
+  )
 }
 
 function bindEnterGuard (
@@ -29498,20 +30549,23 @@ var HashHistory = /*@__PURE__*/(function (History$$1) {
       setupScroll();
     }
 
-    window.addEventListener(supportsPushState ? 'popstate' : 'hashchange', function () {
-      var current = this$1.current;
-      if (!ensureSlash()) {
-        return
+    window.addEventListener(
+      supportsPushState ? 'popstate' : 'hashchange',
+      function () {
+        var current = this$1.current;
+        if (!ensureSlash()) {
+          return
+        }
+        this$1.transitionTo(getHash(), function (route) {
+          if (supportsScroll) {
+            handleScroll(this$1.router, route, current, true);
+          }
+          if (!supportsPushState) {
+            replaceHash(route.fullPath);
+          }
+        });
       }
-      this$1.transitionTo(getHash(), function (route) {
-        if (supportsScroll) {
-          handleScroll(this$1.router, route, current, true);
-        }
-        if (!supportsPushState) {
-          replaceHash(route.fullPath);
-        }
-      });
-    });
+    );
   };
 
   HashHistory.prototype.push = function push (location, onComplete, onAbort) {
@@ -29519,11 +30573,15 @@ var HashHistory = /*@__PURE__*/(function (History$$1) {
 
     var ref = this;
     var fromRoute = ref.current;
-    this.transitionTo(location, function (route) {
-      pushHash(route.fullPath);
-      handleScroll(this$1.router, route, fromRoute, false);
-      onComplete && onComplete(route);
-    }, onAbort);
+    this.transitionTo(
+      location,
+      function (route) {
+        pushHash(route.fullPath);
+        handleScroll(this$1.router, route, fromRoute, false);
+        onComplete && onComplete(route);
+      },
+      onAbort
+    );
   };
 
   HashHistory.prototype.replace = function replace (location, onComplete, onAbort) {
@@ -29531,11 +30589,15 @@ var HashHistory = /*@__PURE__*/(function (History$$1) {
 
     var ref = this;
     var fromRoute = ref.current;
-    this.transitionTo(location, function (route) {
-      replaceHash(route.fullPath);
-      handleScroll(this$1.router, route, fromRoute, false);
-      onComplete && onComplete(route);
-    }, onAbort);
+    this.transitionTo(
+      location,
+      function (route) {
+        replaceHash(route.fullPath);
+        handleScroll(this$1.router, route, fromRoute, false);
+        onComplete && onComplete(route);
+      },
+      onAbort
+    );
   };
 
   HashHistory.prototype.go = function go (n) {
@@ -29559,9 +30621,7 @@ var HashHistory = /*@__PURE__*/(function (History$$1) {
 function checkFallback (base) {
   var location = getLocation(base);
   if (!/^\/#/.test(location)) {
-    window.location.replace(
-      cleanPath(base + '/#' + location)
-    );
+    window.location.replace(cleanPath(base + '/#' + location));
     return true
   }
 }
@@ -29590,10 +30650,13 @@ function getHash () {
   var searchIndex = href.indexOf('?');
   if (searchIndex < 0) {
     var hashIndex = href.indexOf('#');
-    if (hashIndex > -1) { href = decodeURI(href.slice(0, hashIndex)) + href.slice(hashIndex); }
-    else { href = decodeURI(href); }
+    if (hashIndex > -1) {
+      href = decodeURI(href.slice(0, hashIndex)) + href.slice(hashIndex);
+    } else { href = decodeURI(href); }
   } else {
-    if (searchIndex > -1) { href = decodeURI(href.slice(0, searchIndex)) + href.slice(searchIndex); }
+    if (searchIndex > -1) {
+      href = decodeURI(href.slice(0, searchIndex)) + href.slice(searchIndex);
+    }
   }
 
   return href
@@ -29601,9 +30664,14 @@ function getHash () {
 
 function getUrl (path) {
   var href = window.location.href;
-  var i = href.indexOf('#');
-  var base = i >= 0 ? href.slice(0, i) : href;
-  return (base + "#" + path)
+  var hashPos = href.indexOf('#');
+  var base = hashPos > -1 ? href.slice(0, hashPos) : href;
+
+  var searchPos = base.indexOf('?');
+  var query = searchPos > -1 ? base.slice(searchPos) : '';
+  base = query ? base.slice(0, searchPos) : base;
+
+  return (base + "#" + (path + query))
 }
 
 function pushHash (path) {
@@ -29638,20 +30706,28 @@ var AbstractHistory = /*@__PURE__*/(function (History$$1) {
   AbstractHistory.prototype.push = function push (location, onComplete, onAbort) {
     var this$1 = this;
 
-    this.transitionTo(location, function (route) {
-      this$1.stack = this$1.stack.slice(0, this$1.index + 1).concat(route);
-      this$1.index++;
-      onComplete && onComplete(route);
-    }, onAbort);
+    this.transitionTo(
+      location,
+      function (route) {
+        this$1.stack = this$1.stack.slice(0, this$1.index + 1).concat(route);
+        this$1.index++;
+        onComplete && onComplete(route);
+      },
+      onAbort
+    );
   };
 
   AbstractHistory.prototype.replace = function replace (location, onComplete, onAbort) {
     var this$1 = this;
 
-    this.transitionTo(location, function (route) {
-      this$1.stack = this$1.stack.slice(0, this$1.index).concat(route);
-      onComplete && onComplete(route);
-    }, onAbort);
+    this.transitionTo(
+      location,
+      function (route) {
+        this$1.stack = this$1.stack.slice(0, this$1.index).concat(route);
+        onComplete && onComplete(route);
+      },
+      onAbort
+    );
   };
 
   AbstractHistory.prototype.go = function go (n) {
@@ -29662,10 +30738,18 @@ var AbstractHistory = /*@__PURE__*/(function (History$$1) {
       return
     }
     var route = this.stack[targetIndex];
-    this.confirmTransition(route, function () {
-      this$1.index = targetIndex;
-      this$1.updateRoute(route);
-    });
+    this.confirmTransition(
+      route,
+      function () {
+        this$1.index = targetIndex;
+        this$1.updateRoute(route);
+      },
+      function (err) {
+        if (isExtendedError(NavigationDuplicated, err)) {
+          this$1.index = targetIndex;
+        }
+      }
+    );
   };
 
   AbstractHistory.prototype.getCurrentLocation = function getCurrentLocation () {
@@ -29809,11 +30893,29 @@ VueRouter.prototype.onError = function onError (errorCb) {
 };
 
 VueRouter.prototype.push = function push (location, onComplete, onAbort) {
-  this.history.push(location, onComplete, onAbort);
+    var this$1 = this;
+
+  // $flow-disable-line
+  if (!onComplete && !onAbort && typeof Promise !== 'undefined') {
+    return new Promise(function (resolve, reject) {
+      this$1.history.push(location, resolve, reject);
+    })
+  } else {
+    this.history.push(location, onComplete, onAbort);
+  }
 };
 
 VueRouter.prototype.replace = function replace (location, onComplete, onAbort) {
-  this.history.replace(location, onComplete, onAbort);
+    var this$1 = this;
+
+  // $flow-disable-line
+  if (!onComplete && !onAbort && typeof Promise !== 'undefined') {
+    return new Promise(function (resolve, reject) {
+      this$1.history.replace(location, resolve, reject);
+    })
+  } else {
+    this.history.replace(location, onComplete, onAbort);
+  }
 };
 
 VueRouter.prototype.go = function go (n) {
@@ -29893,7 +30995,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.0.7';
+VueRouter.version = '3.1.1';
 
 if (inBrowser && window.Vue) {
   window.Vue.use(VueRouter);
@@ -31009,7 +32111,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "baseURL", function() { return baseURL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bugsnagKey", function() { return bugsnagKey; });
 var siteKey = 1;
-var secretKey = '6QkoiPYGCw52gDlmesdr2uorxwyY1bxFVnR2bMCK';
+var secretKey = 't1meBZaHXQ6oRpFIE5CCrzcCYbXhPrmjSuMh50yP';
 var baseURL = 'https://awesome.loc/';
 var bugsnagKey = '0b8e3f0b2f226634167a4551f01faa22';
 
@@ -31053,7 +32155,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.directive('press', {
     if (typeof binding.value === 'function') {
       var mc = new hammerjs__WEBPACK_IMPORTED_MODULE_3___default.a(el);
       mc.get('press').set({
-        time: 1000
+        time: 500
       });
       mc.on('press', binding.value);
     }
@@ -31077,6 +32179,15 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   },
   created: function created() {
     this.navdrawer = this.$vuetify.breakpoint.name === 'lg' || this.$vuetify.breakpoint.name === 'xl';
+  },
+  methods: {
+    formatBytes: function formatBytes(bytes) {
+      var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+      if (bytes === 0) return '0 Bytes';
+      var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+      if (i === 0) return "".concat(bytes, " ").concat(sizes[i], ")");
+      return "".concat((bytes / Math.pow(1024, i)).toFixed(1), " ").concat(sizes[i]);
+    }
   },
   render: function render(h) {
     return h(_pages_Apps_vue__WEBPACK_IMPORTED_MODULE_4__["default"]);
@@ -31330,10 +32441,28 @@ var pageMixins = {
           break;
       }
     },
-    'table.paging': {
-      handler: function handler(newval) {
+    'table.options': {
+      handler: function handler(newVal) {
+        if (this.table.initial) {
+          this.$store.commit('table', {
+            initial: false
+          });
+          return;
+        }
+
+        this.$store.commit('tableParams', {
+          itemsPerPage: newVal.itemsPerPage,
+          page: newVal.page,
+          sortBy: newVal.sortBy[0],
+          sortDesc: newVal.sortDesc[0]
+        });
+      },
+      deep: true
+    },
+    'table.params': {
+      handler: function handler(newVal) {
         this.$store.dispatch('recordRefetch', {
-          fetch: newval
+          fetch: newVal
         });
       },
       deep: true
@@ -32660,6 +33789,144 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/apps/parts/FileBrowser/index.vue":
+/*!****************************************************!*\
+  !*** ./resources/apps/parts/FileBrowser/index.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index_vue_vue_type_template_id_65c815ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=65c815ca& */ "./resources/apps/parts/FileBrowser/index.vue?vue&type=template&id=65c815ca&");
+/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/FileBrowser/index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _index_vue_vue_type_template_id_65c815ca___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _index_vue_vue_type_template_id_65c815ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/apps/parts/FileBrowser/index.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/apps/parts/FileBrowser/index.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/apps/parts/FileBrowser/index.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/FileBrowser/index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/apps/parts/FileBrowser/index.vue?vue&type=template&id=65c815ca&":
+/*!***********************************************************************************!*\
+  !*** ./resources/apps/parts/FileBrowser/index.vue?vue&type=template&id=65c815ca& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_65c815ca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=65c815ca& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/FileBrowser/index.vue?vue&type=template&id=65c815ca&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_65c815ca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_65c815ca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/apps/parts/FileItem/index.vue":
+/*!*************************************************!*\
+  !*** ./resources/apps/parts/FileItem/index.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _index_vue_vue_type_template_id_54f42096___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=54f42096& */ "./resources/apps/parts/FileItem/index.vue?vue&type=template&id=54f42096&");
+/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/apps/parts/FileItem/index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _index_vue_vue_type_template_id_54f42096___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _index_vue_vue_type_template_id_54f42096___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/apps/parts/FileItem/index.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/apps/parts/FileItem/index.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/apps/parts/FileItem/index.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/FileItem/index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/apps/parts/FileItem/index.vue?vue&type=template&id=54f42096&":
+/*!********************************************************************************!*\
+  !*** ./resources/apps/parts/FileItem/index.vue?vue&type=template&id=54f42096& ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_54f42096___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=54f42096& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/apps/parts/FileItem/index.vue?vue&type=template&id=54f42096&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_54f42096___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_54f42096___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/apps/parts/MediaUpload/index.vue":
 /*!****************************************************!*\
   !*** ./resources/apps/parts/MediaUpload/index.vue ***!
@@ -33147,7 +34414,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************!*\
   !*** ./resources/apps/parts/index.js ***!
   \***************************************/
-/*! exports provided: CodeEditor, DesktopTable, DocumentUpload, AppsMenu, MediaUpload, MobileTable, PageForm, PageHeader, PageTrash, PageWrap, Widget */
+/*! exports provided: CodeEditor, DesktopTable, DocumentUpload, FileBrowser, FileItem, AppsMenu, MediaUpload, MobileTable, PageForm, PageHeader, PageTrash, PageWrap, Widget */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33161,29 +34428,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DocumentUpload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DocumentUpload */ "./resources/apps/parts/DocumentUpload/index.vue");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DocumentUpload", function() { return _DocumentUpload__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _AppsMenu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AppsMenu */ "./resources/apps/parts/AppsMenu/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AppsMenu", function() { return _AppsMenu__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony import */ var _FileBrowser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FileBrowser */ "./resources/apps/parts/FileBrowser/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "FileBrowser", function() { return _FileBrowser__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _MediaUpload__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MediaUpload */ "./resources/apps/parts/MediaUpload/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MediaUpload", function() { return _MediaUpload__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+/* harmony import */ var _FileItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FileItem */ "./resources/apps/parts/FileItem/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "FileItem", function() { return _FileItem__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
-/* harmony import */ var _MobileTable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./MobileTable */ "./resources/apps/parts/MobileTable/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MobileTable", function() { return _MobileTable__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+/* harmony import */ var _AppsMenu__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AppsMenu */ "./resources/apps/parts/AppsMenu/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AppsMenu", function() { return _AppsMenu__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
-/* harmony import */ var _PageForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PageForm */ "./resources/apps/parts/PageForm/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageForm", function() { return _PageForm__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+/* harmony import */ var _MediaUpload__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./MediaUpload */ "./resources/apps/parts/MediaUpload/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MediaUpload", function() { return _MediaUpload__WEBPACK_IMPORTED_MODULE_6__["default"]; });
 
-/* harmony import */ var _PageHeader__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PageHeader */ "./resources/apps/parts/PageHeader/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageHeader", function() { return _PageHeader__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+/* harmony import */ var _MobileTable__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MobileTable */ "./resources/apps/parts/MobileTable/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "MobileTable", function() { return _MobileTable__WEBPACK_IMPORTED_MODULE_7__["default"]; });
 
-/* harmony import */ var _PageTrash__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PageTrash */ "./resources/apps/parts/PageTrash/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageTrash", function() { return _PageTrash__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+/* harmony import */ var _PageForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PageForm */ "./resources/apps/parts/PageForm/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageForm", function() { return _PageForm__WEBPACK_IMPORTED_MODULE_8__["default"]; });
 
-/* harmony import */ var _PageWrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PageWrap */ "./resources/apps/parts/PageWrap/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageWrap", function() { return _PageWrap__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+/* harmony import */ var _PageHeader__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PageHeader */ "./resources/apps/parts/PageHeader/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageHeader", function() { return _PageHeader__WEBPACK_IMPORTED_MODULE_9__["default"]; });
 
-/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Widget */ "./resources/apps/parts/Widget/index.vue");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Widget", function() { return _Widget__WEBPACK_IMPORTED_MODULE_10__["default"]; });
+/* harmony import */ var _PageTrash__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./PageTrash */ "./resources/apps/parts/PageTrash/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageTrash", function() { return _PageTrash__WEBPACK_IMPORTED_MODULE_10__["default"]; });
+
+/* harmony import */ var _PageWrap__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./PageWrap */ "./resources/apps/parts/PageWrap/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "PageWrap", function() { return _PageWrap__WEBPACK_IMPORTED_MODULE_11__["default"]; });
+
+/* harmony import */ var _Widget__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Widget */ "./resources/apps/parts/Widget/index.vue");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Widget", function() { return _Widget__WEBPACK_IMPORTED_MODULE_12__["default"]; });
+
+
 
 
 
@@ -33382,7 +34657,28 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       link: true,
       refresh: false
     },
-    documents: [],
+    document: {
+      files: [],
+      footerProps: {
+        'items-per-page-options': [5, 10, 20]
+      },
+      initial: true,
+      loader: false,
+      options: {
+        itemsPerPage: 5,
+        page: 1
+      },
+      params: {
+        itemsPerPage: 5,
+        page: 1,
+        sortBy: null,
+        sortDesc: null
+      },
+      records: [],
+      total: 0,
+      selected: [],
+      state: false
+    },
     form: {
       state: false,
       mode: 'addnew'
@@ -33418,13 +34714,23 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     table: {
       initial: true,
       loader: false,
-      page: [10, 25, 50],
+      options: {
+        itemsPerPage: 10,
+        page: 1
+      },
+      footerProps: {
+        'items-per-page-options': [10, 25, 50]
+      },
       total: 0,
-      paging: {},
+      params: {
+        itemsPerPage: 10,
+        page: 1,
+        sortBy: null,
+        sortDesc: null
+      },
       selected: []
     },
     upload: {
-      callback: null,
       combined: false,
       progress: false,
       value: 0
@@ -33491,14 +34797,21 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         state.disabled[key] = payload[key];
       });
     },
-    documents: function documents(state, payload) {
-      state.documents = payload;
+    document: function document(state, payload) {
+      Object.keys(payload).forEach(function (key) {
+        state.document[key] = payload[key];
+      });
+    },
+    documentParams: function documentParams(state, payload) {
+      Object.keys(payload).forEach(function (key) {
+        state.document.params[key] = payload[key];
+      });
     },
     documentPush: function documentPush(state, payload) {
-      state.documents.push(payload);
+      state.document.records.push(payload);
     },
     documentSplice: function documentSplice(state, index) {
-      state.documents.splice(index, 1);
+      state.document.records.splice(index, 1);
     },
     fetchAppMenus: function fetchAppMenus(state, payload) {
       if (payload) state.auth.menus = payload;
@@ -33528,9 +34841,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         state.page[key] = payload[key];
       });
     },
-    paging: function paging(state, payload) {
+    params: function params(state, payload) {
       Object.keys(payload).forEach(function (key) {
-        state.table.paging[key] = payload[key];
+        state.table.params[key] = payload[key];
       });
     },
     primaryId: function primaryId(state, payload) {
@@ -33547,6 +34860,11 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     },
     recordSplice: function recordSplice(state, index) {
       state.records.splice(index, 1);
+    },
+    tableParams: function tableParams(state, payload) {
+      Object.keys(payload).forEach(function (key) {
+        state.table.params[key] = payload[key];
+      });
     },
     toolbar: function toolbar(state, payload) {
       Object.keys(payload).forEach(function (key) {
@@ -33620,8 +34938,87 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         "delete": true
       });
     },
-    editFormClose: function editFormClose(_ref6) {
+    documentClose: function documentClose(_ref6) {
       var commit = _ref6.commit;
+      commit('document', {
+        state: false
+      });
+    },
+    documentFetch: function () {
+      var _documentFetch = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref7, payload) {
+        var commit, dispatch, state, _ref8, _ref8$data, data, meta;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                commit = _ref7.commit, dispatch = _ref7.dispatch, state = _ref7.state;
+                _context.prev = 1;
+                _context.next = 4;
+                return state.http.get('/api/document', {
+                  params: payload.params
+                });
+
+              case 4:
+                _ref8 = _context.sent;
+                _ref8$data = _ref8.data;
+                data = _ref8$data.data;
+                meta = _ref8$data.meta;
+                commit('document', {
+                  records: data,
+                  total: meta.total,
+                  selected: []
+                });
+                _context.next = 14;
+                break;
+
+              case 11:
+                _context.prev = 11;
+                _context.t0 = _context["catch"](1);
+                dispatch('errors', _context.t0);
+
+              case 14:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 11]]);
+      }));
+
+      function documentFetch(_x, _x2) {
+        return _documentFetch.apply(this, arguments);
+      }
+
+      return documentFetch;
+    }(),
+    documentOpen: function documentOpen(_ref9) {
+      var commit = _ref9.commit;
+      commit('document', {
+        state: true
+      });
+    },
+    documentRemove: function documentRemove(_ref10, payload) {
+      var state = _ref10.state;
+      var idx = state.document.files.findIndex(function (obj) {
+        return obj.id === payload.id;
+      });
+
+      if (idx !== -1) {
+        state.document.files.splice(idx, 1);
+      }
+    },
+    documentSelect: function documentSelect(_ref11) {
+      var commit = _ref11.commit,
+          state = _ref11.state;
+      commit('document', {
+        files: state.document.selected,
+        state: false
+      });
+    },
+    editFormClose: function editFormClose(_ref12) {
+      var commit = _ref12.commit;
       commit('form', {
         state: false,
         mode: null
@@ -33630,9 +35027,9 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         selected: []
       });
     },
-    editFormOpen: function editFormOpen(_ref7, payload) {
-      var commit = _ref7.commit,
-          state = _ref7.state;
+    editFormOpen: function editFormOpen(_ref13, payload) {
+      var commit = _ref13.commit,
+          state = _ref13.state;
 
       if (payload.constructor === Object) {
         if (state.page.state === 'pinned') {
@@ -33652,80 +35049,80 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     fetchAppMenus: function () {
       var _fetchAppMenus = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(_ref8) {
-        var commit, dispatch, state, _ref9, data;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref14) {
+        var commit, dispatch, state, _ref15, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref8.commit, dispatch = _ref8.dispatch, state = _ref8.state;
-                _context.prev = 1;
-                _context.next = 4;
+                commit = _ref14.commit, dispatch = _ref14.dispatch, state = _ref14.state;
+                _context2.prev = 1;
+                _context2.next = 4;
                 return state.http.get('/api/menus');
 
               case 4:
-                _ref9 = _context.sent;
-                data = _ref9.data;
+                _ref15 = _context2.sent;
+                data = _ref15.data;
                 commit('fetchAppMenus', data);
-                _context.next = 12;
+                _context2.next = 12;
                 break;
 
               case 9:
-                _context.prev = 9;
-                _context.t0 = _context["catch"](1);
-                dispatch('errors', _context.t0);
+                _context2.prev = 9;
+                _context2.t0 = _context2["catch"](1);
+                dispatch('errors', _context2.t0);
 
               case 12:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, null, [[1, 9]]);
+        }, _callee2, null, [[1, 9]]);
       }));
 
-      function fetchAppMenus(_x) {
+      function fetchAppMenus(_x3) {
         return _fetchAppMenus.apply(this, arguments);
       }
 
       return fetchAppMenus;
     }(),
-    formClose: function formClose(_ref10) {
-      var state = _ref10.state,
-          dispatch = _ref10.dispatch;
+    formClose: function formClose(_ref16) {
+      var state = _ref16.state,
+          dispatch = _ref16.dispatch;
       state.form.mode === 'edit' ? dispatch('editFormClose') : dispatch('newFormClose');
     },
-    formSubmit: function formSubmit(_ref11) {
-      var dispatch = _ref11.dispatch,
-          state = _ref11.state;
+    formSubmit: function formSubmit(_ref17) {
+      var dispatch = _ref17.dispatch,
+          state = _ref17.state;
       state.form.mode === 'edit' ? dispatch('recordUpdate') : dispatch('recordAddnew');
     },
-    initStore: function initStore(_ref12) {
-      var commit = _ref12.commit,
-          dispatch = _ref12.dispatch,
-          state = _ref12.state;
+    initStore: function initStore(_ref18) {
+      var commit = _ref18.commit,
+          dispatch = _ref18.dispatch,
+          state = _ref18.state;
       if (!state.auth.check) dispatch('signout');
       commit('initStore');
     },
-    message: function message(_ref13, payload) {
-      var commit = _ref13.commit;
+    message: function message(_ref19, payload) {
+      var commit = _ref19.commit;
       commit('snackbar', {
         color: 'success',
         text: payload,
         state: true
       });
     },
-    newFormClose: function newFormClose(_ref14) {
-      var commit = _ref14.commit;
+    newFormClose: function newFormClose(_ref20) {
+      var commit = _ref20.commit;
       commit('form', {
         state: false,
         mode: null
       });
     },
-    newFormOpen: function newFormOpen(_ref15) {
-      var commit = _ref15.commit,
-          dispatch = _ref15.dispatch,
-          state = _ref15.state;
+    newFormOpen: function newFormOpen(_ref21) {
+      var commit = _ref21.commit,
+          dispatch = _ref21.dispatch,
+          state = _ref21.state;
       dispatch('recordNew');
       commit('form', {
         state: true,
@@ -33733,47 +35130,47 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       });
       state.afterFormOpen();
     },
-    overideState: function overideState(_ref16, payload) {
-      var state = _ref16.state;
+    overideState: function overideState(_ref22, payload) {
+      var state = _ref22.state;
       state.overideState(payload);
     },
-    pageInfo: function pageInfo(_ref17, payload) {
-      var commit = _ref17.commit;
+    pageInfo: function pageInfo(_ref23, payload) {
+      var commit = _ref23.commit;
       commit('pageInfo', payload);
     },
     passwordUpdate: function () {
       var _passwordUpdate = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(_ref18, payload) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref24, payload) {
         var dispatch, state;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
-                dispatch = _ref18.dispatch, state = _ref18.state;
-                _context2.prev = 1;
-                _context2.next = 4;
+                dispatch = _ref24.dispatch, state = _ref24.state;
+                _context3.prev = 1;
+                _context3.next = 4;
                 return state.http.put('/api/password', payload);
 
               case 4:
                 dispatch('message', 'update password berhasil!');
-                _context2.next = 10;
+                _context3.next = 10;
                 break;
 
               case 7:
-                _context2.prev = 7;
-                _context2.t0 = _context2["catch"](1);
-                dispatch('errors', _context2.t0);
+                _context3.prev = 7;
+                _context3.t0 = _context3["catch"](1);
+                dispatch('errors', _context3.t0);
 
               case 10:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2, null, [[1, 7]]);
+        }, _callee3, null, [[1, 7]]);
       }));
 
-      function passwordUpdate(_x2, _x3) {
+      function passwordUpdate(_x4, _x5) {
         return _passwordUpdate.apply(this, arguments);
       }
 
@@ -33782,73 +35179,27 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     profileAvatar: function () {
       var _profileAvatar = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref19, payload) {
-        var commit, dispatch, state, _ref20, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                commit = _ref19.commit, dispatch = _ref19.dispatch, state = _ref19.state;
-                _context3.prev = 1;
-                _context3.next = 4;
-                return state.http.put('/api/profile', {
-                  avatar: payload.path
-                });
-
-              case 4:
-                _ref20 = _context3.sent;
-                data = _ref20.data;
-                commit('auth', {
-                  avatar: data.avatar
-                });
-                dispatch('message', 'update avatar berhasil!');
-                _context3.next = 13;
-                break;
-
-              case 10:
-                _context3.prev = 10;
-                _context3.t0 = _context3["catch"](1);
-                dispatch('errors', _context3.t0);
-
-              case 13:
-              case "end":
-                return _context3.stop();
-            }
-          }
-        }, _callee3, null, [[1, 10]]);
-      }));
-
-      function profileAvatar(_x4, _x5) {
-        return _profileAvatar.apply(this, arguments);
-      }
-
-      return profileAvatar;
-    }(),
-    profileBackground: function () {
-      var _profileBackground = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref21, payload) {
-        var commit, dispatch, state, _ref22, data;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref25, payload) {
+        var commit, dispatch, state, _ref26, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                commit = _ref21.commit, dispatch = _ref21.dispatch, state = _ref21.state;
+                commit = _ref25.commit, dispatch = _ref25.dispatch, state = _ref25.state;
                 _context4.prev = 1;
                 _context4.next = 4;
                 return state.http.put('/api/profile', {
-                  background: payload.path
+                  avatar: payload.path
                 });
 
               case 4:
-                _ref22 = _context4.sent;
-                data = _ref22.data;
+                _ref26 = _context4.sent;
+                data = _ref26.data;
                 commit('auth', {
-                  background: data.background
+                  avatar: data.avatar
                 });
-                dispatch('message', 'update background berhasil!');
+                dispatch('message', 'update avatar berhasil!');
                 _context4.next = 13;
                 break;
 
@@ -33865,40 +35216,36 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee4, null, [[1, 10]]);
       }));
 
-      function profileBackground(_x6, _x7) {
-        return _profileBackground.apply(this, arguments);
+      function profileAvatar(_x6, _x7) {
+        return _profileAvatar.apply(this, arguments);
       }
 
-      return profileBackground;
+      return profileAvatar;
     }(),
-    profileUpdate: function () {
-      var _profileUpdate = _asyncToGenerator(
+    profileBackground: function () {
+      var _profileBackground = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(_ref23, payload) {
-        var commit, dispatch, state, _ref24, data;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(_ref27, payload) {
+        var commit, dispatch, state, _ref28, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                commit = _ref23.commit, dispatch = _ref23.dispatch, state = _ref23.state;
+                commit = _ref27.commit, dispatch = _ref27.dispatch, state = _ref27.state;
                 _context5.prev = 1;
                 _context5.next = 4;
                 return state.http.put('/api/profile', {
-                  name: payload.name,
-                  email: payload.email,
-                  theme: payload.theme
+                  background: payload.path
                 });
 
               case 4:
-                _ref24 = _context5.sent;
-                data = _ref24.data;
+                _ref28 = _context5.sent;
+                data = _ref28.data;
                 commit('auth', {
-                  name: data.name,
-                  email: data.email,
-                  theme: data.theme
+                  background: data.background
                 });
-                dispatch('message', 'update profile berhasil!');
+                dispatch('message', 'update background berhasil!');
                 _context5.next = 13;
                 break;
 
@@ -33915,7 +35262,57 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }, _callee5, null, [[1, 10]]);
       }));
 
-      function profileUpdate(_x8, _x9) {
+      function profileBackground(_x8, _x9) {
+        return _profileBackground.apply(this, arguments);
+      }
+
+      return profileBackground;
+    }(),
+    profileUpdate: function () {
+      var _profileUpdate = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(_ref29, payload) {
+        var commit, dispatch, state, _ref30, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                commit = _ref29.commit, dispatch = _ref29.dispatch, state = _ref29.state;
+                _context6.prev = 1;
+                _context6.next = 4;
+                return state.http.put('/api/profile', {
+                  name: payload.name,
+                  email: payload.email,
+                  theme: payload.theme
+                });
+
+              case 4:
+                _ref30 = _context6.sent;
+                data = _ref30.data;
+                commit('auth', {
+                  name: data.name,
+                  email: data.email,
+                  theme: data.theme
+                });
+                dispatch('message', 'update profile berhasil!');
+                _context6.next = 13;
+                break;
+
+              case 10:
+                _context6.prev = 10;
+                _context6.t0 = _context6["catch"](1);
+                dispatch('errors', _context6.t0);
+
+              case 13:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, null, [[1, 10]]);
+      }));
+
+      function profileUpdate(_x10, _x11) {
         return _profileUpdate.apply(this, arguments);
       }
 
@@ -33924,83 +35321,18 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     recordAddnew: function () {
       var _recordAddnew = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(_ref25) {
-        var commit, dispatch, state, _ref26, data;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
-          while (1) {
-            switch (_context6.prev = _context6.next) {
-              case 0:
-                commit = _ref25.commit, dispatch = _ref25.dispatch, state = _ref25.state;
-                _context6.prev = 1;
-                state.beforeAddnew();
-
-                if (!state.cancelAddnew()) {
-                  _context6.next = 6;
-                  break;
-                }
-
-                commit('form', {
-                  state: false,
-                  mode: null
-                });
-                return _context6.abrupt("return");
-
-              case 6:
-                _context6.next = 8;
-                return state.http.post(state.dataUrl, state.record);
-
-              case 8:
-                _ref26 = _context6.sent;
-                data = _ref26.data;
-                commit('recordPush', data);
-                commit('form', {
-                  state: false,
-                  mode: null
-                });
-                dispatch('message', 'proses simpan berhasil!');
-                state.afterAddnew();
-                _context6.next = 20;
-                break;
-
-              case 16:
-                _context6.prev = 16;
-                _context6.t0 = _context6["catch"](1);
-                dispatch('errors', _context6.t0);
-                commit('form', {
-                  state: false,
-                  mode: null
-                });
-
-              case 20:
-              case "end":
-                return _context6.stop();
-            }
-          }
-        }, _callee6, null, [[1, 16]]);
-      }));
-
-      function recordAddnew(_x10) {
-        return _recordAddnew.apply(this, arguments);
-      }
-
-      return recordAddnew;
-    }(),
-    recordDelete: function () {
-      var _recordDelete = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(_ref27) {
-        var commit, dispatch, state, selected, currentRecord, index, primaryKey, response, _response;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(_ref31) {
+        var commit, dispatch, state, _ref32, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                commit = _ref27.commit, dispatch = _ref27.dispatch, state = _ref27.state;
+                commit = _ref31.commit, dispatch = _ref31.dispatch, state = _ref31.state;
                 _context7.prev = 1;
-                state.beforeDelete();
+                state.beforeAddnew();
 
-                if (!state.cancelDelete()) {
+                if (!state.cancelAddnew()) {
                   _context7.next = 6;
                   break;
                 }
@@ -34012,11 +35344,76 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 return _context7.abrupt("return");
 
               case 6:
+                _context7.next = 8;
+                return state.http.post(state.dataUrl, state.record);
+
+              case 8:
+                _ref32 = _context7.sent;
+                data = _ref32.data;
+                commit('recordPush', data);
+                commit('form', {
+                  state: false,
+                  mode: null
+                });
+                dispatch('message', 'proses simpan berhasil!');
+                state.afterAddnew();
+                _context7.next = 20;
+                break;
+
+              case 16:
+                _context7.prev = 16;
+                _context7.t0 = _context7["catch"](1);
+                dispatch('errors', _context7.t0);
+                commit('form', {
+                  state: false,
+                  mode: null
+                });
+
+              case 20:
+              case "end":
+                return _context7.stop();
+            }
+          }
+        }, _callee7, null, [[1, 16]]);
+      }));
+
+      function recordAddnew(_x12) {
+        return _recordAddnew.apply(this, arguments);
+      }
+
+      return recordAddnew;
+    }(),
+    recordDelete: function () {
+      var _recordDelete = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(_ref33) {
+        var commit, dispatch, state, selected, currentRecord, index, primaryKey, response, _response;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                commit = _ref33.commit, dispatch = _ref33.dispatch, state = _ref33.state;
+                _context8.prev = 1;
+                state.beforeDelete();
+
+                if (!state.cancelDelete()) {
+                  _context8.next = 6;
+                  break;
+                }
+
+                commit('form', {
+                  state: false,
+                  mode: null
+                });
+                return _context8.abrupt("return");
+
+              case 6:
                 selected = state.table.selected;
                 currentRecord = state.record;
 
                 if (!(selected.length <= 1)) {
-                  _context7.next = 17;
+                  _context8.next = 17;
                   break;
                 }
 
@@ -34024,25 +35421,25 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                   return obj.id === currentRecord.id;
                 });
                 primaryKey = state.record[state.primaryId];
-                _context7.next = 13;
+                _context8.next = 13;
                 return state.http["delete"](state.dataUrl + '/' + primaryKey);
 
               case 13:
-                response = _context7.sent;
+                response = _context8.sent;
 
                 if (response) {
                   commit('recordSplice', index);
                 }
 
-                _context7.next = 21;
+                _context8.next = 21;
                 break;
 
               case 17:
-                _context7.next = 19;
+                _context8.next = 19;
                 return state.http.post(state.dataUrl + '/bulks', selected);
 
               case 19:
-                _response = _context7.sent;
+                _response = _context8.sent;
 
                 if (_response) {
                   selected.forEach(function (record) {
@@ -34055,16 +35452,16 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 21:
                 state.afterDelete();
-                _context7.next = 27;
+                _context8.next = 27;
                 break;
 
               case 24:
-                _context7.prev = 24;
-                _context7.t0 = _context7["catch"](1);
-                dispatch('errors', _context7.t0);
+                _context8.prev = 24;
+                _context8.t0 = _context8["catch"](1);
+                dispatch('errors', _context8.t0);
 
               case 27:
-                _context7.prev = 27;
+                _context8.prev = 27;
                 commit('trash', {
                   state: false
                 });
@@ -34072,17 +35469,17 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                   selected: []
                 });
                 dispatch('message', 'proses hapus berhasil!');
-                return _context7.finish(27);
+                return _context8.finish(27);
 
               case 32:
               case "end":
-                return _context7.stop();
+                return _context8.stop();
             }
           }
-        }, _callee7, null, [[1, 24, 27, 32]]);
+        }, _callee8, null, [[1, 24, 27, 32]]);
       }));
 
-      function recordDelete(_x11) {
+      function recordDelete(_x13) {
         return _recordDelete.apply(this, arguments);
       }
 
@@ -34091,73 +35488,80 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     recordFetch: function () {
       var _recordFetch = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(_ref28, payload) {
-        var commit, dispatch, state, url, params, _ref29, _ref29$data, data, meta;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(_ref34, payload) {
+        var commit, dispatch, state, url, params, _ref35, _ref35$data, data, meta;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
           while (1) {
-            switch (_context8.prev = _context8.next) {
+            switch (_context9.prev = _context9.next) {
               case 0:
-                commit = _ref28.commit, dispatch = _ref28.dispatch, state = _ref28.state;
+                commit = _ref34.commit, dispatch = _ref34.dispatch, state = _ref34.state;
                 commit('table', {
                   loader: "".concat(state.auth.theme)
                 });
-                _context8.prev = 2;
+                _context9.prev = 2;
                 url = state.dataUrl;
-                params = state.table.paging;
+                params = state.table.params;
+
+                if (url.includes('/api/document')) {
+                  commit('document', {
+                    records: []
+                  });
+                }
+
                 if (payload) params = payload;
-                _context8.next = 8;
+                _context9.next = 9;
                 return state.http.get(url, {
                   params: params
                 });
 
-              case 8:
-                _ref29 = _context8.sent;
-                _ref29$data = _ref29.data;
-                data = _ref29$data.data;
-                meta = _ref29$data.meta;
+              case 9:
+                _ref35 = _context9.sent;
+                _ref35$data = _ref35.data;
+                data = _ref35$data.data;
+                meta = _ref35$data.meta;
                 commit('records', data);
                 commit('table', {
                   total: meta.total,
                   initial: false,
                   selected: []
                 });
-                _context8.next = 19;
+                _context9.next = 20;
                 break;
 
-              case 16:
-                _context8.prev = 16;
-                _context8.t0 = _context8["catch"](2);
-                dispatch('errors', _context8.t0);
+              case 17:
+                _context9.prev = 17;
+                _context9.t0 = _context9["catch"](2);
+                dispatch('errors', _context9.t0);
 
-              case 19:
-                _context8.prev = 19;
+              case 20:
+                _context9.prev = 20;
                 commit('table', {
                   loader: false
                 });
-                return _context8.finish(19);
+                return _context9.finish(20);
 
-              case 22:
+              case 23:
               case "end":
-                return _context8.stop();
+                return _context9.stop();
             }
           }
-        }, _callee8, null, [[2, 16, 19, 22]]);
+        }, _callee9, null, [[2, 17, 20, 23]]);
       }));
 
-      function recordFetch(_x12, _x13) {
+      function recordFetch(_x14, _x15) {
         return _recordFetch.apply(this, arguments);
       }
 
       return recordFetch;
     }(),
-    recordNew: function recordNew(_ref30) {
-      var state = _ref30.state;
+    recordNew: function recordNew(_ref36) {
+      var state = _ref36.state;
       state.setRecord();
     },
-    recordPress: function recordPress(_ref31, payload) {
-      var commit = _ref31.commit,
-          state = _ref31.state;
+    recordPress: function recordPress(_ref37, payload) {
+      var commit = _ref37.commit,
+          state = _ref37.state;
       if (state.page.state === 'pinned') return;
       commit('pageInfo', {
         state: 'pinned'
@@ -34167,19 +35571,19 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       });
       commit('selectedPush', payload);
     },
-    recordRefetch: function recordRefetch(_ref32, payload) {
-      var commit = _ref32.commit,
-          dispatch = _ref32.dispatch,
-          state = _ref32.state;
+    recordRefetch: function recordRefetch(_ref38, payload) {
+      var commit = _ref38.commit,
+          dispatch = _ref38.dispatch,
+          state = _ref38.state;
 
       if (payload["new"] && payload["new"].length > 0) {
-        commit('paging', {
+        commit('params', {
           search: payload["new"]
         });
         dispatch('recordFetch');
       } else {
         if (payload.old && payload.old.length > 0) {
-          commit('paging', {
+          commit('params', {
             search: null
           });
           dispatch('recordFetch');
@@ -34189,26 +35593,26 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         }
       }
     },
-    recordReload: function recordReload(_ref33) {
-      var dispatch = _ref33.dispatch;
+    recordReload: function recordReload(_ref39) {
+      var dispatch = _ref39.dispatch;
       dispatch('recordFetch');
     },
     recordUpdate: function () {
       var _recordUpdate = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(_ref34) {
-        var commit, dispatch, state, primaryKey, _ref35, data;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(_ref40) {
+        var commit, dispatch, state, primaryKey, _ref41, data;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
-            switch (_context9.prev = _context9.next) {
+            switch (_context10.prev = _context10.next) {
               case 0:
-                commit = _ref34.commit, dispatch = _ref34.dispatch, state = _ref34.state;
-                _context9.prev = 1;
+                commit = _ref40.commit, dispatch = _ref40.dispatch, state = _ref40.state;
+                _context10.prev = 1;
                 state.beforeUpdate();
 
                 if (!state.cancelUpdate()) {
-                  _context9.next = 6;
+                  _context10.next = 6;
                   break;
                 }
 
@@ -34216,16 +35620,16 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                   state: false,
                   mode: null
                 });
-                return _context9.abrupt("return");
+                return _context10.abrupt("return");
 
               case 6:
                 primaryKey = state.record[state.primaryId];
-                _context9.next = 9;
+                _context10.next = 9;
                 return state.http.put(state.dataUrl + '/' + primaryKey, state.record);
 
               case 9:
-                _ref35 = _context9.sent;
-                data = _ref35.data;
+                _ref41 = _context10.sent;
+                data = _ref41.data;
                 commit('record', data);
                 commit('form', {
                   state: false,
@@ -34236,13 +35640,13 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 });
                 dispatch('message', 'proses update berhasil!');
                 state.afterUpdate();
-                _context9.next = 22;
+                _context10.next = 22;
                 break;
 
               case 18:
-                _context9.prev = 18;
-                _context9.t0 = _context9["catch"](1);
-                dispatch('errors', _context9.t0);
+                _context10.prev = 18;
+                _context10.t0 = _context10["catch"](1);
+                dispatch('errors', _context10.t0);
                 commit('form', {
                   state: false,
                   mode: null
@@ -34250,103 +35654,97 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 22:
               case "end":
-                return _context9.stop();
+                return _context10.stop();
             }
           }
-        }, _callee9, null, [[1, 18]]);
+        }, _callee10, null, [[1, 18]]);
       }));
 
-      function recordUpdate(_x14) {
+      function recordUpdate(_x16) {
         return _recordUpdate.apply(this, arguments);
       }
 
       return recordUpdate;
     }(),
-    searchClose: function searchClose(_ref36) {
-      var commit = _ref36.commit;
+    searchClose: function searchClose(_ref42) {
+      var commit = _ref42.commit;
       commit('toolbar', {
         search: false,
         text: null
       });
     },
-    searchOpen: function searchOpen(_ref37) {
-      var commit = _ref37.commit;
+    searchOpen: function searchOpen(_ref43) {
+      var commit = _ref43.commit;
       commit('toolbar', {
         search: true
       });
     },
-    setAfterAddnew: function setAfterAddnew(_ref38, payload) {
-      var commit = _ref38.commit;
+    setAfterAddnew: function setAfterAddnew(_ref44, payload) {
+      var commit = _ref44.commit;
       commit('afterAddnew', payload);
     },
-    setAfterDelete: function setAfterDelete(_ref39, payload) {
-      var commit = _ref39.commit;
+    setAfterDelete: function setAfterDelete(_ref45, payload) {
+      var commit = _ref45.commit;
       commit('afterDelete', payload);
     },
-    setAfterFormOpen: function setAfterFormOpen(_ref40, payload) {
-      var commit = _ref40.commit;
+    setAfterFormOpen: function setAfterFormOpen(_ref46, payload) {
+      var commit = _ref46.commit;
       commit('afterFormOpen', payload);
     },
-    setAfterSelected: function setAfterSelected(_ref41, payload) {
-      var commit = _ref41.commit;
+    setAfterSelected: function setAfterSelected(_ref47, payload) {
+      var commit = _ref47.commit;
       commit('afterSelected', payload);
     },
-    setAfterUpdate: function setAfterUpdate(_ref42, payload) {
-      var commit = _ref42.commit;
+    setAfterUpdate: function setAfterUpdate(_ref48, payload) {
+      var commit = _ref48.commit;
       commit('afterUpdate', payload);
     },
-    setBeforeAddnew: function setBeforeAddnew(_ref43, payload) {
-      var commit = _ref43.commit;
+    setBeforeAddnew: function setBeforeAddnew(_ref49, payload) {
+      var commit = _ref49.commit;
       commit('beforeAddnew', payload);
     },
-    setBeforeDelete: function setBeforeDelete(_ref44, payload) {
-      var commit = _ref44.commit;
+    setBeforeDelete: function setBeforeDelete(_ref50, payload) {
+      var commit = _ref50.commit;
       commit('beforeDelete', payload);
     },
-    setBeforeUpdate: function setBeforeUpdate(_ref45, payload) {
-      var commit = _ref45.commit;
+    setBeforeUpdate: function setBeforeUpdate(_ref51, payload) {
+      var commit = _ref51.commit;
       commit('beforeUpdate', payload);
     },
-    setCancelAddnew: function setCancelAddnew(_ref46, payload) {
-      var commit = _ref46.commit;
+    setCancelAddnew: function setCancelAddnew(_ref52, payload) {
+      var commit = _ref52.commit;
       commit('cancelAddnew', payload);
     },
-    setCancelDelete: function setCancelDelete(_ref47, payload) {
-      var commit = _ref47.commit;
+    setCancelDelete: function setCancelDelete(_ref53, payload) {
+      var commit = _ref53.commit;
       commit('cancelDelete', payload);
     },
-    setCancelUpdate: function setCancelUpdate(_ref48, payload) {
-      var commit = _ref48.commit;
+    setCancelUpdate: function setCancelUpdate(_ref54, payload) {
+      var commit = _ref54.commit;
       commit('cancelUpdate', payload);
     },
-    setOverideState: function setOverideState(_ref49, payload) {
-      var commit = _ref49.commit;
+    setOverideState: function setOverideState(_ref55, payload) {
+      var commit = _ref55.commit;
       commit('overideState', payload);
     },
-    setPrimaryId: function setPrimaryId(_ref50, payload) {
-      var commit = _ref50.commit;
+    setPrimaryId: function setPrimaryId(_ref56, payload) {
+      var commit = _ref56.commit;
       commit('primaryId', payload);
     },
-    setRecord: function setRecord(_ref51, payload) {
-      var commit = _ref51.commit;
+    setRecord: function setRecord(_ref57, payload) {
+      var commit = _ref57.commit;
       commit('setRecord', function () {
         commit('record', payload);
       });
     },
-    setUploadCallback: function setUploadCallback(_ref52, payload) {
-      var commit = _ref52.commit;
-      commit('upload', {
-        callback: payload
-      });
-    },
-    settingAvatar: function settingAvatar(_ref53, payload) {
-      var commit = _ref53.commit;
+    settingAvatar: function settingAvatar(_ref58, payload) {
+      var commit = _ref58.commit;
       commit('field', {
         avatar: payload.path
       });
     },
-    settingBackground: function settingBackground(_ref54, payload) {
-      var commit = _ref54.commit;
+    settingBackground: function settingBackground(_ref59, payload) {
+      var commit = _ref59.commit;
       commit('field', {
         background: payload.path
       });
@@ -34354,36 +35752,36 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     settingUpdate: function () {
       var _settingUpdate = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(_ref55) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(_ref60) {
         var dispatch, state;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
-            switch (_context10.prev = _context10.next) {
+            switch (_context11.prev = _context11.next) {
               case 0:
-                dispatch = _ref55.dispatch, state = _ref55.state;
-                _context10.prev = 1;
-                _context10.next = 4;
+                dispatch = _ref60.dispatch, state = _ref60.state;
+                _context11.prev = 1;
+                _context11.next = 4;
                 return state.http.put('/api/setting/company', state.record);
 
               case 4:
                 dispatch('message', 'proses update berhasil!');
-                _context10.next = 10;
+                _context11.next = 10;
                 break;
 
               case 7:
-                _context10.prev = 7;
-                _context10.t0 = _context10["catch"](1);
-                dispatch('errors', _context10.t0);
+                _context11.prev = 7;
+                _context11.t0 = _context11["catch"](1);
+                dispatch('errors', _context11.t0);
 
               case 10:
               case "end":
-                return _context10.stop();
+                return _context11.stop();
             }
           }
-        }, _callee10, null, [[1, 7]]);
+        }, _callee11, null, [[1, 7]]);
       }));
 
-      function settingUpdate(_x15) {
+      function settingUpdate(_x17) {
         return _settingUpdate.apply(this, arguments);
       }
 
@@ -34392,39 +35790,39 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     settingFetch: function () {
       var _settingFetch = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(_ref56) {
-        var commit, dispatch, state, _ref57, meta;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(_ref61) {
+        var commit, dispatch, state, _ref62, meta;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
-            switch (_context11.prev = _context11.next) {
+            switch (_context12.prev = _context12.next) {
               case 0:
-                commit = _ref56.commit, dispatch = _ref56.dispatch, state = _ref56.state;
-                _context11.prev = 1;
-                _context11.next = 4;
+                commit = _ref61.commit, dispatch = _ref61.dispatch, state = _ref61.state;
+                _context12.prev = 1;
+                _context12.next = 4;
                 return state.http.get('/api/setting/company');
 
               case 4:
-                _ref57 = _context11.sent;
-                meta = _ref57.data.meta;
+                _ref62 = _context12.sent;
+                meta = _ref62.data.meta;
                 commit('record', meta);
-                _context11.next = 12;
+                _context12.next = 12;
                 break;
 
               case 9:
-                _context11.prev = 9;
-                _context11.t0 = _context11["catch"](1);
-                dispatch('errors', _context11.t0);
+                _context12.prev = 9;
+                _context12.t0 = _context12["catch"](1);
+                dispatch('errors', _context12.t0);
 
               case 12:
               case "end":
-                return _context11.stop();
+                return _context12.stop();
             }
           }
-        }, _callee11, null, [[1, 9]]);
+        }, _callee12, null, [[1, 9]]);
       }));
 
-      function settingFetch(_x16) {
+      function settingFetch(_x18) {
         return _settingFetch.apply(this, arguments);
       }
 
@@ -34433,15 +35831,15 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
     signin: function () {
       var _signin = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(_ref58) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(_ref63) {
         var commit, dispatch, state, token, user;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
           while (1) {
-            switch (_context12.prev = _context12.next) {
+            switch (_context13.prev = _context13.next) {
               case 0:
-                commit = _ref58.commit, dispatch = _ref58.dispatch, state = _ref58.state;
-                _context12.prev = 1;
-                _context12.next = 4;
+                commit = _ref63.commit, dispatch = _ref63.dispatch, state = _ref63.state;
+                _context13.prev = 1;
+                _context13.next = 4;
                 return state.http.post('/oauth/token', {
                   grant_type: 'password',
                   client_id: state.auth.siteKey,
@@ -34452,59 +35850,59 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
                 });
 
               case 4:
-                token = _context12.sent;
+                token = _context13.sent;
                 commit('token', token.data);
-                _context12.next = 8;
+                _context13.next = 8;
                 return state.http.get('/api/user');
 
               case 8:
-                user = _context12.sent;
+                user = _context13.sent;
                 commit('user', user.data);
                 _router__WEBPACK_IMPORTED_MODULE_4__["default"].push({
                   name: 'home'
                 });
-                _context12.next = 16;
+                _context13.next = 16;
                 break;
 
               case 13:
-                _context12.prev = 13;
-                _context12.t0 = _context12["catch"](1);
-                dispatch('errors', _context12.t0);
+                _context13.prev = 13;
+                _context13.t0 = _context13["catch"](1);
+                dispatch('errors', _context13.t0);
 
               case 16:
               case "end":
-                return _context12.stop();
+                return _context13.stop();
             }
           }
-        }, _callee12, null, [[1, 13]]);
+        }, _callee13, null, [[1, 13]]);
       }));
 
-      function signin(_x17) {
+      function signin(_x19) {
         return _signin.apply(this, arguments);
       }
 
       return signin;
     }(),
-    signout: function signout(_ref59) {
-      var state = _ref59.state;
+    signout: function signout(_ref64) {
+      var state = _ref64.state;
       state.auth.signout();
       _router__WEBPACK_IMPORTED_MODULE_4__["default"].push({
         name: 'login'
       });
     },
-    snackbarClose: function snackbarClose(_ref60) {
-      var commit = _ref60.commit;
+    snackbarClose: function snackbarClose(_ref65) {
+      var commit = _ref65.commit;
       commit('snackbar', {
         state: false
       });
     },
-    tableHeaders: function tableHeaders(_ref61, payload) {
-      var commit = _ref61.commit;
+    tableHeaders: function tableHeaders(_ref66, payload) {
+      var commit = _ref66.commit;
       commit('tableHeaders', payload);
     },
-    trashFormClose: function trashFormClose(_ref62) {
-      var commit = _ref62.commit,
-          state = _ref62.state;
+    trashFormClose: function trashFormClose(_ref67) {
+      var commit = _ref67.commit,
+          state = _ref67.state;
       state.table.selected.forEach(function (record) {
         return record.pinned = false;
       });
@@ -34518,15 +35916,15 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
         "delete": false
       });
     },
-    trashFormOpen: function trashFormOpen(_ref63) {
-      var commit = _ref63.commit;
+    trashFormOpen: function trashFormOpen(_ref68) {
+      var commit = _ref68.commit;
       commit('trash', {
         state: true
       });
     },
-    errors: function errors(_ref64, payload) {
-      var commit = _ref64.commit,
-          state = _ref64.state;
+    errors: function errors(_ref69, payload) {
+      var commit = _ref69.commit,
+          state = _ref69.state;
 
       if (payload.hasOwnProperty('response')) {
         var _payload$response$dat = payload.response.data,

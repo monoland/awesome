@@ -20,7 +20,7 @@ class SettingController extends Controller
         $this->authorize('viewAny', Setting::class);
 
         return new SettingCollection(
-            Setting::filterOn($request)->paginate($request->rowsPerPage)
+            Setting::filterOn($request)->paginate($request->itemsPerPage)
         );
     }
 
