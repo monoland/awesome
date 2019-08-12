@@ -20,11 +20,11 @@ export default {
     },
 
     data:() => ({
-        files: null
+        // 
     }),
 
     methods: {
-        ...mapActions(['documentOpen', 'pageInfo', 'initStore']),
+        ...mapActions(['pageInfo', 'initStore']),
     }
 };
 </script>
