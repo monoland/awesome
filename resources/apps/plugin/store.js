@@ -10,6 +10,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         auth: Auth,
+        document: { callback: () => {}, multiple: false, selected: [], state: false },
         http: Axios.create({
             baseURL: baseURL,
             headers: {
@@ -18,7 +19,7 @@ export default new Vuex.Store({
                 'X-Requested-With': 'XMLHttpRequest'
             }
         }),
-
+        menus: [],
         
         afterAddnew:() => {},
         afterDelete:() => {},
@@ -34,21 +35,12 @@ export default new Vuex.Store({
         overideState:() => {},
         setRecord:() => {},
 
+        additional: [],
         dataUrl: null,
         disabled: { add: false, delete: true, edit: true, find: false, link: true, refresh: false },
-        
-        document: { files: [], footerProps: { 
-            'items-per-page-options': [5, 10, 20]
-        }, initial: true, loader: false, options: {
-            itemsPerPage: 5, page: 1
-        }, params: {
-            itemsPerPage: 5, page: 1, sortBy: null, sortDesc: null
-        }, records: [], total: 0, selected: [], state: false },
-
         form: { state: false, mode: 'addnew' },
         login: { username: null, userpass: null },
         headers: [],
-        menus: [],
         page: { state: 'default', icon: null, title: null, subtitle: null },
         primaryId: 'id',
         records: [],
@@ -56,15 +48,14 @@ export default new Vuex.Store({
         toolbar: { search: false, delete: false, text: null },
         trash: { state: false },
         snackbar: { state: false, text: null, color: null },
-        
-        table: { initial: true, loader: false, options: {
-            itemsPerPage: 10, page: 1
-        }, footerProps: { 
-            'items-per-page-options': [10, 25, 50]
-        }, total: 0, params: {
-            itemsPerPage: 10, page: 1, sortBy: null, sortDesc: null
-        }, selected: [] },
-        
+        table: { 
+            initial: true, 
+            loader: false, 
+            options: { itemsPerPage: 10, page: 1 }, 
+            footerProps: { 'items-per-page-options': [10, 25, 50] }, 
+            total: 0, params: { itemsPerPage: 10, page: 1, sortBy: null, sortDesc: null}, 
+            selected: [] 
+        },
         upload: { combined: false, progress: false, value: 0 }
     },
 
@@ -79,6 +70,10 @@ export default new Vuex.Store({
     },
 
     mutations: {
+        additional: function(state, payload) {
+            state.additional = payload;
+        },
+
         afterAddnew: function(state, payload) {
             state.afterAddnew = payload;
         },
@@ -153,20 +148,6 @@ export default new Vuex.Store({
             });
         },
 
-        documentParams: function(state, payload) {
-            Object.keys(payload).forEach(key => {
-                state.document.params[key] = payload[key];
-            });
-        },
-
-        documentPush: function(state, payload) {
-            state.document.records.push(payload);
-        },
-
-        documentSplice: function(state, index) {
-            state.document.records.splice(index, 1);
-        },
-
         fetchAppMenus: function(state, payload) {
             if (payload) state.auth.menus = payload;
             state.menus = state.auth.menus;
@@ -188,6 +169,42 @@ export default new Vuex.Store({
             if (!state.http.defaults.headers.common.hasOwnProperty('Authorization')) {
                 state.http.defaults.headers.common['Authorization'] = state.auth.token;
             }
+
+            state.afterAddnew = () => {};
+            state.afterDelete = () => {};
+            state.afterFormOpen = () => {};
+            state.afterSelected = () => {};
+            state.afterUpdate = () => {};
+            state.beforeAddnew = () => {};
+            state.beforeDelete = () => {};
+            state.beforeUpdate = () => {};
+            state.cancelAddnew = () => { return false; };
+            state.cancelDelete = () => { return false; };
+            state.cancelUpdate = () => { return false; };
+            state.overideState = () => {};
+            state.setRecord = () => {};
+
+            state.dataUrl = null;
+            state.disabled = { add: false, delete: true, edit: true, find: false, link: true, refresh: false };
+            state.form = { state: false, mode: 'addnew' };
+            state.login = { username: null, userpass: null };
+            state.headers = [];
+            state.page = { state: 'default', icon: null, title: null, subtitle: null };
+            state.primaryId = 'id';
+            state.records = [];
+            state.record = {};
+            state.toolbar = { search: false, delete: false, text: null };
+            state.trash = { state: false };
+            state.snackbar = { state: false, text: null, color: null };
+            state.table = { 
+                initial: true, 
+                loader: false, 
+                options: { itemsPerPage: 10, page: 1 }, 
+                footerProps: { 'items-per-page-options': [10, 25, 50] }, 
+                total: 0, params: { itemsPerPage: 10, page: 1, sortBy: null, sortDesc: null}, 
+                selected: [] 
+            };
+            state.upload = { combined: false, progress: false, value: 0 };
         },
 
         overideState: function({ state }, payload) {
@@ -272,6 +289,20 @@ export default new Vuex.Store({
             });
         },
 
+        tableFilter: function(state, payload) {
+            Object.keys(payload).forEach(key => {
+                state.table.params[key] = payload[key];
+            });
+        },
+
+        tableFilterRemove: function(state, payload) {
+            Object.keys(payload).forEach(key => {
+                if (state.table.params.hasOwnProperty(key)) {
+                    delete state.table.params[key];
+                }
+            });
+        },
+
         tableHeaders: function(state, payload) {
             state.headers = payload;
         },
@@ -313,37 +344,8 @@ export default new Vuex.Store({
             commit('document', { state: false });
         },
 
-        documentFetch: async function({ commit, dispatch, state }, payload) {
-            try {
-                let { data: { data, meta }} = await state.http.get( 
-                    '/api/document', { params: payload.params }
-                );
-
-                commit('document', { 
-                    records: data, total: meta.total, selected: [] 
-                });
-            } catch (error) {
-                dispatch('errors', error);
-            }
-        },
-
         documentOpen: function({ commit }) {
             commit('document', { state: true });
-        },
-
-        documentRemove: function({ state }, payload) {
-            let idx = state.document.files.findIndex(obj => obj.id === payload.id);
-
-            if (idx !== -1) {
-                state.document.files.splice(idx, 1);
-            }
-        },
-
-        documentSelect: function({ commit, state }) {
-            commit('document', { 
-                files: state.document.selected,
-                state: false
-             });
         },
 
         editFormClose: function({ commit }) {
@@ -554,8 +556,9 @@ export default new Vuex.Store({
 
                 if (payload) params = payload;
                 
-                let { data: { data, meta }} = await state.http.get( url, { params: params });
+                let { data: { additional, data, meta }} = await state.http.get( url, { params: params });
 
+                commit('additional', additional);
                 commit('records', data);
                 commit('table', { total: meta.total, initial: false, selected: [] });
             } catch (error) {
@@ -674,6 +677,10 @@ export default new Vuex.Store({
 
         setCancelUpdate: function({ commit }, payload) {
             commit('cancelUpdate', payload);
+        },
+
+        setFilter: function({ commit }, payload) {
+            commit('tableFilter', payload);
         },
 
         setOverideState: function({ commit }, payload) {

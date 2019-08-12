@@ -46,6 +46,8 @@
             {{ snackbar.text }}
             <v-btn dark text @click="snackbarClose">Tutup</v-btn>
         </v-snackbar>
+
+        <v-file-browser></v-file-browser>
     </v-app>
 </template>
 

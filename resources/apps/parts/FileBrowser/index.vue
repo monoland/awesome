@@ -1,30 +1,5 @@
 <template>
     <v-dialog persistent width="800" v-model="document.state">
-        <template v-slot:activator="{ on }">
-            <div class="v-file">
-                <div class="v-file__wrap">
-                    <v-slide-x-transition mode="in-out">
-                        <v-fileitem class="v-file__bttn" clickable v-on="on" v-if="document.files.length === 0">
-                            Klik untuk buka file browser
-                        </v-fileitem>
-                    </v-slide-x-transition>
-
-                    <v-slide-x-reverse-transition group tag="div" class="v-file__list" mode="in-out" v-show="document.files.length">
-                        <template v-for="(file, index) in document.files">
-                            <v-fileitem class="v-file__item" closeable :key="index" @click="documentRemove(file)">
-                                <div class="d-flex justify-space-between">
-                                    <div class="text-truncate">{{ file.name }}</div>
-                                    <v-chip small label :color="$root.theme" dark>
-                                        <div class="text-truncate">{{ `Size: ${$root.formatBytes(file.byte)}` }}</div>
-                                    </v-chip>
-                                </div>
-                            </v-fileitem>
-                        </template>
-                    </v-slide-x-reverse-transition>
-                </div>
-            </div>
-        </template>
-        
         <v-card class="v-filebrowser">
             <v-toolbar :color="$root.theme" dark flat>
                 <v-toolbar-title>File Browser</v-toolbar-title>
@@ -60,7 +35,7 @@
                 <v-slide-x-transition mode="in-out">
                     <div class="v-filebrowser__content" v-show="tab === 'upload'">
                         <v-layout class="lightbox" :class="`${$root.theme}--text`" fill-height align-center justify-center>
-                            <v-document-upload :callback="callback" class="v-btn">
+                            <v-document-upload :callback="callback">
                                 <v-btn depressed :color="$root.theme" dark>
                                     unggah file
                                 </v-btn>
@@ -83,12 +58,12 @@
                         <v-data-table
                             v-model="document.selected"
                             :headers="headers"
-                            :items="document.records"
-                            :single-select="!multiple"
-                            :loading="document.loader"
-                            :options.sync="document.options"
-                            :server-items-length="document.total"
-                            :footer-props="document.footerProps"
+                            :items="records"
+                            :single-select="!document.multiple"
+                            :loading="loader"
+                            :options.sync="options"
+                            :server-items-length="total"
+                            :footer-props="footerProps"
                             item-key="id"
                             fixed-header
                             show-select
@@ -96,6 +71,10 @@
                         >
                             <template #:progress>
                                 <v-progress-linear :color="color" height="1" indeterminate></v-progress-linear>
+                            </template>
+
+                            <template v-slot:item.byte="{ value }">
+                                {{ $root.formatBytes(value) }}
                             </template>
                         </v-data-table>
                     </div>
@@ -122,107 +101,98 @@ import { mapState, mapActions } from 'vuex';
 export default {
     name: 'v-file-browser',
 
-    props: {
-        multiple: {
-            type: Boolean,
-            default: false
-        },
-
-        value: null
-    },
-
     computed: {
-        ...mapState(['document', 'upload'])
+        ...mapState(['document', 'http', 'upload'])
     },
 
     data:() => ({
-        dialog: false,
-        
+        footerProps: { 'items-per-page-options': [5, 10, 20] },
         headers: [
             { text: 'Name', value: 'name' },
             { text: 'Ekstensi', value: 'extn' },
             { text: 'Mime', value: 'mime' },
-            { text: 'Ukuran', value: 'byte' }
+            { text: 'Ukuran', value: 'byte', align: 'end' }
         ],
-
+        initial: true,
         loader: false,
-        params: {},
+        options: { itemsPerPage: 5, page: 1 },
+        params: { itemsPerPage: 5, page: 1, sortBy: null, sortDesc: null },
+        total: 0,
+        records: [],
         searchText: null,
         selected: [],
         tab: 'upload',
     }),
 
-    created() {
-        if (this.value) this.$store.commit('document', { files: this.value });
-    },
-
-    mounted() {
-        if (this.document.records.length === 0) this.documentFetch({ params: this.document.params });
-    },
-
     methods: {
-        ...mapActions(['documentClose', 'documentFetch', 'documentRemove', 'documentSelect']),
+        ...mapActions(['documentClose']),
+
+        bouncing: debounce(function (value) {
+            this.params['search'] = value;
+        }, 1000),
 
         callback: function(record) {
-            this.$store.commit('documentPush', record);
+            this.document.records.push(record);
             this.tab = 'files';
         },
 
         close: function() {
-            this.$store.dispatch('documentClose');
+            this.documentClose();
             this.tab = 'upload';
         },
 
-        bouncing: debounce(function (value) {
-            this.$store.commit('documentParams', { search: value });
-            this.documentFetch({ params: this.document.params });
-        }, 1000),
+        documentFetch: async function() {
+            try {
+                let { data: { data, meta }} = await this.http.get( 
+                    '/api/document', { params: this.params }
+                );
+
+                this.records = data;
+                this.total = meta.total;
+                this.selected = [];
+            } catch (error) {
+                this.$store.dispatch('errors', error);
+            }
+        },
 
         onSelect: function() {
-            this.$store.dispatch('documentSelect');
-            this.$nextTick(() => {
-                this.$emit('input', this.document.files);
-                this.tab = 'upload';
-            });
-        },
+            this.document.callback(Object.assign([], this.document.selected));
+            this.documentClose();
+            this.$nextTick(() => this.tab = 'upload');
+        }
     },
 
     watch: {
-        searchText: function(newVal) {
-            this.bouncing(newVal);
+        'document.state': function(newVal) {
+            if (newVal && newVal === true && this.records.length === 0) this.documentFetch();
         },
 
-        'document.options': {
+        'options': {
             handler: function(newVal) {
-                if (this.document.initial) {
-                    this.$store.commit('document', { initial: false });
-                    return;
-                }
+                if (this.initial) return;
 
-                this.$store.commit('documentParams', {
+                this.params = {
                     itemsPerPage: newVal.itemsPerPage, 
                     page: newVal.page, 
                     sortBy: newVal.sortBy[0], 
                     sortDesc: newVal.sortDesc[0]
-                });
+                };
             },
 
             deep: true
         },
 
-        'document.params': {
-            handler: function(newVal) {
-                if (this.document.initial) return;
-
-                this.documentFetch({ params: newVal });
+        'params': {
+            handler: function() {
+                this.documentFetch();
             },
 
             deep: true
         },
 
-        value: function(newVal) {
-            if (newVal) this.$store.commit('document', { files: newVal });
-        }
+        searchText: function(newVal) {
+            this.bouncing(newVal);
+        },
     }
 };
 </script>

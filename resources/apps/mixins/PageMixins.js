@@ -30,7 +30,7 @@ export const pageMixins = {
             'afterSelected', 'dataUrl', 'recordFetch', 'initStore', 
             'overideState', 'pageInfo', 'recordNew', 'setRecord', 
             'setAfterSelected', 'setOverideState', 'tableHeaders',
-            'newFormOpen', 'setUploadCallback'
+            'newFormOpen', 'setUploadCallback', 'setFilter'
         ])
     },
 
@@ -56,12 +56,23 @@ export const pageMixins = {
             }
         },
 
+        '$route.query': {
+            handler: function(newVal) {
+                if (Object.keys(newVal).length === 0 && newVal.constructor === Object) {
+                    this.$store.commit('tableFilterRemove', {
+                        filterBy: null, filterOn: null
+                    });
+
+                    this.$nextTick(() => this.$store.dispatch('recordReload'));
+                }
+            },
+
+            deep: true
+        },
+
         'table.options': {
             handler: function(newVal) {
-                if (this.table.initial) {
-                    this.$store.commit('table', { initial: false });
-                    return;
-                }
+                if (this.table.initial) return;
 
                 this.$store.commit('tableParams', {
                     itemsPerPage: newVal.itemsPerPage, 
@@ -77,6 +88,7 @@ export const pageMixins = {
         'table.params': {
             handler: function(newVal) {
                 this.$store.dispatch('recordRefetch', { fetch: newVal });
+
             },
 
             deep: true

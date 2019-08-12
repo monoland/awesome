@@ -32111,7 +32111,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "baseURL", function() { return baseURL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bugsnagKey", function() { return bugsnagKey; });
 var siteKey = 1;
-var secretKey = 't1meBZaHXQ6oRpFIE5CCrzcCYbXhPrmjSuMh50yP';
+var secretKey = 'cwuS8fok4z58zSCn5t8MucT1VweM9F5e8q7r9A9Q';
 var baseURL = 'https://awesome.loc/';
 var bugsnagKey = '0b8e3f0b2f226634167a4551f01faa22';
 
