@@ -132,7 +132,10 @@ export default {
         }, 1000),
 
         callback: function(record) {
-            this.document.records.push(record);
+            this.records.push(record);
+
+            if (this.records.length === 1) this.documentFetch();
+
             this.tab = 'files';
         },
 

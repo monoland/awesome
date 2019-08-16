@@ -27,26 +27,14 @@
         <v-expand-transition>
             <div class="v-user__menu" v-show="expand" v-if="!$vuetify.breakpoint.xsOnly">
                 <v-list>
-                    <v-list-item :active-class="$root.theme + '--text'" :to="{ name: 'profile' }">
-                        <v-list-item-action><v-icon>perm_identity</v-icon></v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>Profile</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item :active-class="$root.theme + '--text'" :to="{ name: 'password' }">
-                        <v-list-item-action><v-icon>lock</v-icon></v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>Katasandi</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-
-                    <v-list-item :active-class="$root.theme + '--text'" :to="{ name: 'setting' }" v-if="auth.authent === 'administrator'">
-                        <v-list-item-action><v-icon>settings</v-icon></v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>Setting</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
+                    <template v-for="(menu, index) in menus.account">
+                        <v-list-item :active-class="$root.theme + '--text'" :to="menu.to" :key="index" v-if="menu.type === 'item'">
+                            <v-list-item-action><v-icon>{{ menu.icon }}</v-icon></v-list-item-action>
+                            <v-list-item-content>
+                                <v-list-item-title>{{ menu.text }}</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </template>
 
                     <v-list-item :active-class="$root.theme + '--text'" @click="signout">
                         <v-list-item-action><v-icon>exit_to_app</v-icon></v-list-item-action>
@@ -60,7 +48,7 @@
         </v-expand-transition>
 
         <v-list>
-            <template v-for="(menu, index) in menus">
+            <template v-for="(menu, index) in menus.sidebar">
                 <v-list-item :active-class="$root.theme + '--text'" :to="menu.to" :key="index" v-if="menu.type === 'item'">
                     <v-list-item-action><v-icon>{{ menu.icon }}</v-icon></v-list-item-action>
                     <v-list-item-content>

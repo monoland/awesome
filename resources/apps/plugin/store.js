@@ -274,7 +274,7 @@ export default new Vuex.Store({
         },
 
         setRecord: function(state, payload) {
-            state.setRecord = payload;
+            state.setRecord = () => state.record = Object.assign({}, payload)
         },
 
         snackbar: function(state, payload) {
@@ -403,8 +403,8 @@ export default new Vuex.Store({
             commit('form', { state: false, mode: null });
         },
 
-        newFormOpen: function({ commit, dispatch, state }) {
-            dispatch('recordNew');
+        newFormOpen: function({ commit, state }) {
+            state.setRecord();
             commit('form', { state: true, mode: 'addnew' });
             
             state.afterFormOpen();
@@ -489,6 +489,8 @@ export default new Vuex.Store({
                 commit('recordPush', data);
                 commit('form', { state: false, mode: null });
                 dispatch('message', 'proses simpan berhasil!');
+
+                if (state.records.length === 1) dispatch('recordFetch');
 
                 state.afterAddnew();
             } catch (error) {
@@ -692,9 +694,7 @@ export default new Vuex.Store({
         },
 
         setRecord: function({ commit }, payload) {
-            commit('setRecord', () => {
-                commit('record', payload);
-            });
+            commit('setRecord', payload);
         },
 
         settingAvatar: function({ commit }, payload) {

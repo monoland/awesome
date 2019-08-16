@@ -78,13 +78,44 @@ class WebController extends Controller
      */
     public function menus(Request $request)
     {
-        return response()->json([
-            ['type' => 'item', 'icon' => 'dashboard', 'text' => 'Beranda', 'to' => ['name' => 'home']],
-            ['type' => 'subheader', 'text' => 'Master', 'class' => 'mt-2'],
-            ['type' => 'item', 'icon' => 'filter_none', 'text' => 'Dokumen', 'to' => ['name' => 'document']],
-            ['type' => 'subheader', 'text' => 'Utilitas', 'class' => 'mt-2'],
-            ['type' => 'item', 'icon' => 'people', 'text' => 'Pengguna', 'to' => ['name' => 'user']],
-            ['type' => 'item', 'icon' => 'whatshot', 'text' => 'OAuth Klien', 'to' => ['name' => 'client']],
-        ]);
+        switch ($request->user()->authent->name) {
+            case 'administrator':
+                return response()->json([
+                    'sidebar' => [
+                        ['type' => 'item', 'icon' => 'dashboard', 'text' => 'Beranda', 'to' => ['name' => 'home']],
+                        // master
+                        ['type' => 'subheader', 'text' => 'Master', 'class' => 'mt-2'],
+                        ['type' => 'item', 'icon' => 'filter_none', 'text' => 'Dokumen', 'to' => ['name' => 'document']],
+                        // utilitas
+                        ['type' => 'subheader', 'text' => 'Utilitas', 'class' => 'mt-2'],
+                        ['type' => 'item', 'icon' => 'people', 'text' => 'Pengguna', 'to' => ['name' => 'user']],
+                        ['type' => 'item', 'icon' => 'whatshot', 'text' => 'OAuth Klien', 'to' => ['name' => 'client']],
+                    ],
+                    'homebar' => [
+                        ['type' => 'item', 'icon' => 'dashboard', 'text' => 'Beranda', 'to' => ['name' => 'home']],
+                        ['type' => 'item', 'icon' => 'perm_identity', 'text' => 'Profile', 'to' => ['name' => 'profile']],
+                        ['type' => 'item', 'icon' => 'lock', 'text' => 'Katasandi', 'to' => ['name' => 'password']],
+                        ['type' => 'item', 'icon' => 'settings', 'text' => 'Setting', 'to' => ['name' => 'setting']],
+                    ],
+                    'account' => [
+                        ['type' => 'item', 'icon' => 'perm_identity', 'text' => 'Profile', 'to' => ['name' => 'profile']],
+                        ['type' => 'item', 'icon' => 'lock', 'text' => 'Katasandi', 'to' => ['name' => 'password']],
+                        ['type' => 'item', 'icon' => 'settings', 'text' => 'Setting', 'to' => ['name' => 'setting']],
+                    ]
+                ]);
+                break;
+
+            default:
+                return response()->json([
+                    'sidebar' => [
+                        ['type' => 'item', 'icon' => 'dashboard', 'text' => 'Beranda', 'to' => ['name' => 'home']],
+                    ],
+                    'account' => [
+                        ['type' => 'item', 'icon' => 'perm_identity', 'text' => 'Profile', 'to' => ['name' => 'profile']],
+                        ['type' => 'item', 'icon' => 'lock', 'text' => 'Katasandi', 'to' => ['name' => 'password']],
+                    ]
+                ]);
+                break;
+        }
     }
 }

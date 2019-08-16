@@ -9,25 +9,12 @@
                 <v-bottom-navigation 
                     grow absolute shift
                 >
-                    <v-btn text :color="$root.theme" :to="{ name: 'home' }">
-                        <span>Beranda</span>
-                        <v-icon>home</v-icon>
-                    </v-btn>
-
-                    <v-btn text :color="$root.theme" :to="{ name: 'profile' }">
-                        <span>Profile</span>
-                        <v-icon>perm_identity</v-icon>
-                    </v-btn>
-
-                    <v-btn text :color="$root.theme" :to="{ name: 'password' }">
-                        <span>Password</span>
-                        <v-icon>lock</v-icon>
-                    </v-btn>
-
-                    <v-btn text :color="$root.theme" :to="{ name: 'setting' }">
-                        <span>Setting</span>
-                        <v-icon>settings</v-icon>
-                    </v-btn>
+                    <template v-for="(menu, index) in menus.homebar">
+                        <v-btn text :color="$root.theme" :to="menu.to" :key="index">
+                            <span>{{ menu.text }}</span>
+                            <v-icon>{{ menu.icon }}</v-icon>
+                        </v-btn>
+                    </template>
 
                     <v-btn text :color="$root.theme" @click="signout">
                         <span>Signout</span>
@@ -58,7 +45,7 @@ export default {
     name: 'page-base',
 
     computed: {
-        ...mapState(['auth', 'snackbar']),
+        ...mapState(['auth', 'menus', 'snackbar']),
     },
 
     created() {
