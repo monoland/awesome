@@ -3,7 +3,7 @@ import { mapState, mapActions } from 'vuex';
 export const pageMixins = {
     computed: {
         ...mapState([
-            'disabled', 'form', 'headers', 'page', 
+            'additional', 'disabled', 'form', 'headers', 'http', 'page', 
             'record', 'records', 'table', 'toolbar'
         ]),
 
@@ -30,7 +30,7 @@ export const pageMixins = {
             'afterSelected', 'dataUrl', 'recordFetch', 'initStore', 
             'overideState', 'pageInfo', 'recordNew', 'setRecord', 
             'setAfterSelected', 'setOverideState', 'tableHeaders',
-            'newFormOpen', 'setUploadCallback', 'setFilter'
+            'newFormOpen', 'setUploadCallback', 'setFilter', 'setAfterFormClose'
         ])
     },
 
@@ -111,7 +111,7 @@ export const pageMixins = {
                 
                 case 1:
                     this.$store.commit('toolbar', { search: false });
-                    this.$store.commit('record', newval[0]);
+                    this.$store.commit('record', Object.assign({}, newval[0]));
                     if (this.page.state !== 'pinned') this.$store.commit('pageInfo', { state: 'select' });
                     
                     this.afterSelected(this.record);

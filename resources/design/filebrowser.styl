@@ -1,3 +1,6 @@
+.v-application--is-ltr .v-filebrowser .v-input__append-outer
+    margin-left: 24px
+
 .v-filebrowser
     &__wrap
         display: flex
@@ -15,11 +18,28 @@
             border: 1px dashed currentColor
             border-radius: 4px
     
-    &__search
+    &__extension
         position: absolute
-        right: 16px
-        width: 250px
+        left: 0
+        height: 100%
+        width: 100%
+        padding: 4px 16px
         z-index: 1
+    
+    &__search
+        position: relative
+        height: 100%
+        border-radius: 3px
+    
+    &__actions
+        position: relative
+        height: 48px
+        width: 48px
+
+        .v-btn
+            position: absolute
+            left: 0
+            top: 0
         
     &__foot
         position: absolute

@@ -23,6 +23,7 @@ export default new Vuex.Store({
         
         afterAddnew:() => {},
         afterDelete:() => {},
+        afterFormClose:() => {},
         afterFormOpen:() => {},
         afterSelected:() => {},
         afterUpdate:() => {},
@@ -80,6 +81,10 @@ export default new Vuex.Store({
 
         afterDelete: function(state, payload) {
             state.afterDelete = payload;
+        },
+
+        afterFormClose: function(state, payload) {
+            state.afterFormClose = payload;
         },
 
         afterFormOpen: function(state, payload) {
@@ -172,6 +177,7 @@ export default new Vuex.Store({
 
             state.afterAddnew = () => {};
             state.afterDelete = () => {};
+            state.afterFormClose = () => {};
             state.afterFormOpen = () => {};
             state.afterSelected = () => {};
             state.afterUpdate = () => {};
@@ -243,6 +249,16 @@ export default new Vuex.Store({
             state.records.splice(index, 1);
         },
 
+        recordUpdate: function(state, payload) {
+            let idx = state.records.findIndex(obj => obj.id === payload.id);
+
+            if (idx !== -1) {
+                Object.keys(payload).forEach(key => {
+                    state.records[idx][key] = payload[key];
+                });
+            }
+        },
+
         tableParams: function(state, payload) {
             Object.keys(payload).forEach(key => {
                 state.table.params[key] = payload[key];
@@ -274,7 +290,9 @@ export default new Vuex.Store({
         },
 
         setRecord: function(state, payload) {
-            state.setRecord = () => state.record = Object.assign({}, payload)
+            state.setRecord = () => {
+                state.record = Object.assign({}, payload)
+            }
         },
 
         snackbar: function(state, payload) {
@@ -379,6 +397,7 @@ export default new Vuex.Store({
 
         formClose: function({ state, dispatch }) {
             state.form.mode === 'edit' ? dispatch('editFormClose') : dispatch('newFormClose');
+            state.afterFormClose();
         },
 
         formSubmit: function({ dispatch, state }) {
@@ -618,6 +637,7 @@ export default new Vuex.Store({
                 );
                 
                 commit('record', data);
+                commit('recordUpdate', data);
                 commit('form', { state: false, mode: null });
                 commit('table', { selected: [] });
                 dispatch('message', 'proses update berhasil!');
@@ -643,6 +663,10 @@ export default new Vuex.Store({
 
         setAfterDelete: function({ commit }, payload) {
             commit('afterDelete', payload);
+        },
+
+        setAfterFormClose: function({ commit }, payload) {
+            commit('afterFormClose', payload);
         },
 
         setAfterFormOpen: function({ commit }, payload) {

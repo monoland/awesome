@@ -6,6 +6,20 @@
                 
                 <v-spacer></v-spacer>
                 
+                <div class="v-filebrowser__actions">
+                    <v-scale-transition>
+                        <v-btn icon @click="searchOpen" v-if="tab === 'files' && !editState">
+                            <v-icon>search</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
+
+                    <v-scale-transition>
+                        <v-btn icon @click="editOpen" v-if="tab === 'files' && editState">
+                            <v-icon>edit</v-icon>
+                        </v-btn>
+                    </v-scale-transition>
+                </div>
+                
                 <v-btn icon @click="close">
                     <v-icon>close</v-icon>
                 </v-btn>
@@ -18,16 +32,43 @@
                         <v-tab href="#files">files</v-tab>
                     </v-tabs>
 
-                    <div class="v-filebrowser__search">
-                        <v-slide-x-reverse-transition>
-                            <v-text-field v-if="tab === 'files'"
-                                v-model="searchText"
-                                label="Cari File"
-                                hide-details
-                                single-line
-                            ></v-text-field>
-                        </v-slide-x-reverse-transition>
-                    </div>
+                    <v-fade-transition>
+                        <div class="v-filebrowser__extension" :class="$root.theme" v-show="searchMode">
+                            <div class="v-filebrowser__search">
+                                <v-slide-x-transition>
+                                    <v-text-field v-if="searchMode"
+                                        ref="searchField"
+                                        append-icon="cancel"
+                                        @click:append="searchClose"
+                                        v-model="searchText"
+                                        label="Cari Dokumen"
+                                        hide-details
+                                        single-line
+                                    ></v-text-field>
+                                </v-slide-x-transition>
+                            </div>
+                        </div>
+                    </v-fade-transition>
+
+                    <v-fade-transition>
+                        <div class="v-filebrowser__extension" :class="$root.theme" v-show="editMode">
+                            <div class="v-filebrowser__search">
+                                <v-slide-x-transition>
+                                    <v-text-field v-if="editMode"
+                                        ref="editField"
+                                        append-icon="cancel"
+                                        append-outer-icon="done"
+                                        @click:append="editMode = false"
+                                        @click:append-outer="editSubmit"
+                                        v-model="editObject.name"
+                                        label="Nama Dokumen"
+                                        hide-details
+                                        single-line
+                                    ></v-text-field>
+                                </v-slide-x-transition>
+                            </div>
+                        </div>
+                    </v-fade-transition>
                 </template>
             </v-toolbar>
 
@@ -58,7 +99,7 @@
                         <v-data-table
                             v-model="document.selected"
                             :headers="headers"
-                            :items="records"
+                            :items.sync="records"
                             :single-select="!document.multiple"
                             :loading="loader"
                             :options.sync="options"
@@ -84,8 +125,8 @@
             <div class="v-filebrowser__foot">
                 <v-btn 
                     :color="$root.theme" 
-                    :disabled="tab === 'upload' || document.selected.length === 0" 
-                    :dark="tab === 'files' && document.selected.length !== 0"
+                    :disabled="tab === 'upload' || document.selected.length === 0 || editMode" 
+                    :dark="tab === 'files' && document.selected.length !== 0 && !editMode"
                     depressed
                     @click="onSelect"
                 >select</v-btn>
@@ -106,12 +147,15 @@ export default {
     },
 
     data:() => ({
+        editMode: false,
+        editState: false,
+        editObject: {},
         footerProps: { 'items-per-page-options': [5, 10, 20] },
         headers: [
             { text: 'Name', value: 'name' },
-            { text: 'Ekstensi', value: 'extn' },
-            { text: 'Mime', value: 'mime' },
-            { text: 'Ukuran', value: 'byte', align: 'end' }
+            { text: 'Ektensi', value: 'extn', align: 'center', class: 'medium-field' },
+            { text: 'Mime', value: 'mime', class: 'mime-field' },
+            { text: 'Ukuran', value: 'byte', align: 'end', class: 'medium-field' }
         ],
         initial: true,
         loader: false,
@@ -119,6 +163,7 @@ export default {
         params: { itemsPerPage: 5, page: 1, sortBy: null, sortDesc: null },
         total: 0,
         records: [],
+        searchMode: false,
         searchText: null,
         selected: [],
         tab: 'upload',
@@ -129,6 +174,7 @@ export default {
 
         bouncing: debounce(function (value) {
             this.params['search'] = value;
+            this.documentFetch();
         }, 1000),
 
         callback: function(record) {
@@ -153,15 +199,53 @@ export default {
                 this.records = data;
                 this.total = meta.total;
                 this.selected = [];
+                this.initial = false;
             } catch (error) {
                 this.$store.dispatch('errors', error);
             }
         },
 
+        editOpen: function() {
+            this.editMode = true;
+            this.$nextTick(() => this.$refs.editField.$el.getElementsByTagName('input')[0].focus());
+        },
+
+        editSubmit: async function() {
+            try {
+                await this.http.put(
+                    'api/document' + '/' + this.editObject.id, this.editObject
+                );
+                
+                this.editMode = false;    
+                
+                this.$store.dispatch('message', 'proses update berhasil!');
+            } catch (error) {
+                this.$store.dispatch('errors', error);
+            }
+            
+        },
+
         onSelect: function() {
             this.document.callback(Object.assign([], this.document.selected));
             this.documentClose();
-            this.$nextTick(() => this.tab = 'upload');
+            
+            this.$nextTick(() => { 
+                this.editMode = false;
+                this.searchMode = false;
+                this.searchText = null;
+                this.editObject = {};
+                this.tab = 'upload';
+            });
+        },
+
+        searchClose: function() {
+            this.searchMode = false;
+            this.searchText = null;
+        },
+
+        searchOpen: function() {
+            this.searchMode = true;
+            this.$nextTick(() => this.$refs.searchField.$el.getElementsByTagName('input')[0].focus());
         }
     },
 
@@ -170,7 +254,22 @@ export default {
             if (newVal && newVal === true && this.records.length === 0) this.documentFetch();
         },
 
-        'options': {
+        'document.selected': {
+            handler: function(newVal, oldVal) {
+                if (oldVal.length === 0 && newVal.length === 1) {
+                    this.editObject = this.document.selected[0];
+                    this.editState = true;
+                } else if (oldVal.length === 1 && newVal.length === 0) {
+                    this.editState = false;
+                    this.editMode = false;
+                    this.editObject = {};
+                }
+            },
+
+            deep: true
+        },
+
+        options: {
             handler: function(newVal) {
                 if (this.initial) return;
 
@@ -180,13 +279,7 @@ export default {
                     sortBy: newVal.sortBy[0], 
                     sortDesc: newVal.sortDesc[0]
                 };
-            },
 
-            deep: true
-        },
-
-        'params': {
-            handler: function() {
                 this.documentFetch();
             },
 

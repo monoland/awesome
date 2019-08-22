@@ -70,7 +70,7 @@ export default {
             { text: 'Ekstensi', value: 'extn' },
             { text: 'Mime', value: 'mime' },
             { text: 'Ukuran', value: 'byte', align: 'end', class: 'number-field' },
-            { text: 'Updated', value: 'updated_at', class: 'date-field' }
+            { text: 'Updated', value: 'updated_at', class: 'datetime-field' }
         ]);
 
         this.pageInfo({
