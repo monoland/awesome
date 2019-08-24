@@ -81,8 +81,17 @@ class WebController extends Controller
         switch ($request->user()->authent->name) {
             case 'administrator':
                 return response()->json([
-                    'sidebar' => [
+                    'deskbar' => [
                         ['type' => 'item', 'icon' => 'dashboard', 'text' => 'Beranda', 'to' => ['name' => 'home']],
+                        // master
+                        ['type' => 'subheader', 'text' => 'Master', 'class' => 'mt-2'],
+                        ['type' => 'item', 'icon' => 'filter_none', 'text' => 'Dokumen', 'to' => ['name' => 'document']],
+                        // utilitas
+                        ['type' => 'subheader', 'text' => 'Utilitas', 'class' => 'mt-2'],
+                        ['type' => 'item', 'icon' => 'people', 'text' => 'Pengguna', 'to' => ['name' => 'user']],
+                        ['type' => 'item', 'icon' => 'whatshot', 'text' => 'OAuth Klien', 'to' => ['name' => 'client']],
+                    ],
+                    'mobibar' => [
                         // master
                         ['type' => 'subheader', 'text' => 'Master', 'class' => 'mt-2'],
                         ['type' => 'item', 'icon' => 'filter_none', 'text' => 'Dokumen', 'to' => ['name' => 'document']],

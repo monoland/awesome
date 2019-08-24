@@ -47,7 +47,8 @@
             "@php artisan package:discover --ansi"
         ],
         "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@php -r \"file_exists('resources/apps/.env.js') || copy('resources/apps/.env.sample.js', 'resources/apps/.env.js');\""
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",

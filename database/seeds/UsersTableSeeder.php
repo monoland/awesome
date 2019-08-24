@@ -21,6 +21,6 @@ class UsersTableSeeder extends Seeder
             'authent_id' => 1
         ]);
 
-        (new ClientRepository)->createPasswordGrantClient(null, 'development', null);
+        dd(((new ClientRepository)->createPasswordGrantClient(null, 'development', null))->secret);
     }
 }

@@ -47,8 +47,46 @@
             </div>
         </v-expand-transition>
 
-        <v-list>
-            <template v-for="(menu, index) in menus.sidebar">
+        <v-list v-if="!$vuetify.breakpoint.xsOnly">
+            <template v-for="(menu, index) in menus.deskbar">
+                <v-list-item :active-class="$root.theme + '--text'" :to="menu.to" :key="index" v-if="menu.type === 'item'">
+                    <v-list-item-action><v-icon>{{ menu.icon }}</v-icon></v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>{{ menu.text }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+
+                <v-divider :class="menu.class" :key="index" v-else-if="menu.type === 'divider'"></v-divider>
+
+                <v-subheader 
+                    class="text-uppercase" 
+                    :class="menu.class" 
+                    :key="index"
+                    v-else-if="menu.type === 'subheader'"
+                >{{ menu.text }}</v-subheader>
+
+                <v-list-group :prepend-icon="menu.icon" :key="index" v-else>
+                    <v-list-item slot="activator">
+                        <v-list-item-title>{{ menu.text }}</v-list-item-title>    
+                    </v-list-item>
+
+                    <template v-for="(item, idx) in menu.items">
+                        <v-list-item :to="item.to" :key="idx">
+                            <v-list-item-action>
+                                <v-icon>{{ item.icon }}</v-icon>
+                            </v-list-item-action>
+                            
+                            <v-list-item-content>
+                                <v-list-item-title>{{ item.text }}</v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </template>
+                </v-list-group>
+            </template>
+        </v-list>
+
+        <v-list v-else>
+            <template v-for="(menu, index) in menus.mobibar">
                 <v-list-item :active-class="$root.theme + '--text'" :to="menu.to" :key="index" v-if="menu.type === 'item'">
                     <v-list-item-action><v-icon>{{ menu.icon }}</v-icon></v-list-item-action>
                     <v-list-item-content>
