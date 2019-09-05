@@ -112,7 +112,7 @@ export default {
             { text: 'Nama', value: 'name' },
             { text: 'Secret', value: 'secret' },
             { text: 'Revoke', value: 'lockicon', sortable: false, align: 'center', class: 'icontag' },
-            { text: 'Updated', value: 'updated_at', class: 'date-field' }
+            { text: 'Updated', value: 'updated_at', class: 'datetime-field' }
         ]);
 
         this.pageInfo({

@@ -1,29 +1,37 @@
 <template>
-    <div class="v-file">
-        <div class="v-file__wrap">
-            <v-slide-x-transition mode="in-out">
-                <v-fileitem v-if="files.length === 0"
-                    class="v-file__bttn" 
-                    clickable 
-                    icon="search"
-                    @click="openFileBrowser"
-                >
-                    Klik untuk buka file browser
-                </v-fileitem>
-            </v-slide-x-transition>
+    <div class="v-attachment">
+        <v-expand-transition>
+            <div class="v-attachment__wrap" v-if="files.length">
+                <div class="v-attachment__list">
+                    <template v-for="(file, index) in files">
+                        <v-expand-transition :key="index">
+                            <div class="v-attachment__item" :key="index">
+                                <div class="v-attachment__hold">
+                                    <div class="v-attachment__icon">
+                                        <v-icon>attach_file</v-icon>
+                                    </div>
 
-            <v-slide-x-reverse-transition group tag="div" class="v-file__list" mode="in-out" v-show="files.length">
-                <template v-for="(file, index) in files">
-                    <v-fileitem class="v-file__item" closeable :key="index" @click="documentRemove(file)">
-                        <div class="d-flex justify-space-between">
-                            <div class="text-truncate">{{ file.name }}</div>
-                            <v-chip small label :color="$root.theme" dark>
-                                <div class="text-truncate">{{ `Size: ${$root.formatBytes(file.byte)}` }}</div>
-                            </v-chip>
-                        </div>
-                    </v-fileitem>
-                </template>
-            </v-slide-x-reverse-transition>
+                                    <div class="v-attachment__text d-flex justify-space-between">
+                                        <div class="text-truncate">{{ file.name }}</div>
+                                        
+                                        <div class="text--secondary caption">{{ `Size: ${$root.formatBytes(file.byte)}` }}</div>
+                                    </div>
+
+                                    <v-btn :color="$root.theme" depressed small icon @click="documentRemove(file)">
+                                        <v-icon>cancel</v-icon>
+                                    </v-btn>
+                                </div>
+
+                                <v-divider></v-divider>
+                            </div>
+                        </v-expand-transition>
+                    </template>
+                </div>
+            </div>
+        </v-expand-transition>
+
+        <div class="v-attachment__button">
+            <v-btn block depressed :color="$root.theme" dark @click="openFileBrowser">Klik untuk buka file browser</v-btn>
         </div>
     </div>
 </template>
@@ -37,7 +45,7 @@ export default {
     props: {
         multiple: {
             type: Boolean,
-            default: false
+            default: true
         },
 
         value: null

@@ -804,6 +804,12 @@ export default new Vuex.Store({
 
                 if (status === 401) {
                     state.auth.signout();
+                } else if (status === 403) {
+                    commit('snackbar', {
+                        color: 'error',
+                        text: 'This action is unauthorized.',
+                        state: true
+                    });
                 } else if (error && hint) {
                     commit('snackbar', {
                         color: 'error',

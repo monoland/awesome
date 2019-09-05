@@ -8,6 +8,10 @@
                 :searchable="searchable"
                 :withProgress="withProgress"
             >
+                <template #navigate>
+                    <slot name="navigate"></slot>
+                </template>
+
                 <template #add-button>
                     <slot name="add-button"></slot>
                 </template>

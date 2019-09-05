@@ -31,7 +31,7 @@ import defaults from './options'
 import {format, unformat} from './utils'
 
 export default {
-    name: 'v-money-field',
+    name: 'v-number-field',
 
     props: {
         value: {
