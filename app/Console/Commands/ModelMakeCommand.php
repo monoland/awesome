@@ -13,7 +13,7 @@ class ModelMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'monoland:model';
+    protected $name = 'mono:model';
 
     /**
      * The console command description.
@@ -72,7 +72,7 @@ class ModelMakeCommand extends GeneratorCommand
         //     $table = Str::singular($table);
         // }
 
-        $this->call('monoland:migration', [
+        $this->call('mono:migration', [
             'name' => "create_{$table}_table",
             '--create' => $table,
         ]);
@@ -89,7 +89,7 @@ class ModelMakeCommand extends GeneratorCommand
 
         $modelName = $this->qualifyClass($this->getNameInput());
 
-        $this->call('monoland:policy', [
+        $this->call('mono:policy', [
             'name' => "{$policy}Policy",
             '--model' => "Models/{$policy}",
         ]);
@@ -99,11 +99,11 @@ class ModelMakeCommand extends GeneratorCommand
     {
         $className = Str::studly(class_basename($this->argument('name')));
 
-        $this->call('monoland:resource', [
+        $this->call('mono:resource', [
             'name' => "{$className}Resource"
         ]);
 
-        $this->call('monoland:resource', [
+        $this->call('mono:resource', [
             'name' => "{$className}Collection"
         ]);
     }

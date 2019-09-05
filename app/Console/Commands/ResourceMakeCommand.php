@@ -13,7 +13,7 @@ class ResourceMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'monoland:resource';
+    protected $name = 'mono:resource';
 
     /**
      * The console command description.

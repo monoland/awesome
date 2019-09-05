@@ -14,7 +14,7 @@ class ControllerMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'monoland:controller';
+    protected $name = 'mono:controller';
 
     /**
      * The console command description.

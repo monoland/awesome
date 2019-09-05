@@ -13,7 +13,7 @@ class PolicyMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $name = 'monoland:policy';
+    protected $name = 'mono:policy';
 
     /**
      * The console command description.
