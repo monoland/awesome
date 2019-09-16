@@ -13,7 +13,7 @@
                         <v-layout :class="{ 'grey': record.background === '' }" column align-center justify-center fill-height>
                             <v-media-upload media-name="app-logo" :callback="settingAvatar">
                                 <v-avatar size="128" class="elevation-2" color="white">
-                                    <v-img :src="record.avatar ? record.avatar : ''"></v-img>
+                                    <v-img :src="record.logo ? record.logo : ''"></v-img>
                                 </v-avatar>
                             </v-media-upload>
                         </v-layout>
@@ -30,18 +30,26 @@
                     <v-card-text>
                         <v-layout wrap>
                             <v-flex xs12>
-                                <v-text-field
+                                <v-textarea
                                     label="Nama Perusahaan"
                                     :color="$root.theme"
                                     v-model="record.name"
-                                ></v-text-field>
+                                ></v-textarea>
                             </v-flex>
 
                             <v-flex xs12>
                                 <v-textarea
-                                    label="Slogan"
+                                    label="Judul"
                                     :color="$root.theme"
-                                    v-model="record.slogan"
+                                    v-model="record.title"
+                                ></v-textarea>
+                            </v-flex>
+
+                            <v-flex xs12>
+                                <v-textarea
+                                    label="Quote"
+                                    :color="$root.theme"
+                                    v-model="record.quote"
                                 ></v-textarea>
                             </v-flex>
 

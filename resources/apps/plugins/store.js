@@ -71,11 +71,11 @@ export default new Vuex.Store({
 
     mutations: {
         additional: function(state, payload) {
-            if (payload.hasOwnProperty('combos')) {
+            if (payload && payload.hasOwnProperty('combos')) {
                 state.combos = payload.combos;
             }
 
-            if (payload.hasOwnProperty('info')) {
+            if (payload && payload.hasOwnProperty('info')) {
                 state.info = payload.info;
             }
         },
@@ -804,8 +804,8 @@ export default new Vuex.Store({
 
         settingFetch: async function({ commit, dispatch, state }) {
             try {
-                let { data: { meta }} = await state.http.get('/api/setting/company');
-                commit('record', meta);
+                let { data } = await state.http.get('/api/setting/company');
+                commit('record', data);
             } catch (error) {
                 dispatch('errors', error);
             }

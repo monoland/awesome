@@ -2562,6 +2562,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'page-setting',
@@ -27418,8 +27426,8 @@ var render = function() {
                                 [
                                   _c("v-img", {
                                     attrs: {
-                                      src: _vm.record.avatar
-                                        ? _vm.record.avatar
+                                      src: _vm.record.logo
+                                        ? _vm.record.logo
                                         : ""
                                     }
                                   })
@@ -27481,7 +27489,7 @@ var render = function() {
                             "v-flex",
                             { attrs: { xs12: "" } },
                             [
-                              _c("v-text-field", {
+                              _c("v-textarea", {
                                 attrs: {
                                   label: "Nama Perusahaan",
                                   color: _vm.$root.theme
@@ -27504,15 +27512,36 @@ var render = function() {
                             [
                               _c("v-textarea", {
                                 attrs: {
-                                  label: "Slogan",
+                                  label: "Judul",
                                   color: _vm.$root.theme
                                 },
                                 model: {
-                                  value: _vm.record.slogan,
+                                  value: _vm.record.title,
                                   callback: function($$v) {
-                                    _vm.$set(_vm.record, "slogan", $$v)
+                                    _vm.$set(_vm.record, "title", $$v)
                                   },
-                                  expression: "record.slogan"
+                                  expression: "record.title"
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-flex",
+                            { attrs: { xs12: "" } },
+                            [
+                              _c("v-textarea", {
+                                attrs: {
+                                  label: "Quote",
+                                  color: _vm.$root.theme
+                                },
+                                model: {
+                                  value: _vm.record.quote,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.record, "quote", $$v)
+                                  },
+                                  expression: "record.quote"
                                 }
                               })
                             ],
@@ -34003,11 +34032,11 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
   },
   mutations: {
     additional: function additional(state, payload) {
-      if (payload.hasOwnProperty('combos')) {
+      if (payload && payload.hasOwnProperty('combos')) {
         state.combos = payload.combos;
       }
 
-      if (payload.hasOwnProperty('info')) {
+      if (payload && payload.hasOwnProperty('info')) {
         state.info = payload.info;
       }
     },
@@ -35202,7 +35231,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       var _settingFetch = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(_ref61) {
-        var commit, dispatch, state, _ref62, meta;
+        var commit, dispatch, state, _ref62, data;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
           while (1) {
@@ -35215,8 +35244,8 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
 
               case 4:
                 _ref62 = _context12.sent;
-                meta = _ref62.data.meta;
-                commit('record', meta);
+                data = _ref62.data;
+                commit('record', data);
                 _context12.next = 12;
                 break;
 
