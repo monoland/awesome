@@ -2876,6 +2876,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       return null;
+    },
+    backgroundWidth: function backgroundWidth() {
+      if (this.company && this.company.width) {
+        return "max-width: ".concat(this.company.width, ";");
+      }
+
+      return null;
     }
   }),
   data: function data() {
@@ -27788,7 +27795,7 @@ var render = function() {
                           },
                           [
                             _c("v-img", {
-                              staticStyle: { "max-width": "168px" },
+                              style: _vm.backgroundWidth,
                               attrs: { src: _vm.company.logo }
                             })
                           ],
@@ -27966,7 +27973,7 @@ var render = function() {
                                       "div",
                                       {
                                         staticClass: "d-block mb-6",
-                                        staticStyle: { "max-width": "168px" }
+                                        style: _vm.backgroundWidth
                                       },
                                       [
                                         _c("v-img", {
@@ -30907,7 +30914,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pusherHost", function() { return pusherHost; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pusherPort", function() { return pusherPort; });
 var siteKey = 1;
-var secretKey = 'Rly2oH95W6p3DN5535eKxZmexgsEz3zGsDgoPRvA';
+var secretKey = '8mIKrWfXpKM18EyJ8aFCuYGPuTPGkNyMeOtlUBAN';
 var baseURL = 'https://awesome.loc/';
 var pusherEcho = false;
 var pusherKey = null;

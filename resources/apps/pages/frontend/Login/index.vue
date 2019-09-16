@@ -5,7 +5,7 @@
                 <v-img class="v-background__auth grey lighten-4" :src="company.background" :aspect-ratio="4/3">
                     <div class="d-flex flex-column fill-height">
                         <div class="d-flex align-end justify-center px-6" style="flex: 1 1 auto;">
-                            <v-img :src="company.logo" style="max-width: 168px;"></v-img>
+                            <v-img :src="company.logo" :style="backgroundWidth"></v-img>
                         </div>
                         <div class="d-flex align-end justify-center font-size-zero px-6 py-4" v-html="company.name"></div>
                     </div>
@@ -64,7 +64,7 @@
                     <v-row>
                         <v-col class="d-flex align-center" cols="6">
                             <v-card class="transparent" elevation="0">
-                                <div class="d-block mb-6" style="max-width: 168px;" v-if="company.logo">
+                                <div class="d-block mb-6" :style="backgroundWidth" v-if="company.logo">
                                     <v-img :src="company.logo"></v-img>
                                 </div>
 
@@ -152,6 +152,14 @@ export default {
         backgroundStyle: function() {
             if (this.company && this.company.background && !this.$vuetify.breakpoint.xsOnly) {
                 return `background: url(${this.company.background}); background-position: center; background-repeat: no-repeat; background-size: cover;`;
+            }
+
+            return null;
+        },
+
+        backgroundWidth: function() {
+            if (this.company && this.company.width) {
+                return `max-width: ${this.company.width};`;
             }
 
             return null;
