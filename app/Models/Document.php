@@ -59,7 +59,7 @@ class Document extends Model
     // relations
 
     /**
-     * Scope for combo
+     * Scope for combo.
      */
     public function scopeFetchCombo($query)
     {
@@ -70,7 +70,7 @@ class Document extends Model
     }
 
     /**
-     * Scope for filter
+     * Scope for filter.
      */
     public function scopeFilterOn($query, $request)
     {
@@ -92,10 +92,9 @@ class Document extends Model
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param [type] $request
-     * @return void
      */
     public static function chunkRecord($request)
     {
@@ -108,14 +107,14 @@ class Document extends Model
 
         try {
             if ($chunk_indx === 0) {
-                $chunk_strg = $request->totalFileSize . '-' . $request->totalParts . '-' . $request->fileName;
+                $chunk_strg = $request->totalFileSize.'-'.$request->totalParts.'-'.$request->fileName;
                 $chunk_hash = sha1($chunk_strg);
 
-                if ((new static)->where('hash', $chunk_hash)->first()) {
+                if ((new static())->where('hash', $chunk_hash)->first()) {
                     return response()->json([
                         'success' => false,
                         'error' => 'File is already exists.',
-                        'preventRetry' => true
+                        'preventRetry' => true,
                     ], 500);
                 }
 
@@ -123,7 +122,7 @@ class Document extends Model
                     return response()->json([
                         'success' => false,
                         'error' => 'File or chunk size is too large.',
-                        'preventRetry' => true
+                        'preventRetry' => true,
                     ], 500);
                 }
             }
@@ -134,42 +133,42 @@ class Document extends Model
 
             return response()->json([
                 'success' => true,
-                'uuid' => $chunk_uuid
+                'uuid' => $chunk_uuid,
             ], 200);
         } catch (\Exception $e) {
-            (new static)->cleanChunks($chunk_uuid);
+            (new static())->cleanChunks($chunk_uuid);
 
             return response()->json([
                 'success' => false,
                 'error' => $e->getMessage(),
-                'preventRetry' => true
+                'preventRetry' => true,
             ], 500);
         }
     }
 
     /**
-     * Store
+     * Store.
      */
     public static function storeRecord($request)
     {
         DB::beginTransaction();
 
-        $model = new static;
+        $model = new static();
 
         $chunk_uuid = $request->uuid;
         $chunk_ttal = $request->totalParts;
         $chunk_file = explode('.', $request->fileName);
         $chunk_extn = array_pop($chunk_file);
 
-        $chunk_path = storage_path('chunks' . DIRECTORY_SEPARATOR . $chunk_uuid);
-        $store_path = 'uploads' . DIRECTORY_SEPARATOR . $chunk_uuid . '.' . $chunk_extn;
+        $chunk_path = storage_path('chunks'.DIRECTORY_SEPARATOR.$chunk_uuid);
+        $store_path = 'uploads'.DIRECTORY_SEPARATOR.$chunk_uuid.'.'.$chunk_extn;
         $media_path = storage_path($store_path);
 
         try {
             $media_trgt = fopen($media_path, 'wb');
 
-            for ($i = 0; $i < $chunk_ttal; $i++) {
-                $chunk = fopen($chunk_path . DIRECTORY_SEPARATOR . $i, 'rb');
+            for ($i = 0; $i < $chunk_ttal; ++$i) {
+                $chunk = fopen($chunk_path.DIRECTORY_SEPARATOR.$i, 'rb');
                 stream_copy_to_stream($chunk, $media_trgt);
                 fclose($chunk);
             }
@@ -183,11 +182,11 @@ class Document extends Model
             $model->extn = File::extension(storage_path($store_path));
             $model->type = File::type(storage_path($store_path));
             $model->mime = File::mimeType(storage_path($store_path));
-            $model->path = $chunk_uuid . '.' . $model->extn;
-            $model->hash = sha1($request->totalFileSize . '-' . $request->totalParts . '-' . $request->fileName);
+            $model->path = $chunk_uuid.'.'.$model->extn;
+            $model->hash = sha1($request->totalFileSize.'-'.$request->totalParts.'-'.$request->fileName);
 
             if (in_array($model->extn, ['jpg', 'jpeg', 'png'])) {
-                $model->furl = '/mediafiles/original/' . $chunk_uuid . '.' . $model->extn;
+                $model->furl = '/mediafiles/original/'.$chunk_uuid.'.'.$model->extn;
             }
 
             $request->user()->documents()->save($model);
@@ -197,7 +196,7 @@ class Document extends Model
             return response()->json([
                 'success' => true,
                 'uuid' => $chunk_uuid,
-                'record' => new DocumentResource($model)
+                'record' => new DocumentResource($model),
             ], 200);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -208,13 +207,13 @@ class Document extends Model
             return response()->json([
                 'success' => false,
                 'error' => $e->getMessage(),
-                'preventRetry' => true
+                'preventRetry' => true,
             ], 500);
         }
     }
 
     /**
-     * Update
+     * Update.
      */
     public static function updateRecord($request, $model)
     {
@@ -236,7 +235,7 @@ class Document extends Model
     }
 
     /**
-     * Destroy
+     * Destroy.
      */
     public static function destroyRecord($model)
     {
@@ -246,7 +245,7 @@ class Document extends Model
             $model->delete();
 
             File::delete(storage_path(
-                'uploads' . DIRECTORY_SEPARATOR . $model->path
+                'uploads'.DIRECTORY_SEPARATOR.$model->path
             ));
 
             DB::commit();
@@ -260,7 +259,7 @@ class Document extends Model
     }
 
     /**
-     * Bulks
+     * Bulks.
      */
     public static function bulkDelete($request, $model = null)
     {
@@ -268,7 +267,7 @@ class Document extends Model
 
         try {
             $bulks = array_column($request->all(), 'id');
-            $rests = (new static)->whereIn('id', $bulks)->delete();
+            $rests = (new static())->whereIn('id', $bulks)->delete();
 
             DB::commit();
 
@@ -283,7 +282,7 @@ class Document extends Model
     public function cleanChunks($uuid)
     {
         try {
-            $dir = storage_path('chunks' . DIRECTORY_SEPARATOR . $uuid);
+            $dir = storage_path('chunks'.DIRECTORY_SEPARATOR.$uuid);
 
             $its = new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS);
             $fls = new \RecursiveIteratorIterator($its, \RecursiveIteratorIterator::CHILD_FIRST);

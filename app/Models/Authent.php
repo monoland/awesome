@@ -55,13 +55,13 @@ class Authent extends Model
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     // relations
 
     /**
-     * Scope for combo
+     * Scope for combo.
      */
     public function scopeFetchCombo($query)
     {
@@ -72,7 +72,7 @@ class Authent extends Model
     }
 
     /**
-     * Scope for filter
+     * Scope for filter.
      */
     public function scopeFilterOn($query, $request)
     {
@@ -94,14 +94,14 @@ class Authent extends Model
     }
 
     /**
-     * Store
+     * Store.
      */
     public static function storeRecord($request)
     {
         DB::beginTransaction();
 
         try {
-            $model = new static;
+            $model = new static();
             $model->name = Str::slug($request->name, '-');
             $model->save();
 
@@ -116,7 +116,7 @@ class Authent extends Model
     }
 
     /**
-     * Update
+     * Update.
      */
     public static function updateRecord($request, $model)
     {
@@ -137,7 +137,7 @@ class Authent extends Model
     }
 
     /**
-     * Destroy
+     * Destroy.
      */
     public static function destroyRecord($model)
     {
@@ -157,7 +157,7 @@ class Authent extends Model
     }
 
     /**
-     * Bulks
+     * Bulks.
      */
     public static function bulksRecord($request, $model = null)
     {
@@ -165,7 +165,7 @@ class Authent extends Model
 
         try {
             $bulks = array_column($request->all(), 'id');
-            $rests = (new static)->whereIn('id', $bulks)->delete();
+            $rests = (new static())->whereIn('id', $bulks)->delete();
 
             DB::commit();
 

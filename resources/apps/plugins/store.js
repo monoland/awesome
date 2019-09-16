@@ -1,24 +1,21 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import Axios from 'axios';
-import router from './router';
-import Auth from '@apps/mixins/AuthProvider';
-import { baseURL } from '@apps/.env.js';
 
 Vue.use(Vuex);
+
+import Axios from 'axios';
+import Echo from 'laravel-echo';
+import Auth from '@apps/mixins/AuthProvider';
+import { baseURL, pusherEcho, pusherKey, pusherHost, pusherPort } from '@apps/.env.js';
+
+import router from './router';
 
 export default new Vuex.Store({
     state: {
         auth: Auth,
         document: { callback: () => {}, multiple: false, selected: [], state: false },
-        http: Axios.create({
-            baseURL: baseURL,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        }),
+        echo: null,
+        http: null,
         menus: [],
         
         afterAddnew:() => {},
@@ -36,7 +33,9 @@ export default new Vuex.Store({
         overideState:() => {},
         setRecord:() => {},
 
-        additional: [],
+        combos: [],
+        company: {},
+        info: {},
         dataUrl: null,
         disabled: { add: false, delete: true, edit: true, find: false, link: true, refresh: false },
         form: { state: false, mode: 'addnew' },
@@ -72,7 +71,13 @@ export default new Vuex.Store({
 
     mutations: {
         additional: function(state, payload) {
-            state.additional = payload;
+            if (payload.hasOwnProperty('combos')) {
+                state.combos = payload.combos;
+            }
+
+            if (payload.hasOwnProperty('info')) {
+                state.info = payload.info;
+            }
         },
 
         afterAddnew: function(state, payload) {
@@ -153,6 +158,10 @@ export default new Vuex.Store({
             });
         },
 
+        fetchAppInfos: function(state, payload) {
+            state.company = payload;
+        },
+
         fetchAppMenus: function(state, payload) {
             if (payload) state.auth.menus = payload;
             state.menus = state.auth.menus;
@@ -171,8 +180,50 @@ export default new Vuex.Store({
         },
 
         initStore: function(state) {
-            if (!state.http.defaults.headers.common.hasOwnProperty('Authorization')) {
-                state.http.defaults.headers.common['Authorization'] = state.auth.token;
+            if (state.http === null) {
+                let headers = {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                };
+
+                if (state.auth.token !== null) {
+                    headers = Object.assign({
+                        'Authorization': state.auth.token
+                    }, headers);
+                }
+
+                state.http = Axios.create({
+                    baseURL: baseURL,
+                    headers
+                });
+            } else {
+                if (!state.http.defaults.headers.common.hasOwnProperty('Authorization') && state.auth.token !== null) {
+                    state.http.defaults.headers.common['Authorization'] = state.auth.token;
+                }
+            }
+
+            if (state.echo === null && pusherEcho === true && state.auth.token !== null) {
+                state.echo = new Echo({
+                    broadcaster: 'pusher',
+                    key: pusherKey,
+                    wsHost: pusherHost,
+                    wsPort: pusherPort,
+                    wssPort: pusherPort,
+                    disableStats: true,
+                    authEndpoint: '/api/broadcasting/auth',
+                    auth: {
+                        headers: {
+                            Authorization: state.auth.token
+                        },
+                    },
+                    // encrypted: true,
+                    // cluster: 'ap1',
+                });
+            }
+
+            if (state.menus.length === 0 && state.auth.token !== null) {
+                state.menus = state.auth.menus;
             }
 
             state.afterAddnew = () => {};
@@ -386,6 +437,16 @@ export default new Vuex.Store({
             state.afterFormOpen(payload);
         },
 
+        fetchAppInfos: async function({ commit, dispatch, state }) {
+            try {
+                let { data } = await state.http.get('/api/company');
+                commit('fetchAppInfos', data);
+
+            } catch (error) {
+                dispatch('errors', error);
+            }
+        },
+
         fetchAppMenus: async function({commit, dispatch, state}) {
             try {
                 let { data } = await state.http.get('/api/menus');
@@ -405,8 +466,8 @@ export default new Vuex.Store({
         },
 
         initStore: function({ commit, dispatch, state }) {
-            if (!state.auth.check) dispatch('signout');
-
+            if (state.auth.token !== null && !state.auth.check) dispatch('signout');
+        
             commit('initStore');
         },
 

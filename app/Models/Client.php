@@ -79,7 +79,7 @@ class Client extends Model
     // relations
 
     /**
-     * Scope for combo
+     * Scope for combo.
      */
     public function scopeFetchCombo($query)
     {
@@ -90,7 +90,7 @@ class Client extends Model
     }
 
     /**
-     * Scope for filter
+     * Scope for filter.
      */
     public function scopeFilterOn($query, $request)
     {
@@ -112,14 +112,14 @@ class Client extends Model
     }
 
     /**
-     * Store
+     * Store.
      */
     public static function storeRecord($request)
     {
         DB::beginTransaction();
 
         try {
-            $model = new static;
+            $model = new static();
             $model->name = $request->name;
             $model->secret = str_random(40);
             $model->personal_access_client = false;
@@ -139,7 +139,7 @@ class Client extends Model
     }
 
     /**
-     * Update
+     * Update.
      */
     public static function updateRecord($request, $model)
     {
@@ -162,7 +162,7 @@ class Client extends Model
     }
 
     /**
-     * Destroy
+     * Destroy.
      */
     public static function destroyRecord($model)
     {
@@ -182,7 +182,7 @@ class Client extends Model
     }
 
     /**
-     * Bulks
+     * Bulks.
      */
     public static function bulkDelete($request, $model = null)
     {
@@ -190,7 +190,7 @@ class Client extends Model
 
         try {
             $bulks = array_column($request->all(), 'id');
-            $rests = (new static)->whereIn('id', $bulks)->delete();
+            $rests = (new static())->whereIn('id', $bulks)->delete();
 
             DB::commit();
 

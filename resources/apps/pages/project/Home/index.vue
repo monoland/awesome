@@ -10,6 +10,10 @@ import { mapActions } from 'vuex';
 export default {
     name: 'page-home',
 
+    route: [
+        { path: 'home', name: 'home', root: 'monoland' },
+    ],
+
     created() {
         this.initStore();
         

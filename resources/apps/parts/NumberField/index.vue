@@ -8,6 +8,7 @@
         :append-icon="appendIcon"
         :disabled="disabled"
         :hide-details="hideDetails"
+        :readonly="readonly"
 
         @click:append="$emit('click:append')"
     >
@@ -103,7 +104,12 @@ export default {
         suffix: {
             type: String,
             default: () => defaults.suffix
-        }
+        },
+
+        readonly: {
+            type: Boolean,
+            default: false
+        },
     },
 
     directives: {money},
@@ -126,7 +132,7 @@ export default {
     watch: {
         value: {
             handler: function(newValue) {
-                let formatted = format(newValue, this.$props)
+                let formatted = format(parseFloat(newValue), this.$props)
 
                 if (formatted !== this.formattedValue) {
                    this.formattedValue = formatted

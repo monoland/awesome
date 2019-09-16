@@ -113,6 +113,10 @@ class Authentication
     }
 
     get token() {
+        if (this.store.getItem('token_type') === null ) {
+            return null;
+        }
+        
         return this.store.getItem('token_type') + ' ' + this.store.getItem('access_token');
     }
 

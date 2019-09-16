@@ -50,6 +50,10 @@ export default {
 
     mixins: [pageMixins],
 
+    route: [
+        { path: 'user', name: 'user', root: 'monoland' },
+    ],
+
     data:() => ({
         single: false,
         authents: [

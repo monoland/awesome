@@ -25,10 +25,14 @@ Vue.directive('press', {
     }
 });
 
+// pusher
+// import Pusher from 'pusher-js';
+// window.Pusher = Pusher;
+
 import Apps from './pages/Apps.vue';
-import router from './plugin/router';
-import store from './plugin/store';
-import vuetify from './plugin/vuetify';
+import router from './plugins/router';
+import store from './plugins/store';
+import vuetify from './plugins/vuetify';
 
 new Vue({
     router,
@@ -41,9 +45,11 @@ new Vue({
         theme: null,
         navdrawer: false,
     }),
+
     created() {
         this.navdrawer = this.$vuetify.breakpoint.name === 'lg' || this.$vuetify.breakpoint.name === 'xl';
     },
+    
     methods: {
         formatBytes: function(bytes) {
             const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
@@ -52,6 +58,12 @@ new Vue({
             if (i === 0) return `${bytes} ${sizes[i]})`;
             return `${(bytes / (1024 ** i)).toFixed(1)} ${sizes[i]}`;
         },
+
+        formatCurrency: function(money) {
+            if (!money) return 0;
+            return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
     },
+    
     render: h => h(Apps)
 }).$mount('#monoland');

@@ -1,52 +1,129 @@
 <template>
     <v-app v-cloak>
-        <v-content class="v-content__auth" :style="cssbackground">
-            <v-container fluid fill-height>
-                <v-layout align-center justify-center column>
-                    <v-widget color="cyan" :elevation="1" :width="formwidth">
-                        <template #header>
-                            <span class="d-block text-uppercase font-weight-medium text-xs-center white--text">l o g i n</span>
-                            <span class="d-block headline font-weight-light letter-space-1 text-uppercase text-xs-center mt-1 white--text">authentication</span>
-                        </template>
+        <template v-if="$vuetify.breakpoint.xsOnly">
+            <v-card flat class="mx-auto" width="100%" height="100%">
+                <v-img class="v-background__auth grey lighten-4" :src="company.background" :aspect-ratio="4/3">
+                    <div class="d-flex flex-column fill-height">
+                        <div class="d-flex align-end justify-center px-6" style="flex: 1 1 auto;">
+                            <v-img :src="company.logo" style="max-width: 168px;"></v-img>
+                        </div>
+                        <div class="d-flex align-end justify-center font-size-zero px-6 py-4" v-html="company.name"></div>
+                    </div>
+                </v-img>
 
-                        <v-layout wrap>
-                            <v-flex xs12>
-                                <v-text-field
-                                    color="cyan"
-                                    label="Username"
-                                    prepend-inner-icon="mail_outline"
-                                    v-model="login.username"
-                                    autocomplete="off"
-                                    hide-details
-                                    single-line
-                                ></v-text-field>
-                            </v-flex>
+                <v-card-text class="px-6">
+                    <v-layout wrap>
+                        <v-flex xs12>
+                            <v-text-field
+                                color="cyan"
+                                label="Username"
+                                prepend-inner-icon="mail_outline"
+                                v-model="login.username"
+                                autocomplete="off"
+                                hide-details
+                                single-line
+                            ></v-text-field>
+                        </v-flex>
 
-                            <v-flex class="mt-4" xs12>
-                                <v-text-field 
-                                    @click:append="showtext = !showtext"
-                                    :append-icon="showtext ? 'visibility' : 'visibility_off'"
-                                    :type="showtext ? 'text' : 'password'"
-                                    color="cyan"
-                                    label="Password"
-                                    prepend-inner-icon="lock_open"
-                                    v-model="login.userpass"
-                                    autocomplete="off"
-                                    hide-details
-                                    single-line
-                                ></v-text-field>
-                            </v-flex>
-                        </v-layout>
+                        <v-flex class="mt-4" xs12>
+                            <v-text-field 
+                                @click:append="showtext = !showtext"
+                                :append-icon="showtext ? 'visibility' : 'visibility_off'"
+                                :type="showtext ? 'text' : 'password'"
+                                color="cyan"
+                                label="Password"
+                                prepend-inner-icon="lock_open"
+                                v-model="login.userpass"
+                                autocomplete="off"
+                                hide-details
+                                single-line
+                            ></v-text-field>
+                        </v-flex>
+                    </v-layout>
+                </v-card-text>
 
-                        <template #actions>
-                            <v-card-text class="px-6 justify-center">
-                                <v-btn block color="cyan" outlined @click="signin">login to apps</v-btn>
-                            </v-card-text>
-                        </template>
-                    </v-widget>
-                </v-layout>
-            </v-container>
-        </v-content>
+                <v-card-text class="px-6">
+                    <v-layout>
+                        <v-flex xs12>
+                            <v-btn color="cyan" block depressed rounded large dark @click="signin">login to app</v-btn>
+                        </v-flex>
+                    </v-layout>
+                </v-card-text>
+            </v-card>
+        </template>
+
+        <template v-else>
+            <v-app-bar class="transparent elevation-0" app>
+                <v-container>
+                    <v-toolbar-title class="font-size-zero" v-html="company.name"></v-toolbar-title>
+                </v-container>
+            </v-app-bar>
+
+            <v-content class="v-background__auth" :style="backgroundStyle">
+                <v-container class="fill-height">
+                    <v-row>
+                        <v-col class="d-flex align-center" cols="6">
+                            <v-card class="transparent" elevation="0">
+                                <div class="d-block mb-6" style="max-width: 168px;" v-if="company.logo">
+                                    <v-img :src="company.logo"></v-img>
+                                </div>
+
+                                <div class="d-block" v-html="company.title"></div>
+                                <v-card-text class="pa-0 mt-6" v-html="company.quote"></v-card-text>
+                            </v-card>
+                        </v-col>
+
+                        <v-col class="d-flex align-center justify-end" cols="6">
+                            <v-card class="v-card--widget mt-4" elevation="1" width="360px">
+                                <v-sheet color="cyan" class="v-sheet--offset pa-4 mx-auto elevation-0" max-width="calc(100% - 32px)">
+                                    <span class="d-block text-uppercase font-weight-medium text-xs-center line-height-1 white--text">l o g i n</span>
+                                    <span class="d-block headline font-weight-light letter-space-1 text-uppercase text-xs-center mt-2 line-height-1 white--text">authentication</span>
+                                </v-sheet>
+                                
+                                <v-card-text>
+                                    <v-layout wrap>
+                                        <v-flex xs12>
+                                            <v-text-field
+                                                color="cyan"
+                                                label="Username"
+                                                prepend-inner-icon="mail_outline"
+                                                v-model="login.username"
+                                                autocomplete="off"
+                                                hide-details
+                                                single-line
+                                            ></v-text-field>
+                                        </v-flex>
+
+                                        <v-flex class="mt-4" xs12>
+                                            <v-text-field 
+                                                @click:append="showtext = !showtext"
+                                                :append-icon="showtext ? 'visibility' : 'visibility_off'"
+                                                :type="showtext ? 'text' : 'password'"
+                                                color="cyan"
+                                                label="Password"
+                                                prepend-inner-icon="lock_open"
+                                                v-model="login.userpass"
+                                                autocomplete="off"
+                                                hide-details
+                                                single-line
+                                            ></v-text-field>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card-text>
+
+                                <v-card-text>
+                                    <v-layout>
+                                        <v-flex xs12>
+                                            <v-btn color="cyan" block depressed rounded large dark @click="signin">login to app</v-btn>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card-text>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-content>
+        </template>
 
         <v-snackbar
             v-model="snackbar.state"
@@ -64,32 +141,37 @@ import { mapState, mapActions } from 'vuex';
 export default {
     name: 'page-login',
 
+    route: [
+        { path: '/', name: 'login' },
+        { path: '*', name: null, redirect: { name: 'login' } },
+    ],
+
     computed: {
-        ...mapState(['login', 'snackbar']),
+        ...mapState(['company', 'login', 'snackbar']),
 
-        cssbackground: function() {
-            let image = '/mediafiles/original/2e18c72308d567a0939cd918f962a1abf3727035.jpg';
-
-            return `background: url(${image}); background-position: center; background-repeat: no-repeat; background-size: cover;`;
-        },
-
-        formwidth: function() {
-            let breaksize = this.$vuetify.breakpoint.name;
-
-            if (breaksize === 'xs') {
-                return '100%';
+        backgroundStyle: function() {
+            if (this.company && this.company.background && !this.$vuetify.breakpoint.xsOnly) {
+                return `background: url(${this.company.background}); background-position: center; background-repeat: no-repeat; background-size: cover;`;
             }
 
-            return '330';
-        },
+            return null;
+        }
     },
 
     data:() => ({
         showtext: false
     }),
 
+    created() {
+        this.initStore();
+    },
+
+    mounted() {
+        this.fetchAppInfos();
+    },
+
     methods: {
-        ...mapActions(['snackbarClose', 'signin'])
+        ...mapActions(['initStore', 'snackbarClose', 'fetchAppInfos', 'signin'])
     }
 };
 </script>

@@ -33,7 +33,7 @@ class Setting extends Model
      * @var array
      */
     protected $casts = [
-        'meta' => 'json'
+        'meta' => 'json',
     ];
 
     /**
@@ -53,7 +53,7 @@ class Setting extends Model
     // relations
 
     /**
-     * Scope for combo
+     * Scope for combo.
      */
     public function scopeFetchCombo($query)
     {
@@ -64,7 +64,7 @@ class Setting extends Model
     }
 
     /**
-     * Scope for filter
+     * Scope for filter.
      */
     public function scopeFilterOn($query, $request)
     {
@@ -86,21 +86,23 @@ class Setting extends Model
     }
 
     /**
-     * Store
+     * Store.
      */
     public static function storeRecord($request)
     {
         DB::beginTransaction();
 
         try {
-            $model = new static;
+            $model = new static();
 
             if ($request->id === 'company') {
                 $model->name = $request->meta['name'];
-                $model->slogan = $request->meta['slogan'];
-                $model->avatar = $request->meta['avatar'];
+                $model->title = $request->meta['title'];
+                $model->quote = $request->meta['quote'];
+                $model->logo = $request->meta['logo'];
                 $model->height = $request->meta['height'];
                 $model->width = $request->meta['width'];
+                $model->background = $request->meta['background'];
             }
 
             $model->save();
@@ -116,7 +118,7 @@ class Setting extends Model
     }
 
     /**
-     * Update
+     * Update.
      */
     public static function updateRecord($request, $model)
     {
@@ -145,7 +147,7 @@ class Setting extends Model
     }
 
     /**
-     * Destroy
+     * Destroy.
      */
     public static function destroyRecord($model)
     {
@@ -165,7 +167,7 @@ class Setting extends Model
     }
 
     /**
-     * Bulks
+     * Bulks.
      */
     public static function bulksRecord($request, $model = null)
     {
@@ -173,7 +175,7 @@ class Setting extends Model
 
         try {
             $bulks = array_column($request->all(), 'id');
-            $rests = (new static)->whereIn('id', $bulks)->delete();
+            $rests = (new static())->whereIn('id', $bulks)->delete();
 
             DB::commit();
 

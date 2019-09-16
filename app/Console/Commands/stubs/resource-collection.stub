@@ -20,13 +20,17 @@ class DummyClass extends ResourceCollection
     /**
      * Get additional data that should be returned with the resource array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function with($request)
     {
-        return [
-            // 'additional' => ElementResourceCombo::collection(Element::with('elementSubs')->get())
-        ];
+        // return [
+        //     'additional' => [
+        //         'combos' => [],
+        //         'info' => null,
+        //     ],
+        // ];
     }
 }

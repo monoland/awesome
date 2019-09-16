@@ -63,6 +63,10 @@ import { mapState, mapActions } from 'vuex';
 export default {
     name: 'page-password',
 
+    route: [
+        { path: 'password', name: 'password', root: 'monoland' },
+    ],
+
     computed: {
         ...mapState(['auth']),
 

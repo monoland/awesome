@@ -9,8 +9,6 @@ class UsersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
     public function run()
     {
@@ -18,9 +16,9 @@ class UsersTableSeeder extends Seeder
             'name' => 'development',
             'email' => 'dev@monoland.loc',
             'password' => Hash::make('rahasia'),
-            'authent_id' => 1
+            'authent_id' => 1,
         ]);
 
-        dd(((new ClientRepository)->createPasswordGrantClient(null, 'development', null))->secret);
+        dd(((new ClientRepository())->createPasswordGrantClient(null, 'development', null))->secret);
     }
 }

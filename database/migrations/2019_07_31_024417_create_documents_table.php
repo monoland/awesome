@@ -8,8 +8,6 @@ class CreateDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -29,10 +27,10 @@ class CreateDocumentsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('doclinks', function (Blueprint $table) {
+        Schema::create('documentables', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('document_id')->index();
-            $table->morphs('linkable');
+            $table->morphs('documentable');
             $table->string('describe');
             $table->timestamps();
         });
@@ -40,8 +38,6 @@ class CreateDocumentsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {

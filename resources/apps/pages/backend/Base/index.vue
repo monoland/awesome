@@ -44,6 +44,11 @@ import { mapState, mapActions } from 'vuex';
 export default {
     name: 'page-base',
 
+    route: [
+        { path: '/backend', node: 'monoland', meta: { auth: true }, children: [] },
+        { path: '', name: 'landing', redirect: { name: 'home' }, root: 'monoland' },
+    ],
+
     computed: {
         ...mapState(['auth', 'menus', 'snackbar']),
     },

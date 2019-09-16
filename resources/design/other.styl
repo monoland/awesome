@@ -25,10 +25,10 @@
 .v-application--is-ltr .v-list-item__avatar:first-child
     margin-right: 16px
 
-.v-content 
-    &__auth
-        &:before
-            background: rgba(0, 0, 0, 0.27)
+.v-application
+    .v-background__auth
+        &::before
+            background: rgba(0, 0, 0, 0.05)
             position: absolute
             content: ''
             display: block
@@ -37,7 +37,12 @@
             height: 100%
             width: 100%
             z-index: 0
-    
+
+        > .v-responsive__content
+            position: relative
+            z-index: 1
+
+.v-content 
     &__wrap
         z-index: 1
         overflow: hidden
@@ -51,3 +56,6 @@
 .v-dialog:not(.v-dialog--fullscreen)
     background: transparent
     box-shadow: none
+
+.layout
+    max-width: 100%

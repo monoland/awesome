@@ -1,4 +1,5 @@
 export { default as Attachment } from './Attachment';
+export { default as ButtonTips } from './ButtonTips';
 export { default as CodeEditor } from './CodeEditor';
 export { default as DesktopTable } from './DesktopTable';
 export { default as DocumentUpload } from './DocumentUpload';

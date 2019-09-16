@@ -15,7 +15,7 @@ class Media
 
     public static function storeChunk($request)
     {
-        $handle = new static;
+        $handle = new static();
 
         $uuid = $request->uuid;
         $partIndex = (int) $request->partIndex;
@@ -35,7 +35,7 @@ class Media
 
             return [
                 'success' => true,
-                'uuid' => $uuid
+                'uuid' => $uuid,
             ];
         } catch (\Exception $e) {
             $handle->cleanChunkDir($handle->chunksFolder, $uuid);
@@ -45,7 +45,7 @@ class Media
     public static function combineChunk($request)
     {
         try {
-            $handle = new static;
+            $handle = new static();
             $uuid = $request->uuid;
             $totalParts = $request[$handle->totalParts];
 
@@ -53,8 +53,8 @@ class Media
             $extension = array_pop($filename);
             $mediaName = sha1($request->mediaName);
 
-            $chunkPath = storage_path($handle->chunksFolder . DIRECTORY_SEPARATOR . $uuid);
-            $storePath = $handle->uploadFolder . DIRECTORY_SEPARATOR . $mediaName . '.' . $extension;
+            $chunkPath = storage_path($handle->chunksFolder.DIRECTORY_SEPARATOR.$uuid);
+            $storePath = $handle->uploadFolder.DIRECTORY_SEPARATOR.$mediaName.'.'.$extension;
             $mediaPath = storage_path($storePath);
 
             if (File::exists($mediaPath)) {
@@ -63,8 +63,8 @@ class Media
 
             $target = fopen($mediaPath, 'wb');
 
-            for ($i = 0; $i < $totalParts; $i++) {
-                $chunk = fopen($chunkPath . DIRECTORY_SEPARATOR . $i, 'rb');
+            for ($i = 0; $i < $totalParts; ++$i) {
+                $chunk = fopen($chunkPath.DIRECTORY_SEPARATOR.$i, 'rb');
                 stream_copy_to_stream($chunk, $target);
                 fclose($chunk);
             }
@@ -84,12 +84,12 @@ class Media
                 'extension' => $exten,
                 'type' => $types,
                 'mime' => $mimes,
-                'path' => '/mediafiles/original/' . $mediaName . '.' . $exten
+                'path' => '/mediafiles/original/'.$mediaName.'.'.$exten,
             ];
 
             return ['success' => true, 'uuid' => $uuid, 'record' => $result];
         } catch (\Exception $e) {
-            (new static)->cleanChunkDir($uuid);
+            (new static())->cleanChunkDir($uuid);
 
             return ['error' => $e->getMessage()];
         }
@@ -97,9 +97,9 @@ class Media
 
     public static function destroyMedia($filename)
     {
-        $handle = new static;
+        $handle = new static();
 
-        if (File::delete(storage_path($handle->uploadFolder . DIRECTORY_SEPARATOR . $filename))) {
+        if (File::delete(storage_path($handle->uploadFolder.DIRECTORY_SEPARATOR.$filename))) {
             return ['success' => true];
         }
 
@@ -109,7 +109,7 @@ class Media
     protected function cleanChunkDir($uuid)
     {
         try {
-            $dir = storage_path($this->chunksFolder . DIRECTORY_SEPARATOR . $uuid);
+            $dir = storage_path($this->chunksFolder.DIRECTORY_SEPARATOR.$uuid);
 
             $its = new \RecursiveDirectoryIterator($dir, \RecursiveDirectoryIterator::SKIP_DOTS);
             $fls = new \RecursiveIteratorIterator($its, \RecursiveIteratorIterator::CHILD_FIRST);

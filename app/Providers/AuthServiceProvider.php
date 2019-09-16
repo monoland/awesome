@@ -15,18 +15,15 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        //
     ];
 
     /**
      * Register any authentication / authorization services.
-     *
-     * @return void
      */
     public function boot()
     {
         Gate::guessPolicyNamesUsing(function ($modelClass) {
-            return 'App\\Policies\\' . class_basename($modelClass) . 'Policy';
+            return 'App\\Policies\\'.class_basename($modelClass).'Policy';
         });
 
         Resource::withoutWrapping();

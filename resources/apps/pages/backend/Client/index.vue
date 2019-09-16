@@ -93,6 +93,10 @@ export default {
 
     mixins: [pageMixins],
 
+    route: [
+        { path: 'client', name: 'client', root: 'monoland' },
+    ],
+
     data:() => ({
         single: false,
         

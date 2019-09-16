@@ -5,7 +5,6 @@ function format (input, opt = defaults) {
     input = input.toFixed(fixed(opt.precision))
   }
   var negative = input.indexOf('-') >= 0 ? '-' : ''
-
   var numbers = onlyNumbers(input)
   var currency = numbersToCurrency(numbers, opt.precision)
   var parts = toStr(currency).split('.')

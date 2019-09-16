@@ -74,6 +74,10 @@ import { mapState, mapActions } from 'vuex';
 export default {
     name: 'page-setting',
 
+    route: [
+        { path: 'setting', name: 'setting', root: 'monoland' },
+    ],
+
     computed: {
         ...mapState(['record']),
 

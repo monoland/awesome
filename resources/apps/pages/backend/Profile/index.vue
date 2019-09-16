@@ -66,6 +66,10 @@ import { mapState, mapActions } from 'vuex';
 export default {
     name: 'page-profile',
 
+    route: [
+        { path: 'profile', name: 'profile', root: 'monoland' },
+    ],
+
     computed: {
         ...mapState(['auth']),
 

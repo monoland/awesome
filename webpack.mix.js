@@ -12,4 +12,4 @@ mix.webpackConfig({
 mix.js('resources/apps/index.js', 'public/scripts/monoland.js')
 mix.stylus('resources/design/main.styl', 'public/styles/monoland.css');
 
-mix.extract(['vue', 'vuetify']);
+mix.extract(['vue', 'vue-router', 'vuex', 'vuetify']);

@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'authent_id',
     ];
 
     /**
@@ -41,9 +41,15 @@ class User extends Authenticatable
     ];
 
     /**
-     * Undocumented function
-     *
-     * @return void
+     * Undocumented function.
+     */
+    public function userable()
+    {
+        return $this->morphTo();
+    }
+
+    /**
+     * Undocumented function.
      */
     public function documents()
     {
@@ -51,9 +57,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Undocumented function
-     *
-     * @return void
+     * Undocumented function.
      */
     public function authent()
     {
@@ -61,9 +65,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdministrator()
     {
@@ -71,7 +75,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Scope for filter
+     * Scope for filter.
      */
     public function scopeFilterOn($query, $request)
     {
@@ -93,14 +97,14 @@ class User extends Authenticatable
     }
 
     /**
-     * Store
+     * Store.
      */
     public static function storeRecord($request)
     {
         DB::beginTransaction();
 
         try {
-            $model = new static;
+            $model = new static();
             $model->name = $request->name;
             $model->email = $request->email;
             $model->authent_id = $request->authent_id;
@@ -121,7 +125,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Update
+     * Update.
      */
     public static function updateRecord($request, $model)
     {
@@ -165,7 +169,7 @@ class User extends Authenticatable
     }
 
     /**
-     * changePassword
+     * changePassword.
      */
     public static function updatePassword($request, $model)
     {
@@ -173,13 +177,13 @@ class User extends Authenticatable
 
         try {
             $model->fill([
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
             ])->save();
 
             DB::commit();
 
             return response()->json([
-                'success' => true
+                'success' => true,
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -189,7 +193,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Destroy
+     * Destroy.
      */
     public static function destroyRecord($model)
     {
@@ -209,7 +213,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Bulks
+     * Bulks.
      */
     public static function bulkDelete($request, $model = null)
     {
@@ -217,7 +221,7 @@ class User extends Authenticatable
 
         try {
             $bulks = array_column($request->all(), 'id');
-            $rests = (new static)->whereIn('id', $bulks)->delete();
+            $rests = (new static())->whereIn('id', $bulks)->delete();
 
             DB::commit();
 

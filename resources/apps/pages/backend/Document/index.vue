@@ -60,6 +60,10 @@ export default {
 
     mixins: [pageMixins],
 
+    route: [
+        { path: 'document', name: 'document', root: 'monoland' },
+    ],
+
     data:() => ({
         single: false,
     }),

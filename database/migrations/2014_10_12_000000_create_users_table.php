@@ -8,8 +8,6 @@ class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
@@ -23,15 +21,13 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable()->default('/images/photo-holder.png');
             $table->string('background')->nullable()->default('/images/drawer-holder.svg');
             $table->string('theme')->default('blue-grey');
-            $table->rememberToken();
+            $table->nullableMorphs('userable');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
