@@ -3085,13 +3085,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   mounted: function mounted() {
-    if (!this.menus.length && !this.auth.menus) {
-      this.$store.dispatch('fetchAppMenus');
-    } else if (!this.menus.length && this.auth.menus) {
+    if (this.menus.constructor === Array && !this.menus.length && !this.auth.menus) {
+      this.fetchAppMenus();
+    } else if (this.menus.constructor === Array && !this.menus.length && this.auth.menus) {
       this.$store.commit('fetchAppMenus');
     }
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['signout']))
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['fetchAppMenus', 'signout']))
 });
 
 /***/ }),
@@ -30878,7 +30878,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pusherHost", function() { return pusherHost; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pusherPort", function() { return pusherPort; });
 var siteKey = 1;
-var secretKey = '5jHdjG5s72ChlmDeNINVZniD0RSs0CLiyizECmWt';
+var secretKey = 'Rly2oH95W6p3DN5535eKxZmexgsEz3zGsDgoPRvA';
 var baseURL = 'https://awesome.loc/';
 var pusherEcho = false;
 var pusherKey = null;
@@ -34132,7 +34132,7 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       }
 
       if (state.menus.length === 0 && state.auth.token !== null) {
-        state.menus = state.auth.menus;
+        if (state.auth.menus !== null) state.menus = state.auth.menus;
       }
 
       state.afterAddnew = function () {};

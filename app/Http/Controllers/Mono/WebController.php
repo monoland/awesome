@@ -12,9 +12,7 @@ use App\Http\Resources\SettingResource;
 class WebController extends Controller
 {
     /**
-     * Undocumented function
-     *
-     * @return void
+     * Undocumented function.
      */
     public function index()
     {
@@ -22,10 +20,9 @@ class WebController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param Request $request
-     * @return void
      */
     public function user(Request $request)
     {
@@ -33,10 +30,9 @@ class WebController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param Request $request
-     * @return void
      */
     public function profile(Request $request)
     {
@@ -44,26 +40,24 @@ class WebController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param Request $request
-     * @return void
      */
     public function password(Request $request)
     {
         $this->validate($request, [
             'old_password' => 'required|old_password',
-            'password' => 'confirmed|max:8|different:old_password'
+            'password' => 'confirmed|max:8|different:old_password',
         ]);
 
         return User::updatePassword($request, $request->user());
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param Request $request
-     * @return void
      */
     public function company(Request $request)
     {
@@ -71,10 +65,9 @@ class WebController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param Request $request
-     * @return void
      */
     public function menus(Request $request)
     {
@@ -110,19 +103,21 @@ class WebController extends Controller
                         ['type' => 'item', 'icon' => 'perm_identity', 'text' => 'Profile', 'to' => ['name' => 'profile']],
                         ['type' => 'item', 'icon' => 'lock', 'text' => 'Katasandi', 'to' => ['name' => 'password']],
                         ['type' => 'item', 'icon' => 'settings', 'text' => 'Setting', 'to' => ['name' => 'setting']],
-                    ]
+                    ],
                 ]);
                 break;
 
             default:
                 return response()->json([
-                    'sidebar' => [
+                    'deskbar' => [
                         ['type' => 'item', 'icon' => 'dashboard', 'text' => 'Beranda', 'to' => ['name' => 'home']],
                     ],
+                    'mobibar' => [],
+                    'homebar' => [],
                     'account' => [
                         ['type' => 'item', 'icon' => 'perm_identity', 'text' => 'Profile', 'to' => ['name' => 'profile']],
                         ['type' => 'item', 'icon' => 'lock', 'text' => 'Katasandi', 'to' => ['name' => 'password']],
-                    ]
+                    ],
                 ]);
                 break;
         }

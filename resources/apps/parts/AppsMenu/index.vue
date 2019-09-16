@@ -140,15 +140,15 @@ export default {
     }),
 
     mounted() {
-        if (!this.menus.length && !this.auth.menus) { 
-            this.$store.dispatch('fetchAppMenus');
-        } else if (!this.menus.length && this.auth.menus) {
+        if (this.menus.constructor === Array && !this.menus.length && !this.auth.menus) { 
+            this.fetchAppMenus();
+        } else if (this.menus.constructor === Array && !this.menus.length && this.auth.menus) {
             this.$store.commit('fetchAppMenus');
         }
     },
 
     methods: {
-        ...mapActions(['signout'])
+        ...mapActions(['fetchAppMenus', 'signout'])
     }
 }
 </script>

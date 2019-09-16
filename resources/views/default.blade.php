@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Awesome</title>
+    <title>Monoland Awesome</title>
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="/styles/monoland.css">
 </head>
@@ -20,7 +19,7 @@
     <div id="monoland"></div>
 
     <script>
-        window.errors = <?php echo($errors->isEmpty() ? 'null' : $errors) ?>;
+        window.errors = null;
     </script>
 
     <noscript>

@@ -223,7 +223,7 @@ export default new Vuex.Store({
             }
 
             if (state.menus.length === 0 && state.auth.token !== null) {
-                state.menus = state.auth.menus;
+                if (state.auth.menus !== null) state.menus = state.auth.menus;
             }
 
             state.afterAddnew = () => {};
