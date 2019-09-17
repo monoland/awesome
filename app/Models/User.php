@@ -110,8 +110,8 @@ class User extends Authenticatable
             $model->authent_id = $request->authent_id;
             $model->password = Hash::make('12345678');
             $model->theme = 'blue-grey';
-            $model->avatar = '/images/photo-holder.png';
-            $model->background = '/images/drawer-holder.svg';
+            $model->avatar = '/images/user-holder.png';
+            $model->background = '/images/draw-holder.svg';
             $model->save();
 
             DB::commit();
