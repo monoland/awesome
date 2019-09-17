@@ -96,13 +96,13 @@ class Setting extends Model
             $model = new static();
 
             if ($request->id === 'company') {
-                $model->name = $request->meta['name'];
-                $model->title = $request->meta['title'];
-                $model->quote = $request->meta['quote'];
-                $model->logo = $request->meta['logo'];
-                $model->height = $request->meta['height'];
-                $model->width = $request->meta['width'];
-                $model->background = $request->meta['background'];
+                $model->background = $request->background;
+                $model->height = $request->height;
+                $model->logo = $request->logo;
+                $model->name = $request->name;
+                $model->quote = $request->quote;
+                $model->title = $request->title;
+                $model->width = $request->width;
             }
 
             $model->save();
@@ -126,11 +126,12 @@ class Setting extends Model
 
         try {
             if ($model->id === 'company') {
-                $model->name = $request->name;
-                $model->slogan = $request->slogan;
-                $model->avatar = $request->avatar;
                 $model->background = $request->background;
                 $model->height = $request->height;
+                $model->logo = $request->logo;
+                $model->name = $request->name;
+                $model->quote = $request->quote;
+                $model->title = $request->title;
                 $model->width = $request->width;
             }
 
