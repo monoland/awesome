@@ -26,11 +26,11 @@ class DummyClass extends ResourceCollection
      */
     public function with($request)
     {
-        // return [
+        return [
         //     'additional' => [
         //         'combos' => [],
         //         'info' => null,
         //     ],
-        // ];
+        ];
     }
 }
