@@ -16,6 +16,7 @@ class DummyClass extends JsonResource
     {
         return [
             'id' => $this->id,
+            'name' => $this->name,
             'pinned' => false,
             'updated_at' => (string) $this->updated_at,
         ];

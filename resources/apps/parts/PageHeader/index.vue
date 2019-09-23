@@ -69,33 +69,15 @@
 
             <template v-if="!$vuetify.breakpoint.xsOnly && crud">
                 <div class="v-page__header--actions" :class="{ 'selected': selected }">
-                    <v-scale-transition>
-                        <slot name="add-button">
-                            <v-btn class="static" icon key="newDesktop" :color="$root.theme" @click="newFormOpen" v-show="!disabled.add">
-                                <v-icon>add</v-icon>
-                            </v-btn>
-                        </slot>
-                    </v-scale-transition>
+                    <slot name="add-button">
+                        <v-btn-tips sticky @click="newFormOpen" label="tambah-data" icon="add" :show="!disabled.add" />
+                    </slot>
                     
                     <slot></slot>
 
-                    <v-scale-transition>
-                        <v-btn icon key="edit" :color="$root.theme" @click="editFormOpen" v-show="!disabled.edit">
-                            <v-icon>edit</v-icon>
-                        </v-btn>
-                    </v-scale-transition>
-
-                    <v-scale-transition>
-                        <v-btn icon key="trash" :color="$root.theme" @click="trashFormOpen" v-show="!disabled.delete">
-                            <v-icon>delete</v-icon>
-                        </v-btn>
-                    </v-scale-transition>
-
-                    <v-scale-transition>
-                        <v-btn icon key="reload" :color="$root.theme" @click="recordReload" v-show="!disabled.refresh">
-                            <v-icon>refresh</v-icon>
-                        </v-btn>
-                    </v-scale-transition>
+                    <v-btn-tips @click="editFormOpen" label="edit-data" icon="edit" :show="!disabled.edit" />
+                    <v-btn-tips @click="trashFormOpen" label="hapus-data" icon="delete" :show="!disabled.delete" />
+                    <v-btn-tips @click="recordReload" label="refresh-data" icon="refresh" :show="!disabled.refresh" />
                 </div>
             </template>
 
@@ -117,9 +99,15 @@
                 <slot></slot>
             </template>
 
-            <v-btn icon :color="$root.theme" @click="searchOpen" v-if="searchable">
-                <v-icon>search</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn icon :color="$root.theme" @click="searchOpen" v-if="searchable" v-on="on">
+                        <v-icon>search</v-icon>
+                    </v-btn>
+                </template>
+
+                <span>cari-data</span>
+            </v-tooltip>
         </v-toolbar>
     </div>
 </template>
