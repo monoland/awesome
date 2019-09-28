@@ -36,7 +36,7 @@ class VuePageCommand extends GeneratorCommand
         } elseif ($this->option('child')) {
             $stub = '/stubs/vuepage.child.stub';
         } else {
-            $this->info('default');
+            $stub = '/stubs/vuepage.stub';
         }
 
         return __DIR__.$stub;
