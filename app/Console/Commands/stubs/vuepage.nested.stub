@@ -1,7 +1,7 @@
 <template>
     <v-page-wrap crud absolute searchable with-progress>
         <template #navigate>
-            <v-btn-tips @click="$router.go(-1)" label="DummyRootName" icon="arrow_back" :show="!disabled.link" />
+            <v-btn-tips @click="$router.go(-1)" label="DummyRootName" icon="arrow_back" :show="true" />
         </template>
 
         <v-desktop-table v-if="desktop"

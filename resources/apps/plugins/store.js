@@ -423,7 +423,7 @@ export default new Vuex.Store({
         },
 
         editFormOpen: function({ commit, state }, payload) {
-            if (payload.constructor === Object) {
+            if (payload && payload.constructor === Object) {
                 if (state.page.state === 'pinned') {
                     commit('selectedPush', payload);
                     return;

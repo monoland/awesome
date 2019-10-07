@@ -70,14 +70,14 @@
             <template v-if="!$vuetify.breakpoint.xsOnly && crud">
                 <div class="v-page__header--actions" :class="{ 'selected': selected }">
                     <slot name="add-button">
-                        <v-btn-tips sticky @click="newFormOpen" label="tambah-data" icon="add" :show="!disabled.add" />
+                        <v-btn-tips sticky @click="newFormOpen" label="TAMBAH" icon="add" :show="!disabled.add" />
                     </slot>
                     
                     <slot></slot>
 
-                    <v-btn-tips @click="editFormOpen" label="edit-data" icon="edit" :show="!disabled.edit" />
-                    <v-btn-tips @click="trashFormOpen" label="hapus-data" icon="delete" :show="!disabled.delete" />
-                    <v-btn-tips @click="recordReload" label="refresh-data" icon="refresh" :show="!disabled.refresh" />
+                    <v-btn-tips @click="editFormOpen" label="EDIT" icon="edit" :show="!disabled.edit" />
+                    <v-btn-tips @click="trashFormOpen" label="HAPUS" icon="delete" :show="!disabled.delete" />
+                    <v-btn-tips @click="recordReload" label="REFRESH" icon="refresh" :show="!disabled.refresh" />
                 </div>
             </template>
 
