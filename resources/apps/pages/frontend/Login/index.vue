@@ -12,8 +12,8 @@
                 </v-img>
 
                 <v-card-text class="px-6">
-                    <v-layout wrap>
-                        <v-flex xs12>
+                    <v-row no-gutters>
+                        <v-col cols="12">
                             <v-text-field
                                 color="cyan"
                                 label="Username"
@@ -23,9 +23,9 @@
                                 hide-details
                                 single-line
                             ></v-text-field>
-                        </v-flex>
+                        </v-col>
 
-                        <v-flex class="mt-4" xs12>
+                        <v-col class="mt-4" cols="12">
                             <v-text-field 
                                 @click:append="showtext = !showtext"
                                 :append-icon="showtext ? 'visibility' : 'visibility_off'"
@@ -38,16 +38,16 @@
                                 hide-details
                                 single-line
                             ></v-text-field>
-                        </v-flex>
-                    </v-layout>
+                        </v-col>
+                    </v-row>
                 </v-card-text>
 
                 <v-card-text class="px-6">
-                    <v-layout>
-                        <v-flex xs12>
+                    <v-row no-gutters>
+                        <v-col cols="12">
                             <v-btn color="cyan" block depressed rounded large dark @click="signin">login to app</v-btn>
-                        </v-flex>
-                    </v-layout>
+                        </v-col>
+                    </v-row>
                 </v-card-text>
             </v-card>
         </template>
@@ -81,8 +81,8 @@
                                 </v-sheet>
                                 
                                 <v-card-text>
-                                    <v-layout wrap>
-                                        <v-flex xs12>
+                                    <v-row no-gutters>
+                                        <v-col cols="12">
                                             <v-text-field
                                                 color="cyan"
                                                 label="Username"
@@ -92,9 +92,9 @@
                                                 hide-details
                                                 single-line
                                             ></v-text-field>
-                                        </v-flex>
+                                        </v-col>
 
-                                        <v-flex class="mt-4" xs12>
+                                        <v-col class="mt-4" cols="12">
                                             <v-text-field 
                                                 @click:append="showtext = !showtext"
                                                 :append-icon="showtext ? 'visibility' : 'visibility_off'"
@@ -107,16 +107,16 @@
                                                 hide-details
                                                 single-line
                                             ></v-text-field>
-                                        </v-flex>
-                                    </v-layout>
+                                        </v-col>
+                                    </v-row>
                                 </v-card-text>
 
                                 <v-card-text>
-                                    <v-layout>
-                                        <v-flex xs12>
+                                    <v-row no-gutters>
+                                        <v-col cols="12">
                                             <v-btn color="cyan" block depressed rounded large dark @click="signin">login to app</v-btn>
-                                        </v-flex>
-                                    </v-layout>
+                                        </v-col>
+                                    </v-row>
                                 </v-card-text>
                             </v-card>
                         </v-col>

@@ -69,15 +69,25 @@
 
             <template v-if="!$vuetify.breakpoint.xsOnly && crud">
                 <div class="v-page__header--actions" :class="{ 'selected': selected }">
-                    <slot name="add-button">
-                        <v-btn-tips sticky @click="newFormOpen" label="TAMBAH" icon="add" :show="!disabled.add" />
-                    </slot>
+                    <v-scale-transition>
+                        <slot name="add-button">
+                            <v-btn-tips sticky @click="newFormOpen" label="ADDNEW" icon="add" :show="!disabled.add" />
+                        </slot>
+                    </v-scale-transition>
                     
                     <slot></slot>
 
-                    <v-btn-tips @click="editFormOpen" label="EDIT" icon="edit" :show="!disabled.edit" />
-                    <v-btn-tips @click="trashFormOpen" label="HAPUS" icon="delete" :show="!disabled.delete" />
-                    <v-btn-tips @click="recordReload" label="REFRESH" icon="refresh" :show="!disabled.refresh" />
+                    <v-scale-transition>
+                        <v-btn-tips @click="editFormOpen" label="EDIT" icon="edit" :show="!disabled.edit" />
+                    </v-scale-transition>
+
+                    <v-scale-transition>
+                        <v-btn-tips @click="trashFormOpen" label="DELETE" icon="delete" :show="!disabled.delete" />
+                    </v-scale-transition>
+
+                    <v-scale-transition>
+                        <v-btn-tips @click="recordReload" label="REFRESH" icon="refresh" :show="!disabled.refresh" />
+                    </v-scale-transition>
                 </div>
             </template>
 
@@ -99,15 +109,9 @@
                 <slot></slot>
             </template>
 
-            <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                    <v-btn icon :color="$root.theme" @click="searchOpen" v-if="searchable" v-on="on">
-                        <v-icon>search</v-icon>
-                    </v-btn>
-                </template>
-
-                <span>cari-data</span>
-            </v-tooltip>
+            <v-btn icon :color="$root.theme" @click="searchOpen" v-if="searchable">
+                <v-icon>search</v-icon>
+            </v-btn>
         </v-toolbar>
     </div>
 </template>
@@ -128,6 +132,16 @@ export default {
         crud: {
             type: Boolean,
             default: false
+        },
+
+        enableDelete: {
+            type: Boolean,
+            default: true
+        },
+
+        enableEdit: {
+            type: Boolean,
+            default: true
         },
 
         flat: {
@@ -178,6 +192,15 @@ export default {
     },
 
     watch: {
+        disabled: {
+            handler: function() {
+                if (!this.enableEdit) this.disabled.edit = true;
+                if (!this.enableDelete) this.disabled.delete = true;
+            },
+
+            deep: true
+        },
+
         searchText: function(newVal) {
             this.bouncing(newVal);
         },

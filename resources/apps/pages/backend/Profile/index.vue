@@ -28,31 +28,33 @@
                     </v-img>
                     
                     <v-card-text>
-                        <v-flex xs12>
-                            <v-text-field
-                                label="Nama Pengguna"
-                                :color="$root.theme"
-                                v-model="user.name"
-                            ></v-text-field>
-                        </v-flex>
+                        <v-row>
+                            <v-col cols="12">
+                                <v-text-field
+                                    label="Nama Pengguna"
+                                    :color="$root.theme"
+                                    v-model="user.name"
+                                ></v-text-field>
+                            </v-col>
 
-                        <v-flex xs12>
-                            <v-text-field
-                                label="Alamat Email"
-                                :color="$root.theme"
-                                v-model="user.email"
-                            ></v-text-field>
-                        </v-flex>
+                            <v-col cols="12">
+                                <v-text-field
+                                    label="Alamat Email"
+                                    :color="$root.theme"
+                                    v-model="user.email"
+                                ></v-text-field>
+                            </v-col>
 
-                        <v-flex xs12>
-                            <v-select
-                                @change="themeUpdate"
-                                label="Warna Thema"
-                                :color="$root.theme"
-                                :items="colors"
-                                v-model="user.theme"
-                            ></v-select>
-                        </v-flex>
+                            <v-col cols="12">
+                                <v-select
+                                    @change="themeUpdate"
+                                    label="Warna Thema"
+                                    :color="$root.theme"
+                                    :items="colors"
+                                    v-model="user.theme"
+                                ></v-select>
+                            </v-col>
+                        </v-row>
                     </v-card-text>
                 </v-card>
             </v-layout>

@@ -6,7 +6,6 @@ namespace App\Models;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ClientResource;
 use Illuminate\Database\Eloquent\Model;
-
 // use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Client extends Model

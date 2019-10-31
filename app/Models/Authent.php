@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Resources\AuthentResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-
 // use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Authent extends Model

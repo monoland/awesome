@@ -18,38 +18,40 @@
                     </v-img>
                     
                     <v-card-text>
-                        <v-flex xs12>
-                            <v-text-field 
-                                label="Katasandi Lama"
-                                :color="$root.theme"
-                                v-model="user.old_password"
-                                :append-icon="hidden1 ? 'visibility_off' : 'visibility'"
-                                :type="hidden1 ? 'password' : 'text'"
-                                @click:append="hidden1 = !hidden1"
-                            ></v-text-field>
-                        </v-flex>
+                        <v-row>
+                            <v-col cols="12">
+                                <v-text-field 
+                                    label="Katasandi Lama"
+                                    :color="$root.theme"
+                                    v-model="user.old_password"
+                                    :append-icon="hidden1 ? 'visibility_off' : 'visibility'"
+                                    :type="hidden1 ? 'password' : 'text'"
+                                    @click:append="hidden1 = !hidden1"
+                                ></v-text-field>
+                            </v-col>
 
-                        <v-flex xs12>
-                            <v-text-field 
-                                label="Katasandi Baru"
-                                :color="$root.theme"
-                                v-model="user.password"
-                                :append-icon="hidden2 ? 'visibility_off' : 'visibility'"
-                                :type="hidden2 ? 'password' : 'text'"
-                                @click:append="hidden2 = !hidden2"
-                            ></v-text-field>
-                        </v-flex>
+                            <v-col cols="12">
+                                <v-text-field 
+                                    label="Katasandi Baru"
+                                    :color="$root.theme"
+                                    v-model="user.password"
+                                    :append-icon="hidden2 ? 'visibility_off' : 'visibility'"
+                                    :type="hidden2 ? 'password' : 'text'"
+                                    @click:append="hidden2 = !hidden2"
+                                ></v-text-field>
+                            </v-col>
 
-                        <v-flex xs12>
-                            <v-text-field 
-                                label="Konfirmasi Sandi"
-                                :color="$root.theme"
-                                v-model="user.password_confirmation"
-                                :append-icon="hidden3 ? 'visibility_off' : 'visibility'"
-                                :type="hidden3 ? 'password' : 'text'"
-                                @click:append="hidden3 = !hidden3"
-                            ></v-text-field>
-                        </v-flex>
+                            <v-col cols="12">
+                                <v-text-field 
+                                    label="Konfirmasi Sandi"
+                                    :color="$root.theme"
+                                    v-model="user.password_confirmation"
+                                    :append-icon="hidden3 ? 'visibility_off' : 'visibility'"
+                                    :type="hidden3 ? 'password' : 'text'"
+                                    @click:append="hidden3 = !hidden3"
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
                     </v-card-text>
                 </v-card>
             </v-layout>

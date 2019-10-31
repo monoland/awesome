@@ -6,7 +6,6 @@ use App\Traits\HasMetaField;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\SettingResource;
 use Illuminate\Database\Eloquent\Model;
-
 // use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Setting extends Model

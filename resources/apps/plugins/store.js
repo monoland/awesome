@@ -30,6 +30,7 @@ export default new Vuex.Store({
         cancelAddnew:() => { return false; },
         cancelDelete:() => { return false; },
         cancelUpdate:() => { return false; },
+        cancelNewForm:() => { return false; },
         overideState:() => {},
         setRecord:() => {},
 
@@ -142,6 +143,10 @@ export default new Vuex.Store({
             state.cancelUpdate = payload;
         },
 
+        cancelNewForm: function(state, payload) {
+            state.cancelNewForm = payload;
+        },
+
         dataUrl: function(state, payload) {
             state.dataUrl = payload;
         },
@@ -238,6 +243,7 @@ export default new Vuex.Store({
             state.cancelAddnew = () => { return false; };
             state.cancelDelete = () => { return false; };
             state.cancelUpdate = () => { return false; };
+            state.cancelNewForm = () => { return false; };
             state.overideState = () => {};
             state.setRecord = () => {};
 
@@ -376,11 +382,6 @@ export default new Vuex.Store({
             state.headers = payload;
         },
 
-        token: function(state, payload) {
-            state.auth.token = payload;
-            state.http.defaults.headers.common['Authorization'] = state.auth.token;
-        },
-
         upload: function(state, payload) {
             Object.keys(payload).forEach(key => {
                 state.upload[key] = payload[key];
@@ -484,6 +485,16 @@ export default new Vuex.Store({
         },
 
         newFormOpen: function({ commit, state }) {
+            if (state.cancelNewForm()) {
+                commit('snackbar', {
+                    color: 'warning',
+                    text: 'This process is not allowed.',
+                    state: true
+                });
+
+                return false;
+            }
+
             state.setRecord();
             commit('form', { state: true, mode: 'addnew' });
             
@@ -766,6 +777,10 @@ export default new Vuex.Store({
             commit('cancelUpdate', payload);
         },
 
+        setCancelNewForm: function({ commit }, payload) {
+            commit('cancelNewForm', payload);
+        },
+
         setFilter: function({ commit }, payload) {
             commit('tableFilter', payload);
         },
@@ -822,7 +837,8 @@ export default new Vuex.Store({
                     scope: '*'
                 });
                 
-                commit('token', token.data);
+                state.auth.token = token.data;
+                state.http.defaults.headers.common['Authorization'] = token.data.token_type + ' ' + token.data.access_token;
 
                 let user = await state.http.get('/api/user');
                 commit('user', user.data );
@@ -865,6 +881,11 @@ export default new Vuex.Store({
 
                 if (status === 401) {
                     state.auth.signout();
+                    commit('snackbar', {
+                        color: 'error',
+                        text: 'The user credentials were incorrect.',
+                        state: true
+                    });
                 } else if (status === 403) {
                     commit('snackbar', {
                         color: 'error',

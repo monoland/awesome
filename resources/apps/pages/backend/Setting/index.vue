@@ -28,47 +28,47 @@
                     </v-img>
                     
                     <v-card-text>
-                        <v-layout wrap>
-                            <v-flex xs12>
+                        <v-row>
+                            <v-col cols="12">
                                 <v-textarea
                                     label="Nama Perusahaan"
                                     :color="$root.theme"
                                     v-model="record.name"
                                 ></v-textarea>
-                            </v-flex>
+                            </v-col>
 
-                            <v-flex xs12>
+                            <v-col cols="12">
                                 <v-textarea
                                     label="Judul"
                                     :color="$root.theme"
                                     v-model="record.title"
                                 ></v-textarea>
-                            </v-flex>
+                            </v-col>
 
-                            <v-flex xs12>
+                            <v-col cols="12">
                                 <v-textarea
                                     label="Quote"
                                     :color="$root.theme"
                                     v-model="record.quote"
                                 ></v-textarea>
-                            </v-flex>
+                            </v-col>
 
-                            <v-flex xs6>
+                            <v-col cols="6">
                                 <v-text-field
                                     label="Tinggi"
                                     :color="$root.theme"
                                     v-model="record.height"
                                 ></v-text-field>
-                            </v-flex>
+                            </v-col>
 
-                            <v-flex xs6>
+                            <v-col cols="6">
                                 <v-text-field
                                     label="Lebar"
                                     :color="$root.theme"
                                     v-model="record.width"
                                 ></v-text-field>
-                            </v-flex>
-                        </v-layout>
+                            </v-col>
+                        </v-row>
                     </v-card-text>
                 </v-card>
             </v-layout>

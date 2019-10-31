@@ -33,54 +33,56 @@
         </v-mobile-table>
 
         <v-page-form small>
-            <v-flex sm6 xs6>
-                <v-text-field
-                    label="Id Klien"
-                    :color="$root.theme"
-                    v-model="record.id"
-                    readonly
-                ></v-text-field>
-            </v-flex>
+            <v-row>
+                <v-col cols="6">
+                    <v-text-field
+                        label="Id Klien"
+                        :color="$root.theme"
+                        v-model="record.id"
+                        readonly
+                    ></v-text-field>
+                </v-col>
 
-            <v-flex sm6 xs6>
-                <v-select v-if="form.mode === 'edit'"
-                    :items="statuses"
-                    label="Status"
-                    :color="$root.theme"
-                    v-model="record.revoked"
-                ></v-select>
+                <v-col cols="6">
+                    <v-select v-if="form.mode === 'edit'"
+                        :items="statuses"
+                        label="Status"
+                        :color="$root.theme"
+                        v-model="record.revoked"
+                    ></v-select>
 
-                <v-select v-else
-                    :items="grants"
-                    label="Grant"
-                    :color="$root.theme"
-                    v-model="record.grant"
-                ></v-select>
-            </v-flex>
+                    <v-select v-else
+                        :items="grants"
+                        label="Grant"
+                        :color="$root.theme"
+                        v-model="record.grant"
+                    ></v-select>
+                </v-col>
 
-            <v-flex sm6 xs12>
-                <v-text-field
-                    label="Nama Klien"
-                    :color="$root.theme"
-                    v-model="record.name"
-                ></v-text-field>
-            </v-flex>
+                <v-col sm="12" md="6">
+                    <v-text-field
+                        label="Nama Klien"
+                        :color="$root.theme"
+                        v-model="record.name"
+                    ></v-text-field>
+                </v-col>
 
-            <v-flex sm6 xs12>
-                <v-text-field
-                    label="Redirect"
-                    :color="$root.theme"
-                    v-model="record.redirect"
-                ></v-text-field>
-            </v-flex>
+                <v-col sm="12" md="6">
+                    <v-text-field
+                        label="Redirect"
+                        :color="$root.theme"
+                        v-model="record.redirect"
+                    ></v-text-field>
+                </v-col>
 
-            <v-flex xs12>
-                <v-textarea v-if="form.mode === 'edit'"
-                    label="Rahasia"
-                    :color="$root.theme"
-                    v-model="record.secret"
-                ></v-textarea>
-            </v-flex>
+                <v-col cols="12">
+                    <v-textarea v-if="form.mode === 'edit'"
+                        label="Rahasia"
+                        :color="$root.theme"
+                        v-model="record.secret"
+                    ></v-textarea>
+                </v-col>
+            </v-row>
         </v-page-form>
     </v-page-wrap>
 </template>

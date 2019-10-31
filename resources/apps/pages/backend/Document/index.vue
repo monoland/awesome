@@ -41,13 +41,15 @@
         </v-mobile-table>
 
         <v-page-form small>
-            <v-flex xs12>
-                <v-text-field
-                    label="Nama Dokumen"
-                    :color="$root.theme"
-                    v-model="record.name"
-                ></v-text-field>
-            </v-flex>
+            <v-row>
+                <v-col cols="12">
+                    <v-text-field
+                        label="Nama Dokumen"
+                        :color="$root.theme"
+                        v-model="record.name"
+                    ></v-text-field>
+                </v-col>
+            </v-row>
         </v-page-form>
     </v-page-wrap>
 </template>
