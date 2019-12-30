@@ -1,7 +1,7 @@
 {
-    "/scripts/core/vendor.js": "/scripts/core/vendor.js",
     "/scripts/core/apps.js": "/scripts/core/apps.js",
     "/scripts/core/manifest.js": "/scripts/core/manifest.js",
+    "/scripts/core/vendor.js": "/scripts/core/vendor.js",
     "/scripts/core/authent.js": "/scripts/core/authent.js",
     "/scripts/core/backend.js": "/scripts/core/backend.js"
 }
