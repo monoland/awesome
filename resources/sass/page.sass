@@ -1,0 +1,21 @@
+.v-page
+    position: relative
+    padding-top: 64px
+
+    &--wrap
+        height: calc( 100vh - 64px )
+        overflow-y: auto
+
+    &--mobile
+        height: calc( 100vh - 56px )
+        overflow-y: auto
+
+
+@media (min-width: 320px) and (max-width: 480px)
+    .v-page
+        position: relative
+        padding-top: 56px
+
+        &--wrap
+            height: calc( 100vh - 56px )
+            overflow-y: auto

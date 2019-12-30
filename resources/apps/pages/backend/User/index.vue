@@ -1,46 +1,86 @@
 <template>
-    <v-page-wrap crud absolute searchable with-progress>
-        <v-desktop-table v-if="desktop"
-            :single="single"
-        ></v-desktop-table>
+    <v-page-wrap>
+        <template #header>
+            <v-page-toolbar>
+                <template #link-button>
+                    <v-btn-action icon="folder_open" text="Open Link" v-model="button.link"></v-btn-action>
+                </template>
+            </v-page-toolbar>
+        </template>
 
-        <v-mobile-table icon="perm_identity" v-else>
-            <template v-slot:default="{ item }">
-                <v-list-item-content>
-                    <v-list-item-title>{{ item.name }}</v-list-item-title>
-                    <v-list-item-subtitle class="f-nunito">{{ item.email }}</v-list-item-subtitle>
-                </v-list-item-content>
+        <v-mobile-table v-if="mobile">
+            <template #default="{ item }">
+                <v-list-item-title>{{ item.name }}</v-list-item-title>
+                <v-list-item-subtitle>path: {{ item.path }}</v-list-item-subtitle>
             </template>
         </v-mobile-table>
 
-        <v-page-form small>
-            <v-row>
-                <v-col cols="12">
-                    <v-text-field
-                        label="Nama Pengguna"
-                        :color="$root.theme"
-                        v-model="record.name"
-                    ></v-text-field>
-                </v-col>
+        <v-page-table v-else></v-page-table>
 
-                <v-col cols="12">
-                    <v-text-field
-                        label="Email Pengguna"
-                        :color="$root.theme"
-                        v-model="record.email"
-                    ></v-text-field>
-                </v-col>
+        <template #footer>
+            <v-page-dialog>
+                <v-card flat>
+                    <v-img class="grey lighten-5" :src="record.background"  :aspect-ratio="16/9" style="max-height: 210px;">
+                        <div class="d-flex align-center justify-center" style="height: 100%;">
+                            <div class="d-flex align-center justify-center">
+                                <div class="d-block" style="height: 132px; min-width: 112px;">
+                                    <v-hover>
+                                        <template v-slot:default="{ hover }">
+                                            <v-avatar class="elevation-2" color="white" :size="mobile ? 112 : 128">
+                                                <v-img :src="record.avatar"></v-img>
 
-                <v-col cols="12">
-                    <v-select
-                        label="Otentikasi"
-                        :items="authents"
-                        :color="$root.theme"
-                        v-model="record.authent_id"
-                    ></v-select>
-                </v-col>
-            </v-row>
-        </v-page-form>
+                                                <v-fade-transition>
+                                                    <v-overlay absolute v-if="hover">
+                                                        <v-btn icon @click="uploadAvatar">
+                                                            <v-icon>photo_camera</v-icon>
+                                                        </v-btn>
+                                                    </v-overlay>
+                                                </v-fade-transition>
+                                            </v-avatar>
+                                        </template>
+                                    </v-hover>
+
+                                    <div class="d-flex justify-center mt-2">{{ record.name }}</div>
+                                </div>
+
+                                <v-btn class="absolute" icon style="right: 8px; bottom: 8px;" @click="uploadBackground">
+                                    <v-icon>photo_camera</v-icon>
+                                </v-btn>
+                            </div>
+                        </div>
+                    </v-img>
+
+                    <v-card-text>
+                        <v-row :no-gutters="mobile">
+                            <v-col cols="12">
+                                <v-text-field
+                                    label="Email"
+                                    v-model="record.email"
+                                    :hide-details="!mobile"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col sm="6" cols="12">
+                                <v-text-field
+                                    label="Nama"
+                                    v-model="record.name"
+                                    :hide-details="!mobile"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col sm="6" cols="12">
+                                <v-select
+                                    :items="themes"
+                                    label="Theme"
+                                    v-model="record.theme"
+                                    :hide-details="!mobile"
+                                ></v-select>
+                            </v-col>
+                        </v-row>
+                    </v-card-text>
+                </v-card>
+            </v-page-dialog>
+        </template>
     </v-page-wrap>
 </template>
 
@@ -48,42 +88,89 @@
 import { pageMixins } from '@apps/mixins/PageMixins';
 
 export default {
-    name: 'page-user',
+    name: 'account-user',
 
     mixins: [pageMixins],
 
-    route: [
-        { path: 'user', name: 'user', root: 'monoland' },
-    ],
-
     data:() => ({
-        single: false,
-        authents: [
-            { text: 'Administrator', value: 1 }
-        ]
+        themes: [
+            { value: 'red', text: 'Red'},
+            { value: 'pink', text: 'Pink'},
+            { value: 'purple', text: 'Purple'},
+            { value: 'deep-purple', text: 'Deep Purple'},
+            { value: 'indigo', text: 'Indigo'},
+            { value: 'blue', text: 'Blue'},
+            { value: 'light-blue', text: 'Light Blue'},
+            { value: 'cyan', text: 'Cyan'},
+            { value: 'teal', text: 'Teal'},
+            { value: 'green', text: 'Green'},
+            { value: 'light-green', text: 'Light Green'},
+            { value: 'lime', text: 'Lemon'},
+            { value: 'yellow', text: 'Yellow'},
+            { value: 'amber', text: 'Amber'},
+            { value: 'orange', text: 'Orange'},
+            { value: 'deep-orange', text: 'Deep Orange'},
+            { value: 'brown', text: 'Brown'},
+            { value: 'blue-grey', text: 'Blue Grey'},
+            { value: 'grey', text: 'Grey'},
+        ],
     }),
 
     created() {
-        this.tableHeaders([
-            { text: 'Name', value: 'name' },
-            { text: 'Email', value: 'email' },
-            { text: 'Otentikasi', value: 'authent_name' },
-            { text: 'Updated', value: 'updated_at', class: 'datetime-field' }
-        ]);
-
-        this.pageInfo({
-            icon: 'people',
-            title: 'Pengguna',
+        this.initPage({
+            icon: 'event_seat',
+            title: 'User',
         });
 
-        this.dataUrl(`/api/users`);
+        this.setPageURL(`api/account`);
+
+        this.setHeader([
+            { text: 'Name', value: 'name' },
+            { text: 'Email', value: 'email' },
+            { text: 'Theme', value: 'theme' },
+            { text: 'Updated', value: 'updated_at', class: 'datetime-field' },
+        ]);
 
         this.setRecord({
             id: null,
             name: null,
-            email: null,
-            authent_id: null
+            avatar: '/images/user-holder.png',
+            background: '/images/draw-holder.svg',
+            theme: null
         });
+    },
+
+    mounted() {
+        this.setUploadOptions({
+            acceptFiles: 'image/png, image/jpeg',
+            allowedExtensions: ['png', 'jpg', 'jpeg'],
+        });
+    },
+
+    methods: {
+        uploadAvatar: function() {
+            this.fineUploader.setParams({ mediaName: 'user-avatar' });
+
+            this.setUploadCallback(response => {
+                this.record.avatar = response.record.path
+            });
+
+            setTimeout(() => {
+                this.upload.input.click();
+            }, 300);
+        },
+
+        uploadBackground: function() {
+            this.fineUploader.setParams({ mediaName: 'user-backdrop' });
+            
+            this.setUploadCallback(response => {
+                this.record.background = response.record.path
+            });
+
+            setTimeout(() => {
+                this.upload.input.click();
+            }, 300);
+        }
     }
 };
 </script>

@@ -9,15 +9,15 @@ use App\Http\Controllers\Controller;
 class MediaController extends Controller
 {
     /**
-     * Undocumented function
+     * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         if (!$request->has('completed')) {
-            return Media::storeChunk($request);
+            return Media::chunkMedia($request);
         }
 
         return Media::combineChunk($request);

@@ -1,5 +1,6 @@
 <?php
 
-Route::middleware('guest')->group(function () {
-    Route::get('/', 'Mono\WebController@index');
-});
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', 'Apps\WebController@index');
+Route::get('/info', 'Apps\WebController@webinfo');

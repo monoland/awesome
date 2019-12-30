@@ -1,83 +1,27 @@
 <template>
     <div class="v-page">
-        <slot name="toolbar">
-            <v-page-header 
-                :absolute="absolute"
-                :crud="crud"  
-                :flat="flat"
-                :searchable="searchable"
-                :withProgress="withProgress"
-                :enable-delete="enableDelete"
-                :enable-edit="enableEdit"
-            >
-                <template #navigate>
-                    <slot name="navigate"></slot>
-                </template>
-
-                <template #add-button>
-                    <slot name="add-button"></slot>
-                </template>
-
-                <template #default>
-                    <slot name="toolbar-default"></slot>
-                </template>
-            </v-page-header>
-        </slot>
+        <slot name="header"></slot>
         
-        <div class="v-page__content">
-            <div class="v-page__wrap">
+        <div class="v-page--wrap" :class="{ 'white': mobile }">
+            <div class="v-page__content">
                 <slot></slot>
-
-                <v-page-trash v-if="!noTrash"></v-page-trash>
             </div>
         </div>
+
+        <slot name="footer"></slot>
+
+        <v-page-delete></v-page-delete>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
     name: 'v-page-wrap',
 
-    props: {
-        absolute: {
-            type: Boolean,
-            default: false
-        },
-
-        crud: {
-            type: Boolean,
-            default: false
-        },
-
-        enableDelete: {
-            type: Boolean,
-            default: true
-        },
-
-        enableEdit: {
-            type: Boolean,
-            default: true
-        },
-
-        flat: {
-            type: Boolean,
-            default: false
-        },
-
-        noTrash: {
-            type: Boolean,
-            default: false
-        },
-
-        withProgress: {
-            type: Boolean,
-            default: false
-        },
-
-        searchable: {
-            type: Boolean,
-            default: false
-        }
+    computed: {
+        ...mapState(['mobile']),
     },
 };
 </script>

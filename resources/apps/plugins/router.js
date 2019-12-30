@@ -1,56 +1,27 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Auth from '@apps/mixins/AuthProvider';
+import Auth from '@apps/providers/AuthProvider';
 
 Vue.use(VueRouter);
 
-let routes = [];
-let keep = null;
+const Login = () => import(/* webpackChunkName: "scripts/core/authent" */ '@apps/pages/frontend/Login');
+const backendBase = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Base');
+const backendHome = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Home');
+const backendUser = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/User');
+const backendProfile = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Profile');
+const backendPassword = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Password');
 
-import * as frontend from '@apps/pages/frontend';
-import * as backend from '@apps/pages/backend';
-import * as project from '@apps/pages/project';
-
-extractRouteFrom(frontend);
-extractRouteFrom(backend);
-extractRouteFrom(project);
-
-function extractRouteFrom(components) {
-    Object.keys(components).forEach(page => {
-        if (!components[page].route) return;
-
-        components[page].route.forEach(route => {
-            if (route.path === '*') {
-                keep = Object.assign({ component: components[page] }, route);
-                return;
-            }
-
-            if (route.hasOwnProperty('root')) {
-                let idx = routes.findIndex(obj => obj.node === route.root);
-
-                if (idx !== -1) {
-                    delete route.root;
-                    
-                    if (routes[idx].children.length > 0) {
-                        let idn = routes[idx].children.findIndex(obj => obj.path === route.path);
-                        if (idn === -1) {
-                            routes[idx].children.push(Object.assign({ component: components[page] }, route));
-                        }
-                    } else {
-                        routes[idx].children.push(Object.assign({ component: components[page] }, route));
-                    }
-                }
-            } else {
-                let idx = routes.findIndex(obj => obj.path === route.path);
-                if (idx === -1) routes.push(Object.assign({ component: components[page] }, route));
-            }
-        });
-
-        delete components[page].route;
-    });
-}
-
-if (keep !== null) routes.push(keep);
+let routes = [
+    { path: '/', name: 'login', component: Login },
+    { path: '/backend', meta: { auth: true }, component: backendBase, children: [
+        { path: '', name: 'backend', redirect: { name: 'backend-home' } },
+        { path: 'home', name: 'backend-home', component: backendHome },
+        { path: 'user', name: 'backend-user', component: backendUser },
+        { path: 'password', name: 'backend-password', component: backendPassword },
+        { path: 'profile', name: 'backend-profile', component: backendProfile },
+    ]},
+    { path: '*', name: null, redirect: { name: 'login' } },
+];
 
 const router = new VueRouter({
     mode: 'hash',
@@ -66,7 +37,7 @@ router.beforeEach((to, from, next) => {
         }
     } else {
         if (to.name === 'login' && Auth.check) {
-            next({ name: 'home' });
+            next({ name: 'backend-home' });
         } else {
             next();
         }

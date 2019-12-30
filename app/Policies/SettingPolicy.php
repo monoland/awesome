@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\Models\User;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SettingPolicy
@@ -11,7 +11,7 @@ class SettingPolicy
     use HandlesAuthorization;
 
     /**
-     * filters
+     * filter function
      *
      * @param [type] $user
      * @param [type] $ability
@@ -19,7 +19,7 @@ class SettingPolicy
      */
     public function before($user, $ability)
     {
-        if ($user->isAdministrator()) {
+        if ($user->hasRole('superadmin')) {
             return true;
         }
     }
@@ -103,18 +103,6 @@ class SettingPolicy
      * @return mixed
      */
     public function forceDelete(User $user, Setting $setting)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the setting.
-     *
-     * @param  \App\Models\User  $user
-     * @param  \App\Models\Setting  $setting
-     * @return mixed
-     */
-    public function bulkDelete(User $user)
     {
         //
     }

@@ -1,15 +1,16 @@
 const mix = require('laravel-mix');
 
+mix.setPublicPath('public');
+
 mix.webpackConfig({
     resolve: {
-        extensions: ['.js', '.vue'],
+        extensions: ['.js', '.scss', '.vue'],
         alias: {
-            '@apps': __dirname + '/resources/apps'
+            '@apps': __dirname + '/resources/apps',
+            '@sass': __dirname + '/resources/sass'
         }
     }
 });
 
-mix.js('resources/apps/index.js', 'public/scripts/monoland.js')
-mix.stylus('resources/design/main.styl', 'public/styles/monoland.css');
-
-mix.extract(['vue', 'vue-router', 'vuex', 'vuetify']);
+mix.js('resources/apps/index.js', 'scripts/core/apps.js');
+mix.extract();

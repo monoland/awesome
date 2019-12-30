@@ -5,309 +5,201 @@ Vue.use(Vuex);
 
 import Axios from 'axios';
 import Echo from 'laravel-echo';
-import Auth from '@apps/mixins/AuthProvider';
+import qq from 'fine-uploader/lib/core';
+import Auth from '@apps/providers/AuthProvider';
 import { baseURL, pusherEcho, pusherKey, pusherHost, pusherPort } from '@apps/.env.js';
 
-import router from './router';
-
-export default new Vuex.Store({
+let rootModule = {
     state: {
         auth: Auth,
-        document: { callback: () => {}, multiple: false, selected: [], state: false },
+        button: {
+            add: false,
+            edit: false,
+            refresh: false,
+            update: false,
+            link: false,
+            search: false
+        },
         echo: null,
+        fineUploader: null,
+        form: {
+            state: null,        // null | add | edit | delete
+            model: false,
+            maxWidth: 700,
+            loader: false
+        },
         http: null,
-        menus: [],
-        
-        afterAddnew:() => {},
-        afterDelete:() => {},
-        afterFormClose:() => {},
-        afterFormOpen:() => {},
-        afterSelected:() => {},
-        afterUpdate:() => {},
-        beforeAddnew:() => {},
-        beforeDelete:() => {},
-        beforeUpdate:() => {},
-        cancelAddnew:() => { return false; },
-        cancelDelete:() => { return false; },
-        cancelUpdate:() => { return false; },
-        cancelNewForm:() => { return false; },
-        overideState:() => {},
-        setRecord:() => {},
-
-        combos: [],
-        company: {},
         info: {},
-        dataUrl: null,
-        disabled: { add: false, delete: true, edit: true, find: false, link: true, refresh: false },
-        form: { state: false, mode: 'addnew' },
-        login: { username: null, userpass: null },
-        headers: [],
-        page: { state: 'default', icon: null, title: null, subtitle: null },
-        primaryId: 'id',
-        records: [],
+        lazy: false,
+        links: {},
+        meta: {},
+        mobile: false,
+        module: false,
+        page: {
+            dataURL: null,
+            title: null,
+            icon: null,
+            state: null,        // newState | selectState | searchState
+            subtitle: null,
+            findIn: 'name',
+            findBy: null
+        },
         record: {},
-        toolbar: { search: false, delete: false, text: null },
-        trash: { state: false },
-        snackbar: { state: false, text: null, color: null },
-        table: { 
-            initial: true, 
-            loader: false, 
-            options: { itemsPerPage: 10, page: 1 }, 
-            footerProps: { 'items-per-page-options': [10, 25, 50] }, 
-            total: 0, params: { itemsPerPage: 10, page: 1, sortBy: null, sortDesc: null}, 
-            selected: [] 
+        recordDefault: {},
+        records: [],
+        selected: [],
+        snackbar: {
+            color: null,
+            state: false,
+            text: null,
         },
-        upload: { combined: false, progress: false, value: 0 }
-    },
-
-    getters: {
-        avatar: function(state) {
-            return state.auth.avatar;
+        table: {
+            headers: [],
+            options: {},
+            selected: [],
+            key: 'id',
+            loader: false,
+            footerProps: { 'items-per-page-options': [10, 25, 50] },
         },
-
-        background: function(state) {
-            return state.auth.background;
-        },
+        upload: {
+            acceptFiles: null,
+            allowedExtensions: null,
+            requestEndpoint: null,
+            successEndpoint: '?completed=true',
+            mediaName: null,
+            fileName: null,
+            model: false,
+            uuid: null,
+            input: null,
+            progress: false,
+            percent: 0,
+            combined: false,
+            uploadedBytes: 0, 
+            totalBytes: 0,
+            callback:() => {}
+        }
     },
 
     mutations: {
-        additional: function(state, payload) {
-            if (payload && payload.hasOwnProperty('combos')) {
-                state.combos = payload.combos;
-            }
-
-            if (payload && payload.hasOwnProperty('info')) {
-                state.info = payload.info;
-            }
-        },
-
-        afterAddnew: function(state, payload) {
-            state.afterAddnew = payload;
-        },
-
-        afterDelete: function(state, payload) {
-            state.afterDelete = payload;
-        },
-
-        afterFormClose: function(state, payload) {
-            state.afterFormClose = payload;
-        },
-
-        afterFormOpen: function(state, payload) {
-            state.afterFormOpen = payload;
-        },
-
-        afterUpdate: function(state, payload) {
-            state.afterUpdate = payload;
-        },
-
-        afterSelected: function(state, payload) {
-            state.afterSelected = payload;
-        },
-
-        auth: function(state, payload) {
+        COMMIT_AUTH: function(state, payload) 
+        {
             Object.keys(payload).forEach(key => {
                 state.auth[key] = payload[key];
             });
         },
 
-        authAvatar: function(state, payload) {
-            state.auth.avatar = payload;
+        COMMIT_AXIOS: function(state, payload) 
+        {
+            state.http.defaults.headers.common['Authorization'] = payload.token_type + ' ' + payload.access_token;
         },
 
-        authBackground: function(state, payload) {
-            state.auth.background = payload;
+        COMMIT_BASEURL: function(state, payload) 
+        {
+            state.http.defaults.baseURL = payload;
+            state.auth.baseURL = payload;
         },
 
-        beforeAddnew: function(state, payload) {
-            state.beforeAddnew = payload;
+        COMMIT_BUTTON_STATE: function(state, payload) 
+        {
+            state.page.state = payload;
+            
+            switch (payload) {
+                case 'newState':
+                    state.button.add = true;
+                    state.button.edit = false;
+                    state.button.delete = false;
+                    state.button.link = false;
+                    state.button.refresh = true;
+                    state.button.search = true;
+                    break;
+
+                case 'selectedState':
+                    state.button.add = false;
+                    state.button.edit = true;
+                    state.button.delete = true;
+                    state.button.link = true;
+                    state.button.refresh = false;
+                    state.button.search = false;
+                    break;
+            }
         },
 
-        beforeDelete: function(state, payload) {
-            state.beforeDelete = payload;
+        COMMIT_CLEAR: function(state) 
+        {
+            state.auth.clear();
         },
 
-        beforeUpdate: function(state, payload) {
-            state.beforeUpdate = payload;
+        COMMIT_FINEUPLOADER: function(state, payload) 
+        {
+            state.fineUploader = payload;
         },
 
-        cancelAddnew: function(state, payload) {
-            state.cancelAddnew = payload;
-        },
-
-        cancelDelete: function(state, payload) {
-            state.cancelDelete = payload;
-        },
-
-        cancelUpdate: function(state, payload) {
-            state.cancelUpdate = payload;
-        },
-
-        cancelNewForm: function(state, payload) {
-            state.cancelNewForm = payload;
-        },
-
-        dataUrl: function(state, payload) {
-            state.dataUrl = payload;
-        },
-
-        disabled: function(state, payload) {
-            Object.keys(payload).forEach(key => {
-                state.disabled[key] = payload[key];
-            });
-        },
-
-        document: function(state, payload) {
-            Object.keys(payload).forEach(key => {
-                state.document[key] = payload[key];
-            });
-        },
-
-        fetchAppInfos: function(state, payload) {
-            state.company = payload;
-        },
-
-        fetchAppMenus: function(state, payload) {
-            if (payload) state.auth.menus = payload;
-            state.menus = state.auth.menus;
-        },
-
-        field: function(state, payload) {
-            Object.keys(payload).forEach(key => {
-                state.record[key] = payload[key];
-            });
-        },
-
-        form: function(state, payload) {
+        COMMIT_FORM: function(state, payload) 
+        {
             Object.keys(payload).forEach(key => {
                 state.form[key] = payload[key];
             });
         },
 
-        initStore: function(state) {
-            if (state.http === null) {
-                let headers = {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest'
-                };
-
-                if (state.auth.token !== null) {
-                    headers = Object.assign({
-                        'Authorization': state.auth.token
-                    }, headers);
-                }
-
-                state.http = Axios.create({
-                    baseURL: baseURL,
-                    headers
-                });
-            } else {
-                if (!state.http.defaults.headers.common.hasOwnProperty('Authorization') && state.auth.token !== null) {
-                    state.http.defaults.headers.common['Authorization'] = state.auth.token;
-                }
-            }
-
-            if (state.echo === null && pusherEcho === true && state.auth.token !== null) {
-                state.echo = new Echo({
-                    broadcaster: 'pusher',
-                    key: pusherKey,
-                    wsHost: pusherHost,
-                    wsPort: pusherPort,
-                    wssPort: pusherPort,
-                    disableStats: true,
-                    authEndpoint: '/api/broadcasting/auth',
-                    auth: {
-                        headers: {
-                            Authorization: state.auth.token
-                        },
-                    },
-                    // encrypted: true,
-                    // cluster: 'ap1',
-                });
-            }
-
-            if (state.menus.length === 0 && state.auth.token !== null) {
-                if (state.auth.menus !== null) state.menus = state.auth.menus;
-            }
-
-            state.afterAddnew = () => {};
-            state.afterDelete = () => {};
-            state.afterFormClose = () => {};
-            state.afterFormOpen = () => {};
-            state.afterSelected = () => {};
-            state.afterUpdate = () => {};
-            state.beforeAddnew = () => {};
-            state.beforeDelete = () => {};
-            state.beforeUpdate = () => {};
-            state.cancelAddnew = () => { return false; };
-            state.cancelDelete = () => { return false; };
-            state.cancelUpdate = () => { return false; };
-            state.cancelNewForm = () => { return false; };
-            state.overideState = () => {};
-            state.setRecord = () => {};
-
-            state.dataUrl = null;
-            state.disabled = { add: false, delete: true, edit: true, find: false, link: true, refresh: false };
-            state.form = { state: false, mode: 'addnew' };
-            state.login = { username: null, userpass: null };
-            state.headers = [];
-            state.page = { state: 'default', icon: null, title: null, subtitle: null };
-            state.primaryId = 'id';
-            state.records = [];
-            state.record = {};
-            state.toolbar = { search: false, delete: false, text: null };
-            state.trash = { state: false };
-            state.snackbar = { state: false, text: null, color: null };
-            state.table = { 
-                initial: true, 
-                loader: false, 
-                options: { itemsPerPage: 10, page: 1 }, 
-                footerProps: { 'items-per-page-options': [10, 25, 50] }, 
-                total: 0, params: { itemsPerPage: 10, page: 1, sortBy: null, sortDesc: null}, 
-                selected: [] 
-            };
-            state.upload = { combined: false, progress: false, value: 0 };
+        COMMIT_HEADER: function(state, payload) 
+        {
+            state.table.headers = payload;
         },
 
-        overideState: function({ state }, payload) {
-            state.overideState = payload;
+        COMMIT_INFO: function(state, payload) 
+        {
+            state.info = payload;
         },
 
-        pageInfo: function(state, payload) {
+        COMMIT_LAZY: function(state, payload) 
+        {
+            state.lazy = payload;
+        },
+
+        COMMIT_LINKS: function(state, payload) 
+        {
+            state.links = payload;
+        },
+
+        COMMIT_META: function(state, payload) 
+        {
+            Object.keys(payload).forEach(key => {
+                state.meta[key] = payload[key];
+            });
+        },
+
+        COMMIT_MOBILE: function(state, payload) 
+        {
+            state.mobile = payload;
+        },
+
+        COMMIT_MODULE: function(state, payload) 
+        {
+            state.module = payload;
+        },
+
+        COMMIT_OPTIONS: function(state, payload) 
+        {
+            Object.keys(payload).forEach(key => {
+                state.table.options[key] = payload[key];
+            });
+        },
+
+        COMMIT_PAGE: function(state, payload) 
+        {
             Object.keys(payload).forEach(key => {
                 state.page[key] = payload[key];
             });
         },
 
-        params: function(state, payload) {
-            Object.keys(payload).forEach(key => {
-                state.table.params[key] = payload[key];
-            });
-        },
-
-        primaryId: function(state, payload) {
-            state.primaryId = payload;
-        },
-
-        record: function(state, payload) {
+        COMMIT_RECORD: function(state, payload) 
+        {
             state.record = payload;
         },
 
-        records: function(state, payload) {
-            state.records = payload;
-        },
-
-        recordPush: function(state, payload) {
-            state.records.push(payload);
-        },
-
-        recordSplice: function(state, index) {
-            state.records.splice(index, 1);
-        },
-
-        recordUpdate: function(state, payload) {
-            let idx = state.records.findIndex(obj => obj.id === payload.id);
+        COMMIT_RECORD_UPDATE: function(state, payload) 
+        {
+            let idx = state.records.findIndex(record => record.id === payload.id);
 
             if (idx !== -1) {
                 Object.keys(payload).forEach(key => {
@@ -316,622 +208,722 @@ export default new Vuex.Store({
             }
         },
 
-        tableParams: function(state, payload) {
-            Object.keys(payload).forEach(key => {
-                state.table.params[key] = payload[key];
-            });
-        },
-
-        toolbar: function(state, payload) {
-            Object.keys(payload).forEach(key => {
-                state.toolbar[key] = payload[key];
-            });
-        },
-
-        trash: function(state, payload) {
-            Object.keys(payload).forEach(key => {
-                state.trash[key] = payload[key];
-            });
-        },
-
-        selectedPush: function(state, payload) {
-            let idx = state.table.selected.findIndex(obj => obj.id === payload.id);
-
-            payload.pinned = idx === -1;
-
-            if (idx === -1) {
-                state.table.selected.push(payload);
+        COMMIT_RECORDS: function(state, payload) 
+        {
+            if (payload.lazy) {
+                payload.records.forEach(record => {
+                    state.records.push(record);
+                });
             } else {
-                state.table.selected.splice(idx, 1);
+                state.records = payload.records;
             }
         },
 
-        setRecord: function(state, payload) {
-            state.setRecord = () => {
-                state.record = Object.assign({}, payload)
-            }
+        COMMIT_RECORDS_PUSH: function(state, payload) 
+        {
+            state.records.push(payload);
         },
 
-        snackbar: function(state, payload) {
+        COMMIT_RECORDS_SPLICE: function(state, payload) 
+        {
+            state.records.splice(payload, 1);
+        },
+
+        COMMIT_SIGNOUT: function(state) 
+        {
+            state.auth.clear();
+            state.echo = null;
+            state.http = null;
+        },
+
+        COMMIT_SNACKBAR: function(state, payload) 
+        {
             Object.keys(payload).forEach(key => {
                 state.snackbar[key] = payload[key];
             });
         },
 
-        table: function(state, payload) {
+        COMMIT_TABLE: function(state, payload) 
+        {
             Object.keys(payload).forEach(key => {
                 state.table[key] = payload[key];
             });
         },
 
-        tableFilter: function(state, payload) {
-            Object.keys(payload).forEach(key => {
-                state.table.params[key] = payload[key];
-            });
-        },
-
-        tableFilterRemove: function(state, payload) {
-            Object.keys(payload).forEach(key => {
-                if (state.table.params.hasOwnProperty(key)) {
-                    delete state.table.params[key];
-                }
-            });
-        },
-
-        tableHeaders: function(state, payload) {
-            state.headers = payload;
-        },
-
-        upload: function(state, payload) {
+        COMMIT_UPLOAD: function(state, payload) 
+        {
             Object.keys(payload).forEach(key => {
                 state.upload[key] = payload[key];
             });
         },
 
-        user: function(state, payload) {
+        COMMIT_USER: function(state, payload)
+        {
             state.auth.user = payload;
         },
+
+        INITIAL_RECORD: function(state, payload) 
+        {
+            state.recordDefault = payload;
+        },
+
+        INITIAL_ECHO: function(state) 
+        {
+            if (state.echo === null && pusherEcho === true) {
+                let options = {
+                    broadcaster: 'pusher',
+                    key: pusherKey,
+                    wsHost: pusherHost,
+                    wsPort: pusherPort,
+                    wssPort: pusherPort,
+                    disableStats: true,
+                    authEndpoint: '/broadcasting/auth'
+                }
+
+                if (state.auth && state.auth.token) {
+                    options = Object.assign({
+                        auth: {
+                            headers: {
+                                Authorization: state.auth.token
+                            },
+                        }
+                    }, options);
+                }
+
+                state.echo = new Echo(options);
+            }
+        },
+
+        INITIAL_HTTP: function(state) 
+        {
+            if (state.http === null) {
+                let headers = {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                };
+
+                if (state.auth && state.auth.token) {
+                    headers = Object.assign({
+                        'Authorization': state.auth.token
+                    }, headers);
+                }
+
+                let currentURL = state.auth.baseURL ? state.auth.baseURL : baseURL;
+
+                state.http = Axios.create({
+                    baseURL: currentURL,
+                    headers
+                });
+            } else {
+                if (!state.http.defaults.headers.common.hasOwnProperty('Authorization') && state.auth.token !== null) {
+                    state.http.defaults.headers.common['Authorization'] = state.auth.token;
+                }
+            }
+        },
+
+        INITIAL_PAGE: function(state) 
+        {
+            let options = {};
+            
+            if (state.mobile) {
+                options = {
+                    page: 1,
+                    itemsPerPage: 10,
+                    sortBy: [],
+                    sortDesc: [],
+                    groupBy: [],
+                    groupDesc: [],
+                    mustSort: false,
+                    multiSort: false
+                };
+            }
+
+            state.button = {
+                add: false,
+                edit: false,
+                update: false,
+                link: false,
+                search: false
+            };
+            state.form = {
+                state: null,
+                model: false,
+                maxWidth: 700,
+                loader: false
+            };
+            state.info = {};
+            state.lazy = false;
+            state.links = {};
+            state.meta = {};
+            state.page = {
+                dataURL: null,
+                title: null,
+                icon: null,
+                state: 'newState',
+                subtitle: null,
+                findIn: 'name',
+                findBy: null
+            };
+            state.record = {};
+            state.recordDefault = {};
+            state.records = [];
+            state.table = {
+                headers: [],
+                options: options,
+                selected: [],
+                key: 'id',
+                loader: false,
+                footerProps: { 'items-per-page-options': [10, 25, 50] },
+            };
+
+            if (!state.upload.input) {
+                state.upload = {
+                    acceptFiles: null,
+                    allowedExtensions: null,
+                    requestEndpoint: null,
+                    successEndpoint: '?completed=true',
+                    fileName: null,
+                    mediaName: null,
+                    model: false,
+                    uuid: null,
+                    input: null,
+                    progress: false,
+                    percent: 0,
+                    combined: false,
+                    uploadedBytes: 0, 
+                    totalBytes: 0,
+                    callback:() => {}
+                };
+            }
+        },
+
+        INITIAL_UPLOAD: function(state) 
+        {
+            state.upload = {
+                acceptFiles: null,
+                allowedExtensions: null,
+                requestEndpoint: null,
+                successEndpoint: '?completed=true',
+                fileName: null,
+                mediaName: null,
+                model: false,
+                uuid: null,
+                input: null,
+                progress: false,
+                percent: 0,
+                combined: false,
+                uploadedBytes: 0, 
+                totalBytes: 0,
+                callback:() => {}
+            };
+        }
     },
 
     actions: {
-        afterSelected: function({ state }, payload) {
-            state.afterSelected(payload);
+        addFormOpen: function({ commit }) 
+        {
+            commit('COMMIT_FORM', { state: 'add', model: true });
         },
 
-        dataUrl: function({ commit }, payload) {
-            commit('dataUrl', payload);
+        deleteFormOpen: function({ commit }) 
+        {
+            commit('COMMIT_FORM', { state: 'delete', model: true });
         },
-
-        deleteClose: function({ commit }) {
-            commit('toolbar', { delete: false });
-        },
-
-        deleteOpen: function({ commit }) {
-            commit('toolbar', { delete: true });
-        },
-
-        documentClose: function({ commit }) {
-            commit('document', { state: false });
-        },
-
-        documentOpen: function({ commit }) {
-            commit('document', { state: true });
-        },
-
-        editFormClose: function({ commit }) {
-            commit('form', { state: false, mode: null });
-            commit('table', { selected: [] });
-        },
-
-        editFormOpen: function({ commit, state }, payload) {
-            if (payload && payload.constructor === Object) {
-                if (state.page.state === 'pinned') {
-                    commit('selectedPush', payload);
-                    return;
-                } else {
-                    commit('record', payload);
-                }
-            }
-
-            commit('form', { state: true, mode: 'edit' });
-            
-            state.afterFormOpen(payload);
-        },
-
-        fetchAppInfos: async function({ commit, dispatch, state }) {
-            try {
-                let { data } = await state.http.get('/api/company');
-                commit('fetchAppInfos', data);
-
-            } catch (error) {
-                dispatch('errors', error);
-            }
-        },
-
-        fetchAppMenus: async function({commit, dispatch, state}) {
-            try {
-                let { data } = await state.http.get('/api/menus');
-                commit('fetchAppMenus', data);
-            } catch (error) {
-                dispatch('errors', error);
-            }
-        },
-
-        formClose: function({ state, dispatch }) {
-            state.form.mode === 'edit' ? dispatch('editFormClose') : dispatch('newFormClose');
-            state.afterFormClose();
-        },
-
-        formSubmit: function({ dispatch, state }) {
-            state.form.mode === 'edit' ? dispatch('recordUpdate') : dispatch('recordAddnew')
-        },
-
-        initStore: function({ commit, dispatch, state }) {
-            if (state.auth.token !== null && !state.auth.check) dispatch('signout');
         
-            commit('initStore');
+        dialogClose: function({ commit, state }) 
+        {
+            commit('COMMIT_FORM', { state: null, model: false });
+            commit('COMMIT_TABLE', { selected: []});
+            commit('COMMIT_RECORD', Object.assign({}, state.recordDefault));
         },
 
-        message: function({ commit }, payload) {
-            commit('snackbar', {
+        dialogPost: function({ dispatch, state }, payload) 
+        {
+            if (state.form.state === 'add') dispatch('recordPost');
+            if (state.form.state === 'delete') dispatch('recordDelete');
+            if (state.form.state === 'edit') dispatch('recordUpdate');
+            if (state.form.state === 'update') dispatch('recordPatch', payload);
+        },
+
+        editFormOpen: function({ commit }) 
+        {
+            commit('COMMIT_FORM', { state: 'edit', model: true });
+        },
+
+        fetchInfo: async function({ commit, state }) 
+        {
+            try {
+                let { data } = await state.http.get('/info');
+
+                commit('COMMIT_INFO', data);
+            } catch (error) {
+                dispatch('errorHandle', error);
+            }
+        },
+
+        getNextData: function({ commit, dispatch, state }) 
+        {
+            if (state.meta.current_page && state.meta.current_page < state.meta.last_page) {
+                commit('COMMIT_LAZY', true);
+                
+                let searchOptions = {
+                    page: state.meta.current_page + 1,
+                    itemsPerPage: state.table.options.itemsPerPage,
+                    sortBy: state.table.options.sortBy[0],
+                    sortDesc: state.table.options.sortDesc[0],
+                    groupBy: state.table.options.groupBy[0],
+                    groupDesc: state.table.options.groupDesc[0],
+                    mustSort: state.table.options.mustSort,
+                    multiSort: false
+                };
+
+                dispatch('recordFetch', searchOptions);
+            }
+        },
+
+        initData: function({ commit, dispatch, state }) 
+        {
+            if (state.auth.logged && !state.auth.check) {
+                dispatch('signout');
+            }
+
+            commit('INITIAL_ECHO');
+            commit('INITIAL_HTTP');
+        },
+
+        initPage: function({ commit }, payload) 
+        {
+            commit('INITIAL_PAGE');
+            commit('COMMIT_PAGE', payload);
+        },
+
+        message: function({ commit }, payload) 
+        {
+            commit('COMMIT_SNACKBAR', {
                 color: 'success',
                 text: payload,
                 state: true
             });
         },
 
-        newFormClose: function({ commit }) {
-            commit('form', { state: false, mode: null });
-        },
+        recordFetch: async function({ commit, dispatch, state }, payload) 
+        {
+            commit('COMMIT_TABLE', { loader: state.auth.user.theme });
 
-        newFormOpen: function({ commit, state }) {
-            if (state.cancelNewForm()) {
-                commit('snackbar', {
-                    color: 'warning',
-                    text: 'This process is not allowed.',
-                    state: true
+            try {
+                let { data: { data: records, links, meta } } = await state.http.get(state.page.dataURL, {
+                    params: payload
                 });
 
-                return false;
-            }
-
-            state.setRecord();
-            commit('form', { state: true, mode: 'addnew' });
-            
-            state.afterFormOpen();
-        },
-
-        overideState: function({ state }, payload) {
-            state.overideState(payload);
-        },
-
-        pageInfo: function({ commit }, payload) {
-            commit('pageInfo', payload);
-        },
-
-        passwordUpdate: async function({ dispatch, state }, payload) {
-            try {
-                await state.http.put(
-                    '/api/password', payload
-                );
-                
-                dispatch('message', 'update password berhasil!');
+                if (records) commit('COMMIT_RECORDS', { lazy: state.lazy, records });
+                if (links) commit('COMMIT_LINKS', links);
+                if (meta) commit('COMMIT_META', meta);
             } catch (error) {
-                dispatch('errors', error);
-            }
-        },
-
-        profileAvatar: async function({ commit, dispatch, state }, payload) {
-            try {
-                let { data } = await state.http.put(
-                    '/api/profile', { avatar: payload.path }
-                );
-                
-                commit('auth', { avatar: data.avatar });
-                dispatch('message', 'update avatar berhasil!');
-            } catch (error) {
-                dispatch('errors', error);
-            }
-        },
-
-        profileBackground: async function({ commit, dispatch, state }, payload) {
-            try {
-                let { data } = await state.http.put(
-                    '/api/profile', { background: payload.path }
-                );
-                
-                commit('auth', { background: data.background });
-                dispatch('message', 'update background berhasil!');
-            } catch (error) {
-                dispatch('errors', error);
-            }
-        },
-
-        profileUpdate: async function({ commit, dispatch, state }, payload) {
-            try {
-                let { data } = await state.http.put(
-                    '/api/profile', {
-                        name: payload.name,
-                        email: payload.email,
-                        theme: payload.theme
-                    }
-                );
-
-                commit('auth', { name: data.name, email: data.email, theme: data.theme });
-                dispatch('message', 'update profile berhasil!');
-            } catch (error) {
-                dispatch('errors', error);
-            }
-        },
-
-        recordAddnew: async function({ commit, dispatch, state }) {
-            try {
-                state.beforeAddnew();
-                
-                if (state.cancelAddnew()) {
-                    commit('form', { state: false, mode: null });
-                    return;
-                }
-
-                let { data } = await state.http.post(
-                    state.dataUrl, state.record
-                );
-
-                commit('recordPush', data);
-                commit('form', { state: false, mode: null });
-                dispatch('message', 'proses simpan berhasil!');
-
-                if (state.records.length === 1) dispatch('recordFetch');
-
-                state.afterAddnew();
-            } catch (error) {
-                dispatch('errors', error);
-                commit('form', { state: false, mode: null });
-            }
-        },
-
-        recordDelete: async function({ commit, dispatch, state }) {
-            try {
-                state.beforeDelete();
-
-                if (state.cancelDelete()) {
-                    commit('form', { state: false, mode: null });
-                    return;
-                }
-
-                let selected = state.table.selected;
-                let currentRecord = state.record;
-
-                if (selected.length <= 1) {
-                    let index = state.records.findIndex(obj => obj.id === currentRecord.id);
-                    let primaryKey = state.record[state.primaryId];
-
-                    let response = await state.http.delete(
-                        state.dataUrl + '/' + primaryKey
-                    );
-
-                    if (response) {
-                        commit('recordSplice', index);
-                    }
-                } else {
-                    let response = await state.http.post(
-                        state.dataUrl + '/bulks', selected
-                    );
-
-                    if (response) {
-                        selected.forEach((record) => {
-                            let index = state.records.findIndex(obj => obj.id === record.id);
-                            commit('recordSplice', index);
-                        });
-                    }
-                }
-
-                state.afterDelete();
-            } catch (error) {
-                dispatch('errors', error);
+                dispatch('errorHandle', error);
             } finally {
-                commit('trash', { state: false });
-                commit('table', { selected: [] });
-                dispatch('message', 'proses hapus berhasil!');
+                commit('COMMIT_TABLE', { loader: false });
+                commit('COMMIT_LAZY', false );
             }
         },
 
-        recordFetch: async function({ commit, dispatch, state }, payload) {
-            commit('table', { loader: `${state.auth.theme}` });
+        recordFetchCurrent: async function({ commit, dispatch, state })
+        {
+            commit('COMMIT_FORM', { loader: true });
 
             try {
-                let url = state.dataUrl;
-                let params = state.table.params;
+                let { data: current } = await state.http.get(state.page.dataURL);
 
-                if (url.includes('/api/document')) {
-                    commit('document', { records: [] });
-                }
-
-                if (payload) params = payload;
-                
-                let { data: { additional, data, meta }} = await state.http.get( url, { params: params });
-
-                commit('additional', additional);
-                commit('records', data);
-                commit('table', { total: meta.total, initial: false, selected: [] });
+                commit('COMMIT_RECORD', Object.assign({}, current));
             } catch (error) {
-                dispatch('errors', error);
+                dispatch('errorHandle', error);
             } finally {
-                commit('table', { loader: false });
+                commit('COMMIT_FORM', { loader: false });
             }
         },
 
-        recordNew: function({ state }) {
-            state.setRecord();
+        recordPost: async function({ commit, dispatch, state }) 
+        {
+            commit('COMMIT_FORM', { loader: true });
+
+            try {
+                let { data: record } = await state.http.post(state.page.dataURL, state.record);
+
+                commit('COMMIT_RECORDS_PUSH', record);
+
+                commit('COMMIT_FORM', { state: null, model: false });
+                commit('COMMIT_TABLE', { selected: []});
+                commit('COMMIT_RECORD', Object.assign({}, state.recordDefault));
+
+                if (state.records.length <= 1) {
+                    dispatch('recordFetch', state.table.options);
+                }
+
+                dispatch('message', 'Proses Simpan Data Berhasil.');
+            } catch (error) {
+                dispatch('errorHandle', error);
+            } finally {
+                commit('COMMIT_FORM', { loader: false });
+            }
         },
 
-        recordPress: function({ commit, state }, payload) {
-            if (state.page.state === 'pinned') return;
-
-            commit('pageInfo', { state: 'pinned' });
-            commit('toolbar', { delete: true });
-            commit('selectedPush', payload);
+        recordRefresh: function({ dispatch, state }) 
+        {
+            dispatch('recordFetch', state.table.options);
         },
 
-        recordRefetch: function({commit, dispatch, state}, payload) {
-            if (payload.new && (payload.new.length > 0)) {
-                commit('params', { search: payload.new });
-                dispatch('recordFetch');
+        recordSync: function({ commit, dispatch, state }, payload) 
+        {
+            commit('COMMIT_RECORDS_PUSH', payload);
+
+            commit('COMMIT_FORM', { state: null, model: false });
+            commit('COMMIT_TABLE', { selected: []});
+            commit('COMMIT_RECORD', Object.assign({}, state.recordDefault));
+
+            if (state.records.length <= 1) {
+                dispatch('recordFetch', state.table.options);
+            }
+
+            dispatch('message', 'Proses Simpan Data Berhasil.');
+        },
+
+        recordUpdate: async function({ commit, dispatch, state }) 
+        {
+            commit('COMMIT_FORM', { loader: true });
+
+            try {
+                let { data: record } = await state.http.put(`${state.page.dataURL}/${state.record[state.table.key]}`, state.record);
+
+                commit('COMMIT_RECORD_UPDATE', record);
+
+                commit('COMMIT_FORM', { state: null, model: false });
+                commit('COMMIT_TABLE', { selected: []});
+                commit('COMMIT_RECORD', Object.assign({}, state.recordDefault));
+                
+                dispatch('message', 'Proses Ubah Data Berhasil.');
+            } catch (error) {
+                dispatch('errorHandle', error);
+            } finally {
+                commit('COMMIT_FORM', { loader: false });
+            }
+        },
+
+        recordPatch: async function({ commit, dispatch, state }, payload)
+        {
+            commit('COMMIT_FORM', { loader: true });
+
+            try {
+                let { data: record } = await state.http.put(state.page.dataURL, state.record);
+
+                commit('COMMIT_RECORD_UPDATE', record);
+                if (payload) commit(payload, record);
+                
+                dispatch('message', 'Proses Update Data Berhasil.');
+            } catch (error) {
+                dispatch('errorHandle', error);
+            } finally {
+                commit('COMMIT_FORM', { loader: false });
+            }
+        },
+
+        recordDelete: async function({ commit, dispatch, state }) 
+        {
+            commit('COMMIT_FORM', { loader: true });
+
+            try {
+                let idxRecord = state.records.findIndex(record => record.id === state.record.id);
+
+                await state.http.delete(`${state.page.dataURL}/${state.record[state.table.key]}`);
+
+                commit('COMMIT_RECORDS_SPLICE', idxRecord);
+
+                commit('COMMIT_FORM', { state: null, model: false });
+                commit('COMMIT_TABLE', { selected: []});
+                commit('COMMIT_RECORD', Object.assign({}, state.recordDefault));
+
+                dispatch('message', 'Proses Hapus Data Berhasil.');
+            } catch (error) {
+                dispatch('errorHandle', error);
+            } finally {
+                commit('COMMIT_FORM', { loader: false });
+            }
+        },
+
+        removeSelected: function({ commit }) 
+        {
+            commit('COMMIT_TABLE', { selected: []});
+        },
+
+        recordClick: function({ commit, state }, payload) 
+        {
+            if (state.page.state === 'newState' || state.page.state === 'searchState') {
+                commit('COMMIT_TABLE', { selected: [payload] });
             } else {
-                if (payload.old && (payload.old.length > 0)) {
-                    commit('params', { search: null });
-                    dispatch('recordFetch');
+                if (payload.id === state.table.selected[0].id) {
+                    commit('COMMIT_TABLE', { selected: [] });
+                    commit('COMMIT_PAGE', { state: 'newState' });
                 } else {
-                    if (state.table.initial) return;
-
-                    dispatch('recordFetch', payload.fetch);
+                    commit('COMMIT_TABLE', { selected: [payload] });
                 }
             }
         },
 
-        recordReload: function({ dispatch }) {
-            dispatch('recordFetch');
+        removeSelectedRecord: function({ commit, state }) 
+        {
+            commit('COMMIT_RECORD', Object.assign({}, state.recordDefault));
         },
 
-        recordUpdate: async function({ commit, dispatch, state }) {
+        searchData: function({ commit }, payload) 
+        {
+            commit('COMMIT_PAGE', payload);
+        },
+
+        searchFormOpen: function({ commit }) 
+        {
+            commit('COMMIT_PAGE', { state: 'searchState' });
+        },
+
+        searchFormClose: function({ commit }) 
+        {
+            commit('COMMIT_PAGE', { 
+                state: 'newState',
+                findBy: null
+            });
+        },
+
+        setButton: function({ commit }, payload) 
+        {
+            commit('COMMIT_BUTTON_STATE', payload);
+        },
+
+        setFormState: function({ commit }, payload)
+        {
+            commit('COMMIT_FORM', { state: payload });
+        },
+
+        setFormModel: function({ commit }, payload) 
+        {
+            commit('COMMIT_FORM', { model: payload });
+        },
+
+        setHeader: function({ commit }, payload) 
+        {
+            commit('COMMIT_HEADER', payload);
+        },
+
+        setMobileMode: function({ commit }, payload) 
+        {
+            commit('COMMIT_MOBILE', payload);
+        },
+
+        setPageURL: function({ commit }, payload) 
+        {
+            commit('COMMIT_PAGE', { dataURL: payload });
+        },
+
+        setRecord: function({ commit }, payload) 
+        {
+            commit('INITIAL_RECORD', payload);
+            commit('COMMIT_RECORD', Object.assign({}, payload));
+        },
+        
+        setSelected: function({ commit }, payload) 
+        {
+            commit('COMMIT_TABLE', { selected: payload });
+        },
+
+        setSelectedRecord: function({ commit }, payload) 
+        {
+            commit('COMMIT_RECORD', Object.assign({}, payload));
+            commit('COMMIT_BUTTON_STATE', 'selectedState');
+        },
+
+        signin: async function({ commit, dispatch, state }, payload) 
+        {
             try {
-                state.beforeUpdate();
-                
-                if (state.cancelUpdate()) {
-                    commit('form', { state: false, mode: null });
-                    return;
-                }
-
-                let primaryKey = state.record[state.primaryId];
-
-                let { data } = await state.http.put(
-                    state.dataUrl + '/' + primaryKey, state.record
-                );
-                
-                commit('record', data);
-                commit('recordUpdate', data);
-                commit('form', { state: false, mode: null });
-                commit('table', { selected: [] });
-                dispatch('message', 'proses update berhasil!');
-                
-                state.afterUpdate();
-            } catch (error) {
-                dispatch('errors', error);
-                commit('form', { state: false, mode: null });
-            }
-        },
-
-        searchClose: function({ commit }) {
-            commit('toolbar', { search: false, text: null });
-        },
-
-        searchOpen: function({ commit }) {
-            commit('toolbar', { search: true });
-        },
-
-        setAfterAddnew: function({ commit }, payload) {
-            commit('afterAddnew', payload);
-        },
-
-        setAfterDelete: function({ commit }, payload) {
-            commit('afterDelete', payload);
-        },
-
-        setAfterFormClose: function({ commit }, payload) {
-            commit('afterFormClose', payload);
-        },
-
-        setAfterFormOpen: function({ commit }, payload) {
-            commit('afterFormOpen', payload);
-        },
-
-        setAfterSelected: function({ commit }, payload) {
-            commit('afterSelected', payload);
-        },
-
-        setAfterUpdate: function({ commit }, payload) {
-            commit('afterUpdate', payload);
-        },
-
-        setBeforeAddnew: function({ commit }, payload) {
-            commit('beforeAddnew', payload);
-        },
-
-        setBeforeDelete: function({ commit }, payload) {
-            commit('beforeDelete', payload);
-        },
-
-        setBeforeUpdate: function({ commit }, payload) {
-            commit('beforeUpdate', payload);
-        },
-
-        setCancelAddnew: function({ commit }, payload) {
-            commit('cancelAddnew', payload);
-        },
-
-        setCancelDelete: function({ commit }, payload) {
-            commit('cancelDelete', payload);
-        },
-
-        setCancelUpdate: function({ commit }, payload) {
-            commit('cancelUpdate', payload);
-        },
-
-        setCancelNewForm: function({ commit }, payload) {
-            commit('cancelNewForm', payload);
-        },
-
-        setFilter: function({ commit }, payload) {
-            commit('tableFilter', payload);
-        },
-
-        setOverideState: function({ commit }, payload) {
-            commit('overideState', payload);
-        },
-
-        setPrimaryId: function({ commit }, payload) {
-            commit('primaryId', payload);
-        },
-
-        setRecord: function({ commit }, payload) {
-            commit('setRecord', payload);
-        },
-
-        settingAvatar: function({ commit }, payload) {
-            commit('field', { avatar: payload.path });
-        },
-
-        settingBackground: function({ commit }, payload) {
-            commit('field', { background: payload.path });
-        },
-
-        settingUpdate: async function({ dispatch, state }) {
-            try {
-                await state.http.put(
-                    '/api/setting/company', state.record
-                );
-                
-                dispatch('message', 'proses update berhasil!');
-            } catch (error) {
-                dispatch('errors', error);
-            }
-        },
-
-        settingFetch: async function({ commit, dispatch, state }) {
-            try {
-                let { data } = await state.http.get('/api/setting/company');
-                commit('record', data);
-            } catch (error) {
-                dispatch('errors', error);
-            }
-        },
-
-        signin: async function({ commit, dispatch, state }) {
-            try {
-                let token = await state.http.post('/oauth/token', {
+                let { data: token } = await state.http.post('/oauth/token', {
                     grant_type: 'password',
                     client_id: state.auth.siteKey,
                     client_secret: state.auth.secretKey,
-                    username: state.login.username,
-                    password: state.login.userpass,
-                    scope: '*'
+                    username: payload.username,
+                    password: payload.userpass
                 });
-                
-                state.auth.token = token.data;
-                state.http.defaults.headers.common['Authorization'] = token.data.token_type + ' ' + token.data.access_token;
 
-                let user = await state.http.get('/api/user');
-                commit('user', user.data );
+                commit('COMMIT_AUTH', { token: token });
+                commit('COMMIT_AXIOS', token);
 
-                router.push({ name: 'home' });
+                let { data: user } = await state.http.get('/api/user');
+                commit('COMMIT_AUTH', { user: user });
+
+                let { data: menus } = await state.http.get('/api/menu');
+                commit('COMMIT_AUTH', { menus: menus });
             } catch (error) {
-                dispatch('errors', error);
+                commit('COMMIT_CLEAR');
+                
+                dispatch('errorHandle', error);
             }
         },
 
-        signout: function({state}) {
-            state.auth.signout();
-            router.push({ name: 'login' });
+        signout: function({ commit }) 
+        {
+            commit('COMMIT_SIGNOUT');
         },
 
-        snackbarClose: function({ commit }) {
-            commit('snackbar', { state: false });
+        snackbarClose: function({ commit }) 
+        {
+            commit('COMMIT_SNACKBAR', { state: false });
         },
 
-        tableHeaders: function({ commit }, payload) {
-            commit('tableHeaders', payload);
+        setUpload: function({ commit, dispatch, state }) 
+        {
+            if (state.upload.progress) return;
+
+            dispatch('setUploadObject').then(() => {
+                commit('COMMIT_UPLOAD', { input: document.getElementById(state.upload.uuid).getElementsByTagName('input')[0] });
+            });
         },
 
-        trashFormClose: function({ commit, state }) {
-            state.table.selected.forEach(record => record.pinned = false);
-
-            commit('trash', { state: false });
-            commit('table', { selected: [] });
-            commit('toolbar', { delete: false });
+        setUploadOptions: function({ commit }, payload) 
+        {
+            commit('COMMIT_UPLOAD', payload);
         },
 
-        trashFormOpen: function({ commit }) {
-            commit('trash', { state: true });
+        setUploadCallback: function({ commit }, payload) 
+        {
+            commit('COMMIT_UPLOAD', { callback: payload });
         },
 
-        errors: function({ commit, state }, payload) {
-            if (payload.hasOwnProperty('response')) {
-                let { message, errors, error, hint } = payload.response.data;
-                let status = payload.response.status;
+        setUploadObject: function({ commit, dispatch, state }) 
+        {
+            if (state.upload.fineUploader) {
+                commit('COMMIT_UPLOAD', { fineUploader: null });
+            }
 
-                if (status === 401) {
-                    state.auth.signout();
-                    commit('snackbar', {
-                        color: 'error',
-                        text: 'The user credentials were incorrect.',
-                        state: true
-                    });
-                } else if (status === 403) {
-                    commit('snackbar', {
-                        color: 'error',
-                        text: 'This action is unauthorized.',
-                        state: true
-                    });
-                } else if (error && hint) {
-                    commit('snackbar', {
-                        color: 'error',
-                        text: hint,
-                        state: true
-                    });
-                } else if (error && !hint) {
-                    commit('snackbar', {
-                        color: 'error',
-                        text: message,
-                        state: true
-                    });
-                } else if (errors && message) {
-                    commit('snackbar', {
-                        color: 'error',
-                        text: message,
-                        state: true
-                    });
-                } else {
-                    commit('snackbar', {
-                        color: 'error',
-                        text: 'there is an error while data process on server.',
-                        state: true
-                    });
+            let requestEndpoint = state.upload.mediaName ? 
+                `${state.upload.requestEndpoint}?mediaName=${state.upload.mediaName}` : 
+                state.upload.requestEndpoint;
+            
+            let successEndpoint = state.upload.mediaName ? 
+                `${state.upload.requestEndpoint}?mediaName=${state.upload.mediaName + state.upload.successEndpoint}` : 
+                `${state.upload.requestEndpoint + state.upload.successEndpoint}`;
+
+            let options = {
+                button: document.getElementById(state.upload.uuid),
+
+                request: {
+                    customHeaders: {
+                        Authorization: state.auth.token
+                    },
+                    endpoint: requestEndpoint,
+                    filenameParam: 'fileName',
+                    inputName: 'fileUpload',
+                    uuidName: 'uuid',
+                    totalFileSizeName: 'totalFileSize'
+                },
+
+                chunking: {
+                    enabled: true,
+                    mandatory: true,
+                    partSize: 250000,
+                    paramNames: {
+                        chunkSize: 'chunkSize',
+                        partByteOffset: 'partByteOffset',
+                        partIndex: 'partIndex',
+                        totalParts: 'totalParts'
+                    },
+                    success: {
+                        endpoint: successEndpoint
+                    }
+                },
+
+                validation: {
+                    acceptFiles: state.upload.acceptFiles,
+                    allowedExtensions: state.upload.allowedExtensions
+                },
+
+                callbacks: {
+                    onUpload: function(id, name) {
+                        commit('COMMIT_UPLOAD', { progress: true, model: true, fileName: name });
+                    },
+
+                    onUploadChunk: function(id, name, data) {
+                        let percent = (parseInt(data.partIndex) + 1) / parseInt(data.totalParts) * 100;
+
+                        commit('COMMIT_UPLOAD', { percent: percent.toFixed(2) });
+
+                        if (percent >= 100) {
+                            commit('COMMIT_UPLOAD', { combined: true });
+                        }
+                    },
+
+                    onComplete: function(id, name, response) {
+                        try {
+                            commit('COMMIT_UPLOAD', { 
+                                progress: false,
+                                model: false,
+                                fileName: null,
+                                percent: 0,
+                                combined: false,
+                                uploadedBytes: 0,
+                                totalBytes: 0
+                            });    
+
+                            state.upload.callback(response);
+                        } catch (error) {
+                            // 
+                        }
+                    },
+
+                    onTotalProgress: function(uploadedBytes, totalBytes) {
+                        let calcUploaded = (uploadedBytes / 1000000).toFixed(1);
+                        let calcBytes = (totalBytes / 1000000).toFixed(1);
+                        
+                        commit('COMMIT_UPLOAD', { 
+                            uploadedBytes: calcUploaded, 
+                            totalBytes: calcBytes 
+                        });
+                    },
+
+                    onError: function(id, name, errorReason, xhrOrXdr) {
+                        commit('COMMIT_UPLOAD', {
+                            progress: false,
+                            model: false,
+                            fileName: null,
+                            percent: 0,
+                            combined: false,
+                            uploadedBytes: 0,
+                            totalBytes: 0
+                        });
+
+                        dispatch('errorHandle', xhrOrXdr);
+                    }
                 }
-            } else if (payload.hasOwnProperty('message')) {
-                commit('snackbar', {
+            };
+
+            commit('COMMIT_FINEUPLOADER', new qq.FineUploaderBasic(options));
+        },
+
+        errorHandle: function({ commit, state }, payload) 
+        {
+            if (payload.hasOwnProperty('response')) {
+                let { data: { message }, status } = payload.response;
+
+                if (status === 401 || status === 403) {
+                    state.auth.signout();
+                }
+
+                commit('COMMIT_SNACKBAR', {
                     color: 'error',
-                    text: payload.message,
+                    text: message,
                     state: true
                 });
             } else {
-                commit('snackbar', {
-                    color: 'error',
-                    text: payload,
-                    state: true
-                });
+                console.log(payload);
             }
 
-            window.console.clear();
+            // window.console.clear();
         }
     }
-});
+};
+
+export default new Vuex.Store(rootModule);

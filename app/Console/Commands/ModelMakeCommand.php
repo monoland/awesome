@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use Illuminate\Support\Str;
 use Illuminate\Console\GeneratorCommand;
-use Symfony\Component\Console\Input\InputOption;
 
 class ModelMakeCommand extends GeneratorCommand
 {
@@ -36,27 +35,11 @@ class ModelMakeCommand extends GeneratorCommand
      */
     public function handle()
     {
-        if (parent::handle() === false && !$this->option('force')) {
-            return;
-        }
+        if (parent::handle() === false) return;
 
-        if ($this->option('all')) {
-            $this->input->setOption('migration', true);
-            $this->input->setOption('policy', true);
-            $this->input->setOption('resource', true);
-        }
-
-        if ($this->option('migration')) {
-            $this->createMigration();
-        }
-
-        if ($this->option('policy')) {
-            $this->createPolicy();
-        }
-
-        if ($this->option('resource')) {
-            $this->createResource();
-        }
+        $this->createMigration();
+        $this->createPolicy();
+        $this->createResource();
     }
 
     /**
@@ -67,10 +50,6 @@ class ModelMakeCommand extends GeneratorCommand
     protected function createMigration()
     {
         $table = Str::plural(Str::snake(class_basename($this->argument('name'))));
-
-        // if ($this->option('pivot')) {
-        //     $table = Str::singular($table);
-        // }
 
         $this->call('mono:migration', [
             'name' => "create_{$table}_table",
@@ -86,8 +65,6 @@ class ModelMakeCommand extends GeneratorCommand
     protected function createPolicy()
     {
         $policy = Str::studly(class_basename($this->argument('name')));
-
-        $modelName = $this->qualifyClass($this->getNameInput());
 
         $this->call('mono:policy', [
             'name' => "{$policy}Policy",
@@ -115,10 +92,6 @@ class ModelMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        // if ($this->option('pivot')) {
-        //     return __DIR__ . '/stubs/pivot.model.stub';
-        // }
-
         return __DIR__ . '/stubs/model.stub';
     }
 
@@ -140,16 +113,6 @@ class ModelMakeCommand extends GeneratorCommand
      */
     protected function getOptions()
     {
-        return [
-            ['all', 'a', InputOption::VALUE_NONE, 'Generate a migration, factory, and resource controller for the model'],
-
-            ['force', null, InputOption::VALUE_NONE, 'Create the class even if the model already exists'],
-
-            ['migration', 'm', InputOption::VALUE_NONE, 'Create a new migration file for the model'],
-
-            ['policy', 'p', InputOption::VALUE_NONE, 'Create a new policy file for the model'],
-
-            ['resource', 'r', InputOption::VALUE_NONE, 'Indicates if the generated an resource'],
-        ];
+        return [];
     }
 }

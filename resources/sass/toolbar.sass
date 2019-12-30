@@ -1,0 +1,26 @@
+.v-toolbar-action
+    display: block
+    margin-right: -12px
+    min-height: 48px
+
+    &.absolute
+        margin-right: 0
+        right: 4px
+        min-height: 48px
+        min-width: 0
+        z-index: 1
+
+    .v-btn--icon.v-size--default
+        min-width: 48px
+
+.v-toolbar.with-shadow
+    &::after
+        bottom: -1px
+        content: ""
+        height: 1px
+        pointer-events: none
+        position: absolute
+        left: 0
+        right: 0
+        width: 100%
+        background: rgba(17,17,17,.06)

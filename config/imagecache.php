@@ -16,7 +16,7 @@ return array(
     |
     */
 
-    'route' => 'mediafiles',
+    'route' => 'media',
 
     /*
     |--------------------------------------------------------------------------
@@ -31,8 +31,7 @@ return array(
     */
 
     'paths' => array(
-        public_path('images'),
-        storage_path('uploads')
+        storage_path('app' . DIRECTORY_SEPARATOR . 'public'),
     ),
 
     /*

@@ -6,11 +6,11 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     *
+     * @return void
      */
     public function run()
     {
-        $this->call(AuthentsTableSeeder::class);
-        $this->call(SettingsTableSeeder::class);
         $this->call(UsersTableSeeder::class);
     }
 }

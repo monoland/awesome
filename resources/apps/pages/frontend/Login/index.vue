@@ -1,85 +1,75 @@
 <template>
     <v-app v-cloak>
-        <template v-if="$vuetify.breakpoint.xsOnly">
-            <v-card flat class="mx-auto" width="100%" height="100%">
-                <v-img class="v-background__auth grey lighten-4" :src="company.background" :aspect-ratio="4/3">
-                    <div class="d-flex flex-column fill-height">
-                        <div class="d-flex align-end justify-center px-6" style="flex: 1 1 auto;">
-                            <v-img :src="company.logo" :style="backgroundWidth"></v-img>
-                        </div>
-                        <div class="d-flex align-end justify-center font-size-zero px-6 py-4" v-html="company.name"></div>
-                    </div>
-                </v-img>
+        <v-app-bar class="transparent" elevation="0" app v-if="!mobile">
+            <v-container>
+                <v-toolbar-title>
+                    <span class="headline font-weight-light">{{ info.name }}</span>
+                    <span class="headline font-weight-bold">{{ info.nameExtended }}</span>
+                </v-toolbar-title>
+            </v-container>
+        </v-app-bar>
 
-                <v-card-text class="px-6">
-                    <v-row no-gutters>
-                        <v-col cols="12">
-                            <v-text-field
-                                color="cyan"
-                                label="Username"
-                                prepend-inner-icon="mail_outline"
-                                v-model="login.username"
-                                autocomplete="off"
-                                hide-details
-                                single-line
-                            ></v-text-field>
-                        </v-col>
-
-                        <v-col class="mt-4" cols="12">
-                            <v-text-field 
-                                @click:append="showtext = !showtext"
-                                :append-icon="showtext ? 'visibility' : 'visibility_off'"
-                                :type="showtext ? 'text' : 'password'"
-                                color="cyan"
-                                label="Password"
-                                prepend-inner-icon="lock_open"
-                                v-model="login.userpass"
-                                autocomplete="off"
-                                hide-details
-                                single-line
-                            ></v-text-field>
-                        </v-col>
-                    </v-row>
-                </v-card-text>
-
-                <v-card-text class="px-6">
-                    <v-row no-gutters>
-                        <v-col cols="12">
-                            <v-btn color="cyan" block depressed rounded large dark @click="signin">login to app</v-btn>
-                        </v-col>
-                    </v-row>
-                </v-card-text>
-            </v-card>
-        </template>
-
-        <template v-else>
-            <v-app-bar class="transparent elevation-0" app>
-                <v-container>
-                    <v-toolbar-title class="font-size-zero" v-html="company.name"></v-toolbar-title>
-                </v-container>
-            </v-app-bar>
-
-            <v-content class="v-background__auth" :style="backgroundStyle">
-                <v-container class="fill-height">
-                    <v-row>
-                        <v-col class="d-flex align-center" cols="6">
-                            <v-card class="transparent" elevation="0">
-                                <div class="d-block mb-6" :style="backgroundWidth" v-if="company.logo">
-                                    <v-img :src="company.logo"></v-img>
+        <v-content class="with-backdrop" :style="contentStyle">
+            <v-container fill-height :class="{ 'pa-0': mobile }">
+                <v-card flat :color="mobile ? 'white' : 'transparent'" :style="{ width: width, height: height }">
+                    <v-img class="grey lighten-4 with-backdrop" :src="info.background" :aspect-ratio="4/3" v-if="mobile">
+                        <div class="d-flex flex-column fill-height">
+                            <div class="d-flex align-end justify-center" style="flex: 1 1 auto;">
+                                <v-img :src="info.logo" style="max-width: 128px;" />
+                            </div>
+                            
+                            <div class="d-block pt-4 pb-3">
+                                <div class="d-block text-uppercase headline text-center">
+                                    <span class="font-weight-light">{{ info.title }}</span>
+                                    <span class="font-weight-bold">{{ info.titleExtended }}</span>
                                 </div>
 
-                                <div class="d-block" v-html="company.title"></div>
-                                <v-card-text class="pa-0 mt-6" v-html="company.quote"></v-card-text>
-                            </v-card>
+                                <div class="d-block text-uppercase subtitle-2 text-center">
+                                    <span class="font-weight-light">{{ info.subtitle }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </v-img>
+
+                    <v-row no-gutters>
+                        <v-col v-if="!mobile"
+                            sm="6" 
+                            cols="12" 
+                            :class="{ 'd-flex flex-column justify-center': !mobile }"
+                        >
+                            <div class="d-block mb-6" style="max-width: 112px;">
+                                <v-img :src="info.logo"></v-img>
+                            </div>
+                            
+                            <div class="d-block text-uppercase display-1">
+                                <span class="font-weight-light">{{ info.title }}</span>
+                                <span class="font-weight-bold">{{ info.titleExtended }}</span>
+                            </div>
+
+                            <div class="d-block text-uppercase title mt-1">
+                                <span class="font-weight-light">{{ info.subtitle }}</span>
+                            </div>
+
+                            <div class="d-block font-weight-light body-2 mt-3" v-html="info.quote"/>
                         </v-col>
 
-                        <v-col class="d-flex align-center justify-end" cols="6">
-                            <v-card class="v-card--widget mt-4" elevation="1" width="360px">
-                                <v-sheet color="cyan" class="v-sheet--offset pa-4 mx-auto elevation-0" max-width="calc(100% - 32px)">
+                        <v-col 
+                            sm="6" 
+                            cols="12" 
+                            :class="{ 'd-flex align-center justify-center': !mobile }"
+                        >
+                            <v-spacer></v-spacer>
+
+                            <v-card 
+                                :elevation="mobile ? 0 : 1" 
+                                :width="mobile ? '100%' : '360px'" 
+                                :class="{ 'px-2': mobile }"
+                            >
+                                <v-sheet color="cyan" class="pa-4 mx-auto elevation-0" max-width="calc(100% - 32px)" style="margin-top: -16px;" v-if="!mobile">
                                     <span class="d-block text-uppercase font-weight-medium text-xs-center line-height-1 white--text">l o g i n</span>
                                     <span class="d-block headline font-weight-light letter-space-1 text-uppercase text-xs-center mt-2 line-height-1 white--text">authentication</span>
                                 </v-sheet>
-                                
+
                                 <v-card-text>
                                     <v-row no-gutters>
                                         <v-col cols="12">
@@ -87,7 +77,7 @@
                                                 color="cyan"
                                                 label="Username"
                                                 prepend-inner-icon="mail_outline"
-                                                v-model="login.username"
+                                                v-model="authorize.username"
                                                 autocomplete="off"
                                                 hide-details
                                                 single-line
@@ -96,13 +86,14 @@
 
                                         <v-col class="mt-4" cols="12">
                                             <v-text-field 
+                                                @keyup.enter="authentication"
                                                 @click:append="showtext = !showtext"
                                                 :append-icon="showtext ? 'visibility' : 'visibility_off'"
                                                 :type="showtext ? 'text' : 'password'"
                                                 color="cyan"
                                                 label="Password"
                                                 prepend-inner-icon="lock_open"
-                                                v-model="login.userpass"
+                                                v-model="authorize.userpass"
                                                 autocomplete="off"
                                                 hide-details
                                                 single-line
@@ -114,21 +105,18 @@
                                 <v-card-text>
                                     <v-row no-gutters>
                                         <v-col cols="12">
-                                            <v-btn color="cyan" block depressed rounded large dark @click="signin">login to app</v-btn>
+                                            <v-btn color="cyan" block depressed rounded large dark @click="authentication">login to app</v-btn>
                                         </v-col>
                                     </v-row>
                                 </v-card-text>
                             </v-card>
                         </v-col>
                     </v-row>
-                </v-container>
-            </v-content>
-        </template>
-
-        <v-snackbar
-            v-model="snackbar.state"
-            :color="snackbar.color"
-        >
+                </v-card>
+            </v-container>
+        </v-content>
+        
+        <v-snackbar v-model="snackbar.state" :color="snackbar.color">
             {{ snackbar.text }}
             <v-btn dark text @click="snackbarClose">Tutup</v-btn>
         </v-snackbar>
@@ -139,47 +127,57 @@
 import { mapState, mapActions } from 'vuex';
 
 export default {
-    name: 'page-login',
-
-    route: [
-        { path: '/', name: 'login' },
-        { path: '*', name: null, redirect: { name: 'login' } },
-    ],
+    name: 'login',
 
     computed: {
-        ...mapState(['company', 'login', 'snackbar']),
+        ...mapState(['auth', 'info', 'mobile', 'snackbar']),
 
-        backgroundStyle: function() {
-            if (this.company && this.company.background && !this.$vuetify.breakpoint.xsOnly) {
-                return `background: url(${this.company.background}); background-position: center; background-repeat: no-repeat; background-size: cover;`;
+        contentStyle: function() {
+            if (this.info && this.info.background && !this.mobile) {
+                return `background: url(${this.info.background}); background-position: center; background-repeat: no-repeat; background-size: cover;`;
             }
 
             return null;
         },
 
-        backgroundWidth: function() {
-            if (this.company && this.company.width) {
-                return `max-width: ${this.company.width};`;
-            }
+        height: function() {
+            return this.mobile ? '100%' : 'auto';
+        },
 
-            return null;
+        width: function() {
+            return '100%';
         }
     },
 
     data:() => ({
-        showtext: false
+        showtext: false,
+        authorize: {
+            username: 'admin@monoland.loc',
+            userpass: 'rahasia'
+        }
     }),
 
     created() {
-        this.initStore();
-    },
-
-    mounted() {
-        this.fetchAppInfos();
+        this.initData();
+        this.fetchInfo();
     },
 
     methods: {
-        ...mapActions(['initStore', 'snackbarClose', 'fetchAppInfos', 'signin'])
+        ...mapActions(['fetchInfo', 'initData', 'signin', 'snackbarClose']),
+        
+        authentication: function() {
+            this.signin({
+                username: this.authorize.username,
+                userpass: this.authorize.userpass
+            }).then(() => {
+                this.$router.push({ name: 'backend-home' });
+            });
+        }
     }
 };
 </script>
+
+<style lang="sass">
+    @import '@sass/application.sass'
+    @import '@sass/backdrop.sass'
+</style>

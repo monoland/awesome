@@ -1,6 +1,8 @@
 <template>
-    <div class="monoland" :v-cloak="!fontLoaded">
-        <router-view></router-view>
+    <div class="apps" v-if="fontLoaded">
+        <v-fade-transition origin="center center">
+            <router-view></router-view>
+        </v-fade-transition>
     </div>
 </template>
 
@@ -8,7 +10,7 @@
 import WebFontLoader from 'webfontloader';
 
 export default {
-    name: 'mono-apps',
+    name: 'apps',
 
     data:() => ({
         fontLoaded: false,
@@ -33,3 +35,9 @@ export default {
     }
 };
 </script>
+
+<style lang="sass">
+    @import '@sass/card.sass'
+    @import '@sass/general.sass'
+    @import '@sass/textField.sass'
+</style>

@@ -1,91 +1,84 @@
 <template>
-    <v-page-wrap flat absolute>
-        <template #toolbar-default>
-            <v-btn :color="$root.theme" icon @click="profileUpdate(user)">
-                <v-icon>done</v-icon>
-            </v-btn>
-        </template>
+    <div class="v-page">
+        <v-page-toolbar update-only @update="dialogPost('COMMIT_USER')" />
+        
+        <div class="v-page--wrap">
+            <div class="v-page__content">
+                <v-card class="mx-auto no-border" :max-width="414" flat :style="mobile ? `min-height: calc(100vh - 56px);` : `min-height: calc(100vh - 64px);`">
+                    <v-img class="grey lighten-5" :src="record.background"  :aspect-ratio="16/9" style="max-height: 210px;">
+                        <div class="d-flex align-center justify-center" style="height: 100%;">
+                            <div class="d-flex align-center justify-center">
+                                <div class="d-block" style="height: 132px; min-width: 112px;">
+                                    <v-hover>
+                                        <template v-slot:default="{ hover }">
+                                            <v-avatar class="elevation-2" color="white" :size="mobile ? 112 : 128">
+                                                <v-img :src="record.avatar"></v-img>
 
-        <v-container class="pa-0" fill-height>
-            <v-layout justify-center wrap>
-                <v-card flat :width="dynWidth">
-                    <v-img :aspect-ratio="4/3" :src="$root.background">
-                        <v-layout column align-center justify-center fill-height>
-                            <v-media-upload media-name="profile" :callback="profileAvatar">
-                                <v-avatar size="128" class="elevation-2" color="white">
-                                    <v-img :src="$root.avatar"></v-img>
-                                </v-avatar>
-                            </v-media-upload>
-                        </v-layout>
+                                                <v-fade-transition>
+                                                    <v-overlay absolute v-if="hover">
+                                                        <v-btn icon @click="uploadAvatar">
+                                                            <v-icon>photo_camera</v-icon>
+                                                        </v-btn>
+                                                    </v-overlay>
+                                                </v-fade-transition>
+                                            </v-avatar>
+                                        </template>
+                                    </v-hover>
 
-                        <div class="drawer-edit" style="position: absolute; bottom: 4px; right: 4px;">
-                            <v-media-upload class="v-btn" media-name="background" :callback="profileBackground">
-                                <v-btn icon>
-                                    <v-icon>edit</v-icon>
+                                    <div class="d-flex justify-center mt-2">{{ record.name }}</div>
+                                </div>
+
+                                <v-btn class="absolute" icon style="right: 8px; bottom: 8px;" @click="uploadBackground">
+                                    <v-icon>photo_camera</v-icon>
                                 </v-btn>
-                            </v-media-upload>
+                            </div>
                         </div>
                     </v-img>
-                    
+
                     <v-card-text>
-                        <v-row>
+                        <v-row :no-gutters="mobile">
                             <v-col cols="12">
                                 <v-text-field
-                                    label="Nama Pengguna"
-                                    :color="$root.theme"
-                                    v-model="user.name"
+                                    label="Email"
+                                    v-model="record.email"
+                                    :hide-details="!mobile"
                                 ></v-text-field>
                             </v-col>
 
-                            <v-col cols="12">
+                            <v-col sm="6" cols="12">
                                 <v-text-field
-                                    label="Alamat Email"
-                                    :color="$root.theme"
-                                    v-model="user.email"
+                                    label="Nama"
+                                    v-model="record.name"
+                                    :hide-details="!mobile"
                                 ></v-text-field>
                             </v-col>
 
-                            <v-col cols="12">
+                            <v-col sm="6" cols="12">
                                 <v-select
-                                    @change="themeUpdate"
-                                    label="Warna Thema"
-                                    :color="$root.theme"
-                                    :items="colors"
-                                    v-model="user.theme"
+                                    :items="themes"
+                                    label="Theme"
+                                    v-model="record.theme"
+                                    :hide-details="!mobile"
                                 ></v-select>
                             </v-col>
                         </v-row>
                     </v-card-text>
                 </v-card>
-            </v-layout>
-        </v-container>
-    </v-page-wrap>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { pageMixins } from '@apps/mixins/PageMixins';
 
 export default {
-    name: 'page-profile',
+    name: 'backend-profile',
 
-    route: [
-        { path: 'profile', name: 'profile', root: 'monoland' },
-    ],
-
-    computed: {
-        ...mapState(['auth']),
-
-        dynWidth: function() {
-            if (this.$vuetify.breakpoint.xsOnly) {
-                return '100%';
-            }
-
-            return '360px';
-        },
-    },
+    mixins: [pageMixins],
 
     data:() => ({
-        colors: [
+        themes: [
             { value: 'red', text: 'Red'},
             { value: 'pink', text: 'Pink'},
             { value: 'purple', text: 'Purple'},
@@ -106,44 +99,49 @@ export default {
             { value: 'blue-grey', text: 'Blue Grey'},
             { value: 'grey', text: 'Grey'},
         ],
-
-        user: {}
     }),
 
     created() {
-        this.initStore();
-        
-        this.user = {
-            name: this.auth.user.name,
-            email: this.auth.user.email,
-            theme: this.auth.theme
-        };
-
-        this.pageInfo({
+        this.initPage({
             icon: 'perm_identity',
             title: 'Profile',
         });
+
+        this.setPageURL(`api/profile`);
+
+        this.recordFetchCurrent();
     },
 
     mounted() {
-        this.$store.subscribe((mutation) => {
-            if (mutation.type === 'auth') {
-                if (mutation.payload.hasOwnProperty('avatar')) {
-                    this.$root.avatar = mutation.payload.avatar;
-                } else if (mutation.payload.hasOwnProperty('background')) {
-                    this.$root.background = mutation.payload.background;
-                }
-            }
+        this.setUploadOptions({
+            acceptFiles: 'image/png, image/jpeg',
+            allowedExtensions: ['png', 'jpg', 'jpeg'],
         });
     },
 
     methods: {
-        ...mapActions([
-            'initStore', 'profileAvatar', 'profileBackground', 'profileUpdate', 'pageInfo'
-        ]),
+        uploadAvatar: function() {
+            this.fineUploader.setParams({ mediaName: 'user-avatar' });
 
-        themeUpdate: function(value) {
-            this.$root.theme = value;
+            this.setUploadCallback(response => {
+                this.record.avatar = response.record.path
+            });
+
+            setTimeout(() => {
+                this.upload.input.click();
+            }, 300);
+        },
+
+        uploadBackground: function() {
+            this.fineUploader.setParams({ mediaName: 'user-backdrop' });
+            
+            this.setUploadCallback(response => {
+                this.record.background = response.record.path
+            });
+
+            setTimeout(() => {
+                this.upload.input.click();
+            }, 300);
         }
     }
 };
