@@ -4,7 +4,11 @@
         
         <div class="v-page--wrap">
             <div class="v-page__content">
-                <v-card class="mx-auto no-border" :max-width="414" flat :style="mobile ? `min-height: calc(100vh - 56px);` : `min-height: calc(100vh - 64px);`">
+                <v-card flat 
+                    class="mx-auto no-border" 
+                    :max-width="414" 
+                    :style="mobile ? `min-height: calc(100vh - 56px);` : `min-height: calc(100vh - 64px);`"
+                >
                     <v-img class="grey lighten-5" :src="record.background"  :aspect-ratio="4/3">
                         <div class="d-flex flex-column fill-height">
                             <div class="d-flex align-center justify-center" style="flex: 1 1 auto;">

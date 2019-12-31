@@ -329,6 +329,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'backend-profile',
@@ -451,6 +455,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _apps_mixins_PageMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @apps/mixins/PageMixins */ "./resources/apps/mixins/PageMixins.js");
+//
+//
+//
+//
 //
 //
 //
@@ -1499,7 +1507,7 @@ var render = function() {
                 style: _vm.mobile
                   ? "min-height: calc(100vh - 56px);"
                   : "min-height: calc(100vh - 64px);",
-                attrs: { "max-width": 414, flat: "" }
+                attrs: { flat: "", "max-width": 414 }
               },
               [
                 _c(
@@ -1767,7 +1775,7 @@ var render = function() {
                 style: _vm.mobile
                   ? "min-height: calc(100vh - 56px);"
                   : "min-height: calc(100vh - 64px);",
-                attrs: { "max-width": 414, flat: "" }
+                attrs: { flat: "", "max-width": 414 }
               },
               [
                 _c(
