@@ -22,6 +22,16 @@ class Setting extends Model
     ];
 
     /**
+     * Get the route key for the model.
+     *
+     * @return void
+     */
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+
+    /**
      * Relationship
      */
 
@@ -69,7 +79,7 @@ class Setting extends Model
         try {
             $model = new static;
             // ...
-            $model->save();
+            // $model->save();
 
             DB::commit();
 
@@ -96,7 +106,17 @@ class Setting extends Model
         DB::beginTransaction();
 
         try {
-            // ...
+            if ($model->name === 'web-info') {
+                $model->company = $request->company;
+                $model->companyExtended = $request->companyExtended;
+                $model->product = $request->product;
+                $model->productExtended = $request->productExtended;
+                $model->slogan = $request->slogan;
+                $model->description = $request->description;
+                $model->logo = $request->logo;
+                $model->background = $request->background;
+            }
+
             $model->save();
 
             DB::commit();

@@ -3,8 +3,8 @@
         <v-app-bar class="transparent" elevation="0" app v-if="!mobile">
             <v-container>
                 <v-toolbar-title>
-                    <span class="headline font-weight-light">{{ info.name }}</span>
-                    <span class="headline font-weight-bold">{{ info.nameExtended }}</span>
+                    <span class="headline font-weight-light">{{ info.company }}</span>
+                    <span class="headline font-weight-bold">{{ info.companyExtended }}</span>
                 </v-toolbar-title>
             </v-container>
         </v-app-bar>
@@ -20,12 +20,12 @@
                             
                             <div class="d-block pt-4 pb-3">
                                 <div class="d-block text-uppercase headline text-center">
-                                    <span class="font-weight-light">{{ info.title }}</span>
-                                    <span class="font-weight-bold">{{ info.titleExtended }}</span>
+                                    <span class="font-weight-light">{{ info.product }}</span>
+                                    <span class="font-weight-bold">{{ info.productExtended }}</span>
                                 </div>
 
                                 <div class="d-block text-uppercase subtitle-2 text-center">
-                                    <span class="font-weight-light">{{ info.subtitle }}</span>
+                                    <span class="font-weight-light">{{ info.slogan }}</span>
                                 </div>
                             </div>
                         </div>
@@ -42,15 +42,15 @@
                             </div>
                             
                             <div class="d-block text-uppercase display-1">
-                                <span class="font-weight-light">{{ info.title }}</span>
-                                <span class="font-weight-bold">{{ info.titleExtended }}</span>
+                                <span class="font-weight-light">{{ info.product }}</span>
+                                <span class="font-weight-bold">{{ info.productExtended }}</span>
                             </div>
 
                             <div class="d-block text-uppercase title mt-1">
-                                <span class="font-weight-light">{{ info.subtitle }}</span>
+                                <span class="font-weight-light">{{ info.slogan }}</span>
                             </div>
 
-                            <div class="d-block font-weight-light body-2 mt-3" v-html="info.quote"/>
+                            <div class="d-block font-weight-light body-2 mt-3" v-html="info.description"/>
                         </v-col>
 
                         <v-col 

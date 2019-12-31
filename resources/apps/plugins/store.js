@@ -527,12 +527,14 @@ let rootModule = {
             }
         },
 
-        recordFetchCurrent: async function({ commit, dispatch, state })
+        recordFetchCurrent: async function({ commit, dispatch, state }, payload)
         {
             commit('COMMIT_FORM', { loader: true });
 
             try {
-                let { data: current } = await state.http.get(state.page.dataURL);
+                let { data: current } = await state.http.get(state.page.dataURL, { 
+                    params: payload 
+                });
 
                 commit('COMMIT_RECORD', Object.assign({}, current));
             } catch (error) {
@@ -613,10 +615,13 @@ let rootModule = {
             commit('COMMIT_FORM', { loader: true });
 
             try {
-                let { data: record } = await state.http.put(state.page.dataURL, state.record);
+                let serverURL = state.page.dataURL;
+                if (payload && payload.hasOwnProperty('dataURL')) serverURL = serverURL + '/' + payload.dataURL;
+
+                let { data: record } = await state.http.put(serverURL, state.record);
 
                 commit('COMMIT_RECORD_UPDATE', record);
-                if (payload) commit(payload, record);
+                if (payload && payload.hasOwnProperty('commit')) commit(payload, record);
                 
                 dispatch('message', 'Proses Update Data Berhasil.');
             } catch (error) {
@@ -903,13 +908,13 @@ let rootModule = {
             commit('COMMIT_FINEUPLOADER', new qq.FineUploaderBasic(options));
         },
 
-        errorHandle: function({ commit, state }, payload) 
+        errorHandle: function({ commit, dispatch, state }, payload) 
         {
             if (payload.hasOwnProperty('response')) {
                 let { data: { message }, status } = payload.response;
 
                 if (status === 401 || status === 403) {
-                    state.auth.signout();
+                    dispatch('signout');
                 }
 
                 commit('COMMIT_SNACKBAR', {

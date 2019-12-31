@@ -268,11 +268,11 @@ var render = function() {
                 [
                   _c("v-toolbar-title", [
                     _c("span", { staticClass: "headline font-weight-light" }, [
-                      _vm._v(_vm._s(_vm.info.name))
+                      _vm._v(_vm._s(_vm.info.company))
                     ]),
                     _vm._v(" "),
                     _c("span", { staticClass: "headline font-weight-bold" }, [
-                      _vm._v(_vm._s(_vm.info.nameExtended))
+                      _vm._v(_vm._s(_vm.info.companyExtended))
                     ])
                   ])
                 ],
@@ -343,13 +343,13 @@ var render = function() {
                                     _c(
                                       "span",
                                       { staticClass: "font-weight-light" },
-                                      [_vm._v(_vm._s(_vm.info.title))]
+                                      [_vm._v(_vm._s(_vm.info.product))]
                                     ),
                                     _vm._v(" "),
                                     _c(
                                       "span",
                                       { staticClass: "font-weight-bold" },
-                                      [_vm._v(_vm._s(_vm.info.titleExtended))]
+                                      [_vm._v(_vm._s(_vm.info.productExtended))]
                                     )
                                   ]
                                 ),
@@ -364,7 +364,7 @@ var render = function() {
                                     _c(
                                       "span",
                                       { staticClass: "font-weight-light" },
-                                      [_vm._v(_vm._s(_vm.info.subtitle))]
+                                      [_vm._v(_vm._s(_vm.info.slogan))]
                                     )
                                   ]
                                 )
@@ -411,13 +411,13 @@ var render = function() {
                                   _c(
                                     "span",
                                     { staticClass: "font-weight-light" },
-                                    [_vm._v(_vm._s(_vm.info.title))]
+                                    [_vm._v(_vm._s(_vm.info.product))]
                                   ),
                                   _vm._v(" "),
                                   _c(
                                     "span",
                                     { staticClass: "font-weight-bold" },
-                                    [_vm._v(_vm._s(_vm.info.titleExtended))]
+                                    [_vm._v(_vm._s(_vm.info.productExtended))]
                                   )
                                 ]
                               ),
@@ -432,7 +432,7 @@ var render = function() {
                                   _c(
                                     "span",
                                     { staticClass: "font-weight-light" },
-                                    [_vm._v(_vm._s(_vm.info.subtitle))]
+                                    [_vm._v(_vm._s(_vm.info.slogan))]
                                   )
                                 ]
                               ),
@@ -440,7 +440,9 @@ var render = function() {
                               _c("div", {
                                 staticClass:
                                   "d-block font-weight-light body-2 mt-3",
-                                domProps: { innerHTML: _vm._s(_vm.info.quote) }
+                                domProps: {
+                                  innerHTML: _vm._s(_vm.info.description)
+                                }
                               })
                             ]
                           )

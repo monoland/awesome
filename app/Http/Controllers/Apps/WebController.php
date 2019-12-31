@@ -31,12 +31,14 @@ class WebController extends Controller
     {
         $menus = [
             ['type' => 'item', 'icon' => 'dashboard', 'text' => 'Beranda', 'to' => ['name' => 'backend-home']],
-            // master
-            ['type' => 'subheader', 'text' => 'Master', 'class' => 'mt-2'],
-            ['type' => 'item', 'icon' => 'people', 'text' => 'User', 'to' => ['name' => 'backend-user']],
-
-            ['type' => 'subheader', 'text' => 'Utilitas', 'class' => 'mt-2'],
         ];
+
+        if ($request->user()->hasRole('superadmin')) {
+            array_push($menus, ['type' => 'subheader', 'text' => 'Master', 'class' => 'mt-2']);
+            array_push($menus, ['type' => 'item', 'icon' => 'people', 'text' => 'Pengguna', 'to' => ['name' => 'backend-user']]);
+            array_push($menus, ['type' => 'subheader', 'text' => 'Utilitas', 'class' => 'mt-2']);
+            array_push($menus, ['type' => 'item', 'icon' => 'settings', 'text' => 'Pengaturan', 'to' => ['name' => 'backend-setting']]);
+        }
 
         return response()->json($menus);
     }

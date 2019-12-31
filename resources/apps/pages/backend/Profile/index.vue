@@ -1,6 +1,6 @@
 <template>
     <div class="v-page">
-        <v-page-toolbar update-only @update="dialogPost('COMMIT_USER')" />
+        <v-page-toolbar update-only @update="dialogPost({ commit: 'COMMIT_USER' })" />
         
         <div class="v-page--wrap">
             <div class="v-page__content">

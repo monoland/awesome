@@ -16,7 +16,9 @@ Route::middleware(['auth:api', 'api'])->group(function () {
     Route::get('profile', 'Mono\ProfileController@index')->name('profile.index');
     Route::match(['PUT', 'PATCH'], 'profile', 'Mono\ProfileController@update')->name('profile.update');
 
-    Route::resource('setting', 'Mono\SettingController')->only(['index', 'store', 'update', 'destroy']);
+    Route::get('setting', 'Mono\SettingController@index')->name('setting.index');
+    Route::match(['PUT', 'PATCH'], 'setting/{setting}', 'Mono\SettingController@update')->name('setting.update');
+
     Route::resource('account', 'Mono\AccountController')->parameters([
         'account' => 'user'
     ])->only(['index', 'store', 'update', 'destroy']);

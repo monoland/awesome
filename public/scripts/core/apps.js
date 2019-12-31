@@ -2171,8 +2171,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pusherHost", function() { return pusherHost; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pusherPort", function() { return pusherPort; });
 var siteKey = 1;
-var secretKey = '5WfV4VMgQXOFjbEsF6hKfYdLZvlaRrQM57f0ED7s';
-var baseURL = 'http://platform.loc';
+var secretKey = 'UMjpASQG3bWdIBwCWmGyrAlP6lQ0TYiiRnU9lH3p';
+var baseURL = 'http://awesome.loc';
 var pusherEcho = false;
 var pusherKey = null;
 var pusherHost = null;
@@ -3185,6 +3185,10 @@ var backendPassword = function backendPassword() {
   return Promise.all(/*! import() | scripts/core/backend */[__webpack_require__.e("/scripts/core/vendor"), __webpack_require__.e("scripts/core/backend")]).then(__webpack_require__.bind(null, /*! @apps/pages/backend/Password */ "./resources/apps/pages/backend/Password/index.vue"));
 };
 
+var backendSetting = function backendSetting() {
+  return Promise.all(/*! import() | scripts/core/backend */[__webpack_require__.e("/scripts/core/vendor"), __webpack_require__.e("scripts/core/backend")]).then(__webpack_require__.bind(null, /*! @apps/pages/backend/Setting */ "./resources/apps/pages/backend/Setting/index.vue"));
+};
+
 var routes = [{
   path: '/',
   name: 'login',
@@ -3217,6 +3221,10 @@ var routes = [{
     path: 'profile',
     name: 'backend-profile',
     component: backendProfile
+  }, {
+    path: 'setting',
+    name: 'backend-setting',
+    component: backendSetting
   }]
 }, {
   path: '*',
@@ -3251,7 +3259,7 @@ router.beforeEach(function (to, from, next) {
   }
 });
 router.onError(function () {
-  _apps_providers_AuthProvider__WEBPACK_IMPORTED_MODULE_2__["default"].signout();
+  _apps_providers_AuthProvider__WEBPACK_IMPORTED_MODULE_2__["default"].clear();
   router.push({
     name: 'login'
   });
@@ -3843,7 +3851,7 @@ var rootModule = {
     recordFetchCurrent: function () {
       var _recordFetchCurrent = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref14) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref14, payload) {
         var commit, dispatch, state, _ref15, current;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -3856,7 +3864,9 @@ var rootModule = {
                 });
                 _context3.prev = 2;
                 _context3.next = 5;
-                return state.http.get(state.page.dataURL);
+                return state.http.get(state.page.dataURL, {
+                  params: payload
+                });
 
               case 5:
                 _ref15 = _context3.sent;
@@ -3885,7 +3895,7 @@ var rootModule = {
         }, _callee3, null, [[2, 10, 13, 16]]);
       }));
 
-      function recordFetchCurrent(_x4) {
+      function recordFetchCurrent(_x4, _x5) {
         return _recordFetchCurrent.apply(this, arguments);
       }
 
@@ -3950,7 +3960,7 @@ var rootModule = {
         }, _callee4, null, [[2, 15, 18, 21]]);
       }));
 
-      function recordPost(_x5) {
+      function recordPost(_x6) {
         return _recordPost.apply(this, arguments);
       }
 
@@ -4035,7 +4045,7 @@ var rootModule = {
         }, _callee5, null, [[2, 14, 17, 20]]);
       }));
 
-      function recordUpdate(_x6) {
+      function recordUpdate(_x7) {
         return _recordUpdate.apply(this, arguments);
       }
 
@@ -4045,7 +4055,7 @@ var rootModule = {
       var _recordPatch = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(_ref22, payload) {
-        var commit, dispatch, state, _ref23, record;
+        var commit, dispatch, state, serverURL, _ref23, record;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
@@ -4056,39 +4066,41 @@ var rootModule = {
                   loader: true
                 });
                 _context6.prev = 2;
-                _context6.next = 5;
-                return state.http.put(state.page.dataURL, state.record);
+                serverURL = state.page.dataURL;
+                if (payload && payload.hasOwnProperty('dataURL')) serverURL = serverURL + '/' + payload.dataURL;
+                _context6.next = 7;
+                return state.http.put(serverURL, state.record);
 
-              case 5:
+              case 7:
                 _ref23 = _context6.sent;
                 record = _ref23.data;
                 commit('COMMIT_RECORD_UPDATE', record);
-                if (payload) commit(payload, record);
+                if (payload && payload.hasOwnProperty('commit')) commit(payload, record);
                 dispatch('message', 'Proses Update Data Berhasil.');
-                _context6.next = 15;
+                _context6.next = 17;
                 break;
 
-              case 12:
-                _context6.prev = 12;
+              case 14:
+                _context6.prev = 14;
                 _context6.t0 = _context6["catch"](2);
                 dispatch('errorHandle', _context6.t0);
 
-              case 15:
-                _context6.prev = 15;
+              case 17:
+                _context6.prev = 17;
                 commit('COMMIT_FORM', {
                   loader: false
                 });
-                return _context6.finish(15);
+                return _context6.finish(17);
 
-              case 18:
+              case 20:
               case "end":
                 return _context6.stop();
             }
           }
-        }, _callee6, null, [[2, 12, 15, 18]]);
+        }, _callee6, null, [[2, 14, 17, 20]]);
       }));
 
-      function recordPatch(_x7, _x8) {
+      function recordPatch(_x8, _x9) {
         return _recordPatch.apply(this, arguments);
       }
 
@@ -4148,7 +4160,7 @@ var rootModule = {
         }, _callee7, null, [[2, 13, 16, 19]]);
       }));
 
-      function recordDelete(_x9) {
+      function recordDelete(_x10) {
         return _recordDelete.apply(this, arguments);
       }
 
@@ -4314,7 +4326,7 @@ var rootModule = {
         }, _callee8, null, [[1, 20]]);
       }));
 
-      function signin(_x10, _x11) {
+      function signin(_x11, _x12) {
         return _signin.apply(this, arguments);
       }
 
@@ -4455,6 +4467,7 @@ var rootModule = {
     },
     errorHandle: function errorHandle(_ref50, payload) {
       var commit = _ref50.commit,
+          dispatch = _ref50.dispatch,
           state = _ref50.state;
 
       if (payload.hasOwnProperty('response')) {
@@ -4463,7 +4476,7 @@ var rootModule = {
             status = _payload$response.status;
 
         if (status === 401 || status === 403) {
-          state.auth.signout();
+          dispatch('signout');
         }
 
         commit('COMMIT_SNACKBAR', {
@@ -4544,6 +4557,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuetify_lib__WEBPACK_IMPORTED_MOD
     VSnackbar: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__["VSnackbar"],
     VSubheader: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__["VSubheader"],
     VSwitch: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__["VSwitch"],
+    VTextarea: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__["VTextarea"],
     VTextField: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__["VTextField"],
     VToolbar: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__["VToolbar"],
     VToolbarTitle: vuetify_lib__WEBPACK_IMPORTED_MODULE_3__["VToolbarTitle"],

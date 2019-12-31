@@ -10,6 +10,7 @@ const backendHome = () => import(/* webpackChunkName: "scripts/core/backend" */ 
 const backendUser = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/User');
 const backendProfile = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Profile');
 const backendPassword = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Password');
+const backendSetting = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Setting');
 
 let routes = [
     { path: '/', name: 'login', component: Login },
@@ -19,6 +20,7 @@ let routes = [
         { path: 'user', name: 'backend-user', component: backendUser },
         { path: 'password', name: 'backend-password', component: backendPassword },
         { path: 'profile', name: 'backend-profile', component: backendProfile },
+        { path: 'setting', name: 'backend-setting', component: backendSetting },
     ]},
     { path: '*', name: null, redirect: { name: 'login' } },
 ];
@@ -45,7 +47,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.onError(() => {
-    Auth.signout();
+    Auth.clear();
     router.push({ name: 'login' });
 });
 
