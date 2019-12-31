@@ -1782,7 +1782,10 @@ var render = function() {
                   "v-img",
                   {
                     staticClass: "grey lighten-5",
-                    attrs: { src: _vm.record.background, "aspect-ratio": 4 / 3 }
+                    attrs: {
+                      src: _vm.record.background,
+                      "aspect-ratio": 16 / 9
+                    }
                   },
                   [
                     _c(
