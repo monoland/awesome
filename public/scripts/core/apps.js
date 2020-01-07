@@ -4263,89 +4263,10 @@ var rootModule = {
       commit('COMMIT_RECORD', Object.assign({}, payload));
       commit('COMMIT_BUTTON_STATE', 'selectedState');
     },
-    signin: function () {
-      var _signin = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(_ref40, payload) {
-        var commit, dispatch, state, _ref41, token, _ref42, user, _ref43, menus;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
-          while (1) {
-            switch (_context8.prev = _context8.next) {
-              case 0:
-                commit = _ref40.commit, dispatch = _ref40.dispatch, state = _ref40.state;
-                _context8.prev = 1;
-                _context8.next = 4;
-                return state.http.post('/oauth/token', {
-                  grant_type: 'password',
-                  client_id: state.auth.siteKey,
-                  client_secret: state.auth.secretKey,
-                  username: payload.username,
-                  password: payload.userpass
-                });
-
-              case 4:
-                _ref41 = _context8.sent;
-                token = _ref41.data;
-                commit('COMMIT_AUTH', {
-                  token: token
-                });
-                commit('COMMIT_AXIOS', token);
-                _context8.next = 10;
-                return state.http.get('/api/user');
-
-              case 10:
-                _ref42 = _context8.sent;
-                user = _ref42.data;
-                commit('COMMIT_AUTH', {
-                  user: user
-                });
-                _context8.next = 15;
-                return state.http.get('/api/menu');
-
-              case 15:
-                _ref43 = _context8.sent;
-                menus = _ref43.data;
-                commit('COMMIT_AUTH', {
-                  menus: menus
-                });
-                _context8.next = 24;
-                break;
-
-              case 20:
-                _context8.prev = 20;
-                _context8.t0 = _context8["catch"](1);
-                commit('COMMIT_CLEAR');
-                dispatch('errorHandle', _context8.t0);
-
-              case 24:
-              case "end":
-                return _context8.stop();
-            }
-          }
-        }, _callee8, null, [[1, 20]]);
-      }));
-
-      function signin(_x11, _x12) {
-        return _signin.apply(this, arguments);
-      }
-
-      return signin;
-    }(),
-    signout: function signout(_ref44) {
-      var commit = _ref44.commit;
-      commit('COMMIT_SIGNOUT');
-    },
-    snackbarClose: function snackbarClose(_ref45) {
-      var commit = _ref45.commit;
-      commit('COMMIT_SNACKBAR', {
-        state: false
-      });
-    },
-    setUpload: function setUpload(_ref46) {
-      var commit = _ref46.commit,
-          dispatch = _ref46.dispatch,
-          state = _ref46.state;
+    setUpload: function setUpload(_ref40) {
+      var commit = _ref40.commit,
+          dispatch = _ref40.dispatch,
+          state = _ref40.state;
       if (state.upload.progress) return;
       dispatch('setUploadObject').then(function () {
         commit('COMMIT_UPLOAD', {
@@ -4353,20 +4274,20 @@ var rootModule = {
         });
       });
     },
-    setUploadOptions: function setUploadOptions(_ref47, payload) {
-      var commit = _ref47.commit;
+    setUploadOptions: function setUploadOptions(_ref41, payload) {
+      var commit = _ref41.commit;
       commit('COMMIT_UPLOAD', payload);
     },
-    setUploadCallback: function setUploadCallback(_ref48, payload) {
-      var commit = _ref48.commit;
+    setUploadCallback: function setUploadCallback(_ref42, payload) {
+      var commit = _ref42.commit;
       commit('COMMIT_UPLOAD', {
         callback: payload
       });
     },
-    setUploadObject: function setUploadObject(_ref49) {
-      var commit = _ref49.commit,
-          dispatch = _ref49.dispatch,
-          state = _ref49.state;
+    setUploadObject: function setUploadObject(_ref43) {
+      var commit = _ref43.commit,
+          dispatch = _ref43.dispatch,
+          state = _ref43.state;
 
       if (state.upload.fineUploader) {
         commit('COMMIT_UPLOAD', {
@@ -4464,6 +4385,85 @@ var rootModule = {
         }
       };
       commit('COMMIT_FINEUPLOADER', new fine_uploader_lib_core__WEBPACK_IMPORTED_MODULE_5___default.a.FineUploaderBasic(options));
+    },
+    snackbarClose: function snackbarClose(_ref44) {
+      var commit = _ref44.commit;
+      commit('COMMIT_SNACKBAR', {
+        state: false
+      });
+    },
+    signin: function () {
+      var _signin = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(_ref45, payload) {
+        var commit, dispatch, state, _ref46, token, _ref47, user, _ref48, menus;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+          while (1) {
+            switch (_context8.prev = _context8.next) {
+              case 0:
+                commit = _ref45.commit, dispatch = _ref45.dispatch, state = _ref45.state;
+                _context8.prev = 1;
+                _context8.next = 4;
+                return state.http.post('/oauth/token', {
+                  grant_type: 'password',
+                  client_id: state.auth.siteKey,
+                  client_secret: state.auth.secretKey,
+                  username: payload.username,
+                  password: payload.userpass
+                });
+
+              case 4:
+                _ref46 = _context8.sent;
+                token = _ref46.data;
+                commit('COMMIT_AUTH', {
+                  token: token
+                });
+                commit('COMMIT_AXIOS', token);
+                _context8.next = 10;
+                return state.http.get('/api/user');
+
+              case 10:
+                _ref47 = _context8.sent;
+                user = _ref47.data;
+                commit('COMMIT_AUTH', {
+                  user: user
+                });
+                _context8.next = 15;
+                return state.http.get('/api/menu');
+
+              case 15:
+                _ref48 = _context8.sent;
+                menus = _ref48.data;
+                commit('COMMIT_AUTH', {
+                  menus: menus
+                });
+                _context8.next = 24;
+                break;
+
+              case 20:
+                _context8.prev = 20;
+                _context8.t0 = _context8["catch"](1);
+                commit('COMMIT_CLEAR');
+                dispatch('errorHandle', _context8.t0);
+
+              case 24:
+              case "end":
+                return _context8.stop();
+            }
+          }
+        }, _callee8, null, [[1, 20]]);
+      }));
+
+      function signin(_x11, _x12) {
+        return _signin.apply(this, arguments);
+      }
+
+      return signin;
+    }(),
+    signout: function signout(_ref49) {
+      var commit = _ref49.commit;
+      commit('COMMIT_SIGNOUT');
     },
     errorHandle: function errorHandle(_ref50, payload) {
       var commit = _ref50.commit,
@@ -4646,6 +4646,15 @@ function () {
       }
 
       this.store.setItem('user', response);
+    }
+  }, {
+    key: "apps",
+    get: function get() {
+      return this.store.getItem('apps');
+    },
+    set: function set(apps) {
+      if (!apps) return;
+      this.store.setItem('apps', apps);
     }
   }, {
     key: "baseURL",
