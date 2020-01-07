@@ -731,7 +731,7 @@ let rootModule = {
             commit('INITIAL_RECORD', payload);
             commit('COMMIT_RECORD', Object.assign({}, payload));
         },
-        
+
         setSelected: function({ commit }, payload) 
         {
             commit('COMMIT_TABLE', { selected: payload });
@@ -741,42 +741,6 @@ let rootModule = {
         {
             commit('COMMIT_RECORD', Object.assign({}, payload));
             commit('COMMIT_BUTTON_STATE', 'selectedState');
-        },
-
-        signin: async function({ commit, dispatch, state }, payload) 
-        {
-            try {
-                let { data: token } = await state.http.post('/oauth/token', {
-                    grant_type: 'password',
-                    client_id: state.auth.siteKey,
-                    client_secret: state.auth.secretKey,
-                    username: payload.username,
-                    password: payload.userpass
-                });
-
-                commit('COMMIT_AUTH', { token: token });
-                commit('COMMIT_AXIOS', token);
-
-                let { data: user } = await state.http.get('/api/user');
-                commit('COMMIT_AUTH', { user: user });
-
-                let { data: menus } = await state.http.get('/api/menu');
-                commit('COMMIT_AUTH', { menus: menus });
-            } catch (error) {
-                commit('COMMIT_CLEAR');
-                
-                dispatch('errorHandle', error);
-            }
-        },
-
-        signout: function({ commit }) 
-        {
-            commit('COMMIT_SIGNOUT');
-        },
-
-        snackbarClose: function({ commit }) 
-        {
-            commit('COMMIT_SNACKBAR', { state: false });
         },
 
         setUpload: function({ commit, dispatch, state }) 
@@ -906,6 +870,42 @@ let rootModule = {
             };
 
             commit('COMMIT_FINEUPLOADER', new qq.FineUploaderBasic(options));
+        },
+
+        snackbarClose: function({ commit }) 
+        {
+            commit('COMMIT_SNACKBAR', { state: false });
+        },
+
+        signin: async function({ commit, dispatch, state }, payload) 
+        {
+            try {
+                let { data: token } = await state.http.post('/oauth/token', {
+                    grant_type: 'password',
+                    client_id: state.auth.siteKey,
+                    client_secret: state.auth.secretKey,
+                    username: payload.username,
+                    password: payload.userpass
+                });
+
+                commit('COMMIT_AUTH', { token: token });
+                commit('COMMIT_AXIOS', token);
+
+                let { data: user } = await state.http.get('/api/user');
+                commit('COMMIT_AUTH', { user: user });
+
+                let { data: menus } = await state.http.get('/api/menu');
+                commit('COMMIT_AUTH', { menus: menus });
+            } catch (error) {
+                commit('COMMIT_CLEAR');
+                
+                dispatch('errorHandle', error);
+            }
+        },
+
+        signout: function({ commit }) 
+        {
+            commit('COMMIT_SIGNOUT');
         },
 
         errorHandle: function({ commit, dispatch, state }, payload) 

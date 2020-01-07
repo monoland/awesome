@@ -48,6 +48,18 @@ class AuthProvider
         this.store.setItem('user', response);
     }
 
+    get apps()
+    {
+        return this.store.getItem('apps');
+    }
+
+    set apps(apps)
+    {
+        if (!apps) return;
+
+        this.store.setItem('apps', apps);
+    }
+
     get baseURL()
     {
         return this.store.getItem('base_url');
