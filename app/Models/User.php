@@ -5,15 +5,17 @@ namespace App\Models;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
-use App\Http\Resources\AccountResource;
+use App\Http\Resources\UserResource;
+use App\Traits\HasRole;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, HasRole, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -42,26 +44,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function hasRole($authent): bool
-    {
-        return $this->authent === $authent;
-    }
-
     /**
      * Undocumented function
      *
      * @return void
      */
-    public function userable()
+    public function documents()
     {
-        return $this->morphTo();
+        return $this->hasMany(Document::class);
     }
 
     /**
      * Undocumented function
      *
-     * @param [type] $query
+     * @param [type] $value
      * @return void
+     */
+    public function resolveRouteBinding($value)
+    {
+        return $this->withTrashed()->where($this->getRouteKeyName(), $value)->first();
+    }
+
+    /**
+     * Scope for combo
      */
     public function scopeFetchCombo($query)
     {
@@ -69,27 +74,37 @@ class User extends Authenticatable
     }
 
     /**
-     * Undocumented function
-     *
-     * @param [type] $query
-     * @param [type] $request
-     * @return void
+     * Scope for filter
      */
     public function scopeFilterOn($query, $request)
     {
         $sortBy = strtolower($request->sortBy) ?: null;
         $sortAz = $request->sortDesc ? 'desc' : 'asc';
         $findBy = strtolower($request->findBy) ?: null;
-        $findIn = strtolower($request->findIn) ?: null;
+        $findOn = strtolower($request->findOn) ?: null;
+
+        $trashed = $request->trashed ?: false;
+        $filterOn = strtolower($request->filterOn) ?: null;
+        $filterBy = strtolower($request->filterBy) ?: null;
 
         $mquery = $query;
 
+        if ($trashed) {
+            $mquery = $mquery->onlyTrashed();
+        }
+
         if ($findBy) {
-            $mquery = $mquery->whereRaw("LOWER({$findIn}) LIKE '%{$findBy}%'");
+            $mquery = $mquery->whereRaw("LOWER({$findOn}) LIKE ?", ["%{$findBy}%"]);
+        }
+
+        if ($filterBy) {
+            $mquery = $mquery->whereRaw("{$filterOn} = ?", [$filterBy]);
         }
 
         if ($sortBy) {
             $mquery = $mquery->orderBy($sortBy, $sortAz);
+        } else {
+            $mquery = $mquery->orderBy('id', $sortAz);
         }
 
         return $mquery;
@@ -109,16 +124,15 @@ class User extends Authenticatable
             $model = new static;
             $model->name = $request->name;
             $model->email = $request->email;
-            $model->password = Hash::make('12345678');
-            $model->authent = 'superadmin';
-            $model->avatar = $request->avatar;
-            $model->background = $request->background;
+            $model->password = Hash::make('12345');
             $model->theme = $request->theme;
+            $model->active = $request->active;
+            $model->role_id = $request->role;
             $model->save();
 
             DB::commit();
 
-            return new AccountResource($model);
+            return new UserResource($model);
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -143,38 +157,14 @@ class User extends Authenticatable
         try {
             $model->name = $request->name;
             $model->email = $request->email;
-            $model->avatar = $request->avatar;
-            $model->background = $request->background;
             $model->theme = $request->theme;
+            $model->active = $request->active;
+            $model->role_id = $request->role;
             $model->save();
 
             DB::commit();
 
-            return new AccountResource($model);
-        } catch (\Exception $e) {
-            DB::rollBack();
-
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    public static function updatePassword(Request $request, $model)
-    {
-        DB::beginTransaction();
-
-        try {
-            $model->fill([
-                'password' => Hash::make($request->password),
-            ])->save();
-
-            DB::commit();
-
-            return response()->json([
-                'success' => true
-            ], 200);
+            return new UserResource($model);
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -197,6 +187,58 @@ class User extends Authenticatable
 
         try {
             $model->delete();
+
+            DB::commit();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $model
+     * @return void
+     */
+    public static function restoreRecord($model)
+    {
+        DB::beginTransaction();
+
+        try {
+            $model->restore();
+
+            DB::commit();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $model
+     * @return void
+     */
+    public static function forceDeleteRecord($model)
+    {
+        DB::beginTransaction();
+
+        try {
+            $model->forceDelete();
 
             DB::commit();
 

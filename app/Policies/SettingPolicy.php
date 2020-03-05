@@ -33,7 +33,7 @@ class SettingPolicy
      */
     public function view(User $user, Setting $setting)
     {
-        //
+        return $user->hasPermission('view-moui-setting');
     }
 
     /**
@@ -45,7 +45,7 @@ class SettingPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasPermission('view-any-moui-setting');
     }
 
     /**
@@ -56,7 +56,7 @@ class SettingPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasPermission('create-moui-setting');
     }
 
     /**
@@ -68,7 +68,7 @@ class SettingPolicy
      */
     public function update(User $user, Setting $setting)
     {
-        //
+        return $user->hasPermission('update-moui-setting');
     }
 
     /**
@@ -80,7 +80,7 @@ class SettingPolicy
      */
     public function delete(User $user, Setting $setting)
     {
-        //
+        return $user->hasPermission('delete-moui-setting');
     }
 
     /**
@@ -92,7 +92,7 @@ class SettingPolicy
      */
     public function restore(User $user, Setting $setting)
     {
-        //
+        return $user->hasPermission('restore-moui-setting');
     }
 
     /**
@@ -104,6 +104,6 @@ class SettingPolicy
      */
     public function forceDelete(User $user, Setting $setting)
     {
-        //
+        return $user->hasPermission('force-delete-moui-setting');
     }
 }

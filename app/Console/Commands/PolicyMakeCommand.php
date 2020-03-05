@@ -56,12 +56,12 @@ class PolicyMakeCommand extends GeneratorCommand
     {
         $model = $this->userProviderModel();
 
-        if (! $model) {
+        if (!$model) {
             return $stub;
         }
 
         return str_replace(
-            $this->rootNamespace().'User',
+            $this->rootNamespace() . 'User',
             $model,
             $stub
         );
@@ -78,7 +78,7 @@ class PolicyMakeCommand extends GeneratorCommand
     {
         $model = str_replace('/', '\\', $model);
 
-        $namespaceModel = $this->laravel->getNamespace().$model;
+        $namespaceModel = $this->laravel->getNamespace() . $model;
 
         if (Str::startsWith($model, '\\')) {
             $stub = str_replace('NamespacedDummyModel', trim($model, '\\'), $stub);
@@ -87,7 +87,9 @@ class PolicyMakeCommand extends GeneratorCommand
         }
 
         $stub = str_replace(
-            "use {$namespaceModel};\nuse {$namespaceModel};", "use {$namespaceModel};", $stub
+            "use {$namespaceModel};\nuse {$namespaceModel};",
+            "use {$namespaceModel};",
+            $stub
         );
 
         $model = class_basename(trim($model, '\\'));
@@ -104,6 +106,8 @@ class PolicyMakeCommand extends GeneratorCommand
 
         $stub = str_replace('DummyUser', $dummyUser, $stub);
 
+        $stub = str_replace('appsName', env('APP_NAME'), $stub);
+
         return str_replace('DocDummyPluralModel', Str::snake(Str::pluralStudly($dummyModel), ' '), $stub);
     }
 
@@ -115,8 +119,8 @@ class PolicyMakeCommand extends GeneratorCommand
     protected function getStub()
     {
         return $this->option('model')
-                    ? __DIR__.'/stubs/policy.stub'
-                    : __DIR__.'/stubs/policy.plain.stub';
+            ? __DIR__ . '/stubs/policy.stub'
+            : __DIR__ . '/stubs/policy.plain.stub';
     }
 
     /**
@@ -127,7 +131,7 @@ class PolicyMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Policies';
+        return $rootNamespace . '\Policies';
     }
 
     /**

@@ -20,9 +20,12 @@ export default {
         WebFontLoader.load({
             custom: {
                 families: ['Roboto', 'Nunito', 'Ubuntu Mono', 'Material Icons'],
-                urls: ['/fonts/webfont.min.css']
+                urls: [`/fonts/webfont.min.css`]
             },
-            active: this.setFontLoaded
+            
+            active: this.setFontLoaded,
+
+            timeout: 2000
         })
     },
 
@@ -35,9 +38,3 @@ export default {
     }
 };
 </script>
-
-<style lang="sass">
-    @import '@sass/card.sass'
-    @import '@sass/general.sass'
-    @import '@sass/textField.sass'
-</style>

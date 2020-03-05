@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
-use Laravel\Passport\Passport;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Resources\Json\Resource;
+use App\Models\Client;
+use App\Models\Token;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Support\Facades\Gate;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,12 @@ class AuthServiceProvider extends ServiceProvider
         Passport::routes(function ($router) {
             $router->forAccessTokens();
         });
+
+        Passport::loadKeysFrom(storage_path('oauth'));
+
+        Passport::useTokenModel(Token::class);
+
+        Passport::useClientModel(Client::class);
 
         Passport::tokensExpireIn(now()->addDays(15));
 

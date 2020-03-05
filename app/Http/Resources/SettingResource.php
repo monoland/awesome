@@ -25,7 +25,10 @@ class SettingResource extends JsonResource
             'description' => optional($this)->description ?: '<a href="https://github.com/monoland/awesome" target="_blank">Monoland</a> adalah sebuah penggabungan dari expressive dan elegant syntax PHP + Modern Javascript Framework yang di bangun dari <a href="https://laravel.com/" target="_blank">Laravel</a> untuk Backend, dan <a href="https://vuejs.org" target="_blank">Vuejs</a> dan <a href="https://vuetifyjs.com" target="_blank">Vuetify</a> pada Frontend.',
             'logo' => optional($this)->logo ?: url('/images/logo-holder.png'),
             'background' => optional($this)->background ?: url('/images/back-holder.jpg'),
-            'updated_at' => (string) optional($this)->updated_at,
+            'updated_at' => (string) $this->updated_at,
+
+            'mobile_title' => $this->name,
+            'mobile_subtitle' => "updated: {$this->updated_at}",
         ];
     }
 }

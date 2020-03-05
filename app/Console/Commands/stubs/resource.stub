@@ -18,6 +18,9 @@ class DummyClass extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'updated_at' => (string) $this->updated_at,
+
+            'mobile_title' => $this->name,
+            'mobile_subtitle' => "updated: {$this->updated_at}",
         ];
     }
 }

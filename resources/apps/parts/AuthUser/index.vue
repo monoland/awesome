@@ -1,50 +1,120 @@
 <template>
-    <v-img class="with-darkdrop" :class="$root.theme + '--text'" :src="user.background" :aspect-ratio="16/9">
-        <div class="d-flex flex-column fill-height">
-            <div class="d-flex align-end justify-start px-4 pb-2" style="flex: 1 1 auto;">
-                <v-avatar color="white" size="56" class="elevation-2">
-                    <v-img :src="user.avatar"></v-img>
-                </v-avatar>
+    <v-img 
+        :class="[theme + ' lighten-2', { 'with-backdrop': withBackdrop }]" 
+        :src="user.background"  
+        :aspect-ratio="showActions ? 4/3 : 16/9"
+    >
+        <div class="d-flex flex-column align-center justify-center user-select-none" style="height: 100%;">
+            <v-avatar color="white" size="64" class="my-3">
+                <v-img :src="user.avatar"></v-img>
+            </v-avatar>
+
+            <div class="d-flex flex-column align-center">
+                <div class="white--text subtitle-2">{{ user.name }}</div>
+                <div class="white--text font-nunito caption font-weight-light line-height-1">{{ user.email }}</div>
             </div>
-            
-            <div class="d-block">
-                <v-list-item style="max-height: 56px; cursor: pointer;" @click="$emit('click')">
-                    <v-list-item-content>
-                        <v-list-item-title class="white--text">{{ user.name }}</v-list-item-title>
-                        <v-list-item-subtitle class="white--text">{{ user.email }}</v-list-item-subtitle>
-                    </v-list-item-content>
-                    <v-list-item-icon>
-                        <v-icon dark>arrow_drop_down</v-icon>
-                    </v-list-item-icon>
-                </v-list-item>
-            </div>
+
+            <div class="d-flex justify-center mt-2" v-if="showActions">
+                <v-tooltip nudge-top="-8" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn dark icon v-on="on" @click="openRoute(profile)">
+                            <v-icon style="font-size: 18px;">perm_identity</v-icon>
+                        </v-btn>
+                    </template>
+                    <span class="text-uppercase">Profile</span>
+                </v-tooltip>
+
+                <v-tooltip nudge-top="-8" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn dark icon v-on="on" @click="openRoute(password)">
+                            <v-icon style="font-size: 18px;">lock</v-icon>
+                        </v-btn>
+                    </template>
+                    <span class="text-uppercase">Password</span>
+                </v-tooltip>
+
+                <v-tooltip nudge-top="-8" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn dark icon v-on="on" @click="openRoute(notification)">
+                            <v-icon style="font-size: 18px;">notifications</v-icon>
+                        </v-btn>
+                    </template>
+                    <span class="text-uppercase">Notification</span>
+                </v-tooltip>
+
+                <v-tooltip nudge-top="-8" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn dark icon v-on="on" @click="signout">
+                            <v-icon style="font-size: 18px;">exit_to_app</v-icon>
+                        </v-btn>
+                    </template>
+                    <span class="text-uppercase">Signout</span>
+                </v-tooltip>
+            </div>            
         </div>
     </v-img>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
     name: 'v-auth-user',
 
-    computed: {
-        ...mapState(['auth']),
+    props: {
+        profile: {
+            type: Object,
+            default:() => ({ name: 'moui-profile' })
+        },
+
+        password: {
+            type: Object,
+            default:() => ({ name: 'moui-password' })
+        },
+
+        notification: {
+            type: Object,
+            default:() => ({ name: 'moui-notification' })
+        },
+
+        showActions: {
+            type: Boolean,
+            default: false
+        },
     },
 
-    data:() => ({
-        user: {}
-    }),
+    computed: {
+        ...mapState(['theme', 'user']),
 
-    mounted() {
-        this.user = this.auth.user;
-
-        this.$store.subscribe( mutation => {
-            if (mutation.type === 'COMMIT_USER') {
-                this.user = mutation.payload;
-                this.$root.theme = mutation.payload.theme;
+        withBackdrop: function() {
+            if (this.user && this.user.background) {
+                return true;
             }
-        });
+
+            return false;
+        }
+    },
+
+    methods: {
+        ...mapActions(['getUserInfo', 'signOut']),
+
+        signout: function() {
+            this.signOut().then(stores => {
+                this.$router.push({ name: 'moui-login' });
+                
+                this.$nextTick(() => stores.clear());
+            });
+        },
+
+        openRoute: function(routeObject) {
+            if (this.$router.currentRoute.name !== routeObject.name) {
+                this.$router.push(routeObject);
+            }
+        }
+    },
+
+    created() {
+        this.getUserInfo({ url: '/api/user' });
     }
-}
+};
 </script>

@@ -33,7 +33,7 @@ class DummyClass
      */
     public function view(DummyUser $user, DummyModel $dummyModel)
     {
-        //
+        return $user->hasPermission('view-appsName-dummyModel');
     }
 
     /**
@@ -45,7 +45,7 @@ class DummyClass
      */
     public function viewAny(DummyUser $user)
     {
-        //
+        return $user->hasPermission('view-any-appsName-dummyModel');
     }
 
     /**
@@ -56,7 +56,7 @@ class DummyClass
      */
     public function create(DummyUser $user)
     {
-        //
+        return $user->hasPermission('create-appsName-dummyModel');
     }
 
     /**
@@ -68,7 +68,7 @@ class DummyClass
      */
     public function update(DummyUser $user, DummyModel $dummyModel)
     {
-        //
+        return $user->hasPermission('update-appsName-dummyModel');
     }
 
     /**
@@ -80,7 +80,7 @@ class DummyClass
      */
     public function delete(DummyUser $user, DummyModel $dummyModel)
     {
-        //
+        return $user->hasPermission('delete-appsName-dummyModel');
     }
 
     /**
@@ -92,7 +92,7 @@ class DummyClass
      */
     public function restore(DummyUser $user, DummyModel $dummyModel)
     {
-        //
+        return $user->hasPermission('restore-appsName-dummyModel');
     }
 
     /**
@@ -104,6 +104,6 @@ class DummyClass
      */
     public function forceDelete(DummyUser $user, DummyModel $dummyModel)
     {
-        //
+        return $user->hasPermission('force-delete-appsName-dummyModel');
     }
 }

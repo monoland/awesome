@@ -1,4 +1,13 @@
-@media (min-width: 320px) and (max-width: 480px)
-    .v-application--is-ltr 
-        .v-list-item__avatar:first-child
-            margin-right: 16px
+.v-list
+    &--flat
+        border-radius: 0
+
+.v-list.permissions
+    .v-list-item
+        padding: 0
+        
+        &__action
+            margin: 8px 32px 8px 0
+    
+    .v-subheader
+        padding: 0

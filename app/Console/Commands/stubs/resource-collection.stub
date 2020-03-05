@@ -26,6 +26,41 @@ class DummyClass extends ResourceCollection
      */
     public function with($request)
     {
-        return [];
+        return [
+            'setups' => [
+                'icon' => 'home',
+
+                'title' => 'Untitled',
+
+                'softDeletes' => $request->user()->hasAnyPermission('restore-AppsName-ResourceName', 'force-delete-AppsName-ResourceName'),
+
+                'findOn' => 'name',
+
+                'combos' => [],
+
+                /**
+                 * filters
+                 * ['text' => 'filter none', 'icon' => 'select_all', 'value' => null],
+                 * ['text' => 'filter some', 'icon' => 'icon', 'value' => ['filterOn' => 'field', 'filterBy' => 'text']],
+                 */
+                'filters' => [],
+
+                'headers' => [
+                    ['text' => 'Name', 'value' => 'name'],
+                    ['text' => 'Updated', 'value' => 'updated_at', 'class' => 'field-datetime'],
+                ],
+
+                /**
+                 * permissions
+                 * ['create' => bool, 'update' => bool, 'delete' => bool, 'restore' => bool, 'forceDelete' => bool]
+                 */
+                'permissions' => $request->user()->permissionsOnModule('AppsName-ResourceName'),
+
+                'record' => [
+                    'id' => null,
+                    'name' => null
+                ]
+            ]
+        ];
     }
 }

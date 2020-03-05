@@ -18,7 +18,7 @@ class DummyClass extends Controller
      */
     public function index(Request $request, ParentDummyModelClass $ParentDummyModelVariable)
     {
-        // $this->authorize('viewAny', DummyModelClass::class);
+        $this->authorize('viewAny', DummyModelClass::class);
 
         return new DummyModelClassCollection(
             $ParentDummyModelVariable->DummyModelVariables()->filterOn($request)->paginate($request->itemsPerPage)
@@ -34,9 +34,9 @@ class DummyClass extends Controller
      */
     public function store(Request $request, ParentDummyModelClass $ParentDummyModelVariable)
     {
-        // $this->authorize('create', DummyModelClass::class);
+        $this->authorize('create', DummyModelClass::class);
 
-        // $this->validate($request, []);
+        $this->validate($request, []);
 
         return DummyModelClass::storeRecord($request, $ParentDummyModelVariable);
     }
@@ -63,9 +63,9 @@ class DummyClass extends Controller
      */
     public function update(Request $request, ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
     {
-        // $this->authorize('update', $DummyModelVariable);
+        $this->authorize('update', $DummyModelVariable);
 
-        // $this->validate($request, []);
+        $this->validate($request, []);
 
         return DummyModelClass::updateRecord($request, $DummyModelVariable);
     }
@@ -79,8 +79,34 @@ class DummyClass extends Controller
      */
     public function destroy(ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
     {
-        // $this->authorize('delete', $DummyModelVariable);
+        $this->authorize('delete', $DummyModelVariable);
 
         return DummyModelClass::destroyRecord($DummyModelVariable);
+    }
+
+    /**
+     * Restore the specified resource from deleted
+     *
+     * @param \DummyFullModelClass  $DummyModelVariable
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
+    {
+        $this->authorize('restore', DummyModelClass::class);
+
+        return DummyModelClass::restoreRecord($DummyModelVariable);
+    }
+
+    /**
+     * Force Delete the specified resource
+     *
+     * @param \DummyFullModelClass $DummyModelVariable
+     * @return \Illuminate\Http\Response
+     */
+    public function forceDelete(ParentDummyModelClass $ParentDummyModelVariable, DummyModelClass $DummyModelVariable)
+    {
+        $this->authorize('forceDelete', DummyModelClass::class);
+
+        return DummyModelClass::forceDeleteRecord($DummyModelVariable);
     }
 }

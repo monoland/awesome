@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
+use App\Http\Resources\SettingResource;
 use App\Traits\HasMeta;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Resources\SettingResource;
-use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    use HasMeta;
+    use HasMeta, SoftDeletes;
 
     /**
      * The attributes that should be cast to native types.
@@ -22,18 +23,15 @@ class Setting extends Model
     ];
 
     /**
-     * Get the route key for the model.
+     * Undocumented function
      *
+     * @param [type] $value
      * @return void
      */
-    public function getRouteKeyName()
+    public function resolveRouteBinding($value)
     {
-        return 'name';
+        return $this->where($this->getRouteKeyName(), $value)->first();
     }
-
-    /**
-     * Relationship
-     */
 
     /**
      * Scope for combo
@@ -51,16 +49,30 @@ class Setting extends Model
         $sortBy = strtolower($request->sortBy) ?: null;
         $sortAz = $request->sortDesc ? 'desc' : 'asc';
         $findBy = strtolower($request->findBy) ?: null;
-        $findIn = strtolower($request->findIn) ?: null;
+        $findOn = strtolower($request->findOn) ?: null;
+
+        $trashed = $request->trashed ?: false;
+        $filterOn = strtolower($request->filterOn) ?: null;
+        $filterBy = strtolower($request->filterBy) ?: null;
 
         $mquery = $query;
 
+        if ($trashed) {
+            $mquery = $mquery->onlyTrashed();
+        }
+
         if ($findBy) {
-            $mquery = $mquery->whereRaw("LOWER({$findIn}) LIKE '%{$findBy}%'");
+            $mquery = $mquery->whereRaw("LOWER({$findOn}) LIKE ?", ["%{$findBy}%"]);
+        }
+
+        if ($filterBy) {
+            $mquery = $mquery->whereRaw("{$filterOn} = ?", [$filterBy]);
         }
 
         if ($sortBy) {
             $mquery = $mquery->orderBy($sortBy, $sortAz);
+        } else {
+            $mquery = $mquery->orderBy('id', $sortAz);
         }
 
         return $mquery;
@@ -79,7 +91,7 @@ class Setting extends Model
         try {
             $model = new static;
             // ...
-            // $model->save();
+            $model->save();
 
             DB::commit();
 
@@ -106,15 +118,36 @@ class Setting extends Model
         DB::beginTransaction();
 
         try {
-            if ($model->name === 'web-info') {
-                $model->company = $request->company;
-                $model->companyExtended = $request->companyExtended;
-                $model->product = $request->product;
-                $model->productExtended = $request->productExtended;
-                $model->slogan = $request->slogan;
-                $model->description = $request->description;
-                $model->logo = $request->logo;
+            if ($request->has('background')) {
                 $model->background = $request->background;
+            }
+
+            if ($request->has('logo')) {
+                $model->logo = $request->logo;
+            }
+
+            if ($request->has('company')) {
+                $model->company = $request->company;
+            }
+
+            if ($request->has('companyExtended')) {
+                $model->companyExtended = $request->companyExtended;
+            }
+
+            if ($request->has('product')) {
+                $model->product = $request->product;
+            }
+
+            if ($request->has('productExtended')) {
+                $model->productExtended = $request->productExtended;
+            }
+
+            if ($request->has('slogan')) {
+                $model->slogan = $request->slogan;
+            }
+
+            if ($request->has('description')) {
+                $model->description = $request->description;
             }
 
             $model->save();
@@ -144,6 +177,58 @@ class Setting extends Model
 
         try {
             $model->delete();
+
+            DB::commit();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $model
+     * @return void
+     */
+    public static function restoreRecord($model)
+    {
+        DB::beginTransaction();
+
+        try {
+            (new static)->withTrashed()->whereRaw("id = {$model}")->restore();
+
+            DB::commit();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $model
+     * @return void
+     */
+    public static function forceDeleteRecord($model)
+    {
+        DB::beginTransaction();
+
+        try {
+            (new static)->withTrashed()->whereRaw("id = {$model}")->forceDelete();
 
             DB::commit();
 

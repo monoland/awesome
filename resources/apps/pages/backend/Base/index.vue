@@ -1,111 +1,73 @@
 <template>
-    <v-scale-transition origin="center center">
-        <v-app v-cloak>
-            <v-navigation-drawer v-model="$root.drawer" app>
-                <v-auth-user @click="expand = !expand"/>
+    <v-app v-cloak>
+        <v-navigation-drawer v-model="$root.drawer" app>
+            <v-toolbar :color="theme" dark flat>
+                <v-toolbar-title class="subtitle-1">
+                    <span class="font-weight-light white--text">{{ info.company }}</span>
+                    <span class="font-weight-bold white--text">{{ info.companyExtended }}</span>
+                </v-toolbar-title>
+            </v-toolbar>
 
-                <v-expand-transition>
-                    <div v-show="expand">
-                        <v-list>
-                            <v-list-item :active-class="$root.theme + '--text'" :to="{ name: 'backend-profile' }">
-                                <v-list-item-action><v-icon>perm_identity</v-icon></v-list-item-action>
-                                <v-list-item-content>
-                                    <v-list-item-title>Profile</v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
+            <v-responsive 
+                class="overflow-y-auto white"
+                :height="device.mobile ? `calc(100vh - 56px)` : `calc(100vh - 64px)`"
+            >
+                <v-auth-user show-actions></v-auth-user>
+                <v-auth-menu></v-auth-menu>
+            </v-responsive>
 
-                            <v-list-item :active-class="$root.theme + '--text'" :to="{ name: 'backend-password' }">
-                                <v-list-item-action><v-icon>lock</v-icon></v-list-item-action>
-                                <v-list-item-content>
-                                    <v-list-item-title>Katasandi</v-list-item-title>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list>
+            <template v-slot:append>
+                <div class="upload-wrapper">
+                    <div id="upload-button"></div>
+                </div>
+            </template>
+        </v-navigation-drawer>
 
-                        <v-divider></v-divider>
-                    </div>
-                </v-expand-transition>
+        <v-auth-toolbar></v-auth-toolbar>
 
-                <v-list>
-                    <template v-for="(menu, index) in menus">
-                        <v-list-item :active-class="$root.theme + '--text'" :to="menu.to" :key="index" v-if="menu.type === 'item'">
-                            <v-list-item-action><v-icon>{{ menu.icon }}</v-icon></v-list-item-action>
-                            <v-list-item-content>
-                                <v-list-item-title>{{ menu.text }}</v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
+        <v-content :class="`${theme} lighten-5`">
+            <router-view :key="$route.path"></router-view>
 
-                        <v-divider :class="menu.class" :key="index" v-else-if="menu.type === 'divider'"></v-divider>
+            <v-upload-desktop></v-upload-desktop>
+            <v-upload-mobile></v-upload-mobile>
+        </v-content>
 
-                        <v-subheader 
-                            class="text-uppercase" 
-                            :class="menu.class" 
-                            :key="index"
-                            v-else-if="menu.type === 'subheader'"
-                        >{{ menu.text }}</v-subheader>
-
-                        <v-list-group :prepend-icon="menu.icon" :key="index" v-else>
-                            <v-list-item slot="activator">
-                                <v-list-item-title>{{ menu.text }}</v-list-item-title>    
-                            </v-list-item>
-
-                            <template v-for="(item, idx) in menu.items">
-                                <v-list-item :to="item.to" :key="idx">
-                                    <v-list-item-action>
-                                        <v-icon>{{ item.icon }}</v-icon>
-                                    </v-list-item-action>
-                                    
-                                    <v-list-item-content>
-                                        <v-list-item-title>{{ item.text }}</v-list-item-title>
-                                    </v-list-item-content>
-                                </v-list-item>
-                            </template>
-                        </v-list-group>
-                    </template>
-
-                    <v-list-item :active-class="$root.theme + '--text'" @click="homeRouter">
-                        <v-list-item-action><v-icon>exit_to_app</v-icon></v-list-item-action>
-                        <v-list-item-content>
-                            <v-list-item-title>Keluar</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </v-list>
-            </v-navigation-drawer>
-
-            <v-content :class="`${$root.theme} lighten-5`">
-                <router-view :key="$route.path"></router-view>
-            </v-content>
-
-            <v-page-upload></v-page-upload>
-
-            <v-snackbar v-model="snackbar.state" :color="snackbar.color" :timeout="3500">
-                {{ snackbar.text }}
-                <v-btn dark text @click.stop="snackbarClose">Tutup</v-btn>
-            </v-snackbar>
-        </v-app>
-    </v-scale-transition>
+        <v-snackbar v-model="snackbar.state" :color="snackbar.color" :timeout="3500">
+            {{ snackbar.text }}
+            <v-btn dark text @click.stop="snackbarClose">Tutup</v-btn>
+        </v-snackbar>
+    </v-app>
 </template>
 
 <script>
 import { baseMixins } from '@apps/mixins/BaseMixins';
+import { domainURL } from '@apps/.env';
 
 export default {
-    name: 'backend-base',
+    name: 'moui-base',
 
+    route: 
+    { 
+        path: '/home', 
+        apps: 'moui', 
+        auth: true, 
+        root: true 
+    },
+    
     mixins: [baseMixins],
 
-    data:() => ({
-        expand: false
-    })
-};
+    created() 
+    {
+        this.setPage({
+            domainURL: domainURL.BASE
+        });
+    },
+}
 </script>
 
 <style lang="sass">
-    @import '@sass/backdrop.sass'
     @import '@sass/button.sass'
-    @import '@sass/dataTable.sass'
+    @import '@sass/expansionpanel.sass'
     @import '@sass/list.sass'
-    @import '@sass/page.sass'
-    @import '@sass/navigationDrawer.sass'
-    @import '@sass/toolbar.sass'
+    @import '@sass/tabs.sass'
 </style>

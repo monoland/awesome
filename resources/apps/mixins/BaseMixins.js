@@ -1,158 +1,128 @@
-import shortid from 'shortid';
-import { mapState, mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export const baseMixins = {
-    computed: {
-        ...mapState(['auth', 'http', 'mobile', 'page', 'table', 'upload', 'snackbar']),
-
-        user: function() {
-            return this.auth.user;
-        },
-
-        menus: function() {
-            return this.auth.menus;
-        }
+    computed: 
+    {
+        ...mapState([
+            'device', 'info', 'page', 'search', 
+            'snackbar', 'table', 'theme', 'upload'
+        ]),
     },
 
-    data:() => ({
-        searchState: false,
-        resetState: false
-    }),
-
-    created() {
-        if (!this.http) {
-            this.initData();
-        }
-
-        this.$root.theme = this.auth.user.theme;
+    methods: 
+    {
+        ...mapActions([
+            'getRecords', 'setPage', 
+            'selectedRecord', 'selectedRecordUnset',
+            'initUploadLibrary', 'setTableParams', 'setToolbar', 
+            'snackbarClose', 'tableSelectedSet', 'tableSelectedRemove',
+        ]),
     },
 
     mounted() {
-        this.setUploadOptions({
-            acceptFiles: this.upload.acceptFiles ? this.upload.acceptFiles : 'image/png, image/jpeg',
-            allowedExtensions: this.upload.allowedExtensions ? this.upload.allowedExtensions : ['png', 'jpg', 'jpeg'],
-            requestEndpoint: this.upload.requestEndpoint ? this.upload.requestEndpoint : '/api/media',
-            uuid: shortid.generate()
-        }).then(() => {
-            this.setUpload();
+        this.initUploadLibrary({
+            baseEndpoint: 'https://awesome.dev/api/document'
         });
     },
 
-    methods: {
-        ...mapActions([
-            'recordFetch',  'initData', 'removeSelectedRecord', 'signout',
-            'snackbarClose', 'setButton', 'setSelectedRecord', 'setUpload', 'setUploadOptions'
-        ]),
-
-        homeRouter: function() {
-            this.signout().then(() => {
-                this.$root.drawer = null;
-                this.$router.push({ name: 'login' });
-            });
-        }
-    },
-
-    watch: {
-        'page.state': {
-            handler: function(state, oldState) {
-                if (state === 'newState' && oldState === null) {
-                    this.searchState = false;
-                    this.resetState = false;
-                }
-
-                if (state === 'searchState' && oldState === 'newState') {
-                    this.searchState = true;
-                    this.resetState = false;
-                }
-
-                if (state === 'newState' && oldState === 'searchState') {
-                    this.searchState = false;
-                    this.resetState = true;
-
-                    this.setButton(state);
-                }
-            },
-
-            deep: true
+    watch: 
+    {
+        'page.state': function(state) {
+            this.setToolbar(state);
         },
 
-        'page.findBy': {
-            handler: function(findBy, oldFind) {
-                if (this.searchState && findBy !== null) {
-                    let searchOptions = {
-                        page: 1,
-                        itemsPerPage: this.table.options.itemsPerPage,
-                        sortBy: this.table.options.sortBy[0],
-                        sortDesc: this.table.options.sortDesc[0],
-                        groupBy: this.table.options.groupBy[0],
-                        groupDesc: this.table.options.groupDesc[0],
-                        mustSort: this.table.options.mustSort,
-                        multiSort: false,
-                        findBy: findBy,
-                        findIn: this.page.findIn
-                    };
-
-                    this.recordFetch(searchOptions);
-                }
-
-                if (this.resetState && oldFind !== '') {
-                    let searchOptions = {
-                        page: 1,
-                        itemsPerPage: this.table.options.itemsPerPage,
-                        sortBy: this.table.options.sortBy[0],
-                        sortDesc: this.table.options.sortDesc[0],
-                        groupBy: this.table.options.groupBy[0],
-                        groupDesc: this.table.options.groupDesc[0],
-                        mustSort: this.table.options.mustSort,
-                        multiSort: false
-                    };
-
-                    this.recordFetch(searchOptions).then(() => {
-                        this.resetState = false
-                    });
-                }
-            },
-
-            deep: true
+        'search.findBy': function(findBy) {
+            this.setTableParams(Object.assign({}, {
+                page: this.table.options.page,
+                itemsPerPage: this.table.options.itemsPerPage,
+                sortBy: this.table.options.sortBy[0],
+                sortDesc: this.table.options.sortDesc[0],
+                filterOn: this.table.filter ? this.table.filter.filterOn : null, 
+                filterBy: this.table.filter ? this.table.filter.filterBy : null,
+                findOn: findBy ? this.search.findOn : null,
+                findBy: findBy ? findBy : null,
+                trashed: this.table.trashed
+            }));
         },
-
+        
         'table.options': {
             handler: function(options) {
                 if (!options.sortBy) return;
 
-                let searchOptions = {
+                this.setTableParams(Object.assign({}, {
                     page: options.page,
                     itemsPerPage: options.itemsPerPage,
                     sortBy: options.sortBy[0],
                     sortDesc: options.sortDesc[0],
-                    groupBy: options.groupBy[0],
-                    groupDesc: options.groupDesc[0],
-                    mustSort: options.mustSort,
-                    multiSort: false
-                };
-
-                this.recordFetch(searchOptions);
+                    filterOn: this.table.filter ? this.table.filter.filterOn : null, 
+                    filterBy: this.table.filter ? this.table.filter.filterBy : null,
+                    findOn: this.search.findBy ? this.search.findOn : null,
+                    findBy: this.search.findBy ? this.search.findBy : null,
+                    trashed: this.table.trashed
+                }));
             },
 
             deep: true
         },
 
-        'table.selected': {
-            handler: function(selected) {
-                if (selected[0]) {
-                    this.setSelectedRecord(selected[0]);
-                } else {
-                    this.removeSelectedRecord();
-                    
-                    if (this.page.findBy === null) {
-                        this.setButton('newState');
-                    } else {
-                        this.setButton('searchState');
+        'table.filter': {
+            handler: function(filter) {
+                if (!this.table.options.sortBy) return;
+
+                this.setTableParams({ 
+                    page: this.table.options.page,
+                    itemsPerPage: this.table.options.itemsPerPage,
+                    sortBy: this.table.options.sortBy[0],
+                    sortDesc: this.table.options.sortDesc[0],
+                    filterOn: filter ? filter.filterOn : null, 
+                    filterBy: filter ? filter.filterBy : null,
+                    findOn: this.search.findBy ? this.search.findOn : null,
+                    findBy: this.search.findBy ? this.search.findBy : null,
+                    trashed: this.table.trashed
+                });
+            },
+
+            deep: true
+        },
+
+        'table.selected': function(selected) {
+            if (selected && 
+                typeof selected === 'object' && 
+                selected.constructor === Array && 
+                selected.length
+            ) {
+                this.selectedRecord();
+            } else {
+                this.selectedRecordUnset();
+            }
+        },
+
+        'table.trashed': function(trashed) {
+            this.setTableParams({ 
+                page: this.table.options.page,
+                itemsPerPage: this.table.options.itemsPerPage,
+                sortBy: this.table.options.sortBy[0],
+                sortDesc: this.table.options.sortDesc[0],
+                filterOn: this.table.filter ? this.table.filter.filterOn : null, 
+                filterBy: this.table.filter ? this.table.filter.filterBy : null,
+                findOn: this.search.findBy ? this.search.findOn : null,
+                findBy: this.search.findBy ? this.search.findBy : null,
+                trashed: trashed
+            });
+        },
+
+        'table.params': {
+            handler: function(params) {
+                Object.keys(params).forEach(key => {
+                    if (params[key] === null || typeof params[key] === 'undefined') {
+                        delete params[key];
                     }
-                }
+                });
+                
+                this.getRecords(params);
             },
 
             deep: true
-        },
+        }
     }
 };

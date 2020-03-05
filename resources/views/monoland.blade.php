@@ -13,12 +13,8 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5">
     <title>Monoland</title>
-    <link rel="manifest" href="/manifest.json">
+
     <style>
         [v-cloak] {
             display: none;
@@ -48,9 +44,9 @@
         </div>
     </noscript>
 
-    <script src="/scripts/core/manifest.js"></script>
-    <script src="/scripts/core/vendor.js"></script>
-    <script src="/scripts/core/apps.js"></script>
+    <script src="/scripts/manifest.js"></script>
+    <script src="/scripts/vendor.js"></script>
+    <script src="/scripts/apps.js"></script>
 </body>
 
 </html>

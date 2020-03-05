@@ -6,13 +6,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\DummyClassResource;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DummyClass extends Model
 {
+    use SoftDeletes;
+    
     /**
-     * Relationship
+     * Undocumented function
+     *
+     * @param [type] $value
+     * @return void
      */
-
+    public function resolveRouteBinding($value)
+    {
+        return $this->withTrashed()->where($this->getRouteKeyName(), $value)->firstOrFail();
+    }
+    
     /**
      * Scope for combo
      */
@@ -29,16 +39,30 @@ class DummyClass extends Model
         $sortBy = strtolower($request->sortBy) ?: null;
         $sortAz = $request->sortDesc ? 'desc' : 'asc';
         $findBy = strtolower($request->findBy) ?: null;
-        $findIn = strtolower($request->findIn) ?: null;
+        $findOn = strtolower($request->findOn) ?: null;
+
+        $trashed = $request->trashed ?: false;
+        $filterOn = strtolower($request->filterOn) ?: null;
+        $filterBy = strtolower($request->filterBy) ?: null;
 
         $mquery = $query;
 
+        if ($trashed) {
+            $mquery = $mquery->onlyTrashed();
+        }
+
         if ($findBy) {
-            $mquery = $mquery->whereRaw("LOWER({$findIn}) LIKE '%{$findBy}%'");
+            $mquery = $mquery->whereRaw("LOWER({$findOn}) LIKE ?", ["%{$findBy}%"]);
+        }
+
+        if ($filterBy) {
+            $mquery = $mquery->whereRaw("{$filterOn} = ?", [$filterBy]);
         }
 
         if ($sortBy) {
             $mquery = $mquery->orderBy($sortBy, $sortAz);
+        } else {
+            $mquery = $mquery->orderBy('id', $sortAz);
         }
 
         return $mquery;
@@ -112,6 +136,58 @@ class DummyClass extends Model
 
         try {
             $model->delete();
+
+            DB::commit();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $model
+     * @return void
+     */
+    public static function restoreRecord($model)
+    {
+        DB::beginTransaction();
+
+        try {
+            $model->restore();
+
+            DB::commit();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $model
+     * @return void
+     */
+    public static function forceDeleteRecord($model)
+    {
+        DB::beginTransaction();
+
+        try {
+            $model->forceDelete();
 
             DB::commit();
 

@@ -8,9 +8,10 @@ mix.webpackConfig({
         alias: {
             '@apps': __dirname + '/resources/apps',
             '@sass': __dirname + '/resources/sass'
-        }
+        },
+        symlinks: false
     }
 });
 
-mix.js('resources/apps/index.js', 'scripts/core/apps.js');
+mix.js('resources/apps/index.js', 'scripts/apps.js');
 mix.extract();

@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Schema;
+
 trait HasMeta
 {
     /**
@@ -73,7 +75,7 @@ trait HasMeta
             return;
         }
 
-        if (\Schema::hasColumn($this->getTable(), $key)) {
+        if (Schema::hasColumn($this->getTable(), $key)) {
             parent::setAttribute($key, $value);
 
             return;

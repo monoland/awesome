@@ -26,6 +26,31 @@ class SettingCollection extends ResourceCollection
      */
     public function with($request)
     {
-        return [];
+        return [
+            'setups' => [
+                'icon' => 'home',
+
+                'title' => 'Setting',
+
+                'softDeletes' => false,
+
+                'findOn' => 'name',
+
+                'combos' => [],
+
+                'filters' => [],
+
+                'headers' => [],
+
+                'permissions' => [
+                    'create' => $request->user()->hasPermission('update-moui-setting')
+                ],
+
+                'record' => [
+                    'id' => null,
+                    'name' => null
+                ]
+            ]
+        ];
     }
 }

@@ -4,6 +4,9 @@ import { siteKey, secretKey } from '@apps/.env.js';
 
 class AuthProvider
 {
+    /**
+     * class constructor
+     */
     constructor()
     {
         this.siteKey = siteKey;
@@ -34,11 +37,41 @@ class AuthProvider
         });        
     }
 
-    get user()
+    /**
+     * get the current apps
+     */
+    get info()
     {
-        return this.store.getItem('user');
+        let info = this.store.getItem('info');
+        
+        return info ? info : {};
     }
 
+    /**
+     * set the current info to store
+     */
+    set info(response)
+    {
+        if (!response) {
+            return;
+        }
+
+        this.store.setItem('info', response);
+    }
+    
+    /**
+     * get the current user
+     */
+    get user()
+    {
+        let user = this.store.getItem('user');
+        
+        return user ? user : {};
+    }
+
+    /**
+     * set the current user to store
+     */
     set user(response)
     {
         if (!response) {
@@ -48,35 +81,73 @@ class AuthProvider
         this.store.setItem('user', response);
     }
 
-    get apps()
+    /**
+     * get the modules for the current user
+     */
+    get modules()
     {
-        return this.store.getItem('apps');
+        return this.store.getItem('modules');
     }
 
-    set apps(apps)
+    /**
+     * set the modules to the store for the current user
+     */
+    set modules(modules)
     {
-        if (!apps) return;
+        if (!modules) return;
 
-        this.store.setItem('apps', apps);
+        this.store.setItem('modules', modules);
     }
 
-    get baseURL()
+    /**
+     * get the domain URL for backend data
+     */
+    get domainURL()
     {
-        return this.store.getItem('base_url');
+        return this.store.getItem('domain_url');
     }
 
-    set baseURL(baseURL)
+    /**
+     * set the domain URL for backend data
+     */
+    set domainURL(domainURL)
     {
-        if (!baseURL) return;
+        if (!domainURL) return;
 
-        this.store.setItem('base_url', baseURL);
+        this.store.setItem('domain_url', domainURL);
     }
 
+    /**
+     * get the active module URL for backend data
+     */
+    get moduleURL()
+    {
+        return this.store.getItem('module_url');
+    }
+
+    /**
+     * set the active module URL for backend data
+     */
+    set moduleURL(moduleURL)
+    {
+        if (!moduleURL) return;
+
+        this.store.setItem('module_url', moduleURL);
+    }
+
+    /**
+     * get the menus for active module
+     */
     get menus()
     {
-        return this.store.getItem('menus');
+        let menus = this.store.getItem('menus');
+        
+        return menus ? menus : {};
     }
 
+    /**
+     * set the menus for active module
+     */
     set menus(menus) 
     {
         if (!menus) return;
@@ -84,11 +155,17 @@ class AuthProvider
         this.store.setItem('menus', menus);
     }
 
+    /**
+     * get route registed status
+     */
     get registed()
     {
         return this.store.getItem('registed');
     }
 
+    /**
+     * set route registed status
+     */
     set registed(registed) 
     {
         if (!registed) return;
@@ -96,6 +173,27 @@ class AuthProvider
         this.store.setItem('registed', registed);
     }
 
+    /**
+     * get the domain URL for backend data
+     */
+    get theme()
+    {
+        return this.store.getItem('theme');
+    }
+
+    /**
+     * set the domain URL for backend data
+     */
+    set theme(theme)
+    {
+        if (!theme) return;
+
+        this.store.setItem('theme', theme);
+    }
+
+    /**
+     * get the active user token
+     */
     get token()
     {
         if (!this.store.getItem('token') || this.store.getItem('token').token_type === null) {
@@ -105,6 +203,9 @@ class AuthProvider
         return this.store.getItem('token').token_type + ' ' + this.store.getItem('token').access_token;
     }
 
+    /**
+     * set the active user token
+     */
     set token(response)
     {
         if (!response) return;
@@ -113,11 +214,17 @@ class AuthProvider
         this.store.setItem('token_create_at', Date.now());
     }
 
+    /**
+     * get the page csrf
+     */
     get csrf() 
     {
         return (document.head.querySelector('meta[name="csrf-token"]')).content;
     }
 
+    /**
+     * get expired status from current token
+     */
     get expired() 
     {
         let minute = parseInt((Date.now() - parseInt(this.store.getItem('token_create_at'))) / 1000);
@@ -126,20 +233,40 @@ class AuthProvider
         return minute >= expire;
     }
 
+    /**
+     * get check status of current token
+     */
     get check() 
     {
-        if (!this.store.getItem('token')) {
+        try {
+            if (!this.store.getItem('token')) {
+                return false;
+            }
+    
+            return !!this.store.getItem('token').access_token && !this.expired;    
+        } catch (error) {
+            this.store.clear();
+            
             return false;
         }
-
-        return !!this.store.getItem('token').access_token && !this.expired;
     }
 
+    /**
+     * get logged status of the current token
+     */
     get logged() 
     {
         return this.store.getItem('token') !== null;
     }
 
+    get stores()
+    {
+        return this.store;
+    }
+
+    /**
+     * clear all store data
+     */
     clear()
     {
         this.store.clear();

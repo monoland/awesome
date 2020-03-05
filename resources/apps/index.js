@@ -9,47 +9,40 @@ const appComponents = require.context('@apps/parts', true, /index\.vue$/);
 
 appComponents.keys().forEach(component => {
     const componentObject = appComponents(component).default;
-
     Vue.component(componentObject.name, componentObject);
 });
 
-/**
- * application build
- */
-import Apps from './pages/Apps.vue';
-import router from './plugins/router';
-import store from './plugins/store';
-import vuetify from './plugins/vuetify';
+import Apps from '@apps/pages/Apps';
+import router from '@apps/plugins/router';
+import store from '@apps/plugins/vuex';
+import vuetify from '@apps/plugins/vuetify';
+import { mapActions } from 'vuex';
 
 new Vue({
     router,
     store,
     vuetify,
 
-    data:() => ({
-        theme: null,
-        drawer: null,
-    }),
+    mounted() {
+        this.deviceResize();
 
-    beforeDestroy () {
         if (typeof window !== 'undefined') {
-            window.removeEventListener('resize', this.onResize, { passive: true })
+            window.addEventListener('resize', this.deviceResize, { passive: true })
         }
     },
 
-    mounted () {
-        this.onResize()
-        window.addEventListener('resize', this.onResize, { passive: true })
+    beforeDestroy () {
+        if (typeof window !== 'undefined') {
+            window.removeEventListener('resize', this.deviceResize, { passive: true })
+        }
     },
-  
-    methods: {
-        onResize () {
-            let mobile = window.innerWidth < 600;
 
-            if (mobile !== this.$store.state.mobile) {
-                this.$store.dispatch('setMobileMode', mobile);
-            }
-        },
+    data:() => ({
+        drawer: null
+    }),
+
+    methods: {
+        ...mapActions(['deviceResize']),
     },
 
     render: h => h(Apps)

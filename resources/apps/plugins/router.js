@@ -4,51 +4,81 @@ import Auth from '@apps/providers/AuthProvider';
 
 Vue.use(VueRouter);
 
-const Login = () => import(/* webpackChunkName: "scripts/core/authent" */ '@apps/pages/frontend/Login');
-const backendBase = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Base');
-const backendHome = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Home');
-const backendUser = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/User');
-const backendProfile = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Profile');
-const backendPassword = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Password');
-const backendSetting = () => import(/* webpackChunkName: "scripts/core/backend" */ '@apps/pages/backend/Setting');
+const pages = require.context('@apps/pages', true, /index\.vue$/);
+const routes = [];
 
-let routes = [
-    { path: '/', name: 'login', component: Login },
-    { path: '/backend', meta: { auth: true }, component: backendBase, children: [
-        { path: '', name: 'backend', redirect: { name: 'backend-home' } },
-        { path: 'home', name: 'backend-home', component: backendHome },
-        { path: 'user', name: 'backend-user', component: backendUser },
-        { path: 'password', name: 'backend-password', component: backendPassword },
-        { path: 'profile', name: 'backend-profile', component: backendProfile },
-        { path: 'setting', name: 'backend-setting', component: backendSetting },
-    ]},
-    { path: '*', name: null, redirect: { name: 'login' } },
-];
+/**
+ * scan and register route non children
+ */
+pages.keys().forEach(page => {
+    const pageComponent = pages(page).default;
 
+    if (!pageComponent.hasOwnProperty('route')) return;
+
+    let { path, name, auth, apps, root } = pageComponent.route;
+
+    if (typeof root === 'boolean' && root === true) {
+        routes.push({ path, meta: { auth }, apps: apps, component: pageComponent, children: [] });
+    } else {
+        routes.push({ path, name, component: pageComponent });
+    }    
+});
+
+if (Auth.check) {
+    pages.keys().forEach(page => {
+        const pageComponent = pages(page).default;
+
+        if (pageComponent.hasOwnProperty('route')) return;
+
+        let menu = Auth.menus.find(menu => menu.slug === pageComponent.name);
+        
+        if (!menu) return;
+        
+        let { slug, path, apps } = menu;
+
+        let route = routes.find(obj => obj.apps === apps);
+
+        if (!route) return;
+
+        route.children.push({ path: path, name: slug, component: pageComponent });
+    });
+}
+
+routes.push({ path: '*', redirect: { name: 'moui-login'} });
+
+/**
+ * create new VueRouter instance
+ */
 const router = new VueRouter({
     mode: 'hash',
     routes
 });
 
+/**
+ * router match
+ */
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.auth)) {
         if (!Auth.check) {
-            next({ name: 'login' });
+            next({ name: 'moui-login' });
         } else {
             next();
         }
     } else {
         if (to.name === 'login' && Auth.check) {
-            next({ name: 'backend-home' });
+            next({ name: 'moui-home' });
         } else {
             next();
         }
     }
 });
 
+/**
+ * catch error
+ */
 router.onError(() => {
     Auth.clear();
-    router.push({ name: 'login' });
+    router.push({ name: 'moui-login' });
 });
 
 export default router;
